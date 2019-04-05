@@ -1,3 +1,19 @@
+#### npm
+**/node_modules/
+
+#### cypress
+**/cypress/screenshots/
+**/cypress/videos/
+
+
+#### https://github.com/github/gitignore/blob/master/Global/VisualStudioCode.gitignore
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+
 #### https://github.com/github/gitignore/blob/master/Global/macOS.gitignore
 # General
 .DS_Store
