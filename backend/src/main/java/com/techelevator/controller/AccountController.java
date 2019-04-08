@@ -1,20 +1,15 @@
 package com.techelevator.controller;
 
 import javax.validation.Valid;
-
 import com.techelevator.authentication.AuthProvider;
 import com.techelevator.authentication.JwtTokenHandler;
 import com.techelevator.authentication.RegistrationResult;
 import com.techelevator.authentication.UnauthorizedException;
-import com.techelevator.authentication.UserCreationException;
 import com.techelevator.model.User;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 /**
  * AccountController
