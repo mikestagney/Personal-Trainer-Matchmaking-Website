@@ -30,4 +30,6 @@ public interface UserDao {
     public User getValidUserWithPassword(String userName, String password);
     
     public User getUserByUsername(String username);
+    
+    public User getUserById(Long id);
 }

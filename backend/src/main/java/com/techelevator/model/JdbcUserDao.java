@@ -112,4 +112,16 @@ public class JdbcUserDao implements UserDao{
             return null;
         }
     }
+
+	@Override
+	public User getUserById(Long id) {
+		String sqlSelectUserByUsername = "SELECT id, username, role FROM users WHERE user_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserByUsername, id);
+
+        if(results.next()) {
+            return mapResultToUser(results);
+        } else {
+            return null;
+        }
+	}
 }

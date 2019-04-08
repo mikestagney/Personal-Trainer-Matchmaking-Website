@@ -5,20 +5,19 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.techelevator.authentication.AuthProvider;
+import com.techelevator.authentication.UnauthorizedException;
 import com.techelevator.model.UserDao;
 
 @RestController
 @CrossOrigin
 public class PersonalTrainerMatchController {
 	
-    private UserDao userDao;
-	
 	@Autowired
-	public PersonalTrainerMatchController(UserDao userDao) {
-		this.userDao = userDao;
-	}
+    private UserDao userDao;
+    @Autowired
+    private AuthProvider authProvider;
 	
 	@RequestMapping(path="/", method=RequestMethod.GET)
     public String displayHomePage(ModelMap modelMap) {
@@ -26,15 +25,21 @@ public class PersonalTrainerMatchController {
     }
 	
 	@RequestMapping(path="/trainer", method=RequestMethod.GET)
-	public String displayTrainerProfilePage(@RequestParam String trainer_id, ModelMap modelMap) {
-		
+	public String displayTrainerProfilePage() throws UnauthorizedException {
+		if(!authProvider.userHasRole(new String[] {"trainer"})) {
+            throw new UnauthorizedException();
+        }
+		userDao.getUserById(authProvider.getCurrentUser().getId());
 		return "trainerProfile";
 	}
 	
 	@RequestMapping(path="/client", method=RequestMethod.GET)
-	public String displayClientProfilePage(@RequestParam String client_id, ModelMap modelMap) {
-		
-		return "clientProfile";
+	public String displayClientProfilePage() throws UnauthorizedException {
+		if(!authProvider.userHasRole(new String[] {"client"})) {
+            throw new UnauthorizedException();
+        }
+		userDao.getUserById(authProvider.getCurrentUser().getId());
+		return "trainerProfile";
 	}
 	
 }
