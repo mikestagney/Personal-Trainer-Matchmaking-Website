@@ -1,7 +1,6 @@
 package com.techelevator.model;
 
 import javax.validation.constraints.AssertTrue;
-
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
