@@ -1,9 +1,8 @@
 package com.techelevator.controller;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,13 +31,12 @@ public class PersonalTrainerMatchController {
     }
 	
 	@RequestMapping(path="/trainer", method=RequestMethod.GET)
-	public List<Object> displayTrainerProfilePage() throws UnauthorizedException {
+	public Map<User,TrainerProfile> displayTrainerProfilePage() throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"trainer"})) {
             throw new UnauthorizedException();
         }
-		List<Object> trainerInfo = new ArrayList<Object>();
-		trainerInfo.add(userDao.getUserById(authProvider.getCurrentUser().getId()));
-		trainerInfo.add(userDao.getTrainerProfile(authProvider.getCurrentUser().getId()));
+		Map<User,TrainerProfile> trainerInfo = new HashMap<User,TrainerProfile>();
+		trainerInfo.put(userDao.getUserById(authProvider.getCurrentUser().getId()),userDao.getTrainerProfile(authProvider.getCurrentUser().getId()));
 		return trainerInfo;
 	}
 	
