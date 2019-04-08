@@ -1,5 +1,8 @@
 package com.techelevator.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.sql.DataSource;
 import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +45,7 @@ public class JdbcUserDao implements UserDao{
         byte[] salt = passwordHasher.generateRandomSalt();
         String hashedPassword = passwordHasher.computeHash(password, salt);
         String saltString = new String(Base64.encode(salt));
-        long newId = jdbcTemplate.queryForObject("INSERT INTO users(username, password, salt, role) VALUES (?, ?, ?, ?) RETURNING id", Long.class, userName,
+        long newId = jdbcTemplate.queryForObject("INSERT INTO users(username, password, salt, role) VALUES (?, ?, ?, ?) RETURNING user_id", Long.class, userName,
                 hashedPassword, saltString, role);
 
         User newUser = new User();
@@ -59,7 +62,7 @@ public class JdbcUserDao implements UserDao{
         String hashedPassword = passwordHasher.computeHash(newPassword, salt);
         String saltString = new String(Base64.encode(salt));
 
-        jdbcTemplate.update("UPDATE users SET password=?, salt=? WHERE id=?",
+        jdbcTemplate.update("UPDATE users SET password=?, salt=? WHERE user_id=?",
                 hashedPassword, saltString, user.getId());
     }
 
@@ -93,7 +96,7 @@ public class JdbcUserDao implements UserDao{
 
     private User mapResultToUser(SqlRowSet results) {
     	User user = new User();
-        user.setId(results.getLong("id"));
+        user.setId(results.getLong("user_id"));
         user.setUsername(results.getString("username"));
         user.setRole(results.getString("role"));
         return user;
@@ -101,7 +104,7 @@ public class JdbcUserDao implements UserDao{
 
     @Override
     public User getUserByUsername(String username) {
-        String sqlSelectUserByUsername = "SELECT id, username, role FROM users WHERE username = ?";
+        String sqlSelectUserByUsername = "SELECT user_id, username, role FROM users WHERE username = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserByUsername, username);
 
         if(results.next()) {
@@ -113,13 +116,32 @@ public class JdbcUserDao implements UserDao{
 
 	@Override
 	public User getUserById(Long id) {
-		String sqlSelectUserByUsername = "SELECT id, username, role FROM users WHERE user_id = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserByUsername, id);
-
+		String sqlSelectUserById = "SELECT user_id, username, role FROM users WHERE user_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserById, id);
         if(results.next()) {
             return mapResultToUser(results);
         } else {
             return null;
         }
+	}
+	
+	public List<User> getListOfAllTrainers() {
+		String sqlSelectUserByUsername = "SELECT id, username, role FROM users WHERE role = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserByUsername, "trainer");
+        List<User> trainerList = new ArrayList<User>();
+        while (results.next()) {
+        	trainerList.add(mapResultToUser(results));
+        }
+        return trainerList;
+	}
+	
+	public List<User> getClientList(Long id) {
+		String sqlSelectUserByUsername = "SELECT id, username, role FROM users WHERE user_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserByUsername, id);
+        List<User> clientList = new ArrayList<User>();
+        while (results.next()) {
+        	clientList.add(mapResultToUser(results));
+        }
+        return clientList;
 	}
 }

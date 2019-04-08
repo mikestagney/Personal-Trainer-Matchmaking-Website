@@ -1,5 +1,7 @@
 package com.techelevator.model;
 
+import java.util.List;
+
 public interface UserDao {
 	
 	/**
@@ -30,4 +32,8 @@ public interface UserDao {
     public User getUserByUsername(String username);
     
     public User getUserById(Long id);
+    
+    public List<User> getListOfAllTrainers();
+    
+    public List<User> getClientList(Long id);
 }
