@@ -1,11 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import ListSnippets from '@/views/ListSnippets';
-import ViewSnippet from '@/views/ViewSnippet';
-import SaveSnippet from '@/views/SaveSnippet';
 import Login from '@/views/Login';
-import ClientRegister from '@/views/ClientRegister';
-import TrainerRegister from '@/views/TrainerRegister';
+import Register from '@/views/Register';
+import UpdateTrainerProfile from '@/views/UpdateTrainerProfile';
 import auth from './auth';
 
 Vue.use(Router);
@@ -20,30 +17,19 @@ const router = new Router({
       component: ListSnippets,
     },
     {
-      path: '/snippet/:id',
-      name: 'snippet',
-      component: ViewSnippet,
-      props: true,
-    },
-    {
-      path: '/save/:id?',
-      name: 'save',
-      component: SaveSnippet,
-    },
-    {
       path: '/login',
       name: 'login',
       component: Login,
     },
     {
-      path: '/clientregister',
-      name: 'clientregister',
-      component: ClientRegister,
+      path: '/register',
+      name: 'register',
+      component: Register,
     },
     {
-      path: '/trainerregister',
-      name: 'trainerregister',
-      component: TrainerRegister,
+      path: '/updateprofile/:id?',
+      name: 'updatetrainerporfile',
+      component: UpdateTrainerProfile,
     },
   ],
 });

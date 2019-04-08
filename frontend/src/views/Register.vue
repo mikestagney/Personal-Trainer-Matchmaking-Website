@@ -1,7 +1,7 @@
 <template>
   <div id="register" class="text-center">
     <form class="form-register" @submit.prevent="register">
-      <h1 class="h3 mb-3 font-weight-normal">Create Client Account</h1>
+      <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         There were problems registering this user.
       </div>
@@ -11,7 +11,7 @@
         id="firstname"
         class="form-control"
         placeholder="First Name"
-        v-model="client.firstname"
+        v-model="user.firstname"
         required
         autofocus
       />
@@ -21,7 +21,7 @@
         id="lastname"
         class="form-control"
         placeholder="Last Name"
-        v-model="client.lastname"
+        v-model="user.lastname"
         required
         autofocus
       />
@@ -31,7 +31,7 @@
         id="username"
         class="form-control"
         placeholder="Username"
-        v-model="client.username"
+        v-model="user.username"
         required
         autofocus
       />
@@ -41,7 +41,7 @@
         id="password"
         class="form-control"
         placeholder="Password"
-        v-model="client.password"
+        v-model="user.password"
         required
       />
       <input
@@ -49,9 +49,14 @@
         id="confirmPassword"
         class="form-control"
         placeholder="Confirm Password"
-        v-model="client.confirmPassword"
+        v-model="user.confirmPassword"
         required
       />
+      <label for="role" class="sr-only">Role</label>
+      <select v-model="user.role">
+        <option value="client">Client</option>
+        <option value="trainer">Trainer</option>
+      </select>
       <router-link :to="{ name: 'login' }">
         Have an account?
       </router-link>
@@ -64,14 +69,16 @@
 
 <script>
 export default {
-  name: 'clientregister',
+  name: 'register',
   data() {
     return {
       user: {
+        firstname: '',
+        lastname: '',
         username: '',
         password: '',
         confirmPassword: '',
-        role: 'user',
+        role: '',
       },
       registrationErrors: false,
     };

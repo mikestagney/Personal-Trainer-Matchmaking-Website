@@ -1,67 +1,10 @@
 <template>
   <div id="register" class="text-center">
     <form class="form-register" @submit.prevent="register">
-      <h1 class="h3 mb-3 font-weight-normal">Create Trainer Account</h1>
+      <h1 class="h3 mb-3 font-weight-normal">Create Trainer Profile</h1>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
-        There were problems registering this user.
+        There were problems registering this trainer.
       </div>
-      <label for="firstname" class="sr-only">First Name</label>
-      <input
-        type="text"
-        id="firstname"
-        class="form-control"
-        placeholder="First Name"
-        v-model="trainer.firstname"
-        required
-        autofocus
-      />
-      <label for="lastname" class="sr-only">Last Name</label>
-      <input
-        type="text"
-        id="lastname"
-        class="form-control"
-        placeholder="Last Name"
-        v-model="trainer.lastname"
-        required
-        autofocus
-      />
-      <label for="username" class="sr-only">Username</label>
-      <input
-        type="text"
-        id="username"
-        class="form-control"
-        placeholder="Username"
-        v-model="trainer.username"
-        required
-        autofocus
-      />
-      <label for="password" class="sr-only">Password</label>
-      <input
-        type="password"
-        id="password"
-        class="form-control"
-        placeholder="Password"
-        v-model="trainer.password"
-        required
-      />
-      <input
-        type="password"
-        id="confirmPassword"
-        class="form-control"
-        placeholder="Confirm Password"
-        v-model="trainer.confirmPassword"
-        required
-      />
-      <label for="price" class="sr-only">Price per Hour</label>
-      <select v-model="trainer.price">
-        <option disabled value="">Please select one</option>
-        <option>50</option>
-        <option>60</option>
-        <option>70</option>
-        <option>80</option>
-        <option>90</option>
-        <option>100</option>
-      </select>
       <label for="city" class="sr-only">City</label>
       <input 
         type="text"
@@ -69,7 +12,7 @@
         class="form-control"
         placeholder="city"
         v-model="trainer.city"/>
-      <label for="price" class="sr-only">State</label>
+      <label for="state" class="sr-only">State</label>
       <select v-model="trainer.state">
         <option disabled value="">State</option>
         <option value="AK">Alaska</option>
@@ -124,20 +67,36 @@
         <option value="WI">Wisconsin</option>
         <option value="WV">West Virginia</option>
         <option value="WY">Wyoming</option>
-      <label for="biography" class="sr-only">Tell us about yourself</label>
-      <input 
+      <label for="price" class="sr-only">Price Per hour</label>
+      <input
         type="text"
-        id="biography"
+        id="price"
         class="form-control"
-        placeholder="Biography"
-        v-model="trainer.biography"/>
-      <label for="philosophy" class="sr-only">Your Workout Philosophy</label>
-      <input 
+        placeholder="Enter your hourly rate"
+        v-model="trainer.price"
+        required
+        autofocus
+      />
+      <label for="background" class="sr-only">Tell us about yourself</label>
+      <input
+        type="text"
+        id="background"
+        class="form-control"
+        placeholder="Background"
+        v-model="trainer.background"
+        required
+        autofocus
+      />
+      <label for="philosophy" class="sr-only">Your training Philosophy</label>
+      <input
         type="text"
         id="philosophy"
         class="form-control"
         placeholder="Philosophy"
-        v-model="trainer.philosophy"/>
+        v-model="trainer.philosophy"
+        required
+        autofocus
+      />
       <label for="certifications" class="sr-only">Certifications</label>
       <input 
         type="text"
@@ -145,11 +104,8 @@
         class="form-control"
         placeholder="Certifications"
         v-model="trainer.certifications"/>
-      <router-link :to="{ name: 'login' }">
-        Have an account?
-      </router-link>
       <button class="btn btn-lg btn-primary btn-block" type="submit">
-        Create Account
+        Create profile
       </button>
     </form>
   </div>
@@ -157,38 +113,55 @@
 
 <script>
 export default {
-  name: 'trainerregister',
+  name: 'updatetrainerprofile',
+  props: {
+    apiUrl: String,
+    trainerId: Number
+  },
   data() {
     return {
       user: {
-        username: '',
-        password: '',
-        confirmPassword: '',
-        role: 'user',
+        city: '',
+        state: '',
+        background: '',
+        philosophy: '',
+        certifications: '',
       },
       registrationErrors: false,
     };
   },
   methods: {
-    register() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/register`, {
+    saveProfile() {
+      this.trainerId === 0 ? this.createProfile() : this.updateProfile();
+    },
+    createProfile() {
+      fetch(this.apiUrl, {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(this.user),
       })
-        .then((response) => {
-          if (response.ok) {
-            this.$router.push({ path: '/login', query: { registration: 'success' } });
-          } else {
-            this.registrationErrors = true;
-          }
-        })
-
-        .then((err) => console.error(err));
+      . then ((response) => {
+        if(response.ok) {
+          this.$emit('showProfile');
+        }
+      })
+      .catch((err) => console.error(err));
     },
+    updateProfile() {
+      fetch(`${this.apiUrl}/${this.trainerId}`, {
+        method: 'PUT',
+        headers: {
+          "Content-Type": "application/json"
+        },
+      })
+      .then((response) => {
+        if(response.ok) {
+          this.$emit('showProfile');
+        }
+      })
+      .catch((err) => console.error(err));
+    }
   },
 };
 </script>

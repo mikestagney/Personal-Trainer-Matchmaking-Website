@@ -28,11 +28,8 @@
         v-model="user.password"
         required
       />
-      <router-link :to="{ name: 'clientregister' }">
-        Register as a client
-      </router-link>
-      <router-link :to="{ name: 'traineregister' }">
-        Register as a trainer
+      <router-link :to="{ name: 'register' }">
+        Need an account?
       </router-link>
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Sign in
