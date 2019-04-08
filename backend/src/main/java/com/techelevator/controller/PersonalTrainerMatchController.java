@@ -26,7 +26,7 @@ public class PersonalTrainerMatchController {
     private AuthProvider authProvider;
 	
 	@RequestMapping(path="/", method=RequestMethod.GET)
-    public String displayHomePage(ModelMap modelMap) {
+    public String displayHomePage() {
 		return "homepage";
     }
 	
