@@ -7,7 +7,7 @@ CREATE TABLE users (
   username varchar(255) NOT NULL UNIQUE,     -- Username
   password varchar(32) NOT NULL,      -- Password
   salt varchar(256) NOT NULL,          -- Password Salt
-  role varchar(255) NOT NULL default('user')
+  role varchar(255) NOT NULL default('client')
 );
 
 COMMIT TRANSACTION;
