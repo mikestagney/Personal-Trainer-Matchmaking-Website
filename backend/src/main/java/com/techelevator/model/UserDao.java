@@ -3,8 +3,8 @@ package com.techelevator.model;
 import java.util.List;
 
 public interface UserDao {
-
-    /**
+	
+	/**
      * Save a new user to the database. The password that is passed in will be
      * salted and hashed before being saved. The original password is never
      * stored in the system. We will never have any idea what it is!
@@ -36,5 +36,4 @@ public interface UserDao {
     public List<User> getAllUsers();
 
     public User getUserByUsername(String username);
-
 }

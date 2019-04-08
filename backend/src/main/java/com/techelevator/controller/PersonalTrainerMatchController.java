@@ -7,18 +7,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.techelevator.model.JdbcClientDao;
+import com.techelevator.model.JdbcTrainerDao;
 import com.techelevator.model.UserDao;
-
 
 @RestController
 @CrossOrigin
 public class PersonalTrainerMatchController {
 	
-	@Autowired
     private UserDao clientDao;
+	private UserDao trainerDao;
 	
 	@Autowired
-	private UserDao trainerDao;
+	public PersonalTrainerMatchController(JdbcClientDao clientDao, JdbcTrainerDao trainerDao) {
+		this.clientDao = clientDao;
+		this.trainerDao = trainerDao;
+	}
 	
 	@RequestMapping(path="/", method=RequestMethod.GET)
     public String displayHomePage(ModelMap modelMap) {
