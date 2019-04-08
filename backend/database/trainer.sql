@@ -12,7 +12,8 @@ CREATE TABLE trainer
     last_name varchar(25) NOT NULL,
     username varchar(25) NOT NULL UNIQUE,
     password varchar(20) NOT NULL,
-    
+    salt varchar(256) NOT NULL,
+        
     constraint pk_trainer primary key (trainerId)
 );
 
@@ -23,6 +24,7 @@ CREATE TABLE client
     last_name varchar(25) NOT NULL,
     username varchar(25) NOT NULL UNIQUE,
     password varchar(20) NOT NULL,
+    salt varchar(256) NOT NULL,
     
     constraint pk_client primary key (clientId)
     
@@ -30,7 +32,7 @@ CREATE TABLE client
 
 CREATE TABLE trainer_profile
 (
-    trainerId int NOT NULL,
+    trainerId int NOT NULL UNIQUE,
     is_public boolean NOT NULL,
     price_per_hour int NOT NULL,
     rating int,
