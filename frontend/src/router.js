@@ -4,7 +4,8 @@ import ListSnippets from '@/views/ListSnippets';
 import ViewSnippet from '@/views/ViewSnippet';
 import SaveSnippet from '@/views/SaveSnippet';
 import Login from '@/views/Login';
-import Register from '@/views/Register';
+import ClientRegister from '@/views/ClientRegister';
+import TrainerRegister from '@/views/TrainerRegister';
 import auth from './auth';
 
 Vue.use(Router);
@@ -35,9 +36,14 @@ const router = new Router({
       component: Login,
     },
     {
-      path: '/register',
-      name: 'register',
-      component: Register,
+      path: '/clientregister',
+      name: 'clientregister',
+      component: ClientRegister,
+    },
+    {
+      path: '/trainerregister',
+      name: 'trainerregister',
+      component: TrainerRegister,
     },
   ],
 });

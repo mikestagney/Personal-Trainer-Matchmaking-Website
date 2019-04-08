@@ -1,18 +1,37 @@
 <template>
   <div id="register" class="text-center">
     <form class="form-register" @submit.prevent="register">
-      <img class="mb-4" src="../assets/telogo.png" alt width="72" height="72" />
-      <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
+      <h1 class="h3 mb-3 font-weight-normal">Create Client Account</h1>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         There were problems registering this user.
       </div>
+      <label for="firstname" class="sr-only">First Name</label>
+      <input
+        type="text"
+        id="firstname"
+        class="form-control"
+        placeholder="First Name"
+        v-model="client.firstname"
+        required
+        autofocus
+      />
+      <label for="lastname" class="sr-only">Last Name</label>
+      <input
+        type="text"
+        id="lastname"
+        class="form-control"
+        placeholder="Last Name"
+        v-model="client.lastname"
+        required
+        autofocus
+      />
       <label for="username" class="sr-only">Username</label>
       <input
         type="text"
         id="username"
         class="form-control"
         placeholder="Username"
-        v-model="user.username"
+        v-model="client.username"
         required
         autofocus
       />
@@ -22,7 +41,7 @@
         id="password"
         class="form-control"
         placeholder="Password"
-        v-model="user.password"
+        v-model="client.password"
         required
       />
       <input
@@ -30,7 +49,7 @@
         id="confirmPassword"
         class="form-control"
         placeholder="Confirm Password"
-        v-model="user.confirmPassword"
+        v-model="client.confirmPassword"
         required
       />
       <router-link :to="{ name: 'login' }">
@@ -45,7 +64,7 @@
 
 <script>
 export default {
-  name: 'register',
+  name: 'clientregister',
   data() {
     return {
       user: {
