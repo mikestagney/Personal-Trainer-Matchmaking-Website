@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS client;
 DROP TABLE IF EXISTS trainer_profile;
 DROP TABLE IF EXISTS client_list;
 
-BEGIN TRANSACTION
+BEGIN TRANSACTION;
 
 CREATE TABLE trainer
 (
@@ -13,7 +13,7 @@ CREATE TABLE trainer
     username varchar(25) NOT NULL UNIQUE,
     password varchar(20) NOT NULL,
     
-    constraint pk_trainer primary key trainerId
+    constraint pk_trainer primary key (trainerId)
 );
 
 CREATE TABLE client
@@ -24,7 +24,7 @@ CREATE TABLE client
     username varchar(25) NOT NULL UNIQUE,
     password varchar(20) NOT NULL,
     
-    constraint pk_client primary key clientId,
+    constraint pk_client primary key (clientId)
     
 );
 
@@ -43,19 +43,19 @@ CREATE TABLE trainer_profile
     constraint pk_trainer_profile primary key (trainerId),
     constraint fk_trainer_profile foreign key (trainerId) references trainer(trainerId)
 
-)
+);
 
 CREATE TABLE client_list 
 (
     trainerId int NOT NULL,
-    clientId int NOT NULL
+    clientId int NOT NULL,
 
     constraint pk_client_list primary key (trainerId, clientId),
-    constraint fk_client_list foreign key (trainerId) references trainer(trainerId),
-    constraint fk_client_list foreign key (clientId) references client(clientId)
+    constraint fk_client_list_trainer foreign key (trainerId) references trainer(trainerId),
+    constraint fk_client_list_client foreign key (clientId) references client(clientId)
 
-)
+);
 
 
 
-COMMIT TRANSACTION
+COMMIT TRANSACTION;
