@@ -1,7 +1,9 @@
 package com.techelevator.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 import org.bouncycastle.util.encoders.Base64;
@@ -101,6 +103,20 @@ public class JdbcUserDao implements UserDao{
         user.setRole(results.getString("role"));
         return user;
     }
+    
+    private TrainerProfile mapResultToTrainerProfile(SqlRowSet results) {
+    	TrainerProfile trainerProfile = new TrainerProfile();
+    	trainerProfile.setId(results.getLong("user_id"));
+    	trainerProfile.setPublic(results.getBoolean("isPublic"));
+    	trainerProfile.setPrice_per_hour(results.getInt("price_per_hour"));
+    	trainerProfile.setRating(results.getDouble("rating"));
+    	trainerProfile.setPhilosophy(results.getString("philosophy"));
+    	trainerProfile.setBio(results.getString("bio"));
+    	trainerProfile.setCity(results.getString("city"));
+    	trainerProfile.setState(results.getString("state"));
+    	trainerProfile.setCertifications(results.getString("certifications"));
+        return trainerProfile;
+    }
 
     @Override
     public User getUserByUsername(String username) {
@@ -125,19 +141,34 @@ public class JdbcUserDao implements UserDao{
         }
 	}
 	
-	public List<User> getListOfAllTrainers() {
-		String sqlSelectUserByUsername = "SELECT id, username, role FROM users WHERE role = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserByUsername, "trainer");
-        List<User> trainerList = new ArrayList<User>();
+	@Override
+	public TrainerProfile getTrainerProfile(Long id) {
+		String sqlSelectUserById = "SELECT * FROM trainer_profile WHERE user_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserById, id);
+        if(results.next()) {
+            return mapResultToTrainerProfile(results);
+        } else {
+            return null;
+        }
+	}
+	
+	@Override
+	public Map<User,TrainerProfile> getMapOfTrainers(String city, String state) {
+		String sqlSelectTrainers = "SELECT user_id, username FROM users JOIN trainer_profile"
+									   + " WHERE role = ? AND city.trainer_profile ILIKE ? AND state.trainer_profile ILIKE ? order by username";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectTrainers, "trainer", "%" + city + "%", "%" + state + "%");
+        Map<User,TrainerProfile> trainerList = new HashMap<User,TrainerProfile>();
         while (results.next()) {
-        	trainerList.add(mapResultToUser(results));
+        	User user = mapResultToUser(results);
+        	trainerList.put(user,getTrainerProfile(user.getId()));
         }
         return trainerList;
 	}
 	
+	@Override
 	public List<User> getClientList(Long id) {
-		String sqlSelectUserByUsername = "SELECT id, username, role FROM users WHERE user_id = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserByUsername, id);
+		String sqlSelectUsersByTrainerId = "SELECT client_id FROM client_list WHERE trainer_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUsersByTrainerId, id);
         List<User> clientList = new ArrayList<User>();
         while (results.next()) {
         	clientList.add(mapResultToUser(results));
