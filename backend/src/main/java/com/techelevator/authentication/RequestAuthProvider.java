@@ -1,12 +1,9 @@
 package com.techelevator.authentication;
 
 import java.util.Arrays;
-
 import javax.servlet.http.HttpServletRequest;
-
 import com.techelevator.model.User;
 import com.techelevator.model.UserDao;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +35,7 @@ public class RequestAuthProvider implements AuthProvider {
 
     @Override
     public boolean signIn(String username, String password) {
-        User authenticatedUser = dao.getValidUserWithPassword(username, password);
+    	User authenticatedUser = dao.getValidUserWithPassword(username, password);
         if(authenticatedUser != null) {
             request.setAttribute(USER_KEY, authenticatedUser);
             return true;
@@ -54,7 +51,7 @@ public class RequestAuthProvider implements AuthProvider {
 
     @Override
     public boolean changePassword(String existingPassword, String newPassword) {
-        User userFromSession = (User) request.getAttribute(USER_KEY);
+    	User userFromSession = (User) request.getAttribute(USER_KEY);
         if(userFromSession == null) {
             return false;
         }
@@ -74,7 +71,7 @@ public class RequestAuthProvider implements AuthProvider {
 
     @Override
     public boolean userHasRole(String[] roles) {
-        User currentUser = getCurrentUser();
+    	User currentUser = getCurrentUser();
         if(currentUser != null && roles != null) {
             return Arrays.asList(roles).contains(currentUser.getRole());
         } else {

@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class PersonalTrainerMatchController {
 	
 	@RequestMapping(path="/", method=RequestMethod.GET)
-    public void displayHomePage(ModelMap modelMap) {
+    public String displayHomePage(ModelMap modelMap) {
 		populateModelMap(modelMap);
+		return "homepage";
     }
 	
 	@RequestMapping(path="/trainer", method=RequestMethod.GET)

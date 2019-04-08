@@ -5,18 +5,18 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import com.techelevator.authentication.PasswordHasher;
-
 import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
-@Component
-public class JdbcUserDao implements UserDao {
+import com.techelevator.authentication.PasswordHasher;
 
-    private JdbcTemplate jdbcTemplate;
+@Component
+public class JdbcTrainerDao implements UserDao{
+
+	private JdbcTemplate jdbcTemplate;
     private PasswordHasher passwordHasher;
 
     /**
@@ -27,7 +27,7 @@ public class JdbcUserDao implements UserDao {
      * @param passwordHasher an object to salt and hash passwords
      */
     @Autowired
-    public JdbcUserDao(DataSource dataSource, PasswordHasher passwordHasher) {
+    public JdbcTrainerDao(DataSource dataSource, PasswordHasher passwordHasher) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.passwordHasher = passwordHasher;
     }
@@ -50,7 +50,7 @@ public class JdbcUserDao implements UserDao {
         long newId = jdbcTemplate.queryForObject("INSERT INTO users(username, password, salt, role) VALUES (?, ?, ?, ?) RETURNING id", Long.class, userName,
                 hashedPassword, saltString, role);
 
-        User newUser = new User();
+        User newUser = new Trainer();
         newUser.setId(newId);
         newUser.setUsername(userName);
         newUser.setRole(role);
@@ -107,7 +107,7 @@ public class JdbcUserDao implements UserDao {
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectAllUsers);
 
         while(results.next()) {
-            User user = mapResultToUser(results);
+        	User user = mapResultToUser(results);
             users.add(user);
         }
 
@@ -115,7 +115,7 @@ public class JdbcUserDao implements UserDao {
     }
 
     private User mapResultToUser(SqlRowSet results) {
-        User user = new User();
+    	User user = new Trainer();
         user.setId(results.getLong("id"));
         user.setUsername(results.getString("username"));
         user.setRole(results.getString("role"));
