@@ -1,39 +1,27 @@
-DROP TABLE IF EXISTS trainer;
-DROP TABLE IF EXISTS client;
+DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS trainer_profile;
 DROP TABLE IF EXISTS client_list;
 
 BEGIN TRANSACTION;
 
-CREATE TABLE trainer
+CREATE TABLE users
 (
-    trainerId serial,
+    user_id serial,
     first_name varchar(25) NOT NULL,
     last_name varchar(25) NOT NULL,
     username varchar(25) NOT NULL UNIQUE,
     password varchar(20) NOT NULL,
     salt varchar(256) NOT NULL,
+    role varchar(10) NOT NULL,
         
-    constraint pk_trainer primary key (trainerId)
-);
-
-CREATE TABLE client
-(
-    clientId serial,
-    first_name varchar(25) NOT NULL,
-    last_name varchar(25) NOT NULL,
-    username varchar(25) NOT NULL UNIQUE,
-    password varchar(20) NOT NULL,
-    salt varchar(256) NOT NULL,
-    
-    constraint pk_client primary key (clientId)
-    
+    constraint pk_trainer primary key (user_id),
+    constraint chk_role CHECK (role IN ('trainer', 'client'))
 );
 
 CREATE TABLE trainer_profile
 (
-    trainerId int NOT NULL UNIQUE,
-    is_public boolean NOT NULL,
+    user_id int NOT NULL UNIQUE,
+    is_public boolean NOT NULL DEFAULT false,
     price_per_hour int NOT NULL,
     rating int,
     philosphy varchar(50),
@@ -42,8 +30,8 @@ CREATE TABLE trainer_profile
     state varchar(2),
     certifications varchar(250),
 
-    constraint pk_trainer_profile primary key (trainerId),
-    constraint fk_trainer_profile foreign key (trainerId) references trainer(trainerId)
+    constraint pk_trainer_profile primary key (user_id),
+    constraint fk_trainer_profile foreign key (user_id) references users (user_id)
 
 );
 
@@ -53,8 +41,8 @@ CREATE TABLE client_list
     clientId int NOT NULL,
 
     constraint pk_client_list primary key (trainerId, clientId),
-    constraint fk_client_list_trainer foreign key (trainerId) references trainer(trainerId),
-    constraint fk_client_list_client foreign key (clientId) references client(clientId)
+    constraint fk_client_list_trainer foreign key (trainerId) references users (user_id),
+    constraint fk_client_list_client foreign key (clientId) references  users (user_id)
 
 );
 
