@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 public class AccountController {
+	
     @Autowired
     private AuthProvider auth;
 
@@ -31,7 +32,6 @@ public class AccountController {
             throw new UnauthorizedException();
         }
     }
-
 
 
     @PostMapping("/register")
