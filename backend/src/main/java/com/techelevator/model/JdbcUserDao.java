@@ -2,20 +2,17 @@ package com.techelevator.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.sql.DataSource;
-
 import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
-
 import com.techelevator.authentication.PasswordHasher;
 
 @Component
-public class JdbcTrainerDao implements UserDao{
-
+public class JdbcUserDao implements UserDao{
+	
 	private JdbcTemplate jdbcTemplate;
     private PasswordHasher passwordHasher;
 
@@ -27,7 +24,7 @@ public class JdbcTrainerDao implements UserDao{
      * @param passwordHasher an object to salt and hash passwords
      */
     @Autowired
-    public JdbcTrainerDao(DataSource dataSource, PasswordHasher passwordHasher) {
+    public JdbcUserDao(DataSource dataSource, PasswordHasher passwordHasher) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.passwordHasher = passwordHasher;
     }
@@ -50,7 +47,7 @@ public class JdbcTrainerDao implements UserDao{
         long newId = jdbcTemplate.queryForObject("INSERT INTO users(username, password, salt, role) VALUES (?, ?, ?, ?) RETURNING id", Long.class, userName,
                 hashedPassword, saltString, role);
 
-        User newUser = new Trainer();
+        User newUser = new User();
         newUser.setId(newId);
         newUser.setUsername(userName);
         newUser.setRole(role);
@@ -96,26 +93,8 @@ public class JdbcTrainerDao implements UserDao{
         }
     }
 
-    /**
-     * Get all of the users from the database.
-     * @return a List of user objects
-     */
-    @Override
-    public List<User> getAllUsers() {
-        List<User> users = new ArrayList<User>();
-        String sqlSelectAllUsers = "SELECT id, username, role FROM users";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectAllUsers);
-
-        while(results.next()) {
-        	User user = mapResultToUser(results);
-            users.add(user);
-        }
-
-        return users;
-    }
-
     private User mapResultToUser(SqlRowSet results) {
-    	User user = new Trainer();
+    	User user = new User();
         user.setId(results.getLong("id"));
         user.setUsername(results.getString("username"));
         user.setRole(results.getString("role"));
@@ -133,5 +112,4 @@ public class JdbcTrainerDao implements UserDao{
             return null;
         }
     }
-
 }

@@ -28,12 +28,6 @@ public interface UserDao {
      * @return true if the user is found and their password matches
      */
     public User getValidUserWithPassword(String userName, String password);
-
-    /**
-     * Get all of the users from the database.
-     * @return a List of user objects
-     */
-    public List<User> getAllUsers();
-
+    
     public User getUserByUsername(String username);
 }
