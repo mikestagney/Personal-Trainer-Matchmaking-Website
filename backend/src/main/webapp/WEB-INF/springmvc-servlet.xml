@@ -32,9 +32,10 @@
 				<property name="excludedUrls">
 					<list>
 					<!-- Every url in the app must be authenticated
-						except /login -->
+						except -->
 						<value>/login</value>
 						<value>/register</value>
+						<value>/</value>
 					</list>
 				</property>
 			</bean>
