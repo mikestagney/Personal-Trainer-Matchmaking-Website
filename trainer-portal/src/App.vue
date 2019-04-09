@@ -2,15 +2,21 @@
   <div id="app">
     <transition name="fade" mode="out-in">
     <router-view></router-view>
+    <update-trainer-profile></update-trainer-profile>
+    <login></login>
     </transition>
   </div>
 </template>
 
 <script>
+import UpdateTrainerProfile from './views/UpdateTrainerProfile.vue'
+import Login from './views/Login.vue'
 
 export default {
   name: 'app', 
   components: {
+    UpdateTrainerProfile,
+    Login
     
   }
 }
