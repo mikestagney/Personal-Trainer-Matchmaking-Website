@@ -1,4 +1,5 @@
 <template>
+  <default-layout>
   <div id="login" class="text-center">
     <form class="form-signin" @submit.prevent="login">
       <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
@@ -35,14 +36,18 @@
       </button>
     </form>
   </div>
+  </default-layout>
 </template>
 
 <script>
 import auth from '../auth';
+import DefaultLayout from '@/layouts/DefaultLayout';
 
 export default {
   name: 'login',
-  components: {},
+  components: {
+    DefaultLayout,
+  },
   data() {
     return {
       user: {
