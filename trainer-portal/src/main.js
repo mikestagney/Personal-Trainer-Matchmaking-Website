@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueHighlightJS from 'vue-highlightjs';
 import App from './App.vue';
 import router from './router';
 import BootstrapVue from 'bootstrap-vue';
