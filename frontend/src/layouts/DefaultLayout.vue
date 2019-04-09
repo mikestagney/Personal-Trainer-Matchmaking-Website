@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <snippet-navigation></snippet-navigation>
+    <navigation></navigation>
     <div class="page-view">
       <slot />
     </div>
@@ -8,12 +8,12 @@
 </template>
 
 <script>
-import SnippetNavigation from '@/components/SnippetNavigation';
+import Navigation from '@/components/Navigation';
 
 export default {
   name: 'DefaultLayout',
   components: {
-    SnippetNavigation,
+    Navigation,
   },
 };
 </script>

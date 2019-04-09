@@ -1,8 +1,7 @@
 <template>
   <nav class="navbar navbar-expand navbar-dark bg-primary">
     <router-link to="/" class="navbar-brand">
-      <img src="../assets/telogo.png" alt width="32" height="32" />
-      TE Snippets
+      Personal Trainer Portal
     </router-link>
     <button
       class="navbar-toggler"
@@ -15,7 +14,7 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="te-snippets-navbar">
+    <div class="collapse navbar-collapse" id="trainer-navbar">
       <ul class="navbar-nav mr-auto">
         <router-link tag="li" class="nav-item" to="/" active-class="active" exact>
           <a class="nav-link">All Snippets</a>
@@ -39,7 +38,7 @@
 import auth from '../auth';
 
 export default {
-  name: 'SnippetNavigation',
+  name: 'Navigation',
   methods: {
     logout() {
       auth.logout();
