@@ -26,7 +26,7 @@ public class ApiController {
         In this example, if the user does not have the admin role
         we send back an unauthorized error.
         */
-        if( ! authProvider.userHasRole(new String[] {"trainer", "client"})) {
+        if( ! authProvider.userHasRole(new String[] {"Trainer", "Client"})) {
             throw new UnauthorizedException();
         }
         return "Success";
