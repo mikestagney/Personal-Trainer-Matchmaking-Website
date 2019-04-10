@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Home from '@/views/Home'
 import Login from '@/views/Login';
 import Register from '@/views/Register';
+import ListTrainers from '@/views/ListTrainers'
 import auth from './auth';
 
 Vue.use(Router);
@@ -25,6 +26,11 @@ const router = new Router({
         path: '/register',
         name: 'register',
         component: Register,
+      },
+      {
+        path: '/search',
+        name: 'search',
+        component: ListTrainers,
       }
     ],
   });

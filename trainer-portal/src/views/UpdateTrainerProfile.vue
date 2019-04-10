@@ -13,7 +13,7 @@
         placeholder="city"
         v-model="trainer.city"/>
       <label for="state" class="sr-only">State</label>
-      <select v-model="trainer.state">
+      <select v-model="trainerprofile.state">
         <option disabled value="">State</option>
         <option value="AK">Alaska</option>
         <option value="AL">Alabama</option>
@@ -74,7 +74,7 @@
         id="price"
         class="form-control"
         placeholder="Enter your hourly rate"
-        v-model="trainer.price"
+        v-model="trainerprofile.price_per_hour"
         required
         autofocus
       />
@@ -84,7 +84,7 @@
         id="background"
         class="form-control"
         placeholder="Background"
-        v-model="trainer.background"
+        v-model="trainerprofile.background"
         required
         autofocus
       />
@@ -94,7 +94,7 @@
         id="philosophy"
         class="form-control"
         placeholder="Philosophy"
-        v-model="trainer.philosophy"
+        v-model="trainerprofile.philosophy"
         required
         autofocus
       />
@@ -104,7 +104,7 @@
         id="certifications"
         class="form-control"
         placeholder="Certifications"
-        v-model="trainer.certifications"/>
+        v-model="trainerprofile.certifications"/>
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Create profile
       </button>
@@ -116,7 +116,6 @@
 export default {
   name: 'updatetrainerprofile',
   props: {
-    apiUrl: String,
     trainerId: Number
   },
   data() {
@@ -136,7 +135,7 @@ export default {
       this.trainerId === 0 ? this.createProfile() : this.updateProfile();
     },
     createProfile() {
-      fetch(this.apiUrl, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
@@ -150,7 +149,7 @@ export default {
       .catch((err) => console.error(err));
     },
     updateProfile() {
-      fetch(`${this.apiUrl}/${this.trainerId}`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/${this.trainerprofileId}`, {
         method: 'PUT',
         headers: {
           "Content-Type": "application/json"

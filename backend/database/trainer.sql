@@ -23,7 +23,7 @@ CREATE TABLE trainer_profile
     user_id int NOT NULL UNIQUE,
     is_public boolean NOT NULL DEFAULT false,
     price_per_hour int NOT NULL,
-    rating int,
+    rating decimal(3,2),
     philosphy varchar(50),
     bio varchar(250),
     city varchar(30),
@@ -45,6 +45,19 @@ CREATE TABLE client_list
     constraint fk_client_list_client foreign key (clientId) references  users (user_id)
 
 );
+CREATE TABLE private_message
+(
+    trainerId int NOT NULL,
+    clientId int NOT NULL,
+    postDate timestamp NOT NULL,
+    subject varchar(20),
+    message varchar(250),
+
+    constraint pk_client_list primary key (trainerId, clientId, postDate),
+    constraint fk_client_list_trainer foreign key (trainerId) references users (user_id),
+    constraint fk_client_list_client foreign key (clientId) references  users (user_id)
+);
+
 
 
 
