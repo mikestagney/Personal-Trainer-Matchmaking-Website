@@ -1,6 +1,7 @@
-package com.techelevator.model;
+package com.techelevator.model.dao;
 
 import java.util.List;
+import com.techelevator.model.TrainerProfile;
 
 public interface TrainerProfileDao {
 	

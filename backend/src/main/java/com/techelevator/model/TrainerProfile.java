@@ -123,5 +123,4 @@ public class TrainerProfile {
 	public void setCertifications(String certifications) {
 		this.certifications = certifications;
 	}
-	
 }

@@ -3,7 +3,7 @@ package com.techelevator.authentication;
 import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import com.techelevator.model.User;
-import com.techelevator.model.UserDao;
+import com.techelevator.model.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

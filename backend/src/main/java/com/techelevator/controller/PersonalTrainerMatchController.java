@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.techelevator.authentication.AuthProvider;
 import com.techelevator.authentication.UnauthorizedException;
 import com.techelevator.model.PrivateMessage;
-import com.techelevator.model.PrivateMessageDao;
 import com.techelevator.model.TrainerProfile;
-import com.techelevator.model.TrainerProfileDao;
 import com.techelevator.model.User;
-import com.techelevator.model.UserDao;
+import com.techelevator.model.dao.ClientListDao;
+import com.techelevator.model.dao.PrivateMessageDao;
+import com.techelevator.model.dao.TrainerProfileDao;
+import com.techelevator.model.dao.UserDao;
 
 @RestController
 @CrossOrigin
@@ -31,6 +32,8 @@ public class PersonalTrainerMatchController {
     private TrainerProfileDao trainerProfileDao;
     @Autowired
     private PrivateMessageDao privateMessageDao;
+    @Autowired
+    private ClientListDao clientListDao;
 	
 	@RequestMapping(path="/", method=RequestMethod.GET)
     public String displayHomePage() {
@@ -81,7 +84,7 @@ public class PersonalTrainerMatchController {
 		if(!authProvider.userHasRole(new String[] {"trainer"})) {
             throw new UnauthorizedException();
         }
-		return userDao.getClientList(authProvider.getCurrentUser().getId());
+		return clientListDao.getClientListOfTrainer(authProvider.getCurrentUser().getId());
 	}
 	
 	@RequestMapping(path="/messageList/{user_id}", method=RequestMethod.GET)
@@ -93,5 +96,4 @@ public class PersonalTrainerMatchController {
 	public List<PrivateMessage> displayMessageListBetweenUsers(@PathVariable long trainerId, @PathVariable long clientId) {
 		return privateMessageDao.getPrivateMessagesBetweenUser(trainerId, clientId);
 	}
-	
 }

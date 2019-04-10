@@ -1,7 +1,5 @@
-package com.techelevator.model;
+package com.techelevator.model.jdbc;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.sql.DataSource;
 import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +7,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 import com.techelevator.authentication.PasswordHasher;
+import com.techelevator.model.User;
+import com.techelevator.model.dao.UserDao;
 
 @Component
 public class JdbcUserDao implements UserDao{
@@ -122,32 +122,5 @@ public class JdbcUserDao implements UserDao{
         } else {
             return null;
         }
-	}
-	
-	@Override
-	public List<User> getUserInfoForTrainer(String city, String state, int price_per_hour, double rating, String certifications) {
-		String sqlSelectTrainers = "SELECT user_id, username FROM users JOIN trainer_profile "
-									   + "WHERE role = ? AND city.trainer_profile ILIKE ? AND state.trainer_profile ILIKE ? "
-									   + "AND price_per_hour.trainer_profile >= ? AND rating.trainer_profile >= ? "
-									   + "AND certifications.trainer_profile ILIKE ? ORDER BY username";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectTrainers, "trainer",
-        		"%" + city + "%", "%" + state + "%", price_per_hour, rating, "%" + certifications + "%");
-        List<User> trainerList = new ArrayList<User>();
-        while (results.next()) {
-        	User user = mapResultToUser(results);
-        	trainerList.add(user);
-        }
-        return trainerList;
-	}
-	
-	@Override
-	public List<User> getClientList(Long id) {
-		String sqlSelectUsersByTrainerId = "SELECT client_id FROM client_list WHERE trainer_id = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUsersByTrainerId, id);
-        List<User> clientList = new ArrayList<User>();
-        while (results.next()) {
-        	clientList.add(mapResultToUser(results));
-        }
-        return clientList;
 	}
 }
