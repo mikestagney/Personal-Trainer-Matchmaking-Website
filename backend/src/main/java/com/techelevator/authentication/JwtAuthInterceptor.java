@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.techelevator.model.User;
 
 /**
@@ -47,8 +46,6 @@ public class JwtAuthInterceptor implements HandlerInterceptor {
         }
     }
 
-
-
     /**
      * @param excludedUrls the excluded urls to set
      */
@@ -67,5 +64,4 @@ public class JwtAuthInterceptor implements HandlerInterceptor {
             throws Exception {
 
     }
-
 }

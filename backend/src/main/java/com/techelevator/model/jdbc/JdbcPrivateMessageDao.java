@@ -13,7 +13,7 @@ import com.techelevator.model.dao.PrivateMessageDao;
 @Component
 public class JdbcPrivateMessageDao implements PrivateMessageDao{
 
-private JdbcTemplate jdbcTemplate;
+	private JdbcTemplate jdbcTemplate;
 	
 	@Autowired
     public JdbcPrivateMessageDao(DataSource dataSource) {

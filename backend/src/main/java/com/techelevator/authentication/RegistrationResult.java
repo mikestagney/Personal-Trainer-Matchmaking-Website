@@ -25,5 +25,4 @@ public class RegistrationResult {
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
-
 }

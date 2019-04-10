@@ -34,9 +34,7 @@ public class PersonalTrainerMatchController {
     private ClientListDao clientListDao;
 	
     @GetMapping("/")
-    public String displayHomePage() {
-		return "homepage";
-    }
+    public void displayHomePage() {}
 	
 	@GetMapping("/trainer")
 	public TrainerProfile displayTrainerProfilePage() throws UnauthorizedException {
