@@ -65,15 +65,15 @@ public class PersonalTrainerMatchController {
 		return trainerProfileDao.getTrainerProfilesBySearchCriteria(city,state,price_per_hour,rating,certifications);
 	}
 	
-	@PutMapping ("updateTrainerProfile/{user_id}")
-	public void updateTrainerProfile(@PathVariable long user_id, @RequestBody TrainerProfile trainerProfile) throws UnauthorizedException {
+	@PutMapping ("updateTrainerProfile")
+	public void updateTrainerProfile(@RequestBody TrainerProfile trainerProfile) throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"trainer"})) {
             throw new UnauthorizedException();
         }
 		else {
-			TrainerProfile requestedTrainerProfile = trainerProfileDao.getTrainerProfileById(user_id);
+			TrainerProfile requestedTrainerProfile = trainerProfileDao.getTrainerProfileById(authProvider.getCurrentUser().getId());
 			if (requestedTrainerProfile != null) {
-				trainerProfile.setId(user_id);
+				trainerProfile.setId(authProvider.getCurrentUser().getId());
 				trainerProfileDao.updateTrainerProfile(trainerProfile);
 			}
 		}
@@ -97,13 +97,13 @@ public class PersonalTrainerMatchController {
 		return clientListDao.searchClientListOfTrainer(authProvider.getCurrentUser().getId(), firstName, lastName, username);
 	}
 	
-	@RequestMapping(path="/messageList/{user_id}", method=RequestMethod.GET)
-	public List<PrivateMessage> displayMessageListForUser(@PathVariable long user_id) {
-		return privateMessageDao.getPrivateMessagesForUser(user_id);
+	@RequestMapping(path="/messageList}", method=RequestMethod.GET)
+	public List<PrivateMessage> displayMessageListForUser() {
+		return privateMessageDao.getPrivateMessagesForUser(authProvider.getCurrentUser().getId());
 	}
 	
-	@RequestMapping(path="/messageListBetweenUsers/{trainerId}/{clientId}", method=RequestMethod.GET)
-	public List<PrivateMessage> displayMessageListBetweenUsers(@PathVariable long trainerId, @PathVariable long clientId) {
-		return privateMessageDao.getPrivateMessagesBetweenUser(trainerId, clientId);
+	@RequestMapping(path="/messageListBetweenUsers}", method=RequestMethod.GET)
+	public List<PrivateMessage> displayMessageListBetweenUsers(@RequestParam long user_id) {
+		return privateMessageDao.getPrivateMessagesBetweenUser(authProvider.getCurrentUser().getId(), user_id);
 	}
 }

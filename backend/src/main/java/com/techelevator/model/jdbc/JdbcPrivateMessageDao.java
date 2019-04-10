@@ -32,10 +32,10 @@ private JdbcTemplate jdbcTemplate;
 	}
 	
 	@Override
-	public List<PrivateMessage> getPrivateMessagesBetweenUser(long trainerId, long clientId) {
+	public List<PrivateMessage> getPrivateMessagesBetweenUser(long userId1, long userId2) {
 		List<PrivateMessage> messageList = new ArrayList<PrivateMessage>();
-		String sqlSearchForMessagesBetweenUsers = "SELECT * FROM private_message WHERE trainerId = ? AND clientId = ?";
-		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForMessagesBetweenUsers, trainerId, clientId);
+		String sqlSearchForMessagesBetweenUsers = "SELECT * FROM private_message WHERE (trainerId = ? OR clientId = ?) AND (trainerId = ? OR clientId = ?)";
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForMessagesBetweenUsers, userId1, userId1, userId2, userId2);
         while (results.next()) {
             messageList.add(mapResultToPrivateMessage(results));
         }
