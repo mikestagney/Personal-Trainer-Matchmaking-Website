@@ -103,6 +103,14 @@ public class PersonalTrainerMatchController {
 	}
 	
 	/**
+	 * GetMapping for displayTrainerDetailPage
+	 */
+	@GetMapping("/trainerDetailPage")
+	public TrainerProfile displayTrainerDetailPage(@RequestParam long trainer_id) {
+		return trainerProfileDao.getTrainerProfileById(trainer_id);
+	}
+	
+	/**
 	 * PutMapping for updateTrainerProfile
 	 */
 	@PutMapping("updateTrainerProfile")
