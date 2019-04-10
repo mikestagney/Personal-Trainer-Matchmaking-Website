@@ -87,6 +87,16 @@ public class PersonalTrainerMatchController {
 		return clientListDao.getClientListOfTrainer(authProvider.getCurrentUser().getId());
 	}
 	
+	@RequestMapping(path="/clientListSearch", method=RequestMethod.GET)
+	public List<User> displayClientListSearch(@RequestParam(defaultValue="") String firstName,
+												@RequestParam(defaultValue="") String lastName,
+												@RequestParam(defaultValue="") String username) throws UnauthorizedException {
+		if(!authProvider.userHasRole(new String[] {"trainer"})) {
+            throw new UnauthorizedException();
+        }
+		return clientListDao.searchClientListOfTrainer(authProvider.getCurrentUser().getId(), firstName, lastName, username);
+	}
+	
 	@RequestMapping(path="/messageList/{user_id}", method=RequestMethod.GET)
 	public List<PrivateMessage> displayMessageListForUser(@PathVariable long user_id) {
 		return privateMessageDao.getPrivateMessagesForUser(user_id);

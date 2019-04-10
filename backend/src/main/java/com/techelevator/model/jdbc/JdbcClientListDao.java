@@ -38,6 +38,20 @@ public class JdbcClientListDao implements ClientListDao{
 		return clientList.getTrainerProfile();
 	}
 	
+	@Override
+	public List<User> searchClientListOfTrainer(long user_id, String firstName, String lastName, String username) {
+		List<User> clientList = new ArrayList<User>();
+		List<User> listOfAllClients = getClientListOfTrainer(user_id);
+		for (User user: listOfAllClients) {
+			if (user.getFirstName().toLowerCase().contains(firstName.toLowerCase()) &&
+					user.getLastName().toLowerCase().contains(lastName.toLowerCase()) &&
+					user.getUsername().toLowerCase().contains(username.toLowerCase())) {
+				clientList.add(user);
+			}
+		}
+        return clientList;
+	}
+	
 	private User mapResultToUser(SqlRowSet results) {
     	User user = new User();
         user.setId(results.getLong("user_id"));

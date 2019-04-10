@@ -10,8 +10,30 @@ public class User {
 	
 	@NotBlank(message="Username is required")
     private String username;
+	
+	@NotBlank(message="First Name is required")
+    private String firstName;
+	
+	@NotBlank(message="Last Name is required")
+    private String lastName;
 
-    @NotBlank(message="Role is required")
+    public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	@NotBlank(message="Role is required")
     private String role;
     private long id;
 

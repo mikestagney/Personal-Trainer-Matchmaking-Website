@@ -40,12 +40,12 @@ public class JdbcUserDao implements UserDao{
      * @return the new user
      */
     @Override
-    public User saveUser(String userName, String password, String role) {
+    public User saveUser(String userName, String first_name, String last_name, String password, String role) {
         byte[] salt = passwordHasher.generateRandomSalt();
         String hashedPassword = passwordHasher.computeHash(password, salt);
         String saltString = new String(Base64.encode(salt));
-        long newId = jdbcTemplate.queryForObject("INSERT INTO users(username, password, salt, role) VALUES (?, ?, ?, ?) RETURNING user_id", Long.class, userName,
-                hashedPassword, saltString, role);
+        long newId = jdbcTemplate.queryForObject("INSERT INTO users(username, first_name, last_name password, salt, role) VALUES (?, ?, ?, ?, ?, ?) RETURNING user_id", Long.class, userName,
+        		first_name, last_name, hashedPassword, saltString, role);
 
         User newUser = new User();
         newUser.setId(newId);
@@ -97,13 +97,15 @@ public class JdbcUserDao implements UserDao{
     	User user = new User();
         user.setId(results.getLong("user_id"));
         user.setUsername(results.getString("username"));
+        user.setFirstName(results.getString("first_name"));
+        user.setLastName(results.getString("last_name"));
         user.setRole(results.getString("role"));
         return user;
     }
 
     @Override
     public User getUserByUsername(String username) {
-        String sqlSelectUserByUsername = "SELECT user_id, username, role FROM users WHERE username = ?";
+        String sqlSelectUserByUsername = "SELECT user_id, username, first_name, last_name, role FROM users WHERE username = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserByUsername, username);
 
         if(results.next()) {
@@ -115,7 +117,7 @@ public class JdbcUserDao implements UserDao{
 
 	@Override
 	public User getUserById(Long id) {
-		String sqlSelectUserById = "SELECT user_id, username, role FROM users WHERE user_id = ?";
+		String sqlSelectUserById = "SELECT user_id, username, first_name, last_name, role FROM users WHERE user_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserById, id);
         if(results.next()) {
             return mapResultToUser(results);
