@@ -73,14 +73,6 @@ public class PersonalTrainerMatchController {
 	}
 	
 	@GetMapping("/clientList")
-	public List<User> displayClientList() throws UnauthorizedException {
-		if(!authProvider.userHasRole(new String[] {"trainer"})) {
-            throw new UnauthorizedException();
-        }
-		return clientListDao.getClientListOfTrainer(authProvider.getCurrentUser().getId());
-	}
-	
-	@GetMapping("/clientListSearch")
 	public List<User> displayClientListSearch(@RequestParam(defaultValue="") String firstName,
 												@RequestParam(defaultValue="") String lastName,
 												@RequestParam(defaultValue="") String username)
