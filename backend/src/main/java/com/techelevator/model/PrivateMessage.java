@@ -53,8 +53,5 @@ public class PrivateMessage {
 	public void setMessageBody(String messageBody) {
 		this.messageBody = messageBody;
 	}
-	
-	
-	
 
 }
