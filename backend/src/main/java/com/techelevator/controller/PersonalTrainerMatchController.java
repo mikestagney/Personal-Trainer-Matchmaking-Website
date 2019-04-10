@@ -64,7 +64,7 @@ public class PersonalTrainerMatchController {
 		return trainerMap;
 	}
 	
-	@PutMapping ("/{user_id}")
+	@PutMapping ("updateTrainerProfile/{user_id}")
 	public void updateTrainerProfile(@PathVariable long user_id, @RequestBody TrainerProfile trainerProfile) {
 		TrainerProfile requestedTrainerProfile = trainerProfileDao.getTrainerProfile(user_id);
 		if (requestedTrainerProfile != null) {
