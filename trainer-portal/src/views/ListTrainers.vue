@@ -28,7 +28,7 @@
             </thead>
             <tbody>
                 <tr v-for="trainer in trainers" :key="trainer.id">
-                    <td>{{trainer.firstname}} {{trainer.lastname}}</td>
+                    <td>{{trainer.first_name}} {{trainer.last_name}}</td>
                     <td>{{trainer.city}}</td>
                     <td>{{trainer.state}}</td>
                     <td>{{trainer.hourly_rate}}</td>
