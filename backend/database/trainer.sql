@@ -15,7 +15,7 @@ CREATE TABLE users
     role varchar(10) NOT NULL,
         
     constraint pk_trainer primary key (user_id),
-    constraint chk_role CHECK (role IN ('trainer', 'client'))
+    constraint chk_role CHECK (role IN ('Trainer', 'Client'))
 );
 
 CREATE TABLE trainer_profile
