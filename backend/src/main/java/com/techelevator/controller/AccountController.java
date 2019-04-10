@@ -6,6 +6,7 @@ import com.techelevator.authentication.JwtTokenHandler;
 import com.techelevator.authentication.RegistrationResult;
 import com.techelevator.authentication.UnauthorizedException;
 import com.techelevator.model.User;
+import com.techelevator.model.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -24,6 +25,9 @@ public class AccountController {
 
     @Autowired
     private JwtTokenHandler tokenHandler;
+    
+    @Autowired
+    private UserDao userDao;
 
     @PostMapping("/login")
     public String login(@RequestBody User user, RedirectAttributes flash) throws UnauthorizedException {
@@ -50,5 +54,10 @@ public class AccountController {
     	}
     	return registrationResult;
     }
+    
+    @PutMapping ("updatePassword/{user_id}")
+	public void updatePassword(@PathVariable long user_id, @RequestBody String newPassword) {
+    	userDao.changePassword(userDao.getUserById(user_id), newPassword);
+	}
 
 }
