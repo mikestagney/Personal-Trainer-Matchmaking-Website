@@ -1,8 +1,6 @@
 package com.techelevator.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,11 +63,16 @@ public class PersonalTrainerMatchController {
 	}
 	
 	@PutMapping ("updateTrainerProfile/{user_id}")
-	public void updateTrainerProfile(@PathVariable long user_id, @RequestBody TrainerProfile trainerProfile) {
-		TrainerProfile requestedTrainerProfile = trainerProfileDao.getTrainerProfileById(user_id);
-		if (requestedTrainerProfile != null) {
-			trainerProfile.setId(user_id);
-			trainerProfileDao.updateTrainerProfile(trainerProfile);
+	public void updateTrainerProfile(@PathVariable long user_id, @RequestBody TrainerProfile trainerProfile) throws UnauthorizedException {
+		if(!authProvider.userHasRole(new String[] {"trainer"})) {
+            throw new UnauthorizedException();
+        }
+		else {
+			TrainerProfile requestedTrainerProfile = trainerProfileDao.getTrainerProfileById(user_id);
+			if (requestedTrainerProfile != null) {
+				trainerProfile.setId(user_id);
+				trainerProfileDao.updateTrainerProfile(trainerProfile);
+			}
 		}
 	}
 	
