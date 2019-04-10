@@ -45,6 +45,19 @@ CREATE TABLE client_list
     constraint fk_client_list_client foreign key (clientId) references  users (user_id)
 
 );
+CREATE TABLE private_message
+(
+    trainerId int NOT NULL,
+    clientId int NOT NULL,
+    postDate timestamp NOT NULL,
+    subject varchar(20),
+    message varchar(250),
+
+    constraint pk_client_list primary key (trainerId, clientId, postDate),
+    constraint fk_client_list_trainer foreign key (trainerId) references users (user_id),
+    constraint fk_client_list_client foreign key (clientId) references  users (user_id)
+);
+
 
 
 
