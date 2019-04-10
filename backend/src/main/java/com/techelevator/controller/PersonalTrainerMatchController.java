@@ -85,7 +85,8 @@ public class PersonalTrainerMatchController {
 	@GetMapping("/clientListSearch")
 	public List<User> displayClientListSearch(@RequestParam(defaultValue="") String firstName,
 												@RequestParam(defaultValue="") String lastName,
-												@RequestParam(defaultValue="") String username) throws UnauthorizedException {
+												@RequestParam(defaultValue="") String username)
+												throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"trainer"})) {
             throw new UnauthorizedException();
         }
