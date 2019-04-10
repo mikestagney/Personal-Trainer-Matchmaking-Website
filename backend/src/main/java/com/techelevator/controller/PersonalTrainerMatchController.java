@@ -3,11 +3,9 @@ package com.techelevator.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.techelevator.authentication.AuthProvider;
@@ -35,12 +33,12 @@ public class PersonalTrainerMatchController {
     @Autowired
     private ClientListDao clientListDao;
 	
-	@RequestMapping(path="/", method=RequestMethod.GET)
+    @GetMapping("/")
     public String displayHomePage() {
 		return "homepage";
     }
 	
-	@RequestMapping(path="/trainer", method=RequestMethod.GET)
+	@GetMapping("/trainer")
 	public TrainerProfile displayTrainerProfilePage() throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"trainer"})) {
             throw new UnauthorizedException();
@@ -48,7 +46,7 @@ public class PersonalTrainerMatchController {
 		return trainerProfileDao.getTrainerProfileById(authProvider.getCurrentUser().getId());
 	}
 	
-	@RequestMapping(path="/client", method=RequestMethod.GET)
+	@GetMapping("/client")
 	public User displayClientProfilePage() throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"client"})) {
             throw new UnauthorizedException();
@@ -56,7 +54,7 @@ public class PersonalTrainerMatchController {
 		return userDao.getUserById(authProvider.getCurrentUser().getId());
 	}
 	
-	@RequestMapping(path="/trainerSearch", method=RequestMethod.GET)
+	@GetMapping("/trainerSearch")
 	public List<TrainerProfile> displayAllTrainers(@RequestParam(defaultValue="") String city,
 													@RequestParam(defaultValue="") String state,
 													@RequestParam(defaultValue="0") int price_per_hour,
@@ -65,21 +63,18 @@ public class PersonalTrainerMatchController {
 		return trainerProfileDao.getTrainerProfilesBySearchCriteria(city,state,price_per_hour,rating,certifications);
 	}
 	
-	@PutMapping ("updateTrainerProfile")
+	@PutMapping("updateTrainerProfile")
 	public void updateTrainerProfile(@RequestBody TrainerProfile trainerProfile) throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"trainer"})) {
             throw new UnauthorizedException();
         }
 		else {
-			TrainerProfile requestedTrainerProfile = trainerProfileDao.getTrainerProfileById(authProvider.getCurrentUser().getId());
-			if (requestedTrainerProfile != null) {
-				trainerProfile.setId(authProvider.getCurrentUser().getId());
-				trainerProfileDao.updateTrainerProfile(trainerProfile);
-			}
+			trainerProfile.setId(authProvider.getCurrentUser().getId());
+			trainerProfileDao.updateTrainerProfile(trainerProfile);
 		}
 	}
 	
-	@RequestMapping(path="/clientList", method=RequestMethod.GET)
+	@GetMapping("/clientList")
 	public List<User> displayClientList() throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"trainer"})) {
             throw new UnauthorizedException();
@@ -87,7 +82,7 @@ public class PersonalTrainerMatchController {
 		return clientListDao.getClientListOfTrainer(authProvider.getCurrentUser().getId());
 	}
 	
-	@RequestMapping(path="/clientListSearch", method=RequestMethod.GET)
+	@GetMapping("/clientListSearch")
 	public List<User> displayClientListSearch(@RequestParam(defaultValue="") String firstName,
 												@RequestParam(defaultValue="") String lastName,
 												@RequestParam(defaultValue="") String username) throws UnauthorizedException {
@@ -97,12 +92,12 @@ public class PersonalTrainerMatchController {
 		return clientListDao.searchClientListOfTrainer(authProvider.getCurrentUser().getId(), firstName, lastName, username);
 	}
 	
-	@RequestMapping(path="/messageList}", method=RequestMethod.GET)
+	@GetMapping("/messageList}")
 	public List<PrivateMessage> displayMessageListForUser() {
 		return privateMessageDao.getPrivateMessagesForUser(authProvider.getCurrentUser().getId());
 	}
 	
-	@RequestMapping(path="/messageListBetweenUsers}", method=RequestMethod.GET)
+	@GetMapping("/messageListBetweenUsers")
 	public List<PrivateMessage> displayMessageListBetweenUsers(@RequestParam long user_id) {
 		return privateMessageDao.getPrivateMessagesBetweenUser(authProvider.getCurrentUser().getId(), user_id);
 	}
