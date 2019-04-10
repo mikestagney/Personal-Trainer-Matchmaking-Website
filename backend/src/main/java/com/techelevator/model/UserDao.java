@@ -1,7 +1,6 @@
 package com.techelevator.model;
 
 import java.util.List;
-import java.util.Map;
 
 public interface UserDao {
 	
@@ -34,9 +33,7 @@ public interface UserDao {
     
     public User getUserById(Long id);
     
-    public Map<User,TrainerProfile> getMapOfTrainers(String city, String state);
+    public List<User>  getUserInfoForTrainer(String city, String state);
     
-    public List<User> getClientList(Long id);
-    
-    public TrainerProfile getTrainerProfile(Long id);
+    public List<User> getClientList(Long id);    
 }

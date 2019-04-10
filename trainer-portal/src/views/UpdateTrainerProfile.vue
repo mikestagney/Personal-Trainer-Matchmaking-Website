@@ -74,7 +74,7 @@
         id="price"
         class="form-control"
         placeholder="Enter your hourly rate"
-        v-model="trainerprofile.price"
+        v-model="trainerprofile.price_per_hour"
         required
         autofocus
       />
@@ -135,7 +135,7 @@ export default {
       this.trainerId === 0 ? this.createProfile() : this.updateProfile();
     },
     createProfile() {
-      fetch(this.apiUrl, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
