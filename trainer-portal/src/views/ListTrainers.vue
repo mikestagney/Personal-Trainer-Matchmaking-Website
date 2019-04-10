@@ -1,7 +1,21 @@
 <template>
 <default-layout>
     <div class="trainer-list">
+      <form method="GET" class="form-inline" v-on:submit.prevent="getTrainers">
         <h1>Available Trainers</h1>
+        <input name="search" type="text" placeholder="Search" v-model="searchText">
+        <div class="form-group">
+        <label for="sortBy">by:</label>
+        <select name="searchBy" class="form-control" v-model="searchBy">
+          <option value="lastName">Trainer last name</option>
+          <option value="city">City</option>
+          <option value="state">State</option>
+          <option value="pricePerHour">Price</option>  
+          <option value="rating">Rating</option>
+        </select>
+      </div>
+         <input name="submit" value="Search" type="submit" class="btn btn-primary">
+      </form>
         <table class="table table-striped">
             <thead class="thead thead-light">
             <tr>
@@ -36,10 +50,19 @@ export default {
     },
     data() {
         return {
+            searchText: '',
+            searchBy: '',
             trainers: []
         };
     },
     methods: {
+       
+        getTrainers(){
+            fetch(process.env.VUE_APP_REMOTE_API + 'trainers?search=' + this.searchText + '&searchBy=' + this.searchBy)
+            .then(response => response.json())
+            .then(parsedData => this.customers = parsedData)
+            .catch(err => console.log(err));
+        }
 
     },
     created() {
