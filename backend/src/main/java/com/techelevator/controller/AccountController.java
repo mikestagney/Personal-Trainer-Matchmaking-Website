@@ -20,13 +20,27 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @CrossOrigin
 public class AccountController {
 	
+	/**
+	 * Autowired AuthProvider
+	 */
     @Autowired
     private AuthProvider auth;
+    
+    /**
+	 * Autowired tokenHandler
+	 */
     @Autowired
     private JwtTokenHandler tokenHandler;
+    
+    /**
+	 * Autowired userDao
+	 */
     @Autowired
     private UserDao userDao;
 
+    /**
+	 * PostMapping for login
+	 */
     @PostMapping("/login")
     public String login(@RequestBody User user, RedirectAttributes flash) throws UnauthorizedException {
         if(auth.signIn(user.getUsername(), user.getPassword())) {
@@ -37,7 +51,9 @@ public class AccountController {
         }
     }
 
-
+    /**
+	 * PostMapping for register
+	 */
     @PostMapping("/register")
     public RegistrationResult register(@Valid @RequestBody User user, BindingResult result) {
     	RegistrationResult registrationResult = new RegistrationResult();
@@ -53,6 +69,9 @@ public class AccountController {
     	return registrationResult;
     }
     
+    /**
+	 * PutMapping for updatePassword
+	 */
     @PutMapping ("updatePassword/{user_id}")
 	public void updatePassword(@PathVariable long user_id, @RequestBody String newPassword) {
     	userDao.changePassword(userDao.getUserById(user_id), newPassword);

@@ -2,6 +2,9 @@ package com.techelevator.authentication;
 
 import com.techelevator.model.User;
 
+/**
+ * AuthProvider
+ */
 public interface AuthProvider {
     /**
      * Returns true if a current user is logged in.

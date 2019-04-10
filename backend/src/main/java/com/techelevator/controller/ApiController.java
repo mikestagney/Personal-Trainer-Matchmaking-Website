@@ -4,8 +4,8 @@ import com.techelevator.authentication.AuthProvider;
 import com.techelevator.authentication.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,10 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class ApiController {
 
+	/**
+	 * Autowired AuthProvider
+	 */
     @Autowired
     private AuthProvider authProvider;
 
-    @RequestMapping(path="/", method=RequestMethod.GET)
+    /**
+	 * GetMapping for "/"
+	 */
+    @GetMapping("/")
     public String authorizedOnly() throws UnauthorizedException {
         /*
         You can lock down which roles are allowed by checking
