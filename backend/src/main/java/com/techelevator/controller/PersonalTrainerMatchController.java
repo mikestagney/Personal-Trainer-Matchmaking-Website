@@ -40,13 +40,11 @@ public class PersonalTrainerMatchController {
     }
 	
 	@RequestMapping(path="/trainer", method=RequestMethod.GET)
-	public Map<User,TrainerProfile> displayTrainerProfilePage() throws UnauthorizedException {
+	public TrainerProfile displayTrainerProfilePage() throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"trainer"})) {
             throw new UnauthorizedException();
         }
-		Map<User,TrainerProfile> trainerInfo = new HashMap<User,TrainerProfile>();
-		trainerInfo.put(userDao.getUserById(authProvider.getCurrentUser().getId()),trainerProfileDao.getTrainerProfileById(authProvider.getCurrentUser().getId()));
-		return trainerInfo;
+		return trainerProfileDao.getTrainerProfileById(authProvider.getCurrentUser().getId());
 	}
 	
 	@RequestMapping(path="/client", method=RequestMethod.GET)
