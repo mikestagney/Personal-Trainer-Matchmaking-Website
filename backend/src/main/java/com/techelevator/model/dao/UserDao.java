@@ -2,6 +2,9 @@ package com.techelevator.model.dao;
 
 import com.techelevator.model.User;
 
+/**
+ * UserDao
+ */
 public interface UserDao {
 	
 	/**
@@ -16,6 +19,9 @@ public interface UserDao {
      */
 	public User saveUser(String userName, String first_name, String last_name, String password, String role);
 
+	/**
+	 * public void changePassword(User user, String newPassword)
+	 */
     public void changePassword(User user, String newPassword);
 
     /**
@@ -29,7 +35,13 @@ public interface UserDao {
      */
     public User getValidUserWithPassword(String userName, String password);
     
+    /**
+     * public User getUserByUsername(String username)
+     */
     public User getUserByUsername(String username);
     
-    public User getUserById(Long id);  
+    /**
+     * public User getUserById(Long id)
+     */
+    public User getUserById(Long id);
 }

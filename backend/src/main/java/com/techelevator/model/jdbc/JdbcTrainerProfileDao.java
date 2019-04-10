@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 import com.techelevator.model.TrainerProfile;
 import com.techelevator.model.dao.TrainerProfileDao;
 
+/**
+ * JdbcTrainerProfileDao implements TrainerProfileDao
+ */
 @Component
 public class JdbcTrainerProfileDao implements TrainerProfileDao{
 	

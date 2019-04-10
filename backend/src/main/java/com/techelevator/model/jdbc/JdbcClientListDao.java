@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 import com.techelevator.model.User;
 import com.techelevator.model.dao.ClientListDao;
 
+/**
+ * JdbcClientListDao implements ClientListDao
+ */
 @Component
 public class JdbcClientListDao implements ClientListDao{
 

@@ -3,6 +3,9 @@ package com.techelevator.authentication;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * RegistrationResult
+ */
 public class RegistrationResult {
 	
 	private boolean success;

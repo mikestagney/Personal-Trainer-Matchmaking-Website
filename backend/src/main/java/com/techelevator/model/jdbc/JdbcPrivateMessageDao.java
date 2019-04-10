@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 import com.techelevator.model.PrivateMessage;
 import com.techelevator.model.dao.PrivateMessageDao;
 
+/**
+ * JdbcPrivateMessageDao implements PrivateMessageDao
+ */
 @Component
 public class JdbcPrivateMessageDao implements PrivateMessageDao{
 

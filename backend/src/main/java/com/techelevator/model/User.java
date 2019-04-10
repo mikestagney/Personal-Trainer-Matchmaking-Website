@@ -8,40 +8,82 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class User {
 	
+	/**
+	 * String username
+	 */
 	@NotBlank(message="Username is required")
     private String username;
 	
+	/**
+	 * String firstName
+	 */
 	@NotBlank(message="First Name is required")
     private String firstName;
 	
+	/**
+	 * String lastName
+	 */
 	@NotBlank(message="Last Name is required")
     private String lastName;
 
+	/**
+	 * public String getFirstName() {
+	 */
     public String getFirstName() {
 		return firstName;
 	}
 
+    /**
+     * public void setFirstName(String firstName)
+     */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
+	/**
+	 * public String getLastName()
+	 */
 	public String getLastName() {
 		return lastName;
 	}
 
+	/**
+	 * public void setLastName(String lastName)
+	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
+	/**
+	 * String role
+	 */
 	@NotBlank(message="Role is required")
     private String role;
+	
+	/**
+     * long id
+     */
     private long id;
 
+    /**
+     * String password
+     */
     @NotBlank(message="Password is required")
     private String password;
+    
+    /**
+     * String confirmPassword
+     */
     private String confirmPassword;
 
+    /**
+     * boolean passwordMatching
+     */
     private boolean passwordMatching;
+    
+    /**
+     * public boolean isPasswordMatching()
+     */
     @AssertTrue(message = "Passwords must match")
     public boolean isPasswordMatching() {
         if (password != null) {
@@ -50,10 +92,16 @@ public class User {
         return true;
     }
 
+    /**
+     * public String getPassword()
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * public String getConfirmPassword()
+     */
     public String getConfirmPassword() {
         return confirmPassword;
     }
@@ -100,10 +148,16 @@ public class User {
         this.username = username;
     }
 
+    /**
+     * public void setPassword(String password)
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * public void setConfirmPassword(String confirmPassword)
+     */
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }

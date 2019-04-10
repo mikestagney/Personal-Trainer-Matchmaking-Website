@@ -10,6 +10,9 @@ import com.techelevator.authentication.PasswordHasher;
 import com.techelevator.model.User;
 import com.techelevator.model.dao.UserDao;
 
+/**
+ * JdbcUserDao implements UserDao
+ */
 @Component
 public class JdbcUserDao implements UserDao{
 	
