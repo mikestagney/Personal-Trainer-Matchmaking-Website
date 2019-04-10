@@ -17,10 +17,9 @@
     <div class="collapse navbar-collapse" id="trainer-navbar">
       <ul class="navbar-nav mr-auto">
         <router-link tag="li" class="nav-item" to="/" active-class="active" exact>
-          <a class="nav-link">All Snippets</a>
+          <a class="nav-link">Search Trainers</a>
         </router-link>
         <router-link tag="li" class="nav-item" to="/save" active-class="active">
-          <a class="nav-link">Add Snippet</a>
         </router-link>
       </ul>
     </div>
