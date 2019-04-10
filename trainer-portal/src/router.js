@@ -4,6 +4,7 @@ import Home from '@/views/Home'
 import Login from '@/views/Login';
 import Register from '@/views/Register';
 import ListTrainers from '@/views/ListTrainers'
+import TrainerProfile from '@/views/TrainerProfile'
 import auth from './auth';
 
 Vue.use(Router);
@@ -31,6 +32,11 @@ const router = new Router({
         path: '/trainerSearch',
         name: 'search',
         component: ListTrainers,
+      }, 
+      {
+        path: '/trainer',
+        name: 'trainer',
+        component: TrainerProfile,
       }
     ],
   });
