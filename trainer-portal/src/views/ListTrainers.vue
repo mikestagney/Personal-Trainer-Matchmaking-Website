@@ -31,7 +31,7 @@
                     <td>{{trainer.firstname}} {{trainer.lastname}}</td>
                     <td>{{trainer.city}}</td>
                     <td>{{trainer.state}}</td>
-                    <td>{{trainer.price_per_hour}}</td>
+                    <td>{{trainer.hourly_rate}}</td>
                     <td>{{trainer.rating}}</td>
                 </tr>
             </tbody>
@@ -50,6 +50,7 @@ export default {
     },
     data() {
         return {
+            apiURL: 'http://5cab867dc85e05001452e9f5.mockapi.io/TrainerProfile',
             searchText: '',
             searchBy: '',
             trainers: []
@@ -58,7 +59,7 @@ export default {
     methods: {
        
         getTrainers(){
-            fetch(process.env.VUE_APP_REMOTE_API + 'trainers?search=' + this.searchText + '&searchBy=' + this.searchBy)
+            fetch(process.env.VUE_APP_REMOTE_API + 'TrainerProfile?search=' + this.searchText + '&searchBy=' + this.searchBy)
             .then(response => response.json())
             .then(parsedData => this.customers = parsedData)
             .catch(err => console.log(err));
@@ -66,7 +67,7 @@ export default {
 
     },
     created() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}`) 
+      fetch(this.apiURL) 
         .then((response) => {
             return response.json();
         })
