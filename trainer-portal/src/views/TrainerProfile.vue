@@ -1,4 +1,5 @@
 <template>
+<default-layout>
     <div class="container">
         <div class="row">
             <div class="col">
@@ -18,11 +19,17 @@
             {{trainerprofile.certifications}}
         </div>
     </div>
+</default-layout>
 </template>
 
 <script>
-export default {
+import DefaultLayout from '@/layouts/DefaultLayout';
 
+export default {
+    name: "TrainerProfile",
+    components: {
+        DefaultLayout
+    },
 }
 </script>
 
