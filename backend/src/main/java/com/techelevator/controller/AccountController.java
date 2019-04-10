@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * AccountController
  */
 @RestController
+@CrossOrigin
 public class AccountController {
 	
     @Autowired
@@ -24,7 +26,7 @@ public class AccountController {
     private JwtTokenHandler tokenHandler;
 
     @PostMapping("/login")
-    public String login(@RequestBody User user) throws UnauthorizedException {
+    public String login(@RequestBody User user, RedirectAttributes flash) throws UnauthorizedException {
         if(auth.signIn(user.getUsername(), user.getPassword())) {
         	User currentUser = auth.getCurrentUser();
             return tokenHandler.createToken(user.getUsername(), currentUser.getRole());
