@@ -45,7 +45,7 @@ public class PersonalTrainerMatchController {
             throw new UnauthorizedException();
         }
 		Map<User,TrainerProfile> trainerInfo = new HashMap<User,TrainerProfile>();
-		trainerInfo.put(userDao.getUserById(authProvider.getCurrentUser().getId()),trainerProfileDao.getTrainerProfile(authProvider.getCurrentUser().getId()));
+		trainerInfo.put(userDao.getUserById(authProvider.getCurrentUser().getId()),trainerProfileDao.getTrainerProfileById(authProvider.getCurrentUser().getId()));
 		return trainerInfo;
 	}
 	
@@ -58,25 +58,20 @@ public class PersonalTrainerMatchController {
 	}
 	
 	@RequestMapping(path="/trainerSearch", method=RequestMethod.GET)
-	public Map<User,TrainerProfile> displayAllTrainers(@RequestParam(defaultValue="") String city,
+	public List<TrainerProfile> displayAllTrainers(@RequestParam(defaultValue="") String city,
 													@RequestParam(defaultValue="") String state,
 													@RequestParam(defaultValue="0") int price_per_hour,
 													@RequestParam(defaultValue="0") double rating,
 													@RequestParam(defaultValue="") String certifications) {
-		List<User> trainerList = userDao.getUserInfoForTrainer(city,state,price_per_hour,rating,certifications);
-		Map<User,TrainerProfile> trainerMap = new HashMap<User,TrainerProfile>();
-		for (User user: trainerList) {
-			trainerMap.put(user,trainerProfileDao.getTrainerProfile(user.getId()));
-		}
-		return trainerMap;
+		return trainerProfileDao.getTrainerProfilesBySearchCriteria(city,state,price_per_hour,rating,certifications);
 	}
 	
 	@PutMapping ("updateTrainerProfile/{user_id}")
 	public void updateTrainerProfile(@PathVariable long user_id, @RequestBody TrainerProfile trainerProfile) {
-		TrainerProfile requestedTrainerProfile = trainerProfileDao.getTrainerProfile(user_id);
+		TrainerProfile requestedTrainerProfile = trainerProfileDao.getTrainerProfileById(user_id);
 		if (requestedTrainerProfile != null) {
 			trainerProfile.setId(user_id);
-			trainerProfileDao.update(trainerProfile);
+			trainerProfileDao.updateTrainerProfile(trainerProfile);
 		}
 	}
 	

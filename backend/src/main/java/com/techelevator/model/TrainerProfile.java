@@ -12,6 +12,10 @@ public class TrainerProfile {
 	@NotBlank(message="isPublic is required")
 	private boolean isPublic;
 	
+	private String firstName;
+	
+	private String lastName;
+	
 	private int price_per_hour;
 	
 	private double rating;
@@ -46,6 +50,22 @@ public class TrainerProfile {
 
 	public void setPublic(boolean isPublic) {
 		this.isPublic = isPublic;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public int getPrice_per_hour() {

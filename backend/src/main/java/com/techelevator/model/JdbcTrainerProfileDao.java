@@ -1,5 +1,8 @@
 package com.techelevator.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,26 +20,41 @@ public class JdbcTrainerProfileDao implements TrainerProfileDao{
     }
 	
 	@Override
-	public TrainerProfile getTrainerProfile(Long id) {
+	public TrainerProfile getTrainerProfileById(Long id) {
 		String sqlSelectUserById = "SELECT * FROM trainer_profile WHERE user_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserById, id);
         if(results.next()) {
-            return mapResultToTrainerProfile(results);
+            return mapResultToTrainerProfile(results, results.getString("first_name"), results.getString("last_name"));
         } else {
             return null;
         }
 	}
 	
 	@Override
-	public void update(TrainerProfile trainerProfile) {
+	public List<TrainerProfile> getTrainerProfilesBySearchCriteria(String city, String state, int price_per_hour, double rating, String certifications) {
+		List<TrainerProfile> trainerProfileList = new ArrayList<TrainerProfile>();
+		String sqlSelectTrainersBySearchCriteria = "SELECT * FROM trainer_profile WHERE city ILIKE ?"
+					+ "AND state ILIKE ? AND price_per_hour >= ? AND rating >= ? AND certifications ILIKE ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectTrainersBySearchCriteria, "%" + city + "%",
+        									"%" + state + "%", price_per_hour, rating, "%" + certifications + "%");
+        while (results.next()) {
+        	trainerProfileList.add(getTrainerProfileById(results.getLong("user_id")));
+        }
+        return trainerProfileList;
+	}
+	
+	@Override
+	public void updateTrainerProfile(TrainerProfile trainerProfile) {
 		jdbcTemplate.update("UPDATE trainer_profile SET is_public=?, price_per_hour=?, philosphy=?, bio=?, "
 				+ "city=?, state=?, certifications=? WHERE user_id=?", trainerProfile.isPublic(),
 				trainerProfile.getPrice_per_hour(), trainerProfile.getPhilosophy(), trainerProfile.getBio(),
 				trainerProfile.getCity(),trainerProfile.getState(), trainerProfile.getCertifications(), trainerProfile.getId());		
 	}
 	
-	private TrainerProfile mapResultToTrainerProfile(SqlRowSet results) {
+	private TrainerProfile mapResultToTrainerProfile(SqlRowSet results, String firstName, String lastName) {
     	TrainerProfile trainerProfile = new TrainerProfile();
+    	trainerProfile.setFirstName(firstName);
+    	trainerProfile.setLastName(lastName);
     	trainerProfile.setId(results.getLong("user_id"));
     	trainerProfile.setPublic(results.getBoolean("isPublic"));
     	trainerProfile.setPrice_per_hour(results.getInt("price_per_hour"));
