@@ -59,8 +59,11 @@ public class PersonalTrainerMatchController {
 	
 	@RequestMapping(path="/trainerSearch", method=RequestMethod.GET)
 	public Map<User,TrainerProfile> displayAllTrainers(@RequestParam(defaultValue="") String city,
-										 @RequestParam(defaultValue="") String state) {
-		List<User> trainerList = userDao.getUserInfoForTrainer(city,state);
+													@RequestParam(defaultValue="") String state,
+													@RequestParam(defaultValue="0") int price_per_hour,
+													@RequestParam(defaultValue="0") double rating,
+													@RequestParam(defaultValue="") String certifications) {
+		List<User> trainerList = userDao.getUserInfoForTrainer(city,state,price_per_hour,rating,certifications);
 		Map<User,TrainerProfile> trainerMap = new HashMap<User,TrainerProfile>();
 		for (User user: trainerList) {
 			trainerMap.put(user,trainerProfileDao.getTrainerProfile(user.getId()));

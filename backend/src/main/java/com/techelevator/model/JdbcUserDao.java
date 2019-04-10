@@ -125,10 +125,13 @@ public class JdbcUserDao implements UserDao{
 	}
 	
 	@Override
-	public List<User> getUserInfoForTrainer(String city, String state) {
-		String sqlSelectTrainers = "SELECT user_id, username FROM users JOIN trainer_profile"
-									   + " WHERE role = ? AND city.trainer_profile ILIKE ? AND state.trainer_profile ILIKE ? order by username";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectTrainers, "trainer", "%" + city + "%", "%" + state + "%");
+	public List<User> getUserInfoForTrainer(String city, String state, int price_per_hour, double rating, String certifications) {
+		String sqlSelectTrainers = "SELECT user_id, username FROM users JOIN trainer_profile "
+									   + "WHERE role = ? AND city.trainer_profile ILIKE ? AND state.trainer_profile ILIKE ? "
+									   + "AND price_per_hour.trainer_profile >= ? AND rating.trainer_profile >= ? "
+									   + "AND certifications.trainer_profile ILIKE ? ORDER BY username";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectTrainers, "trainer",
+        		"%" + city + "%", "%" + state + "%", price_per_hour, rating, "%" + certifications + "%");
         List<User> trainerList = new ArrayList<User>();
         while (results.next()) {
         	User user = mapResultToUser(results);

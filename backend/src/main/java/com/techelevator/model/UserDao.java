@@ -33,7 +33,7 @@ public interface UserDao {
     
     public User getUserById(Long id);
     
-    public List<User>  getUserInfoForTrainer(String city, String state);
+    public List<User>  getUserInfoForTrainer(String city, String state, int price_per_hour, double rating, String certifications);
     
     public List<User> getClientList(Long id);    
 }
