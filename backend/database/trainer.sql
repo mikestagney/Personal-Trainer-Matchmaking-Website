@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS user_profile;
 DROP TABLE IF EXISTS trainer_profile;
 DROP TABLE IF EXISTS client_list;
+DROP TABLE IF EXISTS private_message;
 
 BEGIN TRANSACTION;
 
