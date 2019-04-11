@@ -2,6 +2,9 @@ package com.techelevator.model.clientlist;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.techelevator.model.trainerprofile.TrainerProfile;
 import com.techelevator.model.user.User;
 
@@ -11,6 +14,7 @@ import com.techelevator.model.user.User;
  */
 public class ClientList {
 	
+	@NotBlank(message="Trainer Profile is required")
 	private TrainerProfile trainerProfile = new TrainerProfile();
 	private List<User> clientList = new ArrayList<User>();
 	
