@@ -50,7 +50,6 @@ export default {
     },
     data() {
         return {
-            apiURL: 'http://5cab867dc85e05001452e9f5.mockapi.io/TrainerProfile',
             searchText: '',
             sortBy: '',
             trainers: []
@@ -58,18 +57,16 @@ export default {
     },
     methods: {
         getTrainers(){
-            fetch(this.apiURL + 'trainers?search=' + this.searchText + '&sortBy=' + this.searchBy)
+            fetch(`${process.env.VUE_APP_REMOTE_API}/trainers/search/${this.searchText}`)
             .then(response => response.json())
             .then(parsedData => this.trainers = parsedData)
             .catch(err => console.log(err)); 
         },
-        goToDetail(trainId) {
-            this.$router.push({name: 'trainerDetailPage', params: {Tid:trainId}})
-        }
+
 
     },
     created() {
-      fetch(this.apiURL) 
+      fetch(`${process.env.VUE_APP_REMOTE_API}/TrainerProfile`) 
         .then((response) => {
             return response.json();
         })
