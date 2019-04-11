@@ -2,8 +2,6 @@ package com.techelevator.model.trainerprofile;
 
 import java.util.List;
 
-import org.springframework.jdbc.support.rowset.SqlRowSet;
-
 /**
  * TrainerProfileDao Interface has methods for getting a Trainer's Trainer Profile, updating a
  * Trainer's Trainer Profile, and for finding all Trainer Profiles that meet the search criteria

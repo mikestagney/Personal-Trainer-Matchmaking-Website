@@ -37,7 +37,7 @@ CREATE TABLE trainer_profile
 
 );
 
-CREATE TABLE trainer_profile
+CREATE TABLE client_profile
 (
     user_id int NOT NULL UNIQUE,
     first_name varchar(25) NOT NULL,
