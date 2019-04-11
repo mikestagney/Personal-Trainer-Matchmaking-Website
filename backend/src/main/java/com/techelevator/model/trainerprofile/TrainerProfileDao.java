@@ -14,7 +14,7 @@ public interface TrainerProfileDao {
 	 * @param id the User Id for the Trainer
 	 * @return TrainerProfile for the Trainer for the given Id
 	 */
-	public TrainerProfile getTrainerProfileById(Long id, SqlRowSet resultsToPass);
+	public TrainerProfile getTrainerProfileById(Long id);
 	
 	/**
 	 * @param TrainerProfile to update the logged in Trainer's Trainer Profile to

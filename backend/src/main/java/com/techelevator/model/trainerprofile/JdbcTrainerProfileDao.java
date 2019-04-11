@@ -33,11 +33,11 @@ public class JdbcTrainerProfileDao implements TrainerProfileDao{
 	 * @return TrainerProfile for the Trainer for the given Id
 	 */
 	@Override
-	public TrainerProfile getTrainerProfileById(Long id, SqlRowSet resultsToPass) {
-		String sqlSelectUserById = "SELECT * FROM users WHERE user_id = ?";
+	public TrainerProfile getTrainerProfileById(Long id) {
+		String sqlSelectUserById = "SELECT * FROM trainer_profile WHERE user_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserById, id);
         if(results.next()) {
-            return mapResultToTrainerProfile(resultsToPass, results.getString("first_name"), results.getString("last_name"), id);
+            return mapResultToTrainerProfile(results);
         } else {
             return null;
         }
@@ -59,7 +59,7 @@ public class JdbcTrainerProfileDao implements TrainerProfileDao{
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectTrainersBySearchCriteria, "%" + city + "%",
         									"%" + state + "%", min_price_per_hour, max_price_per_hour, rating, "%" + certifications + "%");
         while (results.next()) {
-        	trainerProfileList.add(getTrainerProfileById(results.getLong("user_id"),results));
+        	trainerProfileList.add(mapResultToTrainerProfile(results));
         }
         return trainerProfileList;
 	}
@@ -69,8 +69,8 @@ public class JdbcTrainerProfileDao implements TrainerProfileDao{
 	 */
 	@Override
 	public void updateTrainerProfile(TrainerProfile trainerProfile) {
-		jdbcTemplate.update("UPDATE trainer_profile SET is_public=?, price_per_hour=?, philosphy=?, bio=?, "
-				+ "city=?, state=?, certifications=? WHERE user_id=?", trainerProfile.isPublic(),
+		jdbcTemplate.update("UPDATE trainer_profile SET first_name=?, last_name=?, is_public=?, price_per_hour=?, philosphy=?, bio=?, "
+				+ "city=?, state=?, certifications=? WHERE user_id=?", trainerProfile.getFirstName(), trainerProfile.getLastName(), trainerProfile.isPublic(),
 				trainerProfile.getPrice_per_hour(), trainerProfile.getPhilosophy(), trainerProfile.getBio(),
 				trainerProfile.getCity(),trainerProfile.getState(), trainerProfile.getCertifications(), trainerProfile.getId());		
 	}
@@ -81,18 +81,18 @@ public class JdbcTrainerProfileDao implements TrainerProfileDao{
 	 */
 	@Override
 	public void createTrainerProfile(TrainerProfile trainerProfile, Long trainer_id) {
-		jdbcTemplate.update("INSERT INTO trainer_profile (user_id, is_public, price_per_hour, rating, philosphy, bio, city, state, certifications)"
-				+ " VALUES (?,?,?,?,?,?,?,?,?)", trainer_id, trainerProfile.isPublic(),trainerProfile.getPrice_per_hour(),
+		jdbcTemplate.update("INSERT INTO trainer_profile (user_id, first_name, last_name is_public, price_per_hour, rating, philosphy, bio, city, state, certifications)"
+				+ " VALUES (?,?,?,?,?,?,?,?,?)", trainer_id, trainerProfile.getFirstName(), trainerProfile.getLastName(), trainerProfile.isPublic(),trainerProfile.getPrice_per_hour(),
 				trainerProfile.getRating(),trainerProfile.getPhilosophy(), trainerProfile.getBio(),trainerProfile.getCity(),
 				trainerProfile.getState(),trainerProfile.getCertifications());
 	}
 	
 	
-	private TrainerProfile mapResultToTrainerProfile(SqlRowSet results, String firstName, String lastName, long id) {
+	private TrainerProfile mapResultToTrainerProfile(SqlRowSet results) {
     	TrainerProfile trainerProfile = new TrainerProfile();
-    	trainerProfile.setFirstName(firstName);
-    	trainerProfile.setLastName(lastName);
-    	trainerProfile.setId(id);
+    	trainerProfile.setId(results.getLong("user_id"));
+    	trainerProfile.setFirstName(results.getString("first_name"));
+    	trainerProfile.setLastName(results.getString("last_name"));
     	trainerProfile.setPublic(results.getBoolean("is_public"));
     	trainerProfile.setPrice_per_hour(results.getInt("price_per_hour"));
     	trainerProfile.setRating(results.getDouble("rating"));

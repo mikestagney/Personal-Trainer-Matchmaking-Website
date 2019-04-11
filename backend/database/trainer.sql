@@ -21,6 +21,8 @@ CREATE TABLE users
 CREATE TABLE trainer_profile
 (
     user_id int NOT NULL UNIQUE,
+    first_name varchar(25) NOT NULL,
+    last_name varchar(25) NOT NULL,
     is_public boolean NOT NULL DEFAULT false,
     price_per_hour int NOT NULL,
     rating decimal(3,2),
@@ -29,6 +31,19 @@ CREATE TABLE trainer_profile
     city varchar(30),
     state varchar(2),
     certifications varchar(250),
+
+    constraint pk_trainer_profile primary key (user_id),
+    constraint fk_trainer_profile foreign key (user_id) references users (user_id)
+
+);
+
+CREATE TABLE trainer_profile
+(
+    user_id int NOT NULL UNIQUE,
+    first_name varchar(25) NOT NULL,
+    last_name varchar(25) NOT NULL,
+    city varchar(30),
+    state varchar(2),
 
     constraint pk_trainer_profile primary key (user_id),
     constraint fk_trainer_profile foreign key (user_id) references users (user_id)
