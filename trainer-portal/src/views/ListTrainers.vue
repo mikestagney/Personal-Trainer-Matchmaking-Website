@@ -6,7 +6,7 @@
         <input name="search" type="text" placeholder="Search" v-model="searchText">
         <div class="form-group">
         <label for="sortBy">by:</label>
-        <select name="searchBy" class="form-control" v-model="searchBy">
+        <select name="sortBy" class="form-control" v-model="sortBy">
           <option value="lastName">Trainer last name</option>
           <option value="city">City</option>
           <option value="state">State</option>
@@ -52,17 +52,16 @@ export default {
         return {
             apiURL: 'http://5cab867dc85e05001452e9f5.mockapi.io/TrainerProfile',
             searchText: '',
-            searchBy: '',
+            sortBy: '',
             trainers: []
         };
     },
     methods: {
-       
         getTrainers(){
-            fetch(process.env.VUE_APP_REMOTE_API + 'TrainerProfile?search=' + this.searchText + '&searchBy=' + this.searchBy)
+            fetch(this.apiURL + 'trainers?search=' + this.searchText + '&sortBy=' + this.searchBy)
             .then(response => response.json())
-            .then(parsedData => this.customers = parsedData)
-            .catch(err => console.log(err));
+            .then(parsedData => this.trainers = parsedData)
+            .catch(err => console.log(err)); 
         },
         goToDetail(trainId) {
             this.$router.push({name: 'trainerDetailPage', params: {Tid:trainId}})
