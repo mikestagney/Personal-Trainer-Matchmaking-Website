@@ -87,7 +87,6 @@ public class JdbcTrainerProfileDao implements TrainerProfileDao{
 				trainerProfile.getState(),trainerProfile.getCertifications());
 	}
 	
-	
 	private TrainerProfile mapResultToTrainerProfile(SqlRowSet results) {
     	TrainerProfile trainerProfile = new TrainerProfile();
     	trainerProfile.setId(results.getLong("user_id"));
