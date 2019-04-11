@@ -10,7 +10,7 @@
       <tr v-for="(message, index) in messages" v-bind:key="index">
         <td>{{ message.date_sent }}</td>
         <td>{{ message.firstname + ' ' + message.lastname }}</td>
-        <td>{{ message.subject }}</td>
+        <td><router-link v-bind:to="{ name: 'trainerPM', params: { MessageID: message.message_id }}">{{ message.subject }}</router-link></td>
         <td>{{ message.unread ? 'Yes':'No' }}</td>
       </tr>
     </table>
@@ -23,7 +23,7 @@ export default {
     name: 'messagelist',
   data() {
     return {
-      apiURL: '',
+      apiURL: 'http://5cab867dc85e05001452e9f5.mockapi.io/message',
       messages: [
         {
         firstname: '',
@@ -33,7 +33,7 @@ export default {
         date_sent: '',
         unread: true,
         body: '',
-        message_id: 1
+        message_id: 0
       }
       ]
     };
@@ -41,7 +41,7 @@ export default {
  
        
   created() {
-      fetch(this.apiURL) 
+      fetch(`${process.env.VUE_APP_REMOTE_API}/message`) 
         .then((response) => {
             return response.json();
         })

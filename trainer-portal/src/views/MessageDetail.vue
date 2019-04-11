@@ -1,6 +1,6 @@
 <template>
 <div>
-  <h1>Subject: {{ message.subject }} </h1>
+  <h3>Subject: {{ this.message.subject }} </h3>
   <p> Name: {{ message.firstname  + ' ' + message.lastname }} {{ message.role }} Time sent: {{ message.date_sent  }}</p>
   <p> {{ message.body }} </p>
 </div>
@@ -10,24 +10,34 @@
 <script>
 export default {
     name: 'MessageDetail',
-    components: {
-        DefaultLayout,
-    },
+    
   data() {
     return {
+      MessageID: this.$route.params.MessageID,
+      apiURL: 'http://5cab867dc85e05001452e9f5.mockapi.io/message/',
       message: 
         {
-        firstname: 'Steve',
-        lastname: 'Austin',
-        role: 'trainer',
-        subject: 'test',
-        date_sent: 'today',
+        firstname: '',
+        lastname: '',
+        role: '',
+        subject: '',
+        date_sent: '',
         unread: true,
-        body: 'blah blah',
-        message_id: 1
+        body: '',
+        message_id: 0
       }
     };
   },
+  created() {
+      fetch((`${process.env.VUE_APP_REMOTE_API}/${this.$route.params.MessageID}`)) 
+        .then((response) => {
+            return response.json();
+        })
+        .then((message) => {
+            this.message = message;
+        })
+        .catch((err) => console.error(err));
+    }
 }
 </script>
 

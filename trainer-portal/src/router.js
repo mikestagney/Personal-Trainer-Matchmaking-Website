@@ -41,8 +41,8 @@ const router = new Router({
         component: TrainerProfile
       },
       {
-        path: '/messagedetail',
-        name: 'messagedetail',
+        path: '/trainer/privatemessage/:MesssageID',
+        name: 'trainerPM',
         component: MessageDetail
       }
 
