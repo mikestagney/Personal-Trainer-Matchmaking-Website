@@ -53,6 +53,7 @@ CREATE TABLE client_list
 (
     trainerId int NOT NULL,
     clientId int NOT NULL,
+    privateNotes text[],
 
     constraint pk_client_list primary key (trainerId, clientId),
     constraint fk_client_list_trainer foreign key (trainerId) references users (user_id),

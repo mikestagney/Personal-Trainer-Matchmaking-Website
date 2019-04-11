@@ -1,6 +1,7 @@
 package com.techelevator.model.profile;
 
 import java.util.List;
+import java.util.Map;
 
 import com.techelevator.model.user.User;
 
@@ -43,4 +44,19 @@ public interface ProfileDao {
 	 * @return List<User> that are in that Trainer's Client List and match the search criteria
 	 */
 	public List<User> searchClientListOfTrainer(long user_id, String firstName, String lastName, String userName);
+	
+	public ClientList getEntireClientListForTrainer(long user_id);
+	
+	public ClientList searchClientList(long user_id, String firstName, String lastName, String username);
+	
+	public Map<User,String[]> searchClientListForPrivateNotes(long user_id, String firstName, String lastName, String username);
+	
+	public void addClientToClientList(long trainer_id, long client_id);
+	
+	public void removeClientFromClientList(long trainer_id, long client_id);
+	
+	public void addPrivateNoteToClientList(long trainer_id, long client_id, String privateNote);
+	
+	public void removePrivateNoteFromClientList(long trainer_id, long client_id, String privateNote);
+	
 }

@@ -1,7 +1,9 @@
 package com.techelevator.model.profile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -16,7 +18,8 @@ public class ClientList {
 	@NotBlank(message="Trainer Profile is required")
 	private UserProfile trainerProfile = new UserProfile();
 	private List<User> clientList = new ArrayList<User>();
-	
+	private Map<User,String[]> privateNotes = new HashMap<User,String[]>();
+
 	/**
 	 * @return TrainerProfile object
 	 */
@@ -43,5 +46,17 @@ public class ClientList {
 	 */
 	public void setClientList(List<User> clientList) {
 		this.clientList = clientList;
+	}
+	
+	public Map<User, String[]> getPrivateNotes() {
+		return privateNotes;
+	}
+
+	public void setPrivateNotes(Map<User, String[]> privateNotes) {
+		this.privateNotes = privateNotes;
+	}
+	
+	public String[] getNotes(User user) {
+		return privateNotes.get(user);
 	}
 }

@@ -12,6 +12,7 @@ import com.techelevator.authentication.AuthProvider;
 import com.techelevator.authentication.UnauthorizedException;
 import com.techelevator.model.privatemessage.PrivateMessage;
 import com.techelevator.model.privatemessage.PrivateMessageDao;
+import com.techelevator.model.profile.ClientList;
 import com.techelevator.model.profile.ProfileDao;
 import com.techelevator.model.profile.UserProfile;
 import com.techelevator.model.user.User;
@@ -126,14 +127,14 @@ public class PersonalTrainerMatchController {
 	 */
 	@GetMapping("/trainerDetailPage")
 	public UserProfile displayTrainerDetailPage(@RequestParam long trainer_id) throws UnauthorizedException {
-		if(!authProvider.userHasRole(new String[] {"trainer"})) {
+		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
             throw new UnauthorizedException();
         }
 		return profileDao.getUserProfileById(trainer_id);
 	}
 	
 	/**
-	 * Method updateTrainerProfile() takes one parameters
+	 * Method updateProfile() takes one parameters
 	 * <p>
 	 * This methods uses the passed in Trainer Profile object to update the currently
 	 * loggin in Trainer User's profile
@@ -141,9 +142,9 @@ public class PersonalTrainerMatchController {
 	 * If AuthProvider cannot authorize that the User has the role "Trainer" then an UnauthorizedException is thrown
 	 * @param UserProfile object for the Trainer Profile that is being updated
 	 */
-	@PutMapping("updateProfile")
-	public void updateTrainerProfile(@RequestBody UserProfile userProfile) throws UnauthorizedException {
-		if(!authProvider.userHasRole(new String[] {"trainer"})) {
+	@PutMapping("updateUserProfile")
+	public void updateUserProfile(@RequestBody UserProfile userProfile) throws UnauthorizedException {
+		if(!authProvider.userHasRole(new String[] {"Trainer","Client"})) {
             throw new UnauthorizedException();
         }
 		else {
@@ -164,14 +165,14 @@ public class PersonalTrainerMatchController {
 	 * @return List<User> for all Client's that fall within the search criteria
 	 */
 	@GetMapping("/clientList")
-	public List<User> displayClientListSearch(@RequestParam(defaultValue="") String firstName,
+	public ClientList displayClientListSearch(@RequestParam(defaultValue="") String firstName,
 												@RequestParam(defaultValue="") String lastName,
 												@RequestParam(defaultValue="") String username)
 												throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"trainer"})) {
             throw new UnauthorizedException();
         }
-		return profileDao.searchClientListOfTrainer(authProvider.getCurrentUser().getId(), firstName, lastName, username);
+		return profileDao.searchClientList(authProvider.getCurrentUser().getId(), firstName, lastName, username);
 	}
 	
 	/**

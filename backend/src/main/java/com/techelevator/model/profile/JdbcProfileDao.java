@@ -1,7 +1,10 @@
 package com.techelevator.model.profile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -165,6 +168,96 @@ public class JdbcProfileDao implements ProfileDao{
 			}
 		}
         return clientList;
+	}
+	
+	@Override
+	public void addClientToClientList(long trainer_id, long client_id) {
+		jdbcTemplate.update("INSERT INTO client_list (trainer_id, client_id) VALUES (?,?)", trainer_id, client_id);
+	}
+	
+	@Override
+	public void removeClientFromClientList(long trainer_id, long client_id) {
+		jdbcTemplate.execute("DELETE FROM client_list WHERE trainer_id=? AND client_id=?");
+	}
+	
+	@Override
+	public void addPrivateNoteToClientList(long trainer_id, long client_id, String privateNote) {
+		String[] privateNotesOld = getPrivateNotesStringArr(trainer_id, client_id);
+		String[] privateNotesNew = new String[privateNotesOld.length + 1];
+		for (int i = 0; i < privateNotesOld.length; i++) {
+			privateNotesNew[i] = privateNotesOld[i];
+		}
+		privateNotesNew[privateNotesOld.length] = privateNote;
+		jdbcTemplate.update("UPDATE client_list SET privateNotes=?  WHERE trainer_id=? AND client_id=?",
+				privateNotesNew,trainer_id,client_id);
+	}
+	
+	@Override
+	public void removePrivateNoteFromClientList(long trainer_id, long client_id, String privateNote) {
+		String[] privateNotesOld = getPrivateNotesStringArr(trainer_id, client_id);
+		if (privateNotesOld.length - 1 == 0) {
+			jdbcTemplate.update("UPDATE client_list SET privateNotes=?  WHERE trainer_id=? AND client_id=?",
+					null,trainer_id,client_id);
+		}
+		else {
+			String[] privateNotesNew = new String[privateNotesOld.length - 1];
+			int counter = 0;
+			for (int i = 0; i < privateNotesOld.length; i++) {
+				if (!privateNotesOld[i].equals(privateNote)) {
+					privateNotesNew[counter] = privateNotesOld[i];
+					counter++;
+				}
+			}
+			jdbcTemplate.update("UPDATE client_list SET privateNotes=?  WHERE trainer_id=? AND client_id=?",
+					privateNotesNew,trainer_id,client_id);
+		}
+	}
+	
+	@Override
+	public ClientList getEntireClientListForTrainer(long user_id) {
+		ClientList clientList = new ClientList();
+		clientList.setClientList(getClientListOfTrainer(user_id));
+		clientList.setTrainerProfile(getUserProfileById(user_id));
+		clientList.setPrivateNotes(getPrivateNotesMap(user_id));
+		return clientList;
+	}
+	
+	@Override
+	public ClientList searchClientList(long user_id, String firstName, String lastName, String username) {
+		ClientList clientList = new ClientList();
+		clientList.setClientList(searchClientListOfTrainer(user_id, firstName, lastName, username));
+		clientList.setTrainerProfile(getUserProfileById(user_id));
+		clientList.setPrivateNotes(searchClientListForPrivateNotes(user_id, firstName, lastName, username));
+		return clientList;
+	}
+	
+	@Override
+	public Map<User,String[]> searchClientListForPrivateNotes(long user_id, String firstName, String lastName, String username) {
+		List<User> clientList = searchClientListOfTrainer(user_id, firstName, lastName, username);
+		Map<User,String[]> privateNotes = new HashMap<User,String[]>();
+		for (User user: clientList) {
+			privateNotes.put(user,getPrivateNotesStringArr(user_id,user.getId()));
+		}
+        return privateNotes;
+	}
+	
+	private Map<User,String[]> getPrivateNotesMap(long user_id) {
+		List<User> listOfAllClients = getClientListOfTrainer(user_id);
+		Map<User,String[]> privateNotes = new HashMap<User,String[]>();
+		for (User user: listOfAllClients) {
+			privateNotes.put(user,getPrivateNotesStringArr(user_id, user.getId()));
+		}
+        return privateNotes;
+	}
+	
+	private String[] getPrivateNotesStringArr(long user_id, long client_id) {
+		String[] privateNotes = null;
+		String sqlSelectPrivateNotes = "SELECT privateNotes FROM client_list WHERE trainer_id = ? and client_id = ?";
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectPrivateNotes, user_id, client_id);
+		if (results.next()) {
+			privateNotes = results.getObject("privateNotes", String[].class);
+        }
+        return privateNotes;
 	}
 	
 	private User mapResultToUser(SqlRowSet results) {
