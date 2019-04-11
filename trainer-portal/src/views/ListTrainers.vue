@@ -2,10 +2,10 @@
 <default-layout>
     <div class="trainer-list">
       <form method="GET" class="form-inline" v-on:submit.prevent="getTrainers">
-        <h1>Available Trainers</h1>
+        <h2 class="mr-3">Available Trainers</h2>
         <input name="search" type="text" placeholder="Search" v-model="searchText">
-        <div class="form-group">
-        <label for="sortBy">by:</label>
+        <div class="form-group ml-2">
+        <label for="sortBy">Sort by:</label>
         <select name="sortBy" class="form-control" v-model="sortBy">
           <option value="lastName">Trainer last name</option>
           <option value="city">City</option>
@@ -14,9 +14,9 @@
           <option value="rating">Rating</option>
         </select>
       </div>
-         <input name="submit" value="Search" type="submit" class="btn btn-primary">
+         <input name="submit" value="Search" type="submit" class="btn btn-primary ml-2">
       </form>
-        <table class="table table-striped">
+        <table class="table table-striped mt-2">
             <thead class="thead thead-light">
             <tr>
             <th scope="col">Trainer Name</th>
