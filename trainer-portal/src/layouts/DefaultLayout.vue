@@ -24,6 +24,6 @@ export default {
   padding: 0px !important;
 }
 .page-view {
-  padding: 0px 20px !important;
+  padding: 0px 40px !important;
 }
 </style>
