@@ -1,4 +1,4 @@
-package com.techelevator.model.jdbc;
+package com.techelevator.model.clientlist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,22 +7,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
-import com.techelevator.model.User;
-import com.techelevator.model.dao.ClientListDao;
+import com.techelevator.model.user.User;
 
 /**
- * JdbcClientListDao implements ClientListDao
+ * JdbcClientListDao Class implements the ClientListDao and searches the database
+ * to find the List<User> that are in that Trainer's Client List and match the search criteria
  */
 @Component
 public class JdbcClientListDao implements ClientListDao{
 
 	private JdbcTemplate jdbcTemplate;
 	
+	/**
+     * Create a new client list dao with the supplied data source
+     *
+     * @param dataSource an SQL data source
+     */
 	@Autowired
     public JdbcClientListDao(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 	
+	/**
+	 * @param user_id the User Id of the Trainer who's Client List is being searched
+	 * @param firstName the First Name to search the client list for
+	 * @param lastName the Last Name to search the client list for
+	 * @param userName the User Name to search the client list for
+	 * @return List<User> that are in that Trainer's Client List and match the search criteria
+	 */
 	@Override
 	public List<User> searchClientListOfTrainer(long user_id, String firstName, String lastName, String username) {
 		List<User> clientList = new ArrayList<User>();

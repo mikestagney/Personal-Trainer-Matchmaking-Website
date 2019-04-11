@@ -9,21 +9,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * ApiController
+ * ApiController Class uses AuthProvider and has a method, public String authorizedOnly(),
+ * for checking if the currently logged in User has either role of "Trainer" or "Client"
  */
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
 public class ApiController {
 
-	/**
-	 * Autowired AuthProvider
-	 */
     @Autowired
     private AuthProvider authProvider;
 
     /**
-	 * GetMapping for "/"
+	 * 
+	 * Method authorizedOnly() takes no parameters
+	 * <p>
+	 * This methods returns a String of "Succes" if user has role of "Trainer" or "Client"
+	 * <p>
+	 * If no role or any other role then an UnauthorizedException is thrown
+	 * @return "Success" if currently logged in User has either role of "Trainer" or "Client"
 	 */
     @GetMapping("/")
     public String authorizedOnly() throws UnauthorizedException {

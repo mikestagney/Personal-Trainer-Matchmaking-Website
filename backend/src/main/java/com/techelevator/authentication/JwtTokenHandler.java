@@ -4,8 +4,8 @@ import java.security.Key;
 import java.util.Date;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
-import com.techelevator.model.User;
-import com.techelevator.model.dao.UserDao;
+import com.techelevator.model.user.User;
+import com.techelevator.model.user.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
@@ -15,7 +15,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.IOException;
 
 /**
- * JwtTokenHandler
+ * JwtTokenHandler ihas methods to create a JWT token and to get the User's token back
  */
 @Component
 public class JwtTokenHandler {

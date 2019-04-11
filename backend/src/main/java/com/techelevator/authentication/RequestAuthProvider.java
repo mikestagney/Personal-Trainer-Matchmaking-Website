@@ -2,13 +2,21 @@ package com.techelevator.authentication;
 
 import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
-import com.techelevator.model.User;
-import com.techelevator.model.dao.UserDao;
+import com.techelevator.model.user.User;
+import com.techelevator.model.user.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * RequestAuthProvider
+ * RequestAuthProvider implements the AuthProvider and has with methods for
+ * Authenticating the User's Login, Registration, Logout, Changing the User's Password,
+ * getting the Current User, and checking if User has Role
+ * <p>
+ *  Methods : boolean isLoggedIn(), User getCurrentUser(),
+ *  boolean signIn(String username, String password), void logOff(),
+ *  boolean changePassword(String existingPassword, String newPassword),
+ *  public void register(String username, String firstName, String lastName, String password, String role),
+ *  and boolean userHasRole(String[] roles)
  */
 @Component
 public class RequestAuthProvider implements AuthProvider {

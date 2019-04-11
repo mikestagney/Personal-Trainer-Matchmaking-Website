@@ -8,10 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import com.techelevator.model.User;
+import com.techelevator.model.user.User;
 
 /**
- * JwtAuthInterceptor
+ * JwtAuthInterceptor implements the HandlerInterceptor and has methods
+ * used to exclude Urls, and handle and authorize the JWT Tokens
  */
 public class JwtAuthInterceptor implements HandlerInterceptor {
 

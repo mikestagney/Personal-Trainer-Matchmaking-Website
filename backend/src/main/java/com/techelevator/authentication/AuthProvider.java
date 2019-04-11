@@ -1,9 +1,17 @@
 package com.techelevator.authentication;
 
-import com.techelevator.model.User;
+import com.techelevator.model.user.User;
 
 /**
- * AuthProvider
+ * AuthProvider Interface with methods for Authenticating the User's Login,
+ * Registration, Logout, Changing the User's Password, getting the Current User,
+ * and checking if User has Role
+ * <p>
+ *  Methods : boolean isLoggedIn(), User getCurrentUser(),
+ *  boolean signIn(String username, String password), void logOff(),
+ *  boolean changePassword(String existingPassword, String newPassword),
+ *  public void register(String username, String firstName, String lastName, String password, String role),
+ *  and boolean userHasRole(String[] roles)
  */
 public interface AuthProvider {
     /**

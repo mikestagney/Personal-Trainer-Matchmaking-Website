@@ -1,88 +1,30 @@
-package com.techelevator.model;
+package com.techelevator.model.user;
 
 import javax.validation.constraints.AssertTrue;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * User
+ * User is an object that holds a First Name, Last Name, Username, Role, User Id,
+ * Password, Confirmation Password, and if Password Matching boolean for a User
  */
 public class User {
 	
-	/**
-	 * String username
-	 */
 	@NotBlank(message="Username is required")
     private String username;
-	
-	/**
-	 * String firstName
-	 */
 	@NotBlank(message="First Name is required")
     private String firstName;
-	
-	/**
-	 * String lastName
-	 */
 	@NotBlank(message="Last Name is required")
     private String lastName;
-
-	/**
-	 * public String getFirstName() {
-	 */
-    public String getFirstName() {
-		return firstName;
-	}
-
-    /**
-     * public void setFirstName(String firstName)
-     */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	/**
-	 * public String getLastName()
-	 */
-	public String getLastName() {
-		return lastName;
-	}
-
-	/**
-	 * public void setLastName(String lastName)
-	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	/**
-	 * String role
-	 */
 	@NotBlank(message="Role is required")
     private String role;
-	
-	/**
-     * long id
-     */
     private long id;
-
-    /**
-     * String password
-     */
     @NotBlank(message="Password is required")
     private String password;
-    
-    /**
-     * String confirmPassword
-     */
     private String confirmPassword;
-
-    /**
-     * boolean passwordMatching
-     */
     private boolean passwordMatching;
     
     /**
-     * public boolean isPasswordMatching()
+     * @return True if Password Matches Confirm Password
      */
     @AssertTrue(message = "Passwords must match")
     public boolean isPasswordMatching() {
@@ -91,16 +33,44 @@ public class User {
         }
         return true;
     }
+    
+    /**
+	 * @return First Name of User
+	 */
+    public String getFirstName() {
+		return firstName;
+	}
 
     /**
-     * public String getPassword()
+     * @param First Name to be set for User
+     */
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	/**
+	 * @return Last Name of User
+	 */
+	public String getLastName() {
+		return lastName;
+	}
+
+	/**
+	 * @param Last Name to be set for User
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+    /**
+     * @return Password of User
      */
     public String getPassword() {
         return password;
     }
 
     /**
-     * public String getConfirmPassword()
+     * @return Confirmation Password of User
      */
     public String getConfirmPassword() {
         return confirmPassword;
@@ -149,14 +119,14 @@ public class User {
     }
 
     /**
-     * public void setPassword(String password)
+     * @param password to set for the User
      */
     public void setPassword(String password) {
         this.password = password;
     }
 
     /**
-     * public void setConfirmPassword(String confirmPassword)
+     * @param confirmation password to set for the User
      */
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;

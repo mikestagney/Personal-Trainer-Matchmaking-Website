@@ -10,6 +10,11 @@ import javax.crypto.spec.PBEKeySpec;
 import org.bouncycastle.util.encoders.Base64;
 import org.springframework.stereotype.Component;
 
+/**
+ * PasswordHasher has methods to create the hash for a password,
+ * read the hash using the keys it has set up, and to create
+ * a random salt for hashing the password
+ */
 @Component
 public class PasswordHasher {
 

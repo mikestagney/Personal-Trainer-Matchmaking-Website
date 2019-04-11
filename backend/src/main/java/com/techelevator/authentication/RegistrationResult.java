@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * RegistrationResult
+ * RegistrationResult has methods to check if the Registraion's Result
+ * has errors or if it was Successful
  */
 public class RegistrationResult {
 	

@@ -1,4 +1,4 @@
-package com.techelevator.model.jdbc;
+package com.techelevator.model.user;
 
 import javax.sql.DataSource;
 import org.bouncycastle.util.encoders.Base64;
@@ -7,8 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 import com.techelevator.authentication.PasswordHasher;
-import com.techelevator.model.User;
-import com.techelevator.model.dao.UserDao;
 
 /**
  * JdbcUserDao implements UserDao
@@ -58,6 +56,10 @@ public class JdbcUserDao implements UserDao{
         return newUser;
     }
 
+    /**
+	 * @param User object of the user to change password for
+     * @param newPassword the new password
+	 */
     @Override
     public void changePassword(User user, String newPassword) {
         byte[] salt = passwordHasher.generateRandomSalt();
@@ -106,6 +108,10 @@ public class JdbcUserDao implements UserDao{
         return user;
     }
 
+    /**
+     * @param username the user name of the user requested
+     * @return the User requested
+     */
     @Override
     public User getUserByUsername(String username) {
         String sqlSelectUserByUsername = "SELECT user_id, username, first_name, last_name, role FROM users WHERE username = ?";
@@ -118,6 +124,10 @@ public class JdbcUserDao implements UserDao{
         }
     }
 
+    /**
+     * @param id the id of the user requested
+     * @return the User requested
+     */
 	@Override
 	public User getUserById(Long id) {
 		String sqlSelectUserById = "SELECT user_id, username, first_name, last_name, role FROM users WHERE user_id = ?";

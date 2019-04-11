@@ -1,4 +1,4 @@
-package com.techelevator.model.jdbc;
+package com.techelevator.model.trainerprofile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,22 +7,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
-import com.techelevator.model.TrainerProfile;
-import com.techelevator.model.dao.TrainerProfileDao;
 
 /**
- * JdbcTrainerProfileDao implements TrainerProfileDao
+ * JdbcTrainerProfileDao implements the TrainerProfileDao and has methods for
+ * getting a Trainer's Trainer Profile, updating a Trainer's Trainer Profile,
+ * and for finding all Trainer Profiles that meet the search criteria
  */
 @Component
 public class JdbcTrainerProfileDao implements TrainerProfileDao{
 	
 	private JdbcTemplate jdbcTemplate;
 	
+	/**
+     * Create a new trainer profile dao with the supplied data source
+     *
+     * @param dataSource an SQL data source
+     */
 	@Autowired
     public JdbcTrainerProfileDao(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 	
+	/**
+	 * @param id the User Id for the Trainer
+	 * @return TrainerProfile for the Trainer for the given Id
+	 */
 	@Override
 	public TrainerProfile getTrainerProfileById(Long id) {
 		String sqlSelectUserById = "SELECT * FROM trainer_profile WHERE user_id = ?";
@@ -34,6 +43,14 @@ public class JdbcTrainerProfileDao implements TrainerProfileDao{
         }
 	}
 	
+	/**
+	 * @param city this is the city to search for a trainer in
+	 * @param state this is the state to search for a trainer in
+	 * @param price_per_hour this is the minimum range price to search for a trainer in
+	 * @param rating this is the minimum rating to search for a trainer in
+	 * @param certifications these are the certifications a trainer must have
+	 * @return List<TrainerProfile> for all Trainer's that fall within the search criteria
+	 */
 	@Override
 	public List<TrainerProfile> getTrainerProfilesBySearchCriteria(String city, String state, int price_per_hour, double rating, String certifications) {
 		List<TrainerProfile> trainerProfileList = new ArrayList<TrainerProfile>();
@@ -47,6 +64,9 @@ public class JdbcTrainerProfileDao implements TrainerProfileDao{
         return trainerProfileList;
 	}
 	
+	/**
+	 * @param TrainerProfile to update the logged in Trainer's Trainer Profile to
+	 */
 	@Override
 	public void updateTrainerProfile(TrainerProfile trainerProfile) {
 		jdbcTemplate.update("UPDATE trainer_profile SET is_public=?, price_per_hour=?, philosphy=?, bio=?, "
