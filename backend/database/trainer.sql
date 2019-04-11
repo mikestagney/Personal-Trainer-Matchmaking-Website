@@ -45,8 +45,8 @@ CREATE TABLE client_profile
     city varchar(30),
     state varchar(2),
 
-    constraint pk_trainer_profile primary key (user_id),
-    constraint fk_trainer_profile foreign key (user_id) references users (user_id)
+    constraint pk_client_profile primary key (user_id),
+    constraint fk_client_profile foreign key (user_id) references users (user_id)
 
 );
 
