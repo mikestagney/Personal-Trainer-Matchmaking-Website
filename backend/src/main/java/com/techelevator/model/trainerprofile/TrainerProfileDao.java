@@ -27,5 +27,5 @@ public interface TrainerProfileDao {
 	 * @param certifications these are the certifications a trainer must have
 	 * @return List<TrainerProfile> for all Trainer's that fall within the search criteria
 	 */
-	public List<TrainerProfile> getTrainerProfilesBySearchCriteria(String city, String state, int price_per_hour, double rating, String certifications);
+	public List<TrainerProfile> getTrainerProfilesBySearchCriteria(String city, String state, int min_price_per_hour, int max_price_per_hour, double rating, String certifications);
 }

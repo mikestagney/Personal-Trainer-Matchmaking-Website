@@ -111,10 +111,11 @@ public class PersonalTrainerMatchController {
 	@GetMapping("/trainerSearch")
 	public List<TrainerProfile> displayAllTrainers(@RequestParam(defaultValue="") String city,
 													@RequestParam(defaultValue="") String state,
-													@RequestParam(defaultValue="0") int price_per_hour,
+													@RequestParam(defaultValue="0") int min_price_per_hour,
+													@RequestParam(defaultValue="100") int max_price_per_hour,
 													@RequestParam(defaultValue="0") double rating,
 													@RequestParam(defaultValue="") String certifications) {
-		return trainerProfileDao.getTrainerProfilesBySearchCriteria(city,state,price_per_hour,rating,certifications);
+		return trainerProfileDao.getTrainerProfilesBySearchCriteria(city,state,min_price_per_hour,max_price_per_hour,rating,certifications);
 	}
 	
 	/**
