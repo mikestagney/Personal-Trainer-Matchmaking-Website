@@ -55,7 +55,7 @@ public class JdbcTrainerProfileDao implements TrainerProfileDao{
 	public List<TrainerProfile> getTrainerProfilesBySearchCriteria(String city, String state, int min_price_per_hour, int max_price_per_hour, double rating, String certifications) {
 		List<TrainerProfile> trainerProfileList = new ArrayList<TrainerProfile>();
 		String sqlSelectTrainersBySearchCriteria = "SELECT * FROM trainer_profile WHERE city ILIKE ? "
-					+ "AND state ILIKE ? AND price_per_hour >= ? AND price_per_hour <= ? AND rating >= ? AND certifications ILIKE ?";
+					+ "AND state ILIKE ? AND price_per_hour >= ? AND price_per_hour <= ? AND rating >= ? AND certifications ILIKE ? AND is_public = true";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectTrainersBySearchCriteria, "%" + city + "%",
         									"%" + state + "%", min_price_per_hour, max_price_per_hour, rating, "%" + certifications + "%");
         while (results.next()) {
