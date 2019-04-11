@@ -75,6 +75,19 @@ public class JdbcTrainerProfileDao implements TrainerProfileDao{
 				trainerProfile.getCity(),trainerProfile.getState(), trainerProfile.getCertifications(), trainerProfile.getId());		
 	}
 	
+	/**
+	 * @param TrainerProfile to be created
+	 * @param trainer_id to use to create Trainer Profile
+	 */
+	@Override
+	public void createTrainerProfile(TrainerProfile trainerProfile, Long trainer_id) {
+		jdbcTemplate.update("INSERT INTO trainer_profile (user_id, is_public, price_per_hour, rating, philosphy, bio, city, state, certifications)"
+				+ " VALUES (?,?,?,?,?,?,?,?,?)", trainer_id, trainerProfile.isPublic(),trainerProfile.getPrice_per_hour(),
+				trainerProfile.getRating(),trainerProfile.getPhilosophy(), trainerProfile.getBio(),trainerProfile.getCity(),
+				trainerProfile.getState(),trainerProfile.getCertifications());
+	}
+	
+	
 	private TrainerProfile mapResultToTrainerProfile(SqlRowSet results, String firstName, String lastName) {
     	TrainerProfile trainerProfile = new TrainerProfile();
     	trainerProfile.setFirstName(firstName);

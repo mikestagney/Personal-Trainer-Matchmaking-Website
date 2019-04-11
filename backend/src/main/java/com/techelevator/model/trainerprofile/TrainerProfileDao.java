@@ -20,6 +20,12 @@ public interface TrainerProfileDao {
 	public void updateTrainerProfile(TrainerProfile trainerProfile);
 	
 	/**
+	 * @param TrainerProfile to be created
+	 * @param trainer_id to use to create Trainer Profile
+	 */
+	public void createTrainerProfile(TrainerProfile trainerProfile, Long trainer_id);
+	
+	/**
 	 * @param city this is the city to search for a trainer in
 	 * @param state this is the state to search for a trainer in
 	 * @param price_per_hour this is the minimum range price to search for a trainer in
