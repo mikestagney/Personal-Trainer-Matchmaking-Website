@@ -33,11 +33,11 @@ public class JdbcTrainerProfileDao implements TrainerProfileDao{
 	 * @return TrainerProfile for the Trainer for the given Id
 	 */
 	@Override
-	public TrainerProfile getTrainerProfileById(Long id) {
-		String sqlSelectUserById = "SELECT * FROM trainer_profile WHERE user_id = ?";
+	public TrainerProfile getTrainerProfileById(Long id, SqlRowSet resultsToPass) {
+		String sqlSelectUserById = "SELECT * FROM users WHERE user_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserById, id);
         if(results.next()) {
-            return mapResultToTrainerProfile(results, results.getString("first_name"), results.getString("last_name"));
+            return mapResultToTrainerProfile(resultsToPass, results.getString("first_name"), results.getString("last_name"), id);
         } else {
             return null;
         }
@@ -54,12 +54,12 @@ public class JdbcTrainerProfileDao implements TrainerProfileDao{
 	@Override
 	public List<TrainerProfile> getTrainerProfilesBySearchCriteria(String city, String state, int min_price_per_hour, int max_price_per_hour, double rating, String certifications) {
 		List<TrainerProfile> trainerProfileList = new ArrayList<TrainerProfile>();
-		String sqlSelectTrainersBySearchCriteria = "SELECT * FROM trainer_profile WHERE city ILIKE ?"
+		String sqlSelectTrainersBySearchCriteria = "SELECT * FROM trainer_profile WHERE city ILIKE ? "
 					+ "AND state ILIKE ? AND price_per_hour >= ? AND price_per_hour <= ? AND rating >= ? AND certifications ILIKE ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectTrainersBySearchCriteria, "%" + city + "%",
         									"%" + state + "%", min_price_per_hour, max_price_per_hour, rating, "%" + certifications + "%");
         while (results.next()) {
-        	trainerProfileList.add(getTrainerProfileById(results.getLong("user_id")));
+        	trainerProfileList.add(getTrainerProfileById(results.getLong("user_id"),results));
         }
         return trainerProfileList;
 	}
@@ -88,15 +88,15 @@ public class JdbcTrainerProfileDao implements TrainerProfileDao{
 	}
 	
 	
-	private TrainerProfile mapResultToTrainerProfile(SqlRowSet results, String firstName, String lastName) {
+	private TrainerProfile mapResultToTrainerProfile(SqlRowSet results, String firstName, String lastName, long id) {
     	TrainerProfile trainerProfile = new TrainerProfile();
     	trainerProfile.setFirstName(firstName);
     	trainerProfile.setLastName(lastName);
-    	trainerProfile.setId(results.getLong("user_id"));
-    	trainerProfile.setPublic(results.getBoolean("isPublic"));
+    	trainerProfile.setId(id);
+    	trainerProfile.setPublic(results.getBoolean("is_public"));
     	trainerProfile.setPrice_per_hour(results.getInt("price_per_hour"));
     	trainerProfile.setRating(results.getDouble("rating"));
-    	trainerProfile.setPhilosophy(results.getString("philosophy"));
+    	trainerProfile.setPhilosophy(results.getString("philosphy"));
     	trainerProfile.setBio(results.getString("bio"));
     	trainerProfile.setCity(results.getString("city"));
     	trainerProfile.setState(results.getString("state"));

@@ -2,6 +2,8 @@ package com.techelevator.model.trainerprofile;
 
 import java.util.List;
 
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
 /**
  * TrainerProfileDao Interface has methods for getting a Trainer's Trainer Profile, updating a
  * Trainer's Trainer Profile, and for finding all Trainer Profiles that meet the search criteria
@@ -12,7 +14,7 @@ public interface TrainerProfileDao {
 	 * @param id the User Id for the Trainer
 	 * @return TrainerProfile for the Trainer for the given Id
 	 */
-	public TrainerProfile getTrainerProfileById(Long id);
+	public TrainerProfile getTrainerProfileById(Long id, SqlRowSet resultsToPass);
 	
 	/**
 	 * @param TrainerProfile to update the logged in Trainer's Trainer Profile to
