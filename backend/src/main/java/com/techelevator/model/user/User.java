@@ -21,7 +21,6 @@ public class User {
     @NotBlank(message="Password is required")
     private String password;
     private String confirmPassword;
-    private boolean passwordMatching;
     
     /**
      * @return True if Password Matches Confirm Password
