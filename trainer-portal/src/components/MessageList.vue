@@ -23,7 +23,6 @@ export default {
     name: 'messagelist',
   data() {
     return {
-      apiURL: 'http://5cab867dc85e05001452e9f5.mockapi.io/message',
       messages: [
         {
         firstname: '',

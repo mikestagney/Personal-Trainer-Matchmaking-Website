@@ -13,8 +13,6 @@ export default {
     
   data() {
     return {
-      MessageID: this.$route.params.MessageID,
-      apiURL: 'http://5cab867dc85e05001452e9f5.mockapi.io/message/',
       message: 
         {
         firstname: '',
@@ -29,15 +27,16 @@ export default {
     };
   },
   created() {
-      fetch((`${process.env.VUE_APP_REMOTE_API}/${this.$route.params.MessageID}`)) 
-        .then((response) => {
-            return response.json();
-        })
-        .then((message) => {
-            this.message = message;
-        })
-        .catch((err) => console.error(err));
-    }
+    const messageID = this.$route.params.MessageID;
+    fetch(`${process.env.VUE_APP_REMOTE_API}/message/${messageID}`)
+      .then((response) => {
+          return response.json();
+      })
+      .then((message) => {
+          this.message = message;
+      })
+      .catch((err) => console.error(err));
+  }
 }
 </script>
 
