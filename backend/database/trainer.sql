@@ -24,7 +24,7 @@ CREATE TABLE trainer_profile
     first_name varchar(25) NOT NULL,
     last_name varchar(25) NOT NULL,
     is_public boolean NOT NULL DEFAULT false,
-    price_per_hour int NOT NULL,
+    price_per_hour int,
     rating decimal(3,2),
     philosphy varchar(50),
     bio varchar(250),
