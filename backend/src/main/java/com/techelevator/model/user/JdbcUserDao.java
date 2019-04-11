@@ -45,7 +45,7 @@ public class JdbcUserDao implements UserDao{
         byte[] salt = passwordHasher.generateRandomSalt();
         String hashedPassword = passwordHasher.computeHash(password, salt);
         String saltString = new String(Base64.encode(salt));
-        long newId = jdbcTemplate.queryForObject("INSERT INTO users(username, first_name, last_name password, salt, role) VALUES (?, ?, ?, ?, ?, ?) RETURNING user_id", Long.class, userName,
+        long newId = jdbcTemplate.queryForObject("INSERT INTO users(username, first_name, last_name, password, salt, role) VALUES (?, ?, ?, ?, ?, ?) RETURNING user_id", Long.class, userName,
         		first_name, last_name, hashedPassword, saltString, role);
 
         User newUser = new User();

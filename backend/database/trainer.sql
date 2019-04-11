@@ -10,7 +10,7 @@ CREATE TABLE users
     first_name varchar(25) NOT NULL,
     last_name varchar(25) NOT NULL,
     username varchar(25) NOT NULL UNIQUE,
-    password varchar(20) NOT NULL,
+    password varchar(1000) NOT NULL,
     salt varchar(256) NOT NULL,
     role varchar(10) NOT NULL,
         
@@ -53,7 +53,7 @@ CREATE TABLE private_message
     subject varchar(20),
     message varchar(250),
 
-    constraint pk_client_list primary key (trainerId, clientId, postDate),
+    constraint pk_private_message primary key (trainerId, clientId, postDate),
     constraint fk_client_list_trainer foreign key (trainerId) references users (user_id),
     constraint fk_client_list_client foreign key (clientId) references  users (user_id)
 );
