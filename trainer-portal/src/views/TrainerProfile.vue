@@ -3,12 +3,13 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <p id="name">{{trainerprofile.firstName}} {{trainerprofile.lastName}}</p>
+                <h1>The trainer Id is: {{this.$route.params.Tid}}</h1>
+                <p id="name">{{trainerprofile.first_name}} {{trainerprofile.last_name}}</p>
                 <p>{{trainerprofile.city}}, {{trainerprofile.state}}</p>
             </div>
             <div class="col">
                 <p>{{trainerprofile.philosophy}}</p>
-                <p>{{trainerprofile.price_per_hour}}</p>
+                <p>{{trainerprofile.hourly_price}}</p>
                 <p>{{trainerprofile.rating}}</p>
             </div>
         </div>

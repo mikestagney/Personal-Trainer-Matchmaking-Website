@@ -34,9 +34,9 @@ const router = new Router({
         component: ListTrainers,
       }, 
       {
-        path: '/trainer',
-        name: 'trainer',
-        component: TrainerProfile,
+        path: '/trainerDetailPage/:Tid',
+        name: 'trainerDetailPage',
+        component: TrainerProfile
       }
     ],
   });

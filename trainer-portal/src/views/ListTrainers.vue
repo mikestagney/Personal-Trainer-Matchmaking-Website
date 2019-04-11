@@ -27,8 +27,8 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for="trainer in trainers" :key="trainer.id">
-                    <td>{{trainer.first_name}} {{trainer.last_name}}</td>
+                <tr v-for="trainer in trainers" :key="trainer.user_id">
+                    <td @click="goToDetail(trainer.user_id)">{{trainer.first_name}} {{trainer.last_name}}</td>
                     <td>{{trainer.city}}</td>
                     <td>{{trainer.state}}</td>
                     <td>{{trainer.hourly_rate}}</td>
@@ -63,6 +63,9 @@ export default {
             .then(response => response.json())
             .then(parsedData => this.customers = parsedData)
             .catch(err => console.log(err));
+        },
+        goToDetail(trainId) {
+            this.$router.push({name: 'trainerDetailPage', params: {Tid:trainId}})
         }
 
     },
