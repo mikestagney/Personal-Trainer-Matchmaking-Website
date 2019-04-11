@@ -36,17 +36,20 @@
       </button>
     </form>
   </div>
+  <message-list></message-list>
   </default-layout>
 </template>
 
 <script>
 import auth from '../auth';
 import DefaultLayout from '@/layouts/DefaultLayout';
+import MessageList from '@/components/MessageList.vue'
 
 export default {
   name: 'login',
   components: {
     DefaultLayout,
+    MessageList,
   },
   data() {
     return {
