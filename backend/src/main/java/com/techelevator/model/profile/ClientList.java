@@ -1,11 +1,10 @@
-package com.techelevator.model.clientlist;
+package com.techelevator.model.profile;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.techelevator.model.trainerprofile.TrainerProfile;
 import com.techelevator.model.user.User;
 
 /**
@@ -15,20 +14,20 @@ import com.techelevator.model.user.User;
 public class ClientList {
 	
 	@NotBlank(message="Trainer Profile is required")
-	private TrainerProfile trainerProfile = new TrainerProfile();
+	private UserProfile trainerProfile = new UserProfile();
 	private List<User> clientList = new ArrayList<User>();
 	
 	/**
 	 * @return TrainerProfile object
 	 */
-	public TrainerProfile getTrainerProfile() {
+	public UserProfile getTrainerProfile() {
 		return trainerProfile;
 	}
 
 	/**
-	 * @param TrainerProfile object to be set to
+	 * @param UserProfile object to be set to
 	 */
-	public void setTrainerProfile(TrainerProfile trainerProfile) {
+	public void setTrainerProfile(UserProfile trainerProfile) {
 		this.trainerProfile = trainerProfile;
 	}
 

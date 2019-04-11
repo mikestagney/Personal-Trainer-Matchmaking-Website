@@ -1,6 +1,4 @@
-package com.techelevator.model.trainerprofile;
-
-import org.hibernate.validator.constraints.NotBlank;
+package com.techelevator.model.profile;
 
 /**
  * TrainerProfile Class is an object that holds an Id, an isPublic boolen, a First Name,
@@ -10,16 +8,10 @@ import org.hibernate.validator.constraints.NotBlank;
 public class TrainerProfile {
 	
 	private long id;
-	@NotBlank(message="isPublic is required")
-	private boolean isPublic;
-	private String firstName;
-	private String lastName;
 	private int price_per_hour;
 	private double rating;
 	private String philosophy;
 	private String bio;
-	private String city;
-	private String state;
 	private String certifications;
 	
 	/**
@@ -35,49 +27,7 @@ public class TrainerProfile {
     public void setId(long id) {
         this.id = id;
     }
-
-    /**
-     * @return the boolean for is Trainer Profile Public 
-     */
-	public boolean isPublic() {
-		return isPublic;
-	}
-
-	/**
-	 * @param the boolean to set for is Trainer Profile Public
-	 */
-	public void setPublic(boolean isPublic) {
-		this.isPublic = isPublic;
-	}
 	
-	/**
-	 * @return the First Name
-	 */
-	public String getFirstName() {
-		return firstName;
-	}
-
-	/**
-	 * @param ithe First Name to set
-	 */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	
-	/**
-	 * @return the Last Name
-	 */
-	public String getLastName() {
-		return lastName;
-	}
-
-	/**
-	 * @param the Last Name to set
-	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
 	/**
 	 * @return the Price Per Hour
 	 */
@@ -132,34 +82,6 @@ public class TrainerProfile {
 	 */
 	public void setBio(String bio) {
 		this.bio = bio;
-	}
-
-	/**
-	 * @return the City of the Trainer
-	 */
-	public String getCity() {
-		return city;
-	}
-
-	/**
-	 * @param the City of the Trainer to set
-	 */
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	/**
-	 * @return the State of the Trainer
-	 */
-	public String getState() {
-		return state;
-	}
-
-	/**
-	 * @param the State of the Trainer to set
-	 */
-	public void setState(String state) {
-		this.state = state;
 	}
 
 	/**

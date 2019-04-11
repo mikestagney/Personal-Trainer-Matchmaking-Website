@@ -4,14 +4,64 @@ INSERT INTO users(first_name, last_name, username, password, salt, role)
 VALUES ('Lance', 'Armstrong', 'LanceArm', 'roidcheater', 'salt1', 'Trainer');
 
 INSERT INTO users(first_name, last_name, username, password, salt, role)
-VALUES ('Terry', 'Reily', 'TerryR1', 'catLuvnum1', 'salt2', 'Client');
+VALUES ('Paige', 'Drees', 'paigeIsATrainerNow', 'paigesPassword', 'salt2', 'Trainer');
 
-INSERT INTO trainer_profile(user_id, is_public, first_name, last_name, price_per_hour, rating, philosphy, bio, city, state, certifications)
-VALUES((SELECT user_id FROM users WHERE username = 'LanceArm'), 'false', 'Lance', 'Armstrong', '100', '3', 'I like to bike', 'former Tour De France winner', 'Austin', 'TX', 'redacted');
+INSERT INTO users(first_name, last_name, username, password, salt, role)
+VALUES ('David', 'P', 'pDog', 'davidsPassword', 'salt3', 'Trainer');
+
+INSERT INTO users(first_name, last_name, username, password, salt, role)
+VALUES ('Terry', 'Reily', 'TerryR1', 'catLuvnum1', 'salt3', 'Client');
+
+INSERT INTO users(first_name, last_name, username, password, salt, role)
+VALUES ('Quinn', 'Hebert', 'Quinn4daWin', 'password1', 'salt4', 'Client');
+
+INSERT INTO users(first_name, last_name, username, password, salt, role)
+VALUES ('Mike', 'Stagney', 'MikeTHEman', 'mikesPassword', 'salt5', 'Client');
+
+INSERT INTO users(first_name, last_name, username, password, salt, role)
+VALUES ('Bernard', 'M', 'bernardM', 'bernardsPassword', 'salt6', 'Client');
+
+
+INSERT INTO user_profile(user_id, is_public, first_name, last_name, city, state, role)
+VALUES((SELECT user_id FROM users WHERE username = 'LanceArm'), 'true', 'Lance', 'Armstrong', 'Austin', 'TX', 'Trainer');
+
+INSERT INTO trainer_profile(user_id, price_per_hour, rating, philosphy, bio, certifications)
+VALUES((SELECT user_id FROM users WHERE username = 'LanceArm'), '100', '3', 'I like to bike', 'former Tour De France winner', 'redacted');
+
+INSERT INTO user_profile(user_id, is_public, first_name, last_name, city, state, role)
+VALUES((SELECT user_id FROM users WHERE username = 'paigeIsATrainerNow'), 'true', 'Paige', 'Drees', 'Covington', 'KY', 'Trainer');
+
+INSERT INTO trainer_profile(user_id, price_per_hour, rating, philosphy, bio, certifications)
+VALUES((SELECT user_id FROM users WHERE username = 'paigeIsATrainerNow'), '50', '5', 'Time to get in shape', 'Got workout plans for DAYS', 'Born Ready');
+
+INSERT INTO user_profile(user_id, is_public, first_name, last_name, city, state, role)
+VALUES((SELECT user_id FROM users WHERE username = 'pDog'), 'false', 'David', 'P', 'Ohio Town', 'OH', 'Trainer');
+
+INSERT INTO trainer_profile(user_id, price_per_hour, rating, philosphy, bio, certifications)
+VALUES((SELECT user_id FROM users WHERE username = 'pDog'), '1', '1', 'I am not a good personal trainer', 'Lets play super smash', 'Coding Champion');
+
+
+INSERT INTO user_profile(user_id, is_public, first_name, last_name, city, state, role)
+VALUES((SELECT user_id FROM users WHERE username = 'TerryR1'), 'true', 'Terry', 'Reily', 'Cincinnati', 'OH', 'Client');
+
+INSERT INTO user_profile(user_id, is_public, first_name, last_name, city, state, role)
+VALUES((SELECT user_id FROM users WHERE username = 'Quinn4daWin'), 'true', 'Quinn', 'Hebert', 'Columbus', 'OH', 'Client');
+
+INSERT INTO user_profile(user_id, is_public, first_name, last_name, city, state, role)
+VALUES((SELECT user_id FROM users WHERE username = 'MikeTHEman'), 'true', 'Mike', 'Stagney', 'Cincinnati', 'OH', 'Client');
+
+INSERT INTO user_profile(user_id, is_public, first_name, last_name, city, state, role)
+VALUES((SELECT user_id FROM users WHERE username = 'bernardM'), 'false', 'Bernard', 'M', 'Cincinnati', 'OH', 'Client');
+
 
 INSERT INTO client_list(trainerId, clientId)
 VALUES ((SELECT user_id FROM users WHERE username = 'LanceArm'), (SELECT user_id FROM users WHERE username = 'TerryR1'));
 
-UPDATE trainer_profile SET first_name='Lance', last_name='ArmStrong', is_public='true', price_per_hour='20', philosphy='I LOVE to bike', bio='former Tour De France winner and PED user', city='Austin', state='TX', certifications='redacted' WHERE user_id=4;
+INSERT INTO client_list(trainerId, clientId)
+VALUES ((SELECT user_id FROM users WHERE username = 'paigeIsATrainerNow'), (SELECT user_id FROM users WHERE username = 'Quinn4daWin'));
+
+INSERT INTO client_list(trainerId, clientId)
+VALUES ((SELECT user_id FROM users WHERE username = 'paigeIsATrainerNow'), (SELECT user_id FROM users WHERE username = 'MikeTHEman'));
+
 
 COMMIT TRANSACTION;

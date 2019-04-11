@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS user_profile;
 DROP TABLE IF EXISTS trainer_profile;
 DROP TABLE IF EXISTS client_list;
+DROP TABLE IF EXISTS private_message;
 
 BEGIN TRANSACTION;
 
@@ -18,35 +20,32 @@ CREATE TABLE users
     constraint chk_role CHECK (role IN ('Trainer', 'Client'))
 );
 
-CREATE TABLE trainer_profile
+CREATE TABLE user_profile
 (
     user_id int NOT NULL UNIQUE,
     first_name varchar(25) NOT NULL,
     last_name varchar(25) NOT NULL,
     is_public boolean NOT NULL DEFAULT false,
-    price_per_hour int,
-    rating decimal(3,2),
-    philosphy varchar(50),
-    bio varchar(250),
-    city varchar(30),
-    state varchar(2),
-    certifications varchar(250),
-
-    constraint pk_trainer_profile primary key (user_id),
-    constraint fk_trainer_profile foreign key (user_id) references users (user_id)
-
-);
-
-CREATE TABLE client_profile
-(
-    user_id int NOT NULL UNIQUE,
-    first_name varchar(25) NOT NULL,
-    last_name varchar(25) NOT NULL,
+    role varchar(10) NOT NULL,
     city varchar(30),
     state varchar(2),
 
     constraint pk_client_profile primary key (user_id),
     constraint fk_client_profile foreign key (user_id) references users (user_id)
+
+);
+
+CREATE TABLE trainer_profile
+(
+    user_id int NOT NULL UNIQUE,
+    price_per_hour int,
+    rating decimal(3,2),
+    philosphy varchar(50),
+    bio varchar(250),
+    certifications varchar(250),
+
+    constraint pk_trainer_profile primary key (user_id),
+    constraint fk_trainer_profile foreign key (user_id) references users (user_id)
 
 );
 

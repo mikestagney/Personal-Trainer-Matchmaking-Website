@@ -10,11 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.techelevator.authentication.AuthProvider;
 import com.techelevator.authentication.UnauthorizedException;
-import com.techelevator.model.clientlist.ClientListDao;
 import com.techelevator.model.privatemessage.PrivateMessage;
 import com.techelevator.model.privatemessage.PrivateMessageDao;
-import com.techelevator.model.trainerprofile.TrainerProfile;
-import com.techelevator.model.trainerprofile.TrainerProfileDao;
+import com.techelevator.model.profile.ProfileDao;
+import com.techelevator.model.profile.UserProfile;
 import com.techelevator.model.user.User;
 import com.techelevator.model.user.UserDao;
 
@@ -40,11 +39,9 @@ public class PersonalTrainerMatchController {
 	@Autowired
     private AuthProvider authProvider;
     @Autowired
-    private TrainerProfileDao trainerProfileDao;
+    private ProfileDao profileDao;
     @Autowired
     private PrivateMessageDao privateMessageDao;
-    @Autowired
-    private ClientListDao clientListDao;
 	
     /**
 	 * Method displayHomePage() does not take any parameters
@@ -72,11 +69,11 @@ public class PersonalTrainerMatchController {
 	 * @return TrainerProfile object for the currently loggin in User with role "Trainer"
 	 */
 	@GetMapping("/trainer")
-	public TrainerProfile displayTrainerProfilePage() throws UnauthorizedException {
+	public UserProfile displayTrainerProfilePage() throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
             throw new UnauthorizedException();
         }
-		return trainerProfileDao.getTrainerProfileById(authProvider.getCurrentUser().getId());
+		return profileDao.getUserProfileById(authProvider.getCurrentUser().getId());
 	}
 	
 	/**
@@ -106,16 +103,16 @@ public class PersonalTrainerMatchController {
 	 * @param price_per_hour this is the minimum range price to search for a trainer in
 	 * @param rating this is the minimum rating to search for a trainer in
 	 * @param certifications these are the certifications a trainer must have
-	 * @return List<TrainerProfile> for all Trainer's that fall within the search criteria
+	 * @return List<UserProfile> for all Trainer's that fall within the search criteria
 	 */
 	@GetMapping("/trainerSearch")
-	public List<TrainerProfile> displayAllTrainers(@RequestParam(defaultValue="") String city,
+	public List<UserProfile> displayAllTrainers(@RequestParam(defaultValue="") String city,
 													@RequestParam(defaultValue="") String state,
 													@RequestParam(defaultValue="0") int min_price_per_hour,
 													@RequestParam(defaultValue="200") int max_price_per_hour,
 													@RequestParam(defaultValue="0") double rating,
 													@RequestParam(defaultValue="") String certifications) {
-		return trainerProfileDao.getTrainerProfilesBySearchCriteria(city,state,min_price_per_hour,max_price_per_hour,rating,certifications);
+		return profileDao.getTrainerProfilesBySearchCriteria(city,state,min_price_per_hour,max_price_per_hour,rating,certifications);
 	}
 	
 	/**
@@ -125,10 +122,14 @@ public class PersonalTrainerMatchController {
 	 * <p>
 	 * @param trainer_id this is the trainer_id for the Trainer Profile to be displayed
 	 * @return TrainerProfile for the Trainer Detail Page that is being displayed
+	 * @throws UnauthorizedException 
 	 */
 	@GetMapping("/trainerDetailPage")
-	public TrainerProfile displayTrainerDetailPage(@RequestParam long trainer_id) {
-		return trainerProfileDao.getTrainerProfileById(trainer_id);
+	public UserProfile displayTrainerDetailPage(@RequestParam long trainer_id) throws UnauthorizedException {
+		if(!authProvider.userHasRole(new String[] {"trainer"})) {
+            throw new UnauthorizedException();
+        }
+		return profileDao.getUserProfileById(trainer_id);
 	}
 	
 	/**
@@ -138,16 +139,16 @@ public class PersonalTrainerMatchController {
 	 * loggin in Trainer User's profile
 	 * <p>
 	 * If AuthProvider cannot authorize that the User has the role "Trainer" then an UnauthorizedException is thrown
-	 * @param TrainerProfile object for the Trainer Profile that is being updated
+	 * @param UserProfile object for the Trainer Profile that is being updated
 	 */
-	@PutMapping("updateTrainerProfile")
-	public void updateTrainerProfile(@RequestBody TrainerProfile trainerProfile) throws UnauthorizedException {
+	@PutMapping("updateProfile")
+	public void updateTrainerProfile(@RequestBody UserProfile userProfile) throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"trainer"})) {
             throw new UnauthorizedException();
         }
 		else {
-			trainerProfile.setId(authProvider.getCurrentUser().getId());
-			trainerProfileDao.updateTrainerProfile(trainerProfile);
+			userProfile.setId(authProvider.getCurrentUser().getId());
+			profileDao.updateUserProfile(userProfile);
 		}
 	}
 	
@@ -170,7 +171,7 @@ public class PersonalTrainerMatchController {
 		if(!authProvider.userHasRole(new String[] {"trainer"})) {
             throw new UnauthorizedException();
         }
-		return clientListDao.searchClientListOfTrainer(authProvider.getCurrentUser().getId(), firstName, lastName, username);
+		return profileDao.searchClientListOfTrainer(authProvider.getCurrentUser().getId(), firstName, lastName, username);
 	}
 	
 	/**
