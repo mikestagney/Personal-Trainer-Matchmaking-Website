@@ -28,7 +28,7 @@
             </thead>
             <tbody>
                 <tr v-for="trainer in trainers" :key="trainer.user_id">
-                    <td @click="goToDetail(trainer.user_id)">{{trainer.first_name}} {{trainer.last_name}}</td>
+                    <td><router-link v-bind:to="{ name: 'trainerProfile', params: { TrainerID: trainer.user_id }}">{{trainer.first_name}} {{trainer.last_name}}</router-link></td>
                     <td>{{trainer.city}}</td>
                     <td>{{trainer.state}}</td>
                     <td>{{trainer.hourly_rate}}</td>
