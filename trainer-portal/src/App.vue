@@ -4,11 +4,13 @@
     <router-view></router-view>
     <update-trainer-profile></update-trainer-profile>
     </transition>
+    
   </div>
 </template>
 
 <script>
 import UpdateTrainerProfile from './views/UpdateTrainerProfile.vue'
+
 
 export default {
   name: 'app', 

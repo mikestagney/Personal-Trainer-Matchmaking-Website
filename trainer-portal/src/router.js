@@ -6,6 +6,8 @@ import Register from '@/views/Register';
 import ListTrainers from '@/views/ListTrainers'
 import TrainerProfile from '@/views/TrainerProfile'
 import auth from './auth';
+import MessageDetail from '@/views/MessageDetail';
+
 
 Vue.use(Router);
 
@@ -37,7 +39,13 @@ const router = new Router({
         path: '/trainer/profile/:TrainerID',
         name: 'trainerProfile',
         component: TrainerProfile
+      },
+      {
+        path: '/trainer/privatemessage/:MesssageID',
+        name: 'trainerPM',
+        component: MessageDetail
       }
+
     ],
   });
   
@@ -45,6 +53,7 @@ const router = new Router({
     // redirect to login page if not logged in and trying to access a restricted page
     //const publicPages = ['/login', '/register', '/trainerSearch', '/td', '/trainerDetailPage'];
     const authRequired = false // !publicPages.includes(to.path);
+
     const loggedIn = auth.getUser();
   
     if (authRequired && !loggedIn) {
