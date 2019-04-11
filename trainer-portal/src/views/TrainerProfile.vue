@@ -1,17 +1,17 @@
 <template>
- <div class="trainerDetailPage">
+ <div class="trainerProfile">
   <div class="container">
-   <h2>the trainer id is :{{this.$route.params.Tid}}</h2>
+   <h2>the trainer id is :{{this.$route.params.TrainerID}}</h2>
   </div>
  </div>
 </template>
 <script>
  export default{
-  name:'trainerDetailPage',
+  name:'trainerProfile',
   data(){
    return{
-    trainId:this.$route.params.Tid,
-    title:"trainerDetailPage"
+    trainId:this.$route.params.TrainerID,
+    title:"trainerProfile"
    }
   }
  }

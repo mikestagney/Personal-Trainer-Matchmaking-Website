@@ -34,8 +34,8 @@ const router = new Router({
         component: ListTrainers,
       }, 
       {
-        path: '/td/:Tid',
-        name: 'trainerDetailPage',
+        path: '/trainer/profile/:TrainerID',
+        name: 'trainerProfile',
         component: TrainerProfile
       }
     ],
@@ -43,11 +43,13 @@ const router = new Router({
   
   router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
-    const publicPages = ['/login', '/register', '/trainerSearch', '/trainerDetailPage'];
-    const authRequired = !publicPages.includes(to.path);
+    //const publicPages = ['/login', '/register', '/trainerSearch', '/td', '/trainerDetailPage'];
+    const authRequired = false // !publicPages.includes(to.path);
     const loggedIn = auth.getUser();
   
     if (authRequired && !loggedIn) {
+      console.log('if (authRequired && !loggedIn)')
+      console.table(to);
       return next('/login');
     }
   
