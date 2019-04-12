@@ -1,6 +1,9 @@
 package com.techelevator.model.user;
 
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -9,20 +12,31 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class User {
 	
+	@Min(1)
+	protected long id;
+	@Size(min = 2, max = 25)
 	@NotBlank(message="Username is required")
-    private String username;
-	@NotBlank(message="First Name is required")
-    private String firstName;
-	@NotBlank(message="Last Name is required")
-    private String lastName;
+	protected String username;
+	@Size(min = 2, max = 10)
 	@NotBlank(message="Role is required")
     private String role;
-    private long id;
+	@Size(min = 2, max = 256)
     @NotBlank(message="Password is required")
-    private String password;
-    private String confirmPassword;
-    
-    /**
+	protected String password;
+	@Size(min = 2, max = 256)
+	protected String confirmPassword;
+	@Size(min = 2, max = 25)
+	@NotBlank(message="First Name is required")
+    private String firstName;
+	@Size(min = 2, max = 25)
+	@NotBlank(message="Last Name is required")
+	private String lastName;
+	@Size(min = 2, max = 30)
+	private String city;
+	@Size(min = 2, max = 2)
+	private String state;
+
+	/**
      * @return True if Password Matches Confirm Password
      */
     @AssertTrue(message = "Passwords must match")
@@ -59,6 +73,13 @@ public class User {
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+	/**
+	 * @return Name of User
+	 */
+	public String getName() {
+		return firstName + " " + lastName;
 	}
 
     /**
@@ -130,4 +151,32 @@ public class User {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
+    
+    /**
+	 * @return the City of the Trainer
+	 */
+	public String getCity() {
+		return city;
+	}
+
+	/**
+	 * @param the City of the Trainer to set
+	 */
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	/**
+	 * @return the State of the Trainer
+	 */
+	public String getState() {
+		return state;
+	}
+
+	/**
+	 * @param the State of the Trainer to set
+	 */
+	public void setState(String state) {
+		this.state = state;
+	}
 }

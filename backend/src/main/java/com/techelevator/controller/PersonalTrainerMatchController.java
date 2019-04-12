@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,6 +45,39 @@ public class PersonalTrainerMatchController {
     @Autowired
     private PrivateMessageDao privateMessageDao;
 	
+    
+    @GetMapping("/search")
+	public List<UserProfile> trainersSearch(@RequestParam(defaultValue="") String city,
+											@RequestParam(defaultValue="") String state,
+											@RequestParam(defaultValue="0") int minHourlyRate,
+											@RequestParam(defaultValue="200") int maxHourlyRate,
+											@RequestParam(defaultValue="0") double rating,
+											@RequestParam(defaultValue="") String certifications) {
+		return profileDao.getTrainerProfilesBySearchCriteria(city,state,minHourlyRate,maxHourlyRate,rating,certifications);
+	}
+    
+    
+    @GetMapping("/trainer/profile")
+	public UserProfile trainerProfilePage(@PathVariable long trainerId) throws UnauthorizedException {
+		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
+            throw new UnauthorizedException();
+        }
+		return profileDao.getUserProfileById(trainerId);
+	}
+    
+    @GetMapping("/trainer/privateMessage/{trainerId}")
+	public UserProfile trainerPrivateMessagePage(@PathVariable long trainerId) throws UnauthorizedException {
+		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
+            throw new UnauthorizedException();
+        }
+		return profileDao.getUserProfileById(trainerId);
+	}
+    
+    
+    
+    
+    
+    
     /**
 	 * Method displayHomePage() does not take any parameters
 	 * <p>
@@ -107,7 +141,7 @@ public class PersonalTrainerMatchController {
 	 * @return List<UserProfile> for all Trainer's that fall within the search criteria
 	 */
 	@GetMapping("/trainerSearch")
-	public List<UserProfile> displayAllTrainers(@RequestParam(defaultValue="") String city,
+	public List<UserProfile> displayTrainersSearch(@RequestParam(defaultValue="") String city,
 													@RequestParam(defaultValue="") String state,
 													@RequestParam(defaultValue="0") int min_price_per_hour,
 													@RequestParam(defaultValue="200") int max_price_per_hour,
