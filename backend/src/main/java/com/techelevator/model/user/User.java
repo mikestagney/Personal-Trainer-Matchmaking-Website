@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class User {
 	
-	@Min(1)
+	//removed validation so login will work
 	protected long id;
 	@Size(min = 2, max = 25)
 	@NotBlank(message="Username is required")
