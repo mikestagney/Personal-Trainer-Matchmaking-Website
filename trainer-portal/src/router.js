@@ -25,7 +25,7 @@ const router = new Router({
         component: Register,
       },
       {
-        path: '/trainerSearch',
+        path: '/search',
         name: 'search',
         component: ListTrainers,
         alias: '/'

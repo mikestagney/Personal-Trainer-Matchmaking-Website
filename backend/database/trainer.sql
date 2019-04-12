@@ -43,7 +43,7 @@ CREATE TABLE trainer_profile
     constraint pk_trainer_profile primary key (user_id)
 );
 
-CREATE TABLE client_list 
+CREATE TABLE client_list
 (
     trainerId int NOT NULL,
     clientId int NOT NULL,
@@ -64,8 +64,8 @@ CREATE TABLE private_message
 );
 
 -- Stored Procedures
-CREATE OR REPLACE FUNCTION random_integer(low INT ,high INT) 
-RETURNS INT AS 
+CREATE OR REPLACE FUNCTION random_integer(low INT ,high INT)
+RETURNS INT AS
 $$
 BEGIN
     RETURN floor(random()* (high-low + 1) + low);
@@ -73,7 +73,7 @@ END;
 $$
 LANGUAGE 'plpgsql' STRICT;
 
-CREATE OR REPLACE FUNCTION random_boolean() 
+CREATE OR REPLACE FUNCTION random_boolean()
 RETURNS BOOLEAN AS
 $$
 BEGIN
@@ -83,45 +83,61 @@ BEGIN
         RETURN true;
     END IF;
 END;
-$$ 
+$$
 LANGUAGE 'plpgsql' STRICT;
 
-CREATE OR REPLACE FUNCTION trainer_search 
+CREATE OR REPLACE FUNCTION trainer_search
     (
-    city           VARCHAR(30)  = NULL,
-    state          VARCHAR(2)   = NULL,
-    certifications VARCHAR(250) = NULL,
-    min_price      INT = 0,
-    max_price      INT = 2147483647,
-    rating         INT = 0
+    t_city           VARCHAR(30)  = NULL,
+    t_state          VARCHAR(2)   = NULL,
+    t_certifications VARCHAR(250) = NULL,
+    t_min_price      INT = 0,
+    t_max_price      INT = 2147483647,
+    t_rating         INT = 0
     )
-RETURNS setof record AS 
+ RETURNS TABLE
+    (
+    user_id         INT
+  , is_public       BOOLEAN
+  , first_name      VARCHAR
+  , last_name       VARCHAR
+  , city            VARCHAR
+  , state           VARCHAR
+  , role            VARCHAR
+  , price_per_hour  INT
+  , rating          NUMERIC
+  , philosphy       VARCHAR
+  , bio             VARCHAR
+  , certifications  VARCHAR
+    ) AS
 $$
-    SELECT 
-        users.user_id    ,   
-        users.first_name ,   
-        users.last_name  ,   
-        is_public        ,   
-        city             ,   
-        state            ,   
-        users.role       ,   
-        price_per_hour   ,
-        rating           ,   
-        philosphy        ,   
-        bio              ,   
-        certifications      
-
+BEGIN
+    RETURN QUERY
+    SELECT
+        users.user_id
+        , true    
+        , users.first_name 
+        , users.last_name      
+        , user_profile.city             
+        , user_profile.state            
+        , users.role                    
+        , trainer_profile.price_per_hour 
+        , trainer_profile.rating           
+        , trainer_profile.philosphy        
+        , trainer_profile.bio              
+        , trainer_profile.certifications
     FROM users
     JOIN trainer_profile USING(user_id)
     JOIN user_profile    USING(user_id)
-    WHERE is_public = true AND
-        ($1 IS NULL OR city           = $1) AND
-        ($2 IS NULL OR state          = $2) AND
-        ($3 IS NULL OR certifications = $3) AND
-        (price_per_hour BETWEEN $4 AND $5)  AND
-        rating >= $6
+    WHERE user_profile.is_public = true AND
+        ($1 IS NULL OR user_profile.city           = $1)    AND
+        ($2 IS NULL OR user_profile.state          = $2)    AND
+        ($3 IS NULL OR trainer_profile.certifications = $3) AND
+        (trainer_profile.price_per_hour BETWEEN $4 AND $5)  AND
+        trainer_profile.rating >= $6;
+END
 $$
-LANGUAGE sql;
+LANGUAGE plpgsql;
 
 
 -- user data
@@ -155,7 +171,8 @@ INSERT INTO users (user_id,first_name,last_name,username,password,salt,role) VAL
 ,(27,'Jonatan','Feeney','Maybelle_Lang92','TUeJ0uWqaTRDi0Z','29JqvAZsSnCbQMI','Client')
 ,(28,'Jalon','Robel','Felicita1','ExDfSHfnWFxxJuY','PZuWr5xdzq9aoQt','Client')
 ,(29,'Einar','Herzog','Rusty.Cormier18','8bF1iWNjqJg9ICL','AXbu_Zx26UWc3Rf','Client')
-,(30,'Casandra','Reichel','Elisabeth.Auer','oawIZfF9NvJhIGh','agQ9E6kyL1tIMau','Client');
+,(30,'Casandra','Reichel','Elisabeth.Auer','oawIZfF9NvJhIGh','agQ9E6kyL1tIMau','Client')
+,(31,'first','last','username','password','agQ9E6kyL1tIMau','Client');
 
 -- user_profile
 INSERT INTO user_profile (user_id,first_name,last_name,is_public,role,city,state) VALUES
@@ -188,7 +205,8 @@ INSERT INTO user_profile (user_id,first_name,last_name,is_public,role,city,state
 ,(27,'Retha','Legros','false','Client','Thompsonmouth','SD')
 ,(28,'Natasha','Ledner','false','Client','South Genevieveton','DE')
 ,(29,'Sigrid','Batz','false','Client','West Kodymouth','AZ')
-,(30,'Brielle','Cruickshank','false','Client','South Karliport','VT');
+,(30,'Brielle','Cruickshank','false','Client','South Karliport','VT')
+,(31,'Brielle','Cruickshank','true','Client','South Karliport','VT');
 
 
 INSERT INTO trainer_profile (user_id,price_per_hour,rating,philosphy,bio,certifications) VALUES
@@ -202,7 +220,7 @@ INSERT INTO trainer_profile (user_id,price_per_hour,rating,philosphy,bio,certifi
 -- Updated values
 UPDATE user_profile SET is_public = random_boolean();
 
-UPDATE users 
+UPDATE users
 SET role = 'Trainer'
 WHERE user_id <= 5;
 
