@@ -68,4 +68,25 @@ public class JdbcPrivateMessageDao implements PrivateMessageDao{
 		message.setMessage(results.getString("message"));
 		return message;
 	}
+
+	@Override
+	public PrivateMessage getPrivateMessage(long message_id) {
+		String sqlSearchForMessagesBetweenUsers = "SELECT * FROM private_message WHERE message_id = ?";
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForMessagesBetweenUsers, message_id);
+        if (results.next()) {
+        	return mapResultToPrivateMessage(results);
+        }
+		return null;
+	}
+
+	@Override
+	public void sendPrivateMessage(PrivateMessage message) {
+        jdbcTemplate.update("INSERT INTO privateMessage( sender_id, recipient_id, sent_date, subject, message) VALUES (?,?,?,?,?)",
+        		message.getSenderId(), message.getRecipientId(), message.getDatePosted(), message.getSubject(), message.getMessage());
+	}
+
+	@Override
+	public void deletePrivateMessage(PrivateMessage message) {
+		// TODO Auto-generated method stub
+	}
 }

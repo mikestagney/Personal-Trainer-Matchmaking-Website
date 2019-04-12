@@ -5,7 +5,6 @@ import com.techelevator.authentication.AuthProvider;
 import com.techelevator.authentication.JwtTokenHandler;
 import com.techelevator.authentication.RegistrationResult;
 import com.techelevator.authentication.UnauthorizedException;
-import com.techelevator.model.profile.JdbcProfileDao;
 import com.techelevator.model.user.User;
 import com.techelevator.model.user.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +31,6 @@ public class AccountController {
     private JwtTokenHandler tokenHandler;
     @Autowired
     private UserDao userDao;
-    @Autowired
-    private JdbcProfileDao profileDao;
 
     /**
 	 * Method login() takes two parameters
@@ -79,6 +76,7 @@ public class AccountController {
     	else {
     		auth.register(user.getUsername(), user.getFirstName(), user.getLastName(), user.getPassword(), user.getRole());
     		registrationResult.setSuccess(true);
+    		
     	}
     	return registrationResult;
     }

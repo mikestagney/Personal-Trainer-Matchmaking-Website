@@ -2,10 +2,12 @@ package com.techelevator.authentication;
 
 import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
-import com.techelevator.model.user.User;
-import com.techelevator.model.user.UserDao;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.techelevator.model.user.User;
+import com.techelevator.model.user.UserDao;
 
 /**
  * RequestAuthProvider implements the AuthProvider and has with methods for
