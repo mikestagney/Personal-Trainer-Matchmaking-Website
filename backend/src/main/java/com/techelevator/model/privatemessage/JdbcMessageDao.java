@@ -85,4 +85,9 @@ public class JdbcMessageDao implements MessageDao{
         jdbcTemplate.update("INSERT INTO privateMessage( sender_id, recipient_id, sent_date, subject, message) VALUES (?,?,?,?,?)",
         		message.getSenderId(), message.getRecipientId(), message.getPostDate(), message.getSubject(), message.getMessage());
 	}
+	
+	@Override
+	public void deleteMessage(long user_id, long messageId) {
+		
+	}
 }

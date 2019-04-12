@@ -24,4 +24,6 @@ public interface MessageDao {
 	public Message getMessage(long message_id);
 	
 	public void sendMessage(Message message);
+	
+	public void deleteMessage(long user_id, long messageId);
 }

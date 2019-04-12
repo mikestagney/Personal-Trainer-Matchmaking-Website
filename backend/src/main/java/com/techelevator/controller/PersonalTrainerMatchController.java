@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -109,12 +110,12 @@ public class PersonalTrainerMatchController {
 	}
 	
 	@GetMapping("/inbox")
-	public List<Message> displayMessages() throws UnauthorizedException {
+	public List<Message> displayMessages() {
 		return privateMessageDao.getMessages(authProvider.getCurrentUser().getId());
 	}
 	
 	@PostMapping("/send")
-	public void sendMessage(@Valid @RequestBody Message message, BindingResult result) throws UnauthorizedException {
+	public void sendMessage(@Valid @RequestBody Message message, BindingResult result) {
 		RegistrationResult registrationResult = new RegistrationResult();
 		if(result.hasErrors()) {
             for(ObjectError error : result.getAllErrors()) {
@@ -128,7 +129,7 @@ public class PersonalTrainerMatchController {
 	}
     
     @GetMapping("/inbox/{messageId}")
-	public Message displayMessage(@PathVariable long messageId) throws UnauthorizedException {
+	public Message displayMessage(@PathVariable long messageId) {
 		return privateMessageDao.getMessage(messageId);
 	}
     
@@ -143,6 +144,11 @@ public class PersonalTrainerMatchController {
 	@GetMapping("/inbox/{userId}")
 	public List<Message> displayMessagesBetweenUsers(@PathVariable long userId) {
 		return privateMessageDao.getMessagesBetweenUsers(authProvider.getCurrentUser().getId(), userId);
+	}
+	
+	@PutMapping("/inbox/{messageId}")
+	public void deleteMessage(@PathVariable long messageId) {
+		privateMessageDao.deleteMessage(authProvider.getCurrentUser().getId(), messageId);
 	}
 	
 }
