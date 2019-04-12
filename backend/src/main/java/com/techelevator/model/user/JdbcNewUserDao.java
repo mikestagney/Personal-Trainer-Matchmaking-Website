@@ -135,7 +135,7 @@ public class JdbcNewUserDao implements UserDao{
     	trainer.setCertifications(results.getObject("certifications", String[].class));
     	trainer.setCity(results.getString("city"));
     	trainer.setState(results.getString("state"));
-    	trainer.setPublic(results.getBoolean("is_public"));
+    	trainer.setIsPublic(results.getBoolean("is_public"));
     	return trainer;
     }
     
@@ -234,7 +234,7 @@ public class JdbcNewUserDao implements UserDao{
 	public void updateTrainer(Trainer trainer) {
 		updateUser(trainer);
 		jdbcTemplate.update("UPDATE trainer SET hourly_rate=?, rating=?, philosophy=?, bio_info=?, is_public=?, certifications=?  WHERE user_id=?",
-				trainer.getHourlyRate(), trainer.getRating(), trainer.getPhilosophy(), trainer.getBioInfo(), trainer.isPublic(), trainer.getCertifications(), trainer.getId());
+				trainer.getHourlyRate(), trainer.getRating(), trainer.getPhilosophy(), trainer.getBioInfo(), trainer.getIsPublic(), trainer.getCertifications(), trainer.getId());
 	}
 
 	
@@ -319,7 +319,7 @@ public class JdbcNewUserDao implements UserDao{
 	}
 	
 	@Override
-	public void addPrivateNoteToClientList(long trainer_id, long client_id, String privateNote) {
+	public void addPrivateNote(long trainer_id, long client_id, String privateNote) {
 		String[] privateNotesOld = getPrivateNotesStringArr(trainer_id, client_id);
 		String[] privateNotesNew = new String[privateNotesOld.length + 1];
 		for (int i = 0; i < privateNotesOld.length; i++) {
@@ -331,7 +331,7 @@ public class JdbcNewUserDao implements UserDao{
 	}
 	
 	@Override
-	public void removePrivateNoteFromClientList(long trainer_id, long client_id, String privateNote) {
+	public void removePrivateNote(long trainer_id, long client_id, String privateNote) {
 		String[] privateNotesOld = getPrivateNotesStringArr(trainer_id, client_id);
 		if (privateNotesOld.length - 1 == 0) {
 			jdbcTemplate.update("UPDATE client_list SET privateNotes=?  WHERE trainer_id=? AND client_id=?",

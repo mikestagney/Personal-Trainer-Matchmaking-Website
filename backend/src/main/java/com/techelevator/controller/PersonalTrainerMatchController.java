@@ -111,7 +111,7 @@ public class PersonalTrainerMatchController {
 	
 	@GetMapping("/inbox")
 	public List<Message> displayMessages() throws UnauthorizedException {
-		return privateMessageDao.getPrivateMessagesForUser(authProvider.getCurrentUser().getId());
+		return privateMessageDao.getMessages(authProvider.getCurrentUser().getId());
 	}
 	
 	@PostMapping("/send")
@@ -123,14 +123,14 @@ public class PersonalTrainerMatchController {
             }
         }
     	else {
-    		privateMessageDao.sendPrivateMessage(message);
+    		privateMessageDao.sendMessage(message);
     		
     	}
 	}
     
     @GetMapping("inbox/{messageId}")
 	public Message displayMessage(@PathVariable long messageId) throws UnauthorizedException {
-		return privateMessageDao.getPrivateMessage(messageId);
+		return privateMessageDao.getMessage(messageId);
 	}
     
     
@@ -143,6 +143,6 @@ public class PersonalTrainerMatchController {
 	 */
 	@GetMapping("/inbox/{userId}")
 	public List<Message> displayMessagesBetweenUsers(@PathVariable long userId) {
-		return privateMessageDao.getPrivateMessagesBetweenUser(authProvider.getCurrentUser().getId(), userId);
+		return privateMessageDao.getMessagesBetweenUsers(authProvider.getCurrentUser().getId(), userId);
 	}
 }

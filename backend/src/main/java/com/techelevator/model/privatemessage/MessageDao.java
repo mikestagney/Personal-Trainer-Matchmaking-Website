@@ -12,18 +12,16 @@ public interface MessageDao {
 	 * @param user_id the User Id of the User who's Messages are being displayed
 	 * @return List<PrivateMessage> that have been sent or recieved by the User
 	 */
-	public List<Message> getPrivateMessagesForUser(long user_id);
+	public List<Message> getMessages(long user_id);
 	
 	/**
 	 * @param userId1 the User Id of one the User who's Messages are being displayed
 	 * @param userId2 the User Id of one the User who's Messages are being displayed
 	 * @return List<PrivateMessage> that have been sent or recieved between the two Users
 	 */
-	public List<Message> getPrivateMessagesBetweenUser(long trainerId, long clientId);
+	public List<Message> getMessagesBetweenUsers(long trainerId, long clientId);
 	
-	public Message getPrivateMessage(long message_id);
+	public Message getMessage(long message_id);
 	
-	public void sendPrivateMessage(Message message);
-	
-	public void deletePrivateMessage(Message message);
+	public void sendMessage(Message message);
 }

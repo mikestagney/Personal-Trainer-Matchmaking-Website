@@ -12,7 +12,10 @@ import org.hibernate.validator.constraints.NotBlank;
  * Client Id, datePosted, subject, and Message Body of a Private Method
  */
 public class Message {
-	
+
+	@Min(1)
+	@NotBlank(message="Message Id is required")
+	private long messageId;
 	@Min(1)
 	@NotBlank(message="Trainer Id is required")
 	private long senderId;
@@ -20,7 +23,7 @@ public class Message {
 	@NotBlank(message="Client Id is required")
 	private long recipientId;
 	@NotBlank(message="Date Posted is required")
-	private LocalDate datePosted;
+	private LocalDate postDate;
 	@Size(min = 2, max = 20)
 	@NotBlank(message="Message subject line is required")
 	private String subject;
@@ -29,6 +32,14 @@ public class Message {
 	private String message;
 	private boolean unread;
 
+	public long getMessageId() {
+		return messageId;
+	}
+
+	public void setMessageId(long messageId) {
+		this.messageId = messageId;
+	}
+	
 	/**
 	 * @return senderId the Id associated with the Trainer for this message
 	 */
@@ -60,15 +71,15 @@ public class Message {
 	/**
 	 * @return LocalDate the date associated when the Message was Sent
 	 */
-	public LocalDate getDatePosted() {
-		return datePosted;
+	public LocalDate getPostDate() {
+		return postDate;
 	}
 
 	/**
 	 * @param LocalDate to set for this message's datePosted
 	 */
-	public void setDatePosted(LocalDate datePosted) {
-		this.datePosted = datePosted;
+	public void setPostDate(LocalDate postDate) {
+		this.postDate = postDate;
 	}
 	
 	/**

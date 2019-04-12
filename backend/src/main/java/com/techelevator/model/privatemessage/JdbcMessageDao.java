@@ -32,12 +32,12 @@ public class JdbcMessageDao implements MessageDao{
 	 * @return List<PrivateMessage> that have been sent or recieved by the User
 	 */
 	@Override
-	public List<Message> getPrivateMessagesForUser(long user_id) {
+	public List<Message> getMessages(long user_id) {
 		List<Message> messageList = new ArrayList<Message>();
 		String sqlSearchForUsersMessages = "SELECT * FROM private_message WHERE sender_id = ? OR recipient_id = ?";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForUsersMessages, user_id, user_id);
         while (results.next()) {
-            messageList.add(mapResultToPrivateMessage(results));
+            messageList.add(mapResultToMessage(results));
         }
 		return messageList;
 	}
@@ -48,21 +48,22 @@ public class JdbcMessageDao implements MessageDao{
 	 * @return List<PrivateMessage> that have been sent or recieved between the two Users
 	 */
 	@Override
-	public List<Message> getPrivateMessagesBetweenUser(long userId1, long userId2) {
+	public List<Message> getMessagesBetweenUsers(long userId1, long userId2) {
 		List<Message> messageList = new ArrayList<Message>();
 		String sqlSearchForMessagesBetweenUsers = "SELECT * FROM private_message WHERE (sender_id = ? OR recipient_id = ?) AND (sender_id = ? OR recipient_id = ?)";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForMessagesBetweenUsers, userId1, userId1, userId2, userId2);
         while (results.next()) {
-            messageList.add(mapResultToPrivateMessage(results));
+            messageList.add(mapResultToMessage(results));
         }
 		return messageList;
 	}
 	
-	private Message mapResultToPrivateMessage(SqlRowSet results) {
+	private Message mapResultToMessage(SqlRowSet results) {
 		Message message = new Message();
+		message.setMessageId(results.getLong("message_id"));
 		message.setSenderId(results.getLong("sender_id"));
 		message.setRecipientId(results.getLong("recipient_id"));
-		message.setDatePosted(results.getDate("date_sent").toLocalDate());
+		message.setPostDate(results.getDate("date_sent").toLocalDate());
 		message.setUnread(results.getBoolean("read"));
 		message.setSubject(results.getString("subject"));
 		message.setMessage(results.getString("message"));
@@ -70,23 +71,18 @@ public class JdbcMessageDao implements MessageDao{
 	}
 
 	@Override
-	public Message getPrivateMessage(long message_id) {
+	public Message getMessage(long message_id) {
 		String sqlSearchForMessagesBetweenUsers = "SELECT * FROM private_message WHERE message_id = ?";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForMessagesBetweenUsers, message_id);
         if (results.next()) {
-        	return mapResultToPrivateMessage(results);
+        	return mapResultToMessage(results);
         }
 		return null;
 	}
 
 	@Override
-	public void sendPrivateMessage(Message message) {
+	public void sendMessage(Message message) {
         jdbcTemplate.update("INSERT INTO privateMessage( sender_id, recipient_id, sent_date, subject, message) VALUES (?,?,?,?,?)",
-        		message.getSenderId(), message.getRecipientId(), message.getDatePosted(), message.getSubject(), message.getMessage());
-	}
-
-	@Override
-	public void deletePrivateMessage(Message message) {
-		// TODO Auto-generated method stub
+        		message.getSenderId(), message.getRecipientId(), message.getPostDate(), message.getSubject(), message.getMessage());
 	}
 }

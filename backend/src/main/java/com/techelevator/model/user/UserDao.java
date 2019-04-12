@@ -78,8 +78,8 @@ public interface UserDao {
 	
 	public void removeClientFromClientList(long trainer_id, long client_id);
 	
-	public void addPrivateNoteToClientList(long trainer_id, long client_id, String privateNote);
+	public void addPrivateNote(long trainer_id, long client_id, String privateNote);
 	
-	public void removePrivateNoteFromClientList(long trainer_id, long client_id, String privateNote);
+	public void removePrivateNote(long trainer_id, long client_id, String privateNote);
 
 }
