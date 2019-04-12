@@ -7,7 +7,7 @@ import ListTrainers from '@/views/ListTrainers'
 import TrainerProfile from '@/views/TrainerProfile'
 import auth from './auth';
 import MessageDetail from '@/views/MessageDetail';
-
+import WriteMessage from '@/views/WriteMessage';
 
 Vue.use(Router);
 
@@ -44,8 +44,12 @@ const router = new Router({
         path: '/trainer/privatemessage/:MesssageID',
         name: 'trainerPM',
         component: MessageDetail
+      },
+      {
+        path: '/trainer/writemessage',
+        name: 'trainer',
+        component: WriteMessage
       }
-
     ],
   });
   
