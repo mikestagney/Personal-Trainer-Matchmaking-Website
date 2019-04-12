@@ -51,7 +51,7 @@ CREATE TABLE client_list
 
 
 
-CREATE TABLE private_message
+CREATE TABLE message
 (
     sender_id int NOT NULL,
     recipient_id int NOT NULL,

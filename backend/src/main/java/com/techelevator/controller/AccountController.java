@@ -76,7 +76,6 @@ public class AccountController {
     	else {
     		auth.register(user.getUsername(), user.getFirstName(), user.getLastName(), user.getPassword(), user.getRole());
     		registrationResult.setSuccess(true);
-    		
     	}
     	return registrationResult;
     }
