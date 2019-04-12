@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 import com.techelevator.authentication.PasswordHasher;
+import com.techelevator.model.profile.TrainerProfile;
+import com.techelevator.model.profile.UserProfile;
 
 /**
  * JdbcUserDao implements UserDao
@@ -53,6 +55,11 @@ public class JdbcUserDao implements UserDao{
         newUser.setUsername(userName);
         newUser.setRole(role);
 
+    //TODO -- BM -- this is where all register new user stuff goes
+		jdbcTemplate.update(
+				"INSERT INTO user_profile (user_id, first_name, last_name, is_public, role, city, state) VALUES (?,?,?,?,?,?,?);", 
+				newId, first_name, last_name, true, role, "", "");
+        
         return newUser;
     }
 

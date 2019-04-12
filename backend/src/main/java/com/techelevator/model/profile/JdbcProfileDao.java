@@ -2,10 +2,12 @@ package com.techelevator.model.profile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -24,7 +26,7 @@ public class JdbcProfileDao implements ProfileDao{
 	private JdbcTemplate jdbcTemplate;
 	
 	/**
-     * Create a new trainer profile dao with the supplied data source
+     * Creates a DAO to access user data.
      *
      * @param dataSource an SQL data source
      */
@@ -58,16 +60,38 @@ public class JdbcProfileDao implements ProfileDao{
 	 */
 	@Override
 	public List<UserProfile> getTrainerProfilesBySearchCriteria(String city, String state, int min_price_per_hour, int max_price_per_hour, double rating, String certifications) {
-		List<UserProfile> trainerProfileList = new ArrayList<UserProfile>();
-		String sqlSelectTrainersBySearchCriteria = "SELECT * FROM user_profile WHERE city ILIKE ? "
-					+ "AND state ILIKE ? AND hourly_rate >= ? AND hourly_rate <= ? AND rating >= ? "
-					+ "AND certifications ILIKE ? AND is_public = true AND role = 'Trainer'";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectTrainersBySearchCriteria, "%" + city + "%", "%" + state + "%",
-        											min_price_per_hour, max_price_per_hour, rating, "%" + certifications + "%");
-        while (results.next()) {
-        	trainerProfileList.add(mapResultToUserProfile(results));
-        }
-        return trainerProfileList;
+          List<UserProfile> trainerProfileList = new ArrayList<UserProfile>();
+          String sql = 
+       		      "SELECT"
+        	    + "    users.user_id                    AS user_id        "
+        	    + "    , true                           AS is_public      "
+        	    + "    , users.first_name               AS first_name     "
+        	    + "    , users.last_name                AS last_name      "
+        	    + "    , user_profile.city              AS city           "
+        	    + "    , user_profile.state             AS state          "
+        	    + "    , users.role                     AS role           "
+        	    + "    , trainer_profile.price_per_hour AS price_per_hour "
+        	    + "    , trainer_profile.rating         AS rating         "
+        	    + "    , trainer_profile.philosphy      AS philosphy      "
+        	    + "    , trainer_profile.bio            AS bio            "
+        	    + "    , trainer_profile.certifications AS certifications "
+        	    + "FROM users                                      "
+        	    + "JOIN trainer_profile USING(user_id)             "
+        	    + "JOIN user_profile    USING(user_id)             "
+        	    + "WHERE user_profile.is_public = true             "
+        	    + " AND city ILIKE ? AND state ILIKE ?             "
+        		+ " AND price_per_hour >= ? AND price_per_hour <= ?"  
+        		+ " AND rating >= ? AND certifications ILIKE ?;    ";
+          
+          SqlRowSet results = jdbcTemplate.queryForRowSet(sql, 
+        		  "%" + city + "%", "%" + state + "%",
+                   min_price_per_hour, max_price_per_hour, 
+                   rating, "%" + certifications + "%");
+
+          while (results.next()) {
+        	  trainerProfileList.add(mapResultToUserProfile(results));
+          }
+          return trainerProfileList;
 	}
 	
 	/**
@@ -90,6 +114,7 @@ public class JdbcProfileDao implements ProfileDao{
 	/**
 	 * 
 	 */
+	//TODO -- not called at all
 	@Override
 	public void createUserProfile(UserProfile userProfile, User user) {
 		jdbcTemplate.update("INSERT INTO user_profile (user_id, first_name, last_name, is_public, role, city, state)"
@@ -108,12 +133,13 @@ public class JdbcProfileDao implements ProfileDao{
 	 */
 	@Override
 	public void createUserProfile(User user) {
-		jdbcTemplate.update("INSERT INTO user_profile (user_id, first_name, last_name, is_public, role, city, state)"
-				+ " VALUES (?,?,?,?,?,?)", user.getId(), user.getFirstName(), user.getLastName(),
-				false, user.getRole(), "", "");
+		jdbcTemplate.update(
+			"INSERT INTO user_profile (user_id, first_name, last_name, is_public, role, city, state) VALUES (?,?,?,?,?,?,?);", 
+			user.getId(), user.getFirstName(), user.getLastName(), false, user.getRole(), "", "");
 		if (user.getRole().equals("Trainer")) {
 			UserProfile userProfile = getUserProfileById(user.getId());
 			TrainerProfile trainerProfile = userProfile.getTrainerProfile();
+			//FIXME --- BM -- What is the intent behind this?
 			try {
 				if (trainerProfile.getPrice_per_hour() < 0) {
 					trainerProfile.setPrice_per_hour(0);
