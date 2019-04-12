@@ -276,10 +276,10 @@ public class JdbcNewUserDao implements UserDao{
 	
 	private String[] getPrivateNotesStringArr(long user_id, long client_id) {
 		String[] privateNotes = null;
-		String sqlSelectPrivateNotes = "SELECT privateNotes FROM client_list WHERE trainer_id = ? and client_id = ?";
+		String sqlSelectPrivateNotes = "SELECT private_notes FROM client_list WHERE trainer_id = ? and client_id = ?";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectPrivateNotes, user_id, client_id);
 		if (results.next()) {
-			privateNotes = results.getObject("privateNotes", String[].class);
+			privateNotes = results.getObject("private_notes", String[].class);
         }
         return privateNotes;
 	}
@@ -302,7 +302,7 @@ public class JdbcNewUserDao implements UserDao{
 			privateNotesNew[i] = privateNotesOld[i];
 		}
 		privateNotesNew[privateNotesOld.length] = privateNote;
-		jdbcTemplate.update("UPDATE client_list SET privateNotes=?  WHERE trainer_id=? AND client_id=?",
+		jdbcTemplate.update("UPDATE client_list SET private_notes=?  WHERE trainer_id=? AND client_id=?",
 				privateNotesNew,trainer_id,client_id);
 	}
 	
@@ -310,7 +310,7 @@ public class JdbcNewUserDao implements UserDao{
 	public void removePrivateNote(long trainer_id, long client_id, String privateNote) {
 		String[] privateNotesOld = getPrivateNotesStringArr(trainer_id, client_id);
 		if (privateNotesOld.length - 1 == 0) {
-			jdbcTemplate.update("UPDATE client_list SET privateNotes=?  WHERE trainer_id=? AND client_id=?",
+			jdbcTemplate.update("UPDATE client_list SET private_notes=?  WHERE trainer_id=? AND client_id=?",
 					null,trainer_id,client_id);
 		}
 		else {
@@ -322,7 +322,7 @@ public class JdbcNewUserDao implements UserDao{
 					counter++;
 				}
 			}
-			jdbcTemplate.update("UPDATE client_list SET privateNotes=?  WHERE trainer_id=? AND client_id=?",
+			jdbcTemplate.update("UPDATE client_list SET private_notes=?  WHERE trainer_id=? AND client_id=?",
 					privateNotesNew,trainer_id,client_id);
 		}
 	}
