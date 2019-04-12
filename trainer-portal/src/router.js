@@ -7,6 +7,7 @@ import TrainerProfile from '@/views/TrainerProfile'
 import auth from './auth';
 import MessageDetail from '@/views/MessageDetail';
 import WriteMessage from '@/views/WriteMessage';
+import Home from '@/views/Home';
 
 Vue.use(Router);
 
@@ -28,7 +29,6 @@ const router = new Router({
         path: '/search',
         name: 'search',
         component: ListTrainers,
-        alias: '/'
       }, 
       {
         path: '/trainer/profile/:TrainerID',
@@ -44,6 +44,11 @@ const router = new Router({
         path: '/trainer/writemessage',
         name: 'trainer',
         component: WriteMessage
+      },
+      {
+      path: '/',
+      name: 'home',
+      component: Home
       }
     ],
   });
