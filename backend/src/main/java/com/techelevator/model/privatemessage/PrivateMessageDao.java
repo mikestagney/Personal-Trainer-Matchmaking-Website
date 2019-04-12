@@ -20,4 +20,10 @@ public interface PrivateMessageDao {
 	 * @return List<PrivateMessage> that have been sent or recieved between the two Users
 	 */
 	public List<PrivateMessage> getPrivateMessagesBetweenUser(long trainerId, long clientId);
+	
+	public PrivateMessage getPrivateMessage(long message_id);
+	
+	public void sendPrivateMessage(PrivateMessage message);
+	
+	public void deletePrivateMessage(PrivateMessage message);
 }

@@ -53,6 +53,11 @@ public class JdbcNewUserDao implements UserDao{
         String saltString = new String(Base64.encode(salt));
         long newId = jdbcTemplate.queryForObject("INSERT INTO users(username, first_name, last_name, password, salt, role) VALUES (?, ?, ?, ?, ?, ?) "
         		+ "RETURNING user_id", Long.class, username,  lastName, hashedPassword, saltString, role);
+        if (role.equals("Trainer")) {
+        	jdbcTemplate.update("INSERT INTO trainer(user_id) VALUES (?)", newId);
+        
+        }
+        
         return createUser(newId, username, firstName, lastName, password, role);
     }
     
@@ -102,34 +107,23 @@ public class JdbcNewUserDao implements UserDao{
     private User createUser(SqlRowSet results) {
     	switch (results.getString("role")) {
     	case "Trainer":
-    		return createNewTrainer(results);
+    		return createTrainer(results);
     	default:
-    		return createNewClient(results);
+    		return createClient(results);
     	}
     }
     
     private User createUser(Long id, String username, String firstName, String lastName, String password, String role) {
-    	switch (role) {
-    	case "Trainer":
-    		Trainer trainer = new Trainer();
-    		trainer.setId(id);
-    		trainer.setUsername(username);
-    		trainer.setFirstName(firstName);
-    		trainer.setLastName(lastName);
-    		trainer.setRole(role);
-        	return trainer;
-    	default:
-    		Client client = new Client();
-        	client.setId(id);
-        	client.setUsername(username);
-        	client.setFirstName(firstName);
-        	client.setLastName(lastName);
-        	client.setRole(role);
-        	return client;
-    	}
+    	User user = new Trainer();
+    	user.setId(id);
+    	user.setUsername(username);
+    	user.setFirstName(firstName);
+    	user.setLastName(lastName);
+    	user.setRole(role);
+    	return user;
     }
     
-    private Trainer createNewTrainer(SqlRowSet results) {
+    private Trainer createTrainer(SqlRowSet results) {
     	Trainer trainer = new Trainer();
     	trainer.setId(results.getLong("user_id"));
     	trainer.setUsername(results.getString("username"));
@@ -147,7 +141,7 @@ public class JdbcNewUserDao implements UserDao{
     	return trainer;
     }
     
-    private Client createNewClient(SqlRowSet results) {
+    private Client createClient(SqlRowSet results) {
     	Client client = new Client();
     	client.setId(results.getLong("user_id"));
     	client.setUsername(results.getString("username"));
@@ -210,11 +204,23 @@ public class JdbcNewUserDao implements UserDao{
         }
 	}
 	
-	private Trainer getTrainerById(Long id) {
+	@Override
+	public Trainer getTrainerById(Long id) {
     	String sqlSelectUserById = "SELECT * FROM trainer WHERE user_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserById, id);
         if(results.next()) {
-            return createNewTrainer(results);
+            return createTrainer(results);
+        } else {
+            return null;
+        }
+	}
+	
+	@Override
+	public Client getClientById(Long id) {
+    	String sqlSelectUserById = "SELECT * FROM client WHERE user_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserById, id);
+        if(results.next()) {
+            return createClient(results);
         } else {
             return null;
         }
@@ -249,7 +255,7 @@ public class JdbcNewUserDao implements UserDao{
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectTrainersBySearchCriteria, "%" + name + "%", "%" + city + "%", "%" + state + "%",
         							minHourlyRate, maxHourlyRate, rating);
         while (results.next()) {
-        	trainerList.add(createNewTrainer(results));
+        	trainerList.add(createTrainer(results));
         }
         return trainerList;
 	}

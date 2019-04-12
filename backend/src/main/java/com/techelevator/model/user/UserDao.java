@@ -48,6 +48,10 @@ public interface UserDao {
      */
     public User getUserById(Long id);
     
+    public Trainer getTrainerById(Long id);
+    
+    public Client getClientById(Long id);
+    
 	public void updateClient(Client user);
 	
 	public void updateTrainer(Trainer trainer);
@@ -61,6 +65,7 @@ public interface UserDao {
 	 * @return List<TrainerProfile> for all Trainer's that fall within the search criteria
 	 */
 	public List<Trainer> getTrainersSearch(String name, String city, String state, int minHourlyRate, int maxHourlyRate, double rating);	
+	
 	/**
 	 * @param user_id the User Id of the Trainer who's Client List is being searched
 	 * @param name the Name to search the client list for
