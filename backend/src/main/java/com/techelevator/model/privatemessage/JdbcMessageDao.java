@@ -67,15 +67,20 @@ public class JdbcMessageDao implements MessageDao{
 		message.setUnread(results.getBoolean("read"));
 		message.setSubject(results.getString("subject"));
 		message.setMessage(results.getString("message"));
+		message.setSenderDelete(results.getBoolean("sender_delete"));
+		message.setRecipientDelete(results.getBoolean("recipient_delete"));
 		return message;
 	}
 
 	@Override
-	public Message getMessage(long message_id) {
+	public Message getMessage(long messageId) {
 		String sqlSearchForMessagesBetweenUsers = "SELECT * FROM private_message WHERE message_id = ?";
-		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForMessagesBetweenUsers, message_id);
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForMessagesBetweenUsers, messageId);
         if (results.next()) {
-        	return mapResultToMessage(results);
+        	Message message = mapResultToMessage(results);
+        	message.setUnread(false);
+			jdbcTemplate.update("INSERT INTO privateMessage( unread ) VALUES (false) WHERE message_id = ?", messageId);
+        	return message;
         }
 		return null;
 	}
@@ -88,6 +93,18 @@ public class JdbcMessageDao implements MessageDao{
 	
 	@Override
 	public void deleteMessage(long user_id, long messageId) {
-		
+		Message message = getMessage(messageId);
+		if (messageId == message.getSenderId()) {
+			jdbcTemplate.update("INSERT INTO privateMessage( sender_delete ) VALUES (true) WHERE message_id = ?", messageId);
+			message.setSenderDelete(true);
+		}
+		else if (messageId == message.getRecipientId()) {
+			jdbcTemplate.update("INSERT INTO privateMessage( recipient_delete ) VALUES (true) WHERE message_id = ?", messageId);
+			message.setRecipientDelete(true);
+		}
+		if (message.isSenderDelete() && message.isRecipientDelete()) {
+			jdbcTemplate.execute("DELETE FROM message WHERE AND message_id = ?");
+
+		}
 	}
 }

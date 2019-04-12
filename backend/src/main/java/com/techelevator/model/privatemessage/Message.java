@@ -31,6 +31,8 @@ public class Message {
 	@NotBlank(message="Message body text is required")
 	private String message;
 	private boolean unread;
+	private boolean senderDelete;
+	private boolean recipientDelete;
 
 	public long getMessageId() {
 		return messageId;
@@ -122,5 +124,21 @@ public class Message {
 	 */
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	
+	public boolean isSenderDelete() {
+		return senderDelete;
+	}
+
+	public void setSenderDelete(boolean senderDelete) {
+		this.senderDelete = senderDelete;
+	}
+
+	public boolean isRecipientDelete() {
+		return recipientDelete;
+	}
+
+	public void setRecipientDelete(boolean recipientDelete) {
+		this.recipientDelete = recipientDelete;
 	}
 }
