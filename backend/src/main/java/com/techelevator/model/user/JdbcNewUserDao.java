@@ -226,7 +226,7 @@ public class JdbcNewUserDao implements UserDao{
         	User user = createUser(results);
         	map.put(user.getId(), user);
         }
-		String sqlSelectTrainersBySearchCriteria = "SELECT * FROM trainer WHERE price_per_hour >= ? AND price_per_hour <= ? AND rating >= ? AND is_public = true";
+		String sqlSelectTrainersBySearchCriteria = "SELECT * FROM trainer WHERE hourly_rate >= ? AND hourly_rate <= ? AND rating >= ? AND is_public = true";
         SqlRowSet results2 = jdbcTemplate.queryForRowSet(sqlSelectTrainersBySearchCriteria, minHourlyRate, maxHourlyRate, rating);
         while (results2.next()) {
         	trainerList.add(createTrainer(results2,map.get(results2.getLong("user_id"))));
