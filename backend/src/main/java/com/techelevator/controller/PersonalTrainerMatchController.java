@@ -74,10 +74,24 @@ public class PersonalTrainerMatchController {
     
     @GetMapping("/client/profile/{clientId}")
 	public User clientProfilePage(@PathVariable long clientId) throws UnauthorizedException {
-		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
+		if(!authProvider.userHasRole(new String[] {"Client"})) {
             throw new UnauthorizedException();
         }
 		return userDao.getClientById(clientId);
+	}
+    
+    @PutMapping("/trainer/updateProfile")
+	public void updateTrainerProfilePage() throws UnauthorizedException {
+		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
+            throw new UnauthorizedException();
+        }
+	}
+    
+    @PutMapping("/client/updateProfile")
+	public void updateClientProfilePage() throws UnauthorizedException {
+		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
+            throw new UnauthorizedException();
+        }
 	}
     
     @GetMapping("/profile")
@@ -103,7 +117,7 @@ public class PersonalTrainerMatchController {
 	public ClientList displayClientListSearch(@RequestParam(defaultValue="") String name,
 												@RequestParam(defaultValue="") String username)
 												throws UnauthorizedException {
-		if(!authProvider.userHasRole(new String[] {"trainer"})) {
+		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
             throw new UnauthorizedException();
         }
 		return userDao.searchClientList(authProvider.getCurrentUser().getId(), name, username);
