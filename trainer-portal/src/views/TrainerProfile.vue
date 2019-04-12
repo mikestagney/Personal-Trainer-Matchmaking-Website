@@ -14,20 +14,20 @@
         <h4 class="font-italic">{{trainer.philosophy}}</h4>
         </div>
     </div>
-    <div class="row mb-3">
-        <div class="col bg-light ml-1">
+    <div class="row mb-2">
+        <div class="col blueBackground ml-1">
             <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/waterbottle.png" class="p-3"><span class="orangeText">  Rating:</span> {{trainer.rating}}</h6>
             
         </div>
-        <div class="col bg-light ml-1">
+        <div class="col blueBackground ml-1">
             <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/scale.png" class="p-3"><span class="orangeText">  Price:</span> ${{trainer.hourly_rate}} per hour</h6>
         </div>
         </div>
         <div class="row mb-3">
-            <div class="col bg-light">
+            <div class="col blueBackground">
             <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/shoe.png" class="p-3"><span class="orangeText">  Background:</span> {{trainer.bio_info}}</h6>
             </div>
-            <div class="col bg-light ml-1">
+            <div class="col blueBackground ml-1">
             <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/muscles.png" class="p-3"><span class="orangeText"> Certifications:</span> {{trainer.certifications}}</h6>
             </div>
         </div>
@@ -85,6 +85,11 @@ import DefaultLayout from '@/layouts/DefaultLayout';
   -moz-box-shadow:    3px 3px 5px 6px #ccc;
   -webkit-box-shadow: 3px 3px 5px 6px #ccc;
   box-shadow:         3px 3px 5px 6px #ccc;
+}
+
+.blueBackground {
+    background-color: #e9f5f8;
+
 }
 
 @font-face {
