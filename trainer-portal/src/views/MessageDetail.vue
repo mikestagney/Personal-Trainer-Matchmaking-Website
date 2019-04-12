@@ -1,9 +1,21 @@
 <template>
-<div>
+<body>
+  <div class="subject">
   <h3>Subject: {{ this.message.subject }} </h3>
-  <p> Name: {{ message.firstname  + ' ' + message.lastname }} {{ message.role }} Time sent: {{ message.date_sent  }}</p>
+  </div>
+  <div class="name">
+  Name: {{ message.firstname  + ' ' + message.lastname }}
+  </div>
+  <div class="role">
+  {{ message.role }} 
+  </div>
+  <div class="date">
+   sent: {{ message.date_sent  }}
+  </div>
+  <div class="message">
   <p> {{ message.body }} </p>
-</div>
+  </div>
+</body> 
     
 </template>
 
@@ -41,5 +53,34 @@ export default {
 </script>
 
 <style>
+
+* {
+  box-sizing: border-box;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr 2fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas:
+    ". subject subject .  ."
+    ". name   role   date    ."
+    ". message message message .";
+}
+.subject {
+  grid-area: subject;
+}
+.name {
+  grid-area: name;
+}
+.role {
+  grid-area: role;
+}
+.date {
+  grid-area: date;
+}
+.message {
+  grid-area: message;
+}
 
 </style>
