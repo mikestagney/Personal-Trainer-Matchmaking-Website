@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * PrivateMessage Class is an object that holds a Trainer Id,
  * Client Id, datePosted, subject, and Message Body of a Private Method
  */
-public class PrivateMessage {
+public class Message {
 	
 	@Min(1)
 	@NotBlank(message="Trainer Id is required")

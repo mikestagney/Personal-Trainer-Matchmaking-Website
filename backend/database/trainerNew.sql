@@ -53,6 +53,7 @@ CREATE TABLE client_list
 
 CREATE TABLE message
 (
+    message_id serial,
     sender_id int NOT NULL,
     recipient_id int NOT NULL,
     post_date timestamp NOT NULL,
@@ -60,7 +61,7 @@ CREATE TABLE message
     subject varchar(20),
     message varchar(250),
 
-    constraint pk_private_message primary key (sender_id, recipient_id, post_date),
+    constraint pk_private_message primary key (message_id, sender_id, recipient_id, post_date),
     constraint fk_private_message_sender foreign key (sender_id) references users (user_id),
     constraint fk_private_message_recipient foreign key (recipient_id) references  users (user_id)
 );

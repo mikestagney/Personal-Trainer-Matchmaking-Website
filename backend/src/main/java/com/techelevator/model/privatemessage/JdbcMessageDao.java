@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * to find all of the messages for a User and all of the Messages between two Users
  */
 @Component
-public class JdbcPrivateMessageDao implements PrivateMessageDao{
+public class JdbcMessageDao implements MessageDao{
 
 	private JdbcTemplate jdbcTemplate;
 	
@@ -23,7 +23,7 @@ public class JdbcPrivateMessageDao implements PrivateMessageDao{
      * @param dataSource an SQL data source
      */
 	@Autowired
-    public JdbcPrivateMessageDao(DataSource dataSource) {
+    public JdbcMessageDao(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 	
@@ -32,8 +32,8 @@ public class JdbcPrivateMessageDao implements PrivateMessageDao{
 	 * @return List<PrivateMessage> that have been sent or recieved by the User
 	 */
 	@Override
-	public List<PrivateMessage> getPrivateMessagesForUser(long user_id) {
-		List<PrivateMessage> messageList = new ArrayList<PrivateMessage>();
+	public List<Message> getPrivateMessagesForUser(long user_id) {
+		List<Message> messageList = new ArrayList<Message>();
 		String sqlSearchForUsersMessages = "SELECT * FROM private_message WHERE sender_id = ? OR recipient_id = ?";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForUsersMessages, user_id, user_id);
         while (results.next()) {
@@ -48,8 +48,8 @@ public class JdbcPrivateMessageDao implements PrivateMessageDao{
 	 * @return List<PrivateMessage> that have been sent or recieved between the two Users
 	 */
 	@Override
-	public List<PrivateMessage> getPrivateMessagesBetweenUser(long userId1, long userId2) {
-		List<PrivateMessage> messageList = new ArrayList<PrivateMessage>();
+	public List<Message> getPrivateMessagesBetweenUser(long userId1, long userId2) {
+		List<Message> messageList = new ArrayList<Message>();
 		String sqlSearchForMessagesBetweenUsers = "SELECT * FROM private_message WHERE (sender_id = ? OR recipient_id = ?) AND (sender_id = ? OR recipient_id = ?)";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForMessagesBetweenUsers, userId1, userId1, userId2, userId2);
         while (results.next()) {
@@ -58,8 +58,8 @@ public class JdbcPrivateMessageDao implements PrivateMessageDao{
 		return messageList;
 	}
 	
-	private PrivateMessage mapResultToPrivateMessage(SqlRowSet results) {
-		PrivateMessage message = new PrivateMessage();
+	private Message mapResultToPrivateMessage(SqlRowSet results) {
+		Message message = new Message();
 		message.setSenderId(results.getLong("sender_id"));
 		message.setRecipientId(results.getLong("recipient_id"));
 		message.setDatePosted(results.getDate("date_sent").toLocalDate());
@@ -70,7 +70,7 @@ public class JdbcPrivateMessageDao implements PrivateMessageDao{
 	}
 
 	@Override
-	public PrivateMessage getPrivateMessage(long message_id) {
+	public Message getPrivateMessage(long message_id) {
 		String sqlSearchForMessagesBetweenUsers = "SELECT * FROM private_message WHERE message_id = ?";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForMessagesBetweenUsers, message_id);
         if (results.next()) {
@@ -80,13 +80,13 @@ public class JdbcPrivateMessageDao implements PrivateMessageDao{
 	}
 
 	@Override
-	public void sendPrivateMessage(PrivateMessage message) {
+	public void sendPrivateMessage(Message message) {
         jdbcTemplate.update("INSERT INTO privateMessage( sender_id, recipient_id, sent_date, subject, message) VALUES (?,?,?,?,?)",
         		message.getSenderId(), message.getRecipientId(), message.getDatePosted(), message.getSubject(), message.getMessage());
 	}
 
 	@Override
-	public void deletePrivateMessage(PrivateMessage message) {
+	public void deletePrivateMessage(Message message) {
 		// TODO Auto-generated method stub
 	}
 }

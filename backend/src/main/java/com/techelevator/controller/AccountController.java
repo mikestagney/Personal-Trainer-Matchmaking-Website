@@ -88,8 +88,8 @@ public class AccountController {
 	 * @param user_id the user_id of the User changing their password
 	 * @param newPassword String of the new password
 	 */
-    @PutMapping ("updatePassword/{user_id}")
-	public void updatePassword(@PathVariable long user_id, @RequestBody String newPassword) {
-    	userDao.changePassword(userDao.getUserById(user_id), newPassword);
+    @PutMapping ("/updatePassword/{newPassword}")
+	public void updatePassword(@PathVariable String newPassword) {
+    	userDao.changePassword(userDao.getUserById(auth.getCurrentUser().getId()), newPassword);
 	}
 }

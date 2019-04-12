@@ -15,12 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.techelevator.authentication.AuthProvider;
 import com.techelevator.authentication.RegistrationResult;
 import com.techelevator.authentication.UnauthorizedException;
-import com.techelevator.model.privatemessage.PrivateMessage;
-import com.techelevator.model.privatemessage.PrivateMessageDao;
+import com.techelevator.model.privatemessage.Message;
+import com.techelevator.model.privatemessage.MessageDao;
 import com.techelevator.model.user.UserDao;
 import com.techelevator.model.user.Client;
 import com.techelevator.model.user.ClientList;
 import com.techelevator.model.user.Trainer;
+import com.techelevator.model.user.User;
 
 /**
  * PersonalTrainerMatchController Class uses AuthProvider, UserDao,
@@ -42,17 +43,22 @@ public class PersonalTrainerMatchController {
 	@Autowired
     private AuthProvider authProvider;
     @Autowired
-    private PrivateMessageDao privateMessageDao;
+    private MessageDao privateMessageDao;
     @Autowired
     private UserDao userDao;
 	
+    
+    @GetMapping("/")
+    public void displayHomePage() {
+    	
+    }
     
     @GetMapping("/search")
 	public List<Trainer> trainersSearch(@RequestParam(defaultValue="") String name,
 											@RequestParam(defaultValue="") String city,
 											@RequestParam(defaultValue="") String state,
 											@RequestParam(defaultValue="0") int minHourlyRate,
-											@RequestParam(defaultValue="200") int maxHourlyRate,
+											@RequestParam(defaultValue="999") int maxHourlyRate,
 											@RequestParam(defaultValue="0") double rating) {
 		return userDao.getTrainersSearch(name,city,state,minHourlyRate,maxHourlyRate,rating);
 	}
@@ -72,6 +78,14 @@ public class PersonalTrainerMatchController {
             throw new UnauthorizedException();
         }
 		return userDao.getClientById(clientId);
+	}
+    
+    @GetMapping("/profile")
+	public User profilePage() throws UnauthorizedException {
+		if(!authProvider.userHasRole(new String[] {"Trainer", "Client"})) {
+            throw new UnauthorizedException();
+        }
+		return userDao.getClientById(authProvider.getCurrentUser().getId());
 	}
     
     /**
@@ -96,12 +110,12 @@ public class PersonalTrainerMatchController {
 	}
 	
 	@GetMapping("/inbox")
-	public List<PrivateMessage> displayMessages() throws UnauthorizedException {
+	public List<Message> displayMessages() throws UnauthorizedException {
 		return privateMessageDao.getPrivateMessagesForUser(authProvider.getCurrentUser().getId());
 	}
 	
 	@PostMapping("/send")
-	public void sendMessage(@Valid @RequestBody PrivateMessage message, BindingResult result) throws UnauthorizedException {
+	public void sendMessage(@Valid @RequestBody Message message, BindingResult result) throws UnauthorizedException {
 		RegistrationResult registrationResult = new RegistrationResult();
 		if(result.hasErrors()) {
             for(ObjectError error : result.getAllErrors()) {
@@ -115,7 +129,7 @@ public class PersonalTrainerMatchController {
 	}
     
     @GetMapping("inbox/{messageId}")
-	public PrivateMessage displayMessage(@PathVariable long messageId) throws UnauthorizedException {
+	public Message displayMessage(@PathVariable long messageId) throws UnauthorizedException {
 		return privateMessageDao.getPrivateMessage(messageId);
 	}
     
@@ -128,7 +142,7 @@ public class PersonalTrainerMatchController {
 	 * @return List<PrivateMessage> list of all Private Messages between user and User
 	 */
 	@GetMapping("/inbox/{userId}")
-	public List<PrivateMessage> displayMessagesBetweenUsers(@RequestParam long userId) {
+	public List<Message> displayMessagesBetweenUsers(@PathVariable long userId) {
 		return privateMessageDao.getPrivateMessagesBetweenUser(authProvider.getCurrentUser().getId(), userId);
 	}
 }
