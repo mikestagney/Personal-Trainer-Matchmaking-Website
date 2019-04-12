@@ -169,6 +169,8 @@ UPDATE user_profile
 SET role = 'Trainer'
 WHERE user_id <= 5;
 
+-- user_id sequence
+select setval('users_user_id_seq', (select max(user_id) from users));
 
 -- Foreign Key Constraints
 ALTER TABLE user_profile

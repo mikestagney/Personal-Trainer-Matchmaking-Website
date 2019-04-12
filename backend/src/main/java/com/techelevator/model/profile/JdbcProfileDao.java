@@ -90,6 +90,7 @@ public class JdbcProfileDao implements ProfileDao{
 	/**
 	 * 
 	 */
+	//TODO -- not called at all
 	@Override
 	public void createUserProfile(UserProfile userProfile, User user) {
 		jdbcTemplate.update("INSERT INTO user_profile (user_id, first_name, last_name, is_public, role, city, state)"
@@ -108,12 +109,13 @@ public class JdbcProfileDao implements ProfileDao{
 	 */
 	@Override
 	public void createUserProfile(User user) {
-		jdbcTemplate.update("INSERT INTO user_profile (user_id, first_name, last_name, is_public, role, city, state)"
-				+ " VALUES (?,?,?,?,?,?)", user.getId(), user.getFirstName(), user.getLastName(),
-				false, user.getRole(), "", "");
+		jdbcTemplate.update(
+			"INSERT INTO user_profile (user_id, first_name, last_name, is_public, role, city, state) VALUES (?,?,?,?,?,?,?);", 
+			user.getId(), user.getFirstName(), user.getLastName(), false, user.getRole(), "", "");
 		if (user.getRole().equals("Trainer")) {
 			UserProfile userProfile = getUserProfileById(user.getId());
 			TrainerProfile trainerProfile = userProfile.getTrainerProfile();
+			//FIXME --- BM -- What is the intent behind this?
 			try {
 				if (trainerProfile.getPrice_per_hour() < 0) {
 					trainerProfile.setPrice_per_hour(0);
