@@ -1,6 +1,6 @@
 <template>
   <default-layout>
-  <div id="login" class="text-center">
+  <div id="login" class="text-center shadow bg-light">
     <form class="form-signin" @submit.prevent="login">
       <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
       <div class="alert alert-danger" role="alert" v-if="invalidCredentials">
@@ -28,10 +28,10 @@
         v-model="user.password"
         required
       />
-      <router-link :to="{ name: 'register' }">
+      <router-link :to="{ name: 'register' }" class="orangeText">
         Need an account?
       </router-link>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">
+      <button class="btn btn-lg btn-info btn-block mt-2" type="submit">
         Sign in
       </button>
     </form>
@@ -108,8 +108,9 @@ body {
   align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #f5f5f5;
   font-family: 'Roboto Condensed', sans-serif;
+  border-radius: 10px;
+  
 }
 
 form {

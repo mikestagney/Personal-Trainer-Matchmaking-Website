@@ -1,6 +1,6 @@
 <template>
 <body>
-  <div class="container page-view">
+  <div class="container page-view pt-2">
     <div class="messageContainer pb-4 pl-4 pr-4 pt-2">
       <div class="row messageHeader text-light mb-3 p-5 shadow">
                 <div class="col">
