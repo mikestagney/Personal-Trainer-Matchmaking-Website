@@ -5,29 +5,32 @@
    <!-- <h2>the trainer id is :{{this.$route.params.TrainerID}}</h2> -->
    <div v-for="trainer in trainers" :key="trainer.user_id">
      <div v-if="TrainerID == trainer.user_id">
-    <div class="row bg-info text-light mb-3" id="trainerHeading">
+    <div class="row imageHeader text-light mb-3 p-5 shadow">
         <div class="col">
-        <h3 class="text-center">{{trainer.first_name}} {{trainer.last_name}}</h3>
-        <h4 class="text-center font-italic">{{trainer.philosophy}}</h4>
+        <h3 id="test">{{trainer.first_name}} {{trainer.last_name}}</h3>
+        <h5>{{trainer.city}}, {{trainer.state}}</h5>
+        </div>
+        <div class="col">
+        <h4 class="font-italic">{{trainer.philosophy}}</h4>
         </div>
     </div>
-    <div class="row text-center mb-3 purpleText">
-        <div class="col bg-light">
-            <h6 class="font-weight-bold">{{trainer.city}}, {{trainer.state}}</h6>
+    <div class="row mb-3">
+        <div class="col bg-light ml-1">
+            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/waterbottle.png" class="p-3"><span class="orangeText">  Rating:</span> {{trainer.rating}}</h6>
+            
         </div>
         <div class="col bg-light ml-1">
-            <h6 class="font-weight-bold">{{trainer.rating}}</h6>
+            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/scale.png" class="p-3"><span class="orangeText">  Price:</span> ${{trainer.hourly_rate}} per hour</h6>
         </div>
-        <div class="col bg-light ml-1">
-            <h6 class="font-weight-bold">${{trainer.hourly_rate}} per hour</h6>
         </div>
-    </div>
-    <div class="row mx-auto text-center mb-3">
-        <div class="col">
-        <p>{{trainer.bio_info}}</p>
-        <p>{{trainer.certifications}}</p>
+        <div class="row mb-3">
+            <div class="col bg-light">
+            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/shoe.png" class="p-3"><span class="orangeText">  Background:</span> {{trainer.bio_info}}</h6>
+            </div>
+            <div class="col bg-light ml-1">
+            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/muscles.png" class="p-3"><span class="orangeText"> Certifications:</span> {{trainer.certifications}}</h6>
+            </div>
         </div>
-    </div>
   </div>
  </div>
   </div>
@@ -65,12 +68,30 @@ import DefaultLayout from '@/layouts/DefaultLayout';
 </script>
 
 <style>
-#trainerHeading {
-    border-radius: 4px;
+
+.orangeText {
+    color: 	#FF8C00;
 }
 
-.purpleText {
-    color: #A194DB;
+.imageHeader {
+    background-image: url("../assets/FitnessImages/fitnessImage5.jpg");
+    background-size: cover;
+    background-position: bottom;
+    border-radius: 4px;
+    
 }
+
+.shadow {
+  -moz-box-shadow:    3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow:         3px 3px 5px 6px #ccc;
+}
+
+@font-face {
+font-family:"bebas-neue-by-fontfabric";
+src:url("https://use.typekit.net/af/630fe9/00000000000000003b9b1558/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"),url("https://use.typekit.net/af/630fe9/00000000000000003b9b1558/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"),url("https://use.typekit.net/af/630fe9/00000000000000003b9b1558/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
+font-style:normal;font-weight:400;
+}
+
 
 </style>

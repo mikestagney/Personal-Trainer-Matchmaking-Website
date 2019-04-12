@@ -2,6 +2,9 @@ package com.techelevator.model.privatemessage;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -10,43 +13,48 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class PrivateMessage {
 	
+	@Min(1)
 	@NotBlank(message="Trainer Id is required")
-	private long trainerId;
+	private long senderId;
+	@Min(1)
 	@NotBlank(message="Client Id is required")
-	private long clientId;
+	private long recipientId;
 	@NotBlank(message="Date Posted is required")
 	private LocalDate datePosted;
+	@Size(min = 2, max = 20)
 	@NotBlank(message="Message subject line is required")
 	private String subject;
+	@Size(min = 2, max = 250)
 	@NotBlank(message="Message body text is required")
-	private String messageBody;
+	private String message;
+	private boolean unread;
 
 	/**
-	 * @return trainerId the Id associated with the Trainer for this message
+	 * @return senderId the Id associated with the Trainer for this message
 	 */
-	public long getTrainerId() {
-		return trainerId;
+	public long getSenderId() {
+		return senderId;
 	}
 
 	/**
-	 * @param trainerId to set for this message
+	 * @param senderId to set for this message
 	 */
-	public void setTrainerId(long trainerId) {
-		this.trainerId = trainerId;
+	public void setSenderId(long senderId) {
+		this.senderId = senderId;
 	}
 
 	/**
-	 * @return clientId the Id associated with the Client for this message
+	 * @return recipientId the Id associated with the Client for this message
 	 */
-	public long getClientId() {
-		return clientId;
+	public long getRecipientId() {
+		return recipientId;
 	}
 
 	/**
-	 * @param clientId to set for this message
+	 * @param recipientId to set for this message
 	 */
-	public void setClientId(long clientId) {
-		this.clientId = clientId;
+	public void setRecipientId(long recipientId) {
+		this.recipientId = recipientId;
 	}
 
 	/**
@@ -61,6 +69,20 @@ public class PrivateMessage {
 	 */
 	public void setDatePosted(LocalDate datePosted) {
 		this.datePosted = datePosted;
+	}
+	
+	/**
+	 * @return if message war red
+	 */
+	public boolean isUnread() {
+		return unread;
+	}
+
+	/**
+	 * @param set if message was read
+	 */
+	public void setUnread(boolean unread) {
+		this.unread = unread;
 	}
 
 	/**
@@ -80,14 +102,14 @@ public class PrivateMessage {
 	/**
 	 * @return messageBody the String associated with the content of the messages body
 	 */
-	public String getMessageBody() {
-		return messageBody;
+	public String getMessage() {
+		return message;
 	}
 
 	/**
 	 * @param messageBody text to set for this message
 	 */
-	public void setMessageBody(String messageBody) {
-		this.messageBody = messageBody;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }

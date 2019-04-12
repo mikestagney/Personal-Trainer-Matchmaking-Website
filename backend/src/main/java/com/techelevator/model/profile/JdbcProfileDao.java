@@ -104,7 +104,7 @@ public class JdbcProfileDao implements ProfileDao{
 				userProfile.getCity(), userProfile.getState(), userProfile.getId());
 		if (userProfile.getRole().equals("Trainer")) {
 			TrainerProfile trainerProfile = userProfile.getTrainerProfile();
-			jdbcTemplate.update("UPDATE trainer_profile SET price_per_hour=?, rating=?, philosphy=?, bio=?, certifications=?  WHERE user_id=?",
+			jdbcTemplate.update("UPDATE trainer_profile SET hourly_rate=?, rating=?, philosphy=?, bio_info=?, certifications=?  WHERE user_id=?",
 					trainerProfile.getPrice_per_hour(), trainerProfile.getRating(), trainerProfile.getPhilosophy(),
 					trainerProfile.getBio(), trainerProfile.getCertifications(), trainerProfile.getId());
 		}
@@ -122,7 +122,7 @@ public class JdbcProfileDao implements ProfileDao{
 				userProfile.isPublic(), userProfile.getRole(), userProfile.getCity(), userProfile.getState());
 		if (userProfile.getRole().equals("Trainer")) {
 			TrainerProfile trainerProfile = userProfile.getTrainerProfile();
-			jdbcTemplate.update("INSERT INTO trainer_profile (user_id, price_per_hour, rating, philosphy, bio, certifications)"
+			jdbcTemplate.update("INSERT INTO trainer_profile (user_id, hourly_rate, rating, philosphy, bio_info, certifications)"
 					+ " VALUES (?,?,?,?,?,?)", user.getId(), trainerProfile.getPrice_per_hour(), trainerProfile.getRating(),
 					trainerProfile.getPhilosophy(), trainerProfile.getBio(), trainerProfile.getCertifications());
 		}
@@ -148,7 +148,7 @@ public class JdbcProfileDao implements ProfileDao{
 			catch (Exception e) {
 				trainerProfile.setPrice_per_hour(0);
 			}
-			jdbcTemplate.update("INSERT INTO trainer_profile (user_id, price_per_hour, rating, philosphy, bio, certifications)"
+			jdbcTemplate.update("INSERT INTO trainer_profile (user_id, hourly_rate, rating, philosphy, bio_info, certifications)"
 					+ " VALUES (?,?,?,?,?,?)", user.getId(), trainerProfile.getPrice_per_hour(), trainerProfile.getRating(),
 					trainerProfile.getPhilosophy(), trainerProfile.getBio(), trainerProfile.getCertifications());
 		}
@@ -165,10 +165,10 @@ public class JdbcProfileDao implements ProfileDao{
     	userProfile.setRole(results.getString("role"));
     	if (userProfile.getRole().contentEquals("Trainer")) {
     		TrainerProfile trainerProfile = new TrainerProfile();
-    		trainerProfile.setPrice_per_hour(results.getInt("price_per_hour"));
+    		trainerProfile.setPrice_per_hour(results.getInt("hourly_rate"));
         	trainerProfile.setRating(results.getDouble("rating"));
         	trainerProfile.setPhilosophy(results.getString("philosphy"));
-        	trainerProfile.setBio(results.getString("bio"));
+        	trainerProfile.setBio(results.getString("bio_info"));
         	trainerProfile.setCertifications(results.getString("certifications"));
         	userProfile.setTrainerProfile(trainerProfile);
     	}

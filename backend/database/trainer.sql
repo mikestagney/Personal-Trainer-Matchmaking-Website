@@ -34,10 +34,10 @@ CREATE TABLE user_profile
 CREATE TABLE trainer_profile
 (
     user_id int NOT NULL UNIQUE,
-    price_per_hour int,
+    hourly_rate int,
     rating decimal(3,2),
-    philosphy varchar(250),
-    bio varchar(1000),
+    philosophy varchar(250),
+    bio_info varchar(1000),
     certifications varchar(250),
 
     constraint pk_trainer_profile primary key (user_id)
@@ -45,22 +45,23 @@ CREATE TABLE trainer_profile
 
 CREATE TABLE client_list
 (
-    trainerId int NOT NULL,
-    clientId int NOT NULL,
-    privateNotes text ARRAY,
+    trainer_id int NOT NULL,
+    client_id int NOT NULL,
+    privateNotes text[],
 
-    constraint pk_client_list primary key (trainerId, clientId)
+    constraint pk_client_list primary key (trainer_id, client_id)
 );
 
 CREATE TABLE private_message
 (
-    trainerId int NOT NULL,
-    clientId int NOT NULL,
-    postDate timestamp NOT NULL,
-    subject varchar(250),
-    message varchar(1000),
+    sender_id int NOT NULL,
+    recipient_id int NOT NULL,
+    date_sent timestamp NOT NULL,
+    unread  boolean NOT NULL DEFAULT true,
+    subject varchar(20),
+    message varchar(250),
 
-    constraint pk_private_message primary key (trainerId, clientId, postDate)
+    constraint pk_private_message primary key (sender_id, recipient_id, date_sent)
 );
 
 -- Stored Procedures
@@ -85,60 +86,6 @@ BEGIN
 END;
 $$
 LANGUAGE 'plpgsql' STRICT;
-
-CREATE OR REPLACE FUNCTION trainer_search
-    (
-    t_city           VARCHAR(30)  = NULL,
-    t_state          VARCHAR(2)   = NULL,
-    t_certifications VARCHAR(250) = NULL,
-    t_min_price      INT = 0,
-    t_max_price      INT = 2147483647,
-    t_rating         INT = 0
-    )
- RETURNS TABLE
-    (
-    user_id         INT
-  , is_public       BOOLEAN
-  , first_name      VARCHAR
-  , last_name       VARCHAR
-  , city            VARCHAR
-  , state           VARCHAR
-  , role            VARCHAR
-  , price_per_hour  INT
-  , rating          NUMERIC
-  , philosphy       VARCHAR
-  , bio             VARCHAR
-  , certifications  VARCHAR
-    ) AS
-$$
-BEGIN
-    RETURN QUERY
-    SELECT
-        users.user_id
-        , true    
-        , users.first_name 
-        , users.last_name      
-        , user_profile.city             
-        , user_profile.state            
-        , users.role                    
-        , trainer_profile.price_per_hour 
-        , trainer_profile.rating           
-        , trainer_profile.philosphy        
-        , trainer_profile.bio              
-        , trainer_profile.certifications
-    FROM users
-    JOIN trainer_profile USING(user_id)
-    JOIN user_profile    USING(user_id)
-    WHERE user_profile.is_public = true AND
-        ($1 IS NULL OR user_profile.city           = $1)    AND
-        ($2 IS NULL OR user_profile.state          = $2)    AND
-        ($3 IS NULL OR trainer_profile.certifications = $3) AND
-        (trainer_profile.price_per_hour BETWEEN $4 AND $5)  AND
-        trainer_profile.rating >= $6;
-END
-$$
-LANGUAGE plpgsql;
-
 
 -- user data
 INSERT INTO users (user_id,first_name,last_name,username,password,salt,role) VALUES
@@ -209,7 +156,7 @@ INSERT INTO user_profile (user_id,first_name,last_name,is_public,role,city,state
 ,(31,'Brielle','Cruickshank','true','Client','South Karliport','VT');
 
 
-INSERT INTO trainer_profile (user_id,price_per_hour,rating,philosphy,bio,certifications) VALUES
+INSERT INTO trainer_profile (user_id,hourly_rate,rating,philosophy,bio_info,certifications) VALUES
  (1,805.40,1,'We need to quantify the solid state SSL protocol!','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','IFBB Pro')
 ,(2,773.36,5,'You can''t back up the firewall without synthesizing the 1080p XSS interface!','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','IFBB Pro')
 ,(3,158.47,2,'I''ll calculate the bluetooth AGP transmitter, that should sensor the FTP driver!','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','IFBB Pro')
@@ -241,11 +188,11 @@ ADD FOREIGN KEY(user_id)
 REFERENCES users(user_id);
 
 ALTER TABLE client_list
-ADD FOREIGN KEY(trainerId) REFERENCES users(user_id),
-ADD FOREIGN KEY(clientId) REFERENCES users(user_id);
+ADD FOREIGN KEY(trainer_id) REFERENCES users(user_id),
+ADD FOREIGN KEY(client_id) REFERENCES users(user_id);
 
 ALTER TABLE private_message
-ADD FOREIGN KEY(trainerId) REFERENCES users(user_id),
-ADD FOREIGN KEY(clientId) REFERENCES users(user_id);
+ADD FOREIGN KEY(sender_id) REFERENCES users(user_id),
+ADD FOREIGN KEY(recipient_id) REFERENCES users(user_id);
 
 COMMIT TRANSACTION;
