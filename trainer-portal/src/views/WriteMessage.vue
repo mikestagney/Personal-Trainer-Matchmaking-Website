@@ -59,7 +59,7 @@ export default {
       })
       .then((response) => {
         if(response.ok) {
-         this.$router.push({ path: '/trainer/privatemessage' });
+         this.$router.push({ path: '/home' });
           } 
       })
       .catch((err) => console.error(err));
