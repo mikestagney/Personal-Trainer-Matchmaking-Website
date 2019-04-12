@@ -1,4 +1,4 @@
-package com.techelevator.model.profile;
+package com.techelevator.model.user;
 
 /**
  * TrainerProfile Class is an object that holds an Id, an isPublic boolen, a First Name,

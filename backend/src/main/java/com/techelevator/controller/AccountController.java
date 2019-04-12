@@ -5,9 +5,10 @@ import com.techelevator.authentication.AuthProvider;
 import com.techelevator.authentication.JwtTokenHandler;
 import com.techelevator.authentication.RegistrationResult;
 import com.techelevator.authentication.UnauthorizedException;
-import com.techelevator.model.profile.JdbcProfileDao;
+import com.techelevator.model.user.JdbcProfileDao;
 import com.techelevator.model.user.User;
 import com.techelevator.model.user.UserDao;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -69,6 +70,7 @@ public class AccountController {
 	 */
     @PostMapping("/register")
     public RegistrationResult register(@Valid @RequestBody User user, BindingResult result) {
+    	System.out.println("register");
     	RegistrationResult registrationResult = new RegistrationResult();
     	if(result.hasErrors()) {
             for(ObjectError error : result.getAllErrors()) {
@@ -77,7 +79,6 @@ public class AccountController {
         }
     	else {
     		auth.register(user.getUsername(), user.getFirstName(), user.getLastName(), user.getPassword(), user.getRole());
-    		profileDao.createUserProfile(user);
     		registrationResult.setSuccess(true);
     	}
     	return registrationResult;

@@ -2,8 +2,6 @@ package com.techelevator.model.user;
 
 import java.util.List;
 
-import com.techelevator.model.profile.ClientList;
-
 /**
  * UserDao
  */
@@ -69,7 +67,7 @@ public interface UserDao {
 	 * @param userName the User Name to search the client list for
 	 * @return ClientList for Clients in the Trainer's Client List that match the search criteria
 	 */
-	public ClientList searchClientList(String name, String userName);
+	public ClientList searchClientList(long id, String name, String userName);
 			
 	public void addClientToClientList(long trainer_id, long client_id);
 	

@@ -1,6 +1,10 @@
-package com.techelevator.model.profile;
+package com.techelevator.model.user;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.sql.DataSource;
 import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 import com.techelevator.authentication.PasswordHasher;
-import com.techelevator.model.profile.ClientList;
-import com.techelevator.model.profile.UserProfile;
-import com.techelevator.model.user.Client;
-import com.techelevator.model.user.Trainer;
-import com.techelevator.model.user.User;
-import com.techelevator.model.user.UserDao;
+import com.techelevator.model.user.ClientList;
 
 /**
  * 
@@ -52,7 +51,7 @@ public class JdbcNewUserDao implements UserDao{
         byte[] salt = passwordHasher.generateRandomSalt();
         String hashedPassword = passwordHasher.computeHash(password, salt);
         String saltString = new String(Base64.encode(salt));
-        long newId = jdbcTemplate.queryForObject("INSERT INTO user(username, first_name, last_name, password, salt, role) VALUES (?, ?, ?, ?, ?, ?) "
+        long newId = jdbcTemplate.queryForObject("INSERT INTO users(username, first_name, last_name, password, salt, role) VALUES (?, ?, ?, ?, ?, ?) "
         		+ "RETURNING user_id", Long.class, username,  lastName, hashedPassword, saltString, role);
         return createUser(newId, username, firstName, lastName, password, role);
     }
@@ -83,7 +82,7 @@ public class JdbcNewUserDao implements UserDao{
      */
     @Override
     public User getValidUserWithPassword(String userName, String password) {
-        String sqlSearchForUser = "SELECT * FROM user WHERE UPPER(username) = ?";
+        String sqlSearchForUser = "SELECT * FROM users WHERE username = ?";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForUser, userName.toUpperCase());
         if (results.next()) {
@@ -130,17 +129,17 @@ public class JdbcNewUserDao implements UserDao{
     	}
     }
     
-    private User createNewTrainer(SqlRowSet results) {
+    private Trainer createNewTrainer(SqlRowSet results) {
     	Trainer trainer = new Trainer();
     	trainer.setId(results.getLong("user_id"));
     	trainer.setUsername(results.getString("username"));
     	trainer.setFirstName(results.getString("first_mame"));
     	trainer.setLastName(results.getString("last_name"));
     	trainer.setRole(results.getString("role"));
-    	trainer.setHourlyRate(results.getInt("hourly_rate"));
+    	trainer.setHourlyRate(results.getInt("rate_per_hour"));
     	trainer.setRating(results.getDouble("rating"));
     	trainer.setPhilosophy(results.getString("philosophy"));
-    	trainer.setBioInfo(results.getString("bio_info"));
+    	trainer.setBioInfo(results.getString("bio"));
     	trainer.setCertifications(results.getObject("certifications", String[].class));
     	trainer.setCity(results.getString("city"));
     	trainer.setState(results.getString("state"));
@@ -148,7 +147,7 @@ public class JdbcNewUserDao implements UserDao{
     	return trainer;
     }
     
-    private User createNewClient(SqlRowSet results) {
+    private Client createNewClient(SqlRowSet results) {
     	Client client = new Client();
     	client.setId(results.getLong("user_id"));
     	client.setUsername(results.getString("username"));
@@ -211,6 +210,16 @@ public class JdbcNewUserDao implements UserDao{
         }
 	}
 	
+	private Trainer getTrainerById(Long id) {
+    	String sqlSelectUserById = "SELECT * FROM trainer WHERE user_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserById, id);
+        if(results.next()) {
+            return createNewTrainer(results);
+        } else {
+            return null;
+        }
+	}
+	
 	
 	@Override
 	public void updateClient(Client client) {
@@ -233,101 +242,110 @@ public class JdbcNewUserDao implements UserDao{
 
 	@Override
 	public List<Trainer> getTrainersSearch(String name, String city, String state, int minHourlyRate, int maxHourlyRate, double rating) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Trainer> trainerList = new ArrayList<Trainer>();
+		String sqlSelectTrainersBySearchCriteria = "SELECT * FROM trainer WHERE CONCAT(firstName, ' ', lastName) ILIKE ? AND city ILIKE ? "
+					+ "AND state ILIKE ? AND price_per_hour >= ? AND price_per_hour <= ? AND rating >= ? "
+					+ "AND certifications ILIKE ? AND is_public = true AND role = 'Trainer'";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectTrainersBySearchCriteria, "%" + name + "%", "%" + city + "%", "%" + state + "%",
+        							minHourlyRate, maxHourlyRate, rating);
+        while (results.next()) {
+        	trainerList.add(createNewTrainer(results));
+        }
+        return trainerList;
 	}
 
 	@Override
-	public List<Client> searchClientListOfTrainer(long user_id, String firstName, String lastName, String userName) {
-		// TODO Auto-generated method stub
-		return null;
+	public ClientList searchClientList(long id, String name, String username) {
+		ClientList clientList = new ClientList();
+		clientList.setClientList(searchClientListOfTrainer(id, name, username));
+		clientList.setTrainer(getTrainerById(id));
+		clientList.setPrivateNotes(getPrivateNotes(id, clientList.getClientList()));
+		return clientList;
 	}
-
-	@Override
-	public ClientList getClientListForTrainer(long user_id) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	private List<User> searchClientListOfTrainer(long user_id, String name, String username) {
+		List<User> clientList = new ArrayList<User>();
+		List<User> listOfAllClients = getClientListOfTrainer(user_id);
+		for (User user: listOfAllClients) {
+			if ((user.getFirstName() + " " + user.getLastName()).contains(name) &&
+					user.getUsername().contains(username)) {
+				clientList.add(user);
+			}
+		}
+        return clientList;
 	}
-
-	@Override
-	public ClientList searchClientList(long user_id, String firstName, String lastName, String username) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	private List<User> getClientListOfTrainer(long user_id) {
+		String sqlSelectUsersByTrainerId = "SELECT client_id FROM client_list WHERE trainer_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUsersByTrainerId, user_id);
+        List<User> clientList = new ArrayList<User>();
+        while (results.next()) {
+        	clientList.add(getUserById(results.getLong("client_id")));
+        }
+        return clientList;
+	}
+	
+	
+	private Map<User,String[]> getPrivateNotes(long id, List<User> clientList) {
+		Map<User,String[]> privateNotes = new HashMap<User,String[]>();
+		for (User user: clientList) {
+			privateNotes.put(user,getPrivateNotesStringArr(id,user.getId()));
+		}
+        return privateNotes;
+	}
+	
+	private String[] getPrivateNotesStringArr(long user_id, long client_id) {
+		String[] privateNotes = null;
+		String sqlSelectPrivateNotes = "SELECT privateNotes FROM client_list WHERE trainer_id = ? and client_id = ?";
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectPrivateNotes, user_id, client_id);
+		if (results.next()) {
+			privateNotes = results.getObject("privateNotes", String[].class);
+        }
+        return privateNotes;
 	}
 
 	@Override
 	public void addClientToClientList(long trainer_id, long client_id) {
-		// TODO Auto-generated method stub
-		
+		jdbcTemplate.update("INSERT INTO client_list (trainer_id, client_id) VALUES (?,?)", trainer_id, client_id);
 	}
-
+	
 	@Override
 	public void removeClientFromClientList(long trainer_id, long client_id) {
-		// TODO Auto-generated method stub
-		
+		jdbcTemplate.execute("DELETE FROM client_list WHERE trainer_id=? AND client_id=?");
 	}
-
+	
 	@Override
 	public void addPrivateNoteToClientList(long trainer_id, long client_id, String privateNote) {
-		// TODO Auto-generated method stub
-		
+		String[] privateNotesOld = getPrivateNotesStringArr(trainer_id, client_id);
+		String[] privateNotesNew = new String[privateNotesOld.length + 1];
+		for (int i = 0; i < privateNotesOld.length; i++) {
+			privateNotesNew[i] = privateNotesOld[i];
+		}
+		privateNotesNew[privateNotesOld.length] = privateNote;
+		jdbcTemplate.update("UPDATE client_list SET privateNotes=?  WHERE trainer_id=? AND client_id=?",
+				privateNotesNew,trainer_id,client_id);
 	}
-
+	
 	@Override
 	public void removePrivateNoteFromClientList(long trainer_id, long client_id, String privateNote) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	private NewUser mapResultToForClient(SqlRowSet results) {
-		switch (results.getString("role")) {
-			case ("Trainer"):
-				NewUser user = new Trainer();
-			default:
-				NewUser user = new Client();
+		String[] privateNotesOld = getPrivateNotesStringArr(trainer_id, client_id);
+		if (privateNotesOld.length - 1 == 0) {
+			jdbcTemplate.update("UPDATE client_list SET privateNotes=?  WHERE trainer_id=? AND client_id=?",
+					null,trainer_id,client_id);
 		}
-        user.setId(results.getLong("user_id"));
-        user.setUsername(results.getString("username"));
-        return user;
-    }
+		else {
+			String[] privateNotesNew = new String[privateNotesOld.length - 1];
+			int counter = 0;
+			for (int i = 0; i < privateNotesOld.length; i++) {
+				if (!privateNotesOld[i].equals(privateNote)) {
+					privateNotesNew[counter] = privateNotesOld[i];
+					counter++;
+				}
+			}
+			jdbcTemplate.update("UPDATE client_list SET privateNotes=?  WHERE trainer_id=? AND client_id=?",
+					privateNotesNew,trainer_id,client_id);
+		}
+	}
+
 	
-	private User mapResultToForTrainer(SqlRowSet results) {
-		User user = new User();
-        user.setId(results.getLong("user_id"));
-        user.setUsername(results.getString("username"));
-        user.setRole(results.getString("role"));
-        return user;
-    }
-
-
-	@Override
-	public void createTrainerProfile(User user) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void createClientProfile(User user) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateUserProfile(User user) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<Trainer> getTrainersSearch(String city, String state, int min_price_per_hour, int max_price_per_hour,
-			double rating, String certifications) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ClientList searchClientList(String name, String userName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

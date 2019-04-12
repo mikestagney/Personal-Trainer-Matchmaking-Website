@@ -1,7 +1,11 @@
 package com.techelevator.controller;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,15 +13,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.techelevator.authentication.AuthProvider;
 import com.techelevator.authentication.UnauthorizedException;
 import com.techelevator.model.privatemessage.PrivateMessage;
 import com.techelevator.model.privatemessage.PrivateMessageDao;
 import com.techelevator.model.profile.ClientList;
 import com.techelevator.model.profile.ProfileDao;
+import com.techelevator.model.profile.User;
+import com.techelevator.model.profile.UserDao;
 import com.techelevator.model.profile.UserProfile;
-import com.techelevator.model.user.User;
-import com.techelevator.model.user.UserDao;
 
 /**
  * PersonalTrainerMatchController Class uses AuthProvider, UserDao,
@@ -141,6 +146,7 @@ public class PersonalTrainerMatchController {
 	 * @return List<UserProfile> for all Trainer's that fall within the search criteria
 	 */
 	@GetMapping("/trainerSearch")
+<<<<<<< HEAD
 	public List<UserProfile> displayTrainersSearch(@RequestParam(defaultValue="") String city,
 													@RequestParam(defaultValue="") String state,
 													@RequestParam(defaultValue="0") int min_price_per_hour,
@@ -148,6 +154,16 @@ public class PersonalTrainerMatchController {
 													@RequestParam(defaultValue="0") double rating,
 													@RequestParam(defaultValue="") String certifications) {
 		return profileDao.getTrainerProfilesBySearchCriteria(city,state,min_price_per_hour,max_price_per_hour,rating,certifications);
+=======
+	public List<UserProfile> displayAllTrainers(
+			@RequestParam(defaultValue="")    String city,
+			@RequestParam(defaultValue="")    String state,
+			@RequestParam(defaultValue="0")   int min_price_per_hour,
+			@RequestParam(defaultValue="999") int max_price_per_hour,
+			@RequestParam(defaultValue="0")   double rating,
+			@RequestParam(defaultValue="")    String certifications) {
+		return profileDao.getTrainerProfilesBySearchCriteria(city,state,min_price_per_hour,max_price_per_hour,rating,certifications);		
+>>>>>>> a4ef9cf1ecb089f06a9ea98c261a9b2ff1b9b425
 	}
 	
 	/**

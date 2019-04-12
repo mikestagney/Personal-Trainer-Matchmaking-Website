@@ -39,6 +39,7 @@ CREATE TABLE trainer_profile
     philosphy varchar(250),
     bio varchar(1000),
     certifications varchar(250),
+    is_public boolean NOT NULL DEFAULT false,
 
     constraint pk_trainer_profile primary key (user_id)
 );

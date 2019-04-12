@@ -5,7 +5,7 @@
    <!-- <h2>the trainer id is :{{this.$route.params.TrainerID}}</h2> -->
    <div v-for="trainer in trainers" :key="trainer.user_id">
      <div v-if="TrainerID == trainer.user_id">
-    <div class="row imageHeader text-light mb-3 p-5" id="trainerHeading">
+    <div class="row imageHeader text-light mb-3 p-5 shadow">
         <div class="col">
         <h3 id="test">{{trainer.first_name}} {{trainer.last_name}}</h3>
         <h5>{{trainer.city}}, {{trainer.state}}</h5>
@@ -68,9 +68,6 @@ import DefaultLayout from '@/layouts/DefaultLayout';
 </script>
 
 <style>
-#trainerHeading {
-    border-radius: 4px;
-}
 
 .orangeText {
     color: 	#FF8C00;
@@ -80,8 +77,14 @@ import DefaultLayout from '@/layouts/DefaultLayout';
     background-image: url("../assets/FitnessImages/fitnessImage5.jpg");
     background-size: cover;
     background-position: bottom;
+    border-radius: 4px;
     
+}
 
+.shadow {
+  -moz-box-shadow:    3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow:         3px 3px 5px 6px #ccc;
 }
 
 @font-face {

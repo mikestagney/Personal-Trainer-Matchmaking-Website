@@ -1,9 +1,9 @@
-package com.techelevator.model.profile;
+package com.techelevator.model.user;
 
 import java.util.List;
 import java.util.Map;
 
-import com.techelevator.model.user.User;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 /**
  * TrainerProfileDao Interface has methods for getting a Trainer's Trainer Profile, updating a
@@ -34,7 +34,8 @@ public interface ProfileDao {
 	 * @param certifications these are the certifications a trainer must have
 	 * @return List<TrainerProfile> for all Trainer's that fall within the search criteria
 	 */
-	public List<UserProfile> getTrainerProfilesBySearchCriteria(String city, String state, int min_price_per_hour, int max_price_per_hour, double rating, String certifications);
+	List<UserProfile> getTrainerProfilesBySearchCriteria(String city, String state, int min_price_per_hour,
+			int max_price_per_hour, double rating, String certifications);
 	
 	/**
 	 * @param user_id the User Id of the Trainer who's Client List is being searched
@@ -58,5 +59,4 @@ public interface ProfileDao {
 	public void addPrivateNoteToClientList(long trainer_id, long client_id, String privateNote);
 	
 	public void removePrivateNoteFromClientList(long trainer_id, long client_id, String privateNote);
-	
 }
