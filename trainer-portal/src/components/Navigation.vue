@@ -16,7 +16,7 @@
     </button>
     <div class="collapse navbar-collapse" id="trainer-navbar">
       <ul class="navbar-nav mr-auto">
-        <router-link tag="li" class="nav-item" to="/trainerSearch" active-class="active" exact>
+        <router-link tag="li" class="nav-item" to="/search" active-class="active" exact>
           <a class="nav-link">Search Trainers</a>
         </router-link>
         <router-link tag="li" class="nav-item" to="/save" active-class="active">

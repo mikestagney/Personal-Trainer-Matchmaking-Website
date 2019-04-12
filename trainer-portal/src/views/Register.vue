@@ -1,5 +1,6 @@
 <template>
-  <div id="register" class="text-center">
+<default-layout>
+  <div id="register" class="text-center shadow light-bg">
     <form class="form-register" @submit.prevent="register">
       <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
@@ -52,24 +53,34 @@
         v-model="user.confirmPassword"
         required
       />
-      <label for="role" class="sr-only">Role</label>
-      <select v-model="user.role">
+      <label for="role">Role</label>
+        <select v-model="user.role" class="ml-2">
         <option value="client">Client</option>
         <option value="trainer">Trainer</option>
       </select>
-      <router-link :to="{ name: 'login' }">
+      <div class="row">
+        <div class="col">
+      <router-link :to="{ name: 'login' }" class="orangeText">
         Have an account?
       </router-link>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">
+        </div>
+      </div>
+      <button class="btn btn-lg btn-info btn-block mt-2" type="submit">
         Create Account
       </button>
     </form>
   </div>
+</default-layout>
 </template>
 
 <script>
+import DefaultLayout from '@/layouts/DefaultLayout';
+
 export default {
   name: 'register',
+  components: {
+    DefaultLayout,
+  },
   data() {
     return {
       user: {
@@ -123,8 +134,8 @@ body {
   align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #f5f5f5;
   font-family: 'Roboto Condensed', sans-serif;
+  border-radius: 10px;
 }
 
 form {
