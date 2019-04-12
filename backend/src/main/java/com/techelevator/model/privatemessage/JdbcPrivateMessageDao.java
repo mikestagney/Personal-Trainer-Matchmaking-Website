@@ -34,7 +34,7 @@ public class JdbcPrivateMessageDao implements PrivateMessageDao{
 	@Override
 	public List<PrivateMessage> getPrivateMessagesForUser(long user_id) {
 		List<PrivateMessage> messageList = new ArrayList<PrivateMessage>();
-		String sqlSearchForUsersMessages = "SELECT * FROM private_message WHERE trainerId = ? OR clientId = ?";
+		String sqlSearchForUsersMessages = "SELECT * FROM private_message WHERE sender_id = ? OR recipient_id = ?";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForUsersMessages, user_id, user_id);
         while (results.next()) {
             messageList.add(mapResultToPrivateMessage(results));
@@ -50,7 +50,7 @@ public class JdbcPrivateMessageDao implements PrivateMessageDao{
 	@Override
 	public List<PrivateMessage> getPrivateMessagesBetweenUser(long userId1, long userId2) {
 		List<PrivateMessage> messageList = new ArrayList<PrivateMessage>();
-		String sqlSearchForMessagesBetweenUsers = "SELECT * FROM private_message WHERE (trainerId = ? OR clientId = ?) AND (trainerId = ? OR clientId = ?)";
+		String sqlSearchForMessagesBetweenUsers = "SELECT * FROM private_message WHERE (sender_id = ? OR recipient_id = ?) AND (sender_id = ? OR recipient_id = ?)";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForMessagesBetweenUsers, userId1, userId1, userId2, userId2);
         while (results.next()) {
             messageList.add(mapResultToPrivateMessage(results));
@@ -60,11 +60,12 @@ public class JdbcPrivateMessageDao implements PrivateMessageDao{
 	
 	private PrivateMessage mapResultToPrivateMessage(SqlRowSet results) {
 		PrivateMessage message = new PrivateMessage();
-		message.setTrainerId(results.getLong("clientId"));
-		message.setClientId(results.getLong("clientId"));
-		message.setDatePosted(results.getDate("datePosted").toLocalDate());
+		message.setSenderId(results.getLong("sender_id"));
+		message.setRecipientId(results.getLong("recipient_id"));
+		message.setDatePosted(results.getDate("date_sent").toLocalDate());
+		message.setUnread(results.getBoolean("read"));
 		message.setSubject(results.getString("subject"));
-		message.setMessageBody(results.getString("messageBody"));
+		message.setMessage(results.getString("message"));
 		return message;
 	}
 }

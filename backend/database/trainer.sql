@@ -38,10 +38,10 @@ CREATE TABLE user_profile
 CREATE TABLE trainer_profile
 (
     user_id int NOT NULL UNIQUE,
-    price_per_hour int,
+    hourly_rate int,
     rating decimal(3,2),
     philosphy varchar(50),
-    bio varchar(250),
+    bio_info varchar(250),
     certifications varchar(250),
 
     constraint pk_trainer_profile primary key (user_id),
@@ -51,8 +51,8 @@ CREATE TABLE trainer_profile
 
 CREATE TABLE client_list 
 (
-    trainerId int NOT NULL,
-    clientId int NOT NULL,
+    trainer_id int NOT NULL,
+    client_id int NOT NULL,
     privateNotes text[],
 
     constraint pk_client_list primary key (trainerId, clientId),
@@ -62,15 +62,16 @@ CREATE TABLE client_list
 );
 CREATE TABLE private_message
 (
-    trainerId int NOT NULL,
-    clientId int NOT NULL,
-    postDate timestamp NOT NULL,
+    sender_id int NOT NULL,
+    recipient_id int NOT NULL,
+    date_sent timestamp NOT NULL,
+    unread  NOT NULL DEFAULT true,
     subject varchar(20),
     message varchar(250),
 
-    constraint pk_private_message primary key (trainerId, clientId, postDate),
-    constraint fk_client_list_trainer foreign key (trainerId) references users (user_id),
-    constraint fk_client_list_client foreign key (clientId) references  users (user_id)
+    constraint pk_private_message primary key (sender_id, recipientId, post_date),
+    constraint fk_private_message_sender foreign key (sender_id) references users (user_id),
+    constraint fk_private_message_recipient foreign key (recipient_id) references  users (user_id)
 );
 
 
