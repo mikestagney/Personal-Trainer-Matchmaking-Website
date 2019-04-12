@@ -7,8 +7,8 @@
       class="navbar-toggler"
       type="button"
       data-toggle="collapse"
-      data-target="#te-snippets-navbar"
-      aria-controls="te-snippets-navbar"
+      data-target="#trainer-portal-navbar"
+      aria-controls="trainer-portal-navbar"
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
@@ -28,6 +28,11 @@
         <router-link tag="li" class="nav-item" @click="logout" active-class="active" exact>
           <a class="nav-link" href="#"><!-- {{auth.getToken === null ? 'login' : 'logout'}} --></a>
         </router-link>
+      </ul>
+       <ul class="navbar-nav mr-auto">
+      <router-link tag="li" class="nav-item" to="/login" active-class="active" exact>
+          <a class="nav-link">Login</a>
+      </router-link>
       </ul>
     </div>
   </nav>
