@@ -27,7 +27,7 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for="trainer in trainers" :key="trainer.user_id">
+                <tr v-for="trainer in activeTrainers" :key="trainer.user_id">
                     <td><router-link v-bind:to="{ name: 'trainerProfile', params: { TrainerID: trainer.user_id }}">{{trainer.first_name}} {{trainer.last_name}}</router-link></td>
                     <td>{{trainer.city}}</td>
                     <td>{{trainer.state}}</td>
@@ -54,6 +54,13 @@ export default {
             sortBy: '',
             trainers: []
         };
+    },
+    computed: {
+        activeTrainers: function() {
+            return this.trainers.filter(function(trainer) {
+                return trainer.public
+            })
+        }
     },
     methods: {
         getTrainers(){
