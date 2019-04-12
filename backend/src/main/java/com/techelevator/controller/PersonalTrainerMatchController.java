@@ -18,7 +18,6 @@ import com.techelevator.authentication.UnauthorizedException;
 import com.techelevator.model.privatemessage.Message;
 import com.techelevator.model.privatemessage.MessageDao;
 import com.techelevator.model.user.UserDao;
-import com.techelevator.model.user.Client;
 import com.techelevator.model.user.ClientList;
 import com.techelevator.model.user.Trainer;
 import com.techelevator.model.user.User;
@@ -73,7 +72,7 @@ public class PersonalTrainerMatchController {
 	}
     
     @GetMapping("/client/profile/{clientId}")
-	public Client clientProfilePage(@PathVariable long clientId) throws UnauthorizedException {
+	public User clientProfilePage(@PathVariable long clientId) throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
             throw new UnauthorizedException();
         }

@@ -50,10 +50,10 @@ public interface UserDao {
     
     public Trainer getTrainerById(Long id);
     
-    public Client getClientById(Long id);
+    public User getClientById(Long id);
     
-	public void updateClient(Client user);
-	
+    public void updateUser(User user);
+    
 	public void updateTrainer(Trainer trainer);
 	
 	/**
