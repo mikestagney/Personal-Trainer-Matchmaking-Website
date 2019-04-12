@@ -55,9 +55,9 @@ CREATE TABLE client_list
     client_id int NOT NULL,
     privateNotes text[],
 
-    constraint pk_client_list primary key (trainerId, clientId),
-    constraint fk_client_list_trainer foreign key (trainerId) references users (user_id),
-    constraint fk_client_list_client foreign key (clientId) references  users (user_id)
+    constraint pk_client_list primary key (trainer_id, client_id),
+    constraint fk_client_list_trainer foreign key (trainer_id) references users (user_id),
+    constraint fk_client_list_client foreign key (client_id) references  users (user_id)
 
 );
 CREATE TABLE private_message
@@ -65,11 +65,11 @@ CREATE TABLE private_message
     sender_id int NOT NULL,
     recipient_id int NOT NULL,
     date_sent timestamp NOT NULL,
-    unread  NOT NULL DEFAULT true,
+    unread  boolean NOT NULL DEFAULT true,
     subject varchar(20),
     message varchar(250),
 
-    constraint pk_private_message primary key (sender_id, recipientId, post_date),
+    constraint pk_private_message primary key (sender_id, recipient_id, date_sent),
     constraint fk_private_message_sender foreign key (sender_id) references users (user_id),
     constraint fk_private_message_recipient foreign key (recipient_id) references  users (user_id)
 );
