@@ -60,6 +60,8 @@ CREATE TABLE message
     unread boolean NOT NULL DEFAULT true,
     subject varchar(20),
     message varchar(250),
+    sender_delete boolean NOT NULL DEFAULT false,
+    recipient_delete boolean NOT NULL DEFAULT false,
 
     constraint pk_private_message primary key (message_id, sender_id, recipient_id, post_date),
     constraint fk_private_message_sender foreign key (sender_id) references users (user_id),

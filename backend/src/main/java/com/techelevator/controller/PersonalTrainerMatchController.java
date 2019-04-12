@@ -127,7 +127,7 @@ public class PersonalTrainerMatchController {
     	}
 	}
     
-    @GetMapping("inbox/{messageId}")
+    @GetMapping("/inbox/{messageId}")
 	public Message displayMessage(@PathVariable long messageId) throws UnauthorizedException {
 		return privateMessageDao.getMessage(messageId);
 	}
@@ -144,4 +144,5 @@ public class PersonalTrainerMatchController {
 	public List<Message> displayMessagesBetweenUsers(@PathVariable long userId) {
 		return privateMessageDao.getMessagesBetweenUsers(authProvider.getCurrentUser().getId(), userId);
 	}
+	
 }
