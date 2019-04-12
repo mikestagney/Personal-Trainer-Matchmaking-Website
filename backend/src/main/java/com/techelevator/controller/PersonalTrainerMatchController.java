@@ -81,17 +81,24 @@ public class PersonalTrainerMatchController {
 	}
     
     @PutMapping("/trainer/updateProfile")
-	public void updateTrainerProfilePage() throws UnauthorizedException {
+	public void updateTrainerProfilePage(@Valid @RequestBody Trainer trainer, BindingResult result) throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
             throw new UnauthorizedException();
         }
+		if(!result.hasErrors()) {
+			userDao.updateTrainer(trainer);
+        }
+    	
 	}
     
     @PutMapping("/client/updateProfile")
-	public void updateClientProfilePage() throws UnauthorizedException {
+	public void updateClientProfilePage(@Valid @RequestBody User user, BindingResult result) throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
             throw new UnauthorizedException();
         }
+		if(!result.hasErrors()) {
+			userDao.updateUser(user);
+		}
 	}
     
     @GetMapping("/profile")
@@ -138,7 +145,6 @@ public class PersonalTrainerMatchController {
         }
     	else {
     		privateMessageDao.sendMessage(message);
-    		
     	}
 	}
     
