@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand navbar-dark bg-primary">
+  <nav class="navbar navbar-expand navbar-dark bg-info">
     <router-link to="/" class="navbar-brand">
       Personal Trainer Portal
     </router-link>
