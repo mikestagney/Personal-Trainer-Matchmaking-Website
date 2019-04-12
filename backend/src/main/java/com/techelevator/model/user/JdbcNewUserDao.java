@@ -55,9 +55,7 @@ public class JdbcNewUserDao implements UserDao{
         		+ "RETURNING user_id", Long.class, username,  lastName, hashedPassword, saltString, role);
         if (role.equals("Trainer")) {
         	jdbcTemplate.update("INSERT INTO trainer(user_id) VALUES (?)", newId);
-        
         }
-        
         return createUser(newId, username, firstName, lastName, password, role);
     }
     
