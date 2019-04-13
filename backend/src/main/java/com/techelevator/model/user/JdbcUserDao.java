@@ -51,11 +51,22 @@ public class JdbcUserDao implements UserDao{
         byte[] salt = passwordHasher.generateRandomSalt();
         String hashedPassword = passwordHasher.computeHash(password, salt);
         String saltString = new String(Base64.encode(salt));
-        long newId = jdbcTemplate.queryForObject("INSERT INTO users(username, first_name, last_name, password, salt, role) VALUES (?, ?, ?, ?, ?, ?) "
-        		+ "RETURNING user_id", Long.class, username,  lastName, hashedPassword, saltString, role);
-        if (role.equals("Trainer")) {
+        long newId = jdbcTemplate.queryForObject(
+        		"INSERT INTO users(	username, first_name, last_name, password, salt, role) VALUES (?, ?, ?, ?, ?, ?) "
+        		+ "RETURNING user_id", Long.class,
+        							username, firstName,  lastName,  hashedPassword, saltString, role);
+        
+        switch( role ) {
+        case "Trainer":
         	jdbcTemplate.update("INSERT INTO trainer(user_id) VALUES (?)", newId);
+        	break;
+        case "Client":
+        	jdbcTemplate.update("INSERT INTO client(user_id) VALUES (?)", newId);
+        	break;
+    	default:
+    		throw new IllegalArgumentException("User has illegal role: " + role + ". Must be: Client, Trainer.");
         }
+        
         return createUser(newId, username, firstName, lastName, password, role);
     }
     
@@ -102,6 +113,7 @@ public class JdbcUserDao implements UserDao{
         }
     }
     
+    //TODO BM -- why are there 2 of these?
     private User createUser(Long id, String username, String firstName, String lastName, String password, String role) {
     	User user = new Trainer();
     	user.setId(id);
@@ -111,6 +123,19 @@ public class JdbcUserDao implements UserDao{
     	user.setRole(role);
     	return user;
     }
+    
+    private User createUser(SqlRowSet results) {
+    	Client client = new Client();
+    	client.setId(results.getLong("user_id"));
+    	client.setUsername(results.getString("username"));
+    	client.setFirstName(results.getString("first_name"));
+    	client.setLastName(results.getString("last_name"));
+    	client.setRole(results.getString("role"));
+    	client.setCity(results.getString("city"));
+    	client.setState(results.getString("state"));
+    	return client;
+    }
+
     
     private Trainer createTrainer(SqlRowSet results, User user) {
     	Trainer trainer = new Trainer();
@@ -129,19 +154,7 @@ public class JdbcUserDao implements UserDao{
     	trainer.setIsPublic(results.getBoolean("is_public"));
     	return trainer;
     }
-    
-    private User createUser(SqlRowSet results) {
-    	Client client = new Client();
-    	client.setId(results.getLong("user_id"));
-    	client.setUsername(results.getString("username"));
-    	client.setFirstName(results.getString("first_mame"));
-    	client.setLastName(results.getString("last_name"));
-    	client.setRole(results.getString("role"));
-    	client.setCity(results.getString("city"));
-    	client.setState(results.getString("state"));
-    	return client;
-    }
-    
+        
     /**
      * @param username the user name of the user requested
      * @return the User requested
@@ -216,10 +229,11 @@ public class JdbcUserDao implements UserDao{
 		
 	}
 
+	//TODO BM -- either use join or return entire result set
 	@Override
 	public List<Trainer> getTrainersSearch(String name, String city, String state, int minHourlyRate, int maxHourlyRate, double rating) {
 		List<Trainer> trainerList = new ArrayList<Trainer>();
-		String sqlSearchUsers = "SELECT * FROM trainer WHERE CONCAT(firstName, ' ', lastName) ILIKE ? AND city ILIKE ? AND state ILIKE ? AND role = 'Trainer'";
+		String sqlSearchUsers = "SELECT * FROM users WHERE first_name ILIKE ? AND city ILIKE ? AND state ILIKE ? AND role = 'Trainer'";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchUsers, "%" + name + "%", "%" + city + "%", "%" + state + "%");
 		Map<Long,User> map = new HashMap<Long,User>();
 		while (results.next()) {
