@@ -36,14 +36,14 @@
       </button>
     </form>
   </div>
-  <message-list></message-list>
+ 
   </default-layout>
 </template>
 
 <script>
 import auth from '../auth';
 import DefaultLayout from '@/layouts/DefaultLayout';
-import MessageList from '@/components/MessageList.vue'
+//import MessageList from '@/components/MessageList.vue'
 
 export default {
   name: 'login',
@@ -70,14 +70,19 @@ export default {
         body: JSON.stringify(this.user),
       })
         .then((response) => {
+          console.table(response)
           if (response.ok) {
+            console.log("response ok");
             return response.text();
           } else {
+            console.log("not ok");
             this.invalidCredentials = true;
           }
         })
         .then((token) => {
+          console.table(token);
           if (token != undefined) {
+            console.log("token ok");
             if (token.includes('"')) {
               token = token.replace(/"/g, '');
             }

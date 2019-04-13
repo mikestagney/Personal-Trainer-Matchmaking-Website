@@ -10,11 +10,13 @@
       <div class="subject text-center">
       <h3>"{{ this.message.subject }}"</h3>
       </div>
-      <p><span class="orangeText">From:</span> {{ message.firstname  + ' ' + message.lastname }}, {{message.role}}</p>
-      <p><span class="orangeText">Sent:</span> {{ message.date_sent  }}</p>
+      <p><span class="orangeText">From:</span> {{ message.senderId  + ' ' + message.receipientId }}, {{message.role}}</p>
+      <p><span class="orangeText">Sent:</span> {{ message.postDate  }}</p>
       <div class="message p-3">
-      <p> {{ message.body }} </p>
+      <p> {{ message.message }} </p>
       </div>
+
+
     </div>
   </div>
 </body> 
@@ -22,6 +24,8 @@
 </template>
 
 <script>
+import auth from '../auth';
+
 export default {
     name: 'MessageDetail',
     
@@ -29,20 +33,27 @@ export default {
     return {
       message: 
         {
-        firstname: '',
-        lastname: '',
-        role: '',
+        messageId: 0,
+        senderId: 0,
+        receipientId: 0,
+        postDate: '',
         subject: '',
-        date_sent: '',
-        unread: true,
-        body: '',
-        message_id: 0
+        message: '',
+        unread: false,
+        senderDelete: false,
+        recipientDelete: false
       }
     };
   },
   created() {
-    const messageID = this.$route.params.MessageID;
-    fetch(`${process.env.VUE_APP_REMOTE_API}/message/${messageID}`)
+    const messageIdPuller = this.$route.params.MessageID;
+    fetch(`${process.env.VUE_APP_REMOTE_API}/inbox/${messageIdPuller}`, {
+      method: 'GET',
+        headers: new Headers ({
+          Authorization: 'Bearer ' + auth.getToken(),
+        }),
+        credentials: 'same-origin',
+      })
       .then((response) => {
           return response.json();
       })
@@ -50,6 +61,25 @@ export default {
           this.message = message;
       })
       .catch((err) => console.error(err));
+  },
+  methods: {
+    deleteMessage() {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/message/${this.messageIdPuller}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: 'Bearer ' + auth.getToken(),
+        },
+        credentials: 'same-origin',
+      })
+        .then((response) => {
+          if (response.ok) {
+            this.$router.push({ path: '/inbox' })
+          }
+         
+        })
+        .catch((err) => console.error(err));
+    }
+
   }
 }
 </script>

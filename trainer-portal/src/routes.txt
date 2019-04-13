@@ -1,0 +1,38 @@
+{
+        path: '/register',
+        name: 'register',
+        component: Register,
+      },
+      {
+        path: '/search',
+        name: 'search',
+        component: ListTrainers,
+      }, 
+      {
+        path: '/trainer/profile/:TrainerID',
+        name: 'trainerProfile',
+        component: TrainerProfile
+      },
+      {
+        path: '/trainer/privatemessage/:MesssageID',
+        name: 'trainerPM',
+        component: MessageDetail
+      },
+      {
+        path: '/trainer/writemessage',
+        name: 'trainer',
+        component: WriteMessage
+      },
+      {
+      path: '/',
+      name: 'home',
+      component: Home
+      }
+
+      import Register from '@/views/Register';
+import ListTrainers from '@/views/ListTrainers'
+import TrainerProfile from '@/views/TrainerProfile'
+import auth from './auth';
+import MessageDetail from '@/views/MessageDetail';
+import WriteMessage from '@/views/WriteMessage';
+import Home from '@/views/Home';
