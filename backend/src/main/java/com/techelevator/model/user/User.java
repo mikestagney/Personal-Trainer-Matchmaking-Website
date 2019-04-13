@@ -1,7 +1,6 @@
 package com.techelevator.model.user;
 
 import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -11,8 +10,6 @@ import org.hibernate.validator.constraints.NotBlank;
  * Password, Confirmation Password, and if Password Matching boolean for a User
  */
 public class User {
-	
-	//removed validation so login will work
 	protected long id;
 	@Size(min = 2, max = 25)
 	@NotBlank(message="Username is required")
@@ -135,7 +132,7 @@ public class User {
      * @param username the username to set
      */
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username.toUpperCase();
     }
 
     /**

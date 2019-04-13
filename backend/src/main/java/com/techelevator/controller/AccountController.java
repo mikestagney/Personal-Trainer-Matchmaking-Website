@@ -47,7 +47,6 @@ public class AccountController {
 	 */
     @PostMapping("/register")
     public RegistrationResult register(@Valid @RequestBody User user, BindingResult result) {
-    	System.out.println("register");
     	RegistrationResult registrationResult = new RegistrationResult();
     	if(result.hasErrors()) {
             for(ObjectError error : result.getAllErrors()) {

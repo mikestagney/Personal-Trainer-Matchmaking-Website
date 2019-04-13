@@ -48,8 +48,7 @@ import MessageList from '@/components/MessageList.vue'
 export default {
   name: 'login',
   components: {
-    DefaultLayout,
-    MessageList,
+    DefaultLayout 
   },
   data() {
     return {

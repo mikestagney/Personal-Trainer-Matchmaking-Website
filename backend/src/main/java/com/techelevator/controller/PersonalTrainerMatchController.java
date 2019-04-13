@@ -23,19 +23,8 @@ import com.techelevator.model.user.ClientList;
 import com.techelevator.model.user.Trainer;
 import com.techelevator.model.user.User;
 
-/**
- * PersonalTrainerMatchController Class uses AuthProvider, UserDao,
- * TrainerProfileDao, PrivateMessageDao, clientListDao, and
- * has methods for mapping the needed data for displaying the pages for the website
- * <p>
- * Methods: public void displayHomePage(), public TrainerProfile displayTrainerProfilePage(), public User displayClientProfilePage(),
- * public List<TrainerProfile> displayAllTrainers(String city,String state,int price_per_hour,double rating,String certifications),
- * public TrainerProfile displayTrainerDetailPage(@RequestParam long trainer_id),
- * public void updateTrainerProfile(@RequestBody TrainerProfile trainerProfile),
- * public List<User> displayClientListSearch(String firstName,String lastName,String username),
- * public List<PrivateMessage> displayMessageListForUser(),
- * and public List<PrivateMessage> displayMessageListBetweenUsers(@RequestParam long user_id)
- */
+
+//TODO BM -- split this into TrainerController, ClientController, AccountController
 @RestController
 @CrossOrigin
 public class PersonalTrainerMatchController {
@@ -55,11 +44,11 @@ public class PersonalTrainerMatchController {
     
     @GetMapping("/search")
 	public List<Trainer> trainersSearch(@RequestParam(defaultValue="") String name,
-											@RequestParam(defaultValue="") String city,
-											@RequestParam(defaultValue="") String state,
-											@RequestParam(defaultValue="0") int minHourlyRate,
-											@RequestParam(defaultValue="999") int maxHourlyRate,
-											@RequestParam(defaultValue="0") double rating) {
+										@RequestParam(defaultValue="") String city,
+										@RequestParam(defaultValue="") String state,
+										@RequestParam(defaultValue="0") int minHourlyRate,
+										@RequestParam(defaultValue="999") int maxHourlyRate,
+										@RequestParam(defaultValue="0") double rating) {
 		return userDao.getTrainersSearch(name,city,state,minHourlyRate,maxHourlyRate,rating);
 	}
     
@@ -156,7 +145,7 @@ public class PersonalTrainerMatchController {
     
     /**
 	 * Method displayMessageListBetweenUsers() takes one parameters
-	 * <p>
+	 * 
 	 * Displays Message List for only the messages between a user and the logged in User
 	 * @param user_id this is the id of the user that the logged in User wants to see messages to and from
 	 * @return List<PrivateMessage> list of all Private Messages between user and User
