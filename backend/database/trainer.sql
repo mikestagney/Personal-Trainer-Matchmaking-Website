@@ -89,12 +89,12 @@ LANGUAGE 'plpgsql' STRICT;
 
 -- user data
 INSERT INTO users (user_id,first_name,last_name,username,password,salt,role,city,state) VALUES
- (1,'Waylon','O''Hara','Kari78','pKkjz5CLGGIh4ND','fOzycrWX4cXAGGV','Client'                            ,'Koelpinberg'       ,'OH')
+ (1,'Test','Trainer','trainer','pKkjz5CLGGIh4ND','fOzycrWX4cXAGGV','Client'                             ,'Koelpinberg'       ,'OH')
 ,(2,'Elise','Mayert','Lewis.Paucek','UAs6zyKsgghmcZw','cmvaE2gYpCkM59d','Client'                        ,'South Yvonne'      ,'MD')
 ,(3,'Zella','Hilpert','Arvel.Ruecker','AjQc1h8S3cPyKTm','zPa43KHWCeNl9yi','Client'                      ,'Doramouth'         ,'OR')
 ,(4,'Darius','Thompson','Ebba.Mueller47','1RQFACvS2fLeeup','GCXIVxeMYZVfxZn','Client'                   ,'East Carlotta'     ,'IN')
 ,(5,'Cristina','Russel','Bradford.Ziemann','09X7f1tKIgbIND7','rMirr4sFnQ0bkAW','Client'                 ,'Orionburgh'        ,'DE')
-,(6,'Floy','Shanahan','Daniela_Graham37','ttuMvaHBZ0HWVCX','fPpyI1PLJaFOvSQ','Client'                   ,'Langoshmouth'      ,'ME')
+,(6,'Test','Client','client','ttuMvaHBZ0HWVCX','fPpyI1PLJaFOvSQ','Client'                               ,'Langoshmouth'      ,'ME')
 ,(7,'Ellsworth','Rutherford','Maximillian.Schamberger','3aTCI28burpURRh','PfvkPqKIwMN1Wwd','Client'     ,'East Janis'        ,'RI')
 ,(8,'Eloise','Skiles','Catherine.Moore','Skeor05X3nJBcwB','LwkU4KSFfhDRc4E','Client'                    ,'Stoltenbergside'   ,'WY')
 ,(9,'Wilhelm','Effertz','Skyla_Rowe46','oU_PkXeGP_A4q9x','T_EVPauG96wGJsD','Client'                     ,'South Cassidyton'  ,'WY')
@@ -119,23 +119,27 @@ INSERT INTO users (user_id,first_name,last_name,username,password,salt,role,city
 ,(28,'Jalon','Robel','Felicita1','ExDfSHfnWFxxJuY','PZuWr5xdzq9aoQt','Client'                           ,'West Kodymouth'    ,'AZ')
 ,(29,'Einar','Herzog','Rusty.Cormier18','8bF1iWNjqJg9ICL','AXbu_Zx26UWc3Rf','Client'                    ,'South Karliport'   ,'VT')
 ,(30,'Casandra','Reichel','Elisabeth.Auer','oawIZfF9NvJhIGh','agQ9E6kyL1tIMau','Client'                 ,'South Karliport'   ,'VT')
-,(31,'first','last','username','password','agQ9E6kyL1tIMau','Client', 'South Karliport'   ,'VT');
-
+;
 
 INSERT INTO trainer (user_id,hourly_rate,rating,is_public,philosophy,bio,certifications) VALUES
- (1,55,1,true,'We need to quantify the solid state SSL protocol!','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','{"IFBB Pro"}')
-,(2,25,5,true,'You can''t back up the firewall without synthesizing the 1080p XSS interface!','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','{"IFBB Pro"}')
-,(3,60,2,true,'I''ll calculate the bluetooth AGP transmitter, that should sensor the FTP driver!','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','{"IFBB Pro"}')
-,(4,200,4,true,'Try to transmit the IB firewall, maybe it will transmit the primary transmitter!','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','{"IFBB Pro"}')
-,(5,25,2,true,'You can''t index the pixel without copying the optical ADP matrix!','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','{"IFBB Pro"}');
+ (1,55,1,true,'We need to quantify the solid state SSL protocol!','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','{"American Council on Exercise (ACE)", "National Academy of Sports Medicine (NASM)", "International Sports Sciences Association (ISSA)", "American College of Sports Medicine (ACSM)", "National Strength and Conditioning Association (NSCA)", "National Federation of Professional Trainers (NFPT)"}')
+,(2,25,5,true,'You can''t back up the firewall without synthesizing the 1080p XSS interface!','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '{"International Sports Sciences Association (ISSA)", "National Strength and Conditioning Association (NSCA)", "National Federation of Professional Trainers (NFPT)"}')
+,(3,60,2,true,'I''ll calculate the bluetooth AGP transmitter, that should sensor the FTP driver!','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '{"National Strength and Conditioning Association (NSCA)", "National Federation of Professional Trainers (NFPT)"}')
+,(4,200,4,true,'Try to transmit the IB firewall, maybe it will transmit the primary transmitter!','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '{"American Council on Exercise (ACE)", "American College of Sports Medicine (ACSM)", "National Strength and Conditioning Association (NSCA)", "National Federation of Professional Trainers (NFPT)"}')
+,(5,25,2,true,'You can''t index the pixel without copying the optical ADP matrix!','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '{"National Federation of Professional Trainers (NFPT)"}')
+;
 
 
--- Updated values
-UPDATE trainer SET is_public = random_boolean();
+INSERT INTO message (message_id, sender_id, recipient_id, post_date, unread, subject, message) VALUES
+ (1,1,2,'1/10/2019',true,'Subject 1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')
+,(2,1,2,'1/10/2019',false,'Subject 2', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')
+,(3,1,2,'1/10/2019',true,'Subject 3', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')
+,(4,2,1,'1/11/2019',true,'Reply 1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')
+,(5,2,1,'1/11/2019',false,'Reply 2', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')
+;
 
-UPDATE users
-SET role = 'Trainer'
-WHERE user_id <= 5;
+-- Fixup Schema
+-- ============
 
 -- user_id sequence
 select setval('users_user_id_seq', (select max(user_id) from users));
@@ -157,6 +161,29 @@ ALTER TABLE message
 ADD FOREIGN KEY(sender_id)    REFERENCES users(user_id),
 ADD FOREIGN KEY(recipient_id) REFERENCES users(user_id);
 
-COMMIT TRANSACTION;
 
+-- Realistic values
+-- ================
+
+-- the password is 'password' for everyone
+UPDATE users
+SET
+    username = UPPER(username),
+    password = '327BtUzwOFiH7YN3BjySWA==',
+    salt     = 'TCtA0l/RfWIfJkIRtEppHOp53FcciS4xSEJOu3z0J8kAOcKZFVQRu7ew4agRozh5Je6IL5Ruqv+gcSS4H1Mp6zPg0EOHQG16DQejzWNeZN3GIdi4E/368H2ze72papiIql8HmHhuDhQ6uS8VreE3xxo6ro19CenQp9ORnXEut3s='
+;
+
+-- the first 5 users are trainers, the rest are clients
+UPDATE users
+SET role = 'Trainer'
+WHERE user_id <= 5;
+
+UPDATE trainer SET is_public = random_boolean();
+
+-- clients
+INSERT INTO client (user_id)
+SELECT user_id FROM users
+WHERE user_id > 5;
+
+COMMIT TRANSACTION;
 
