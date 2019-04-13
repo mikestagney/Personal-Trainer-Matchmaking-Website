@@ -29,7 +29,7 @@
         required
       />
       <router-link :to="{ name: 'register' }" class="orangeText">
-        Need an account?
+        Need an account
       </router-link>
       <button class="btn btn-lg btn-info btn-block mt-2" type="submit">
         Sign in
@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     login() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/login`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}login`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -70,24 +70,19 @@ export default {
         body: JSON.stringify(this.user),
       })
         .then((response) => {
-          console.table(response)
           if (response.ok) {
-            console.log("response ok");
             return response.text();
           } else {
-            console.log("not ok");
             this.invalidCredentials = true;
           }
         })
         .then((token) => {
-          console.table(token);
-          if (token != undefined) {
-            console.log("token ok");
+          if (token != undefined) {           
             if (token.includes('"')) {
               token = token.replace(/"/g, '');
             }
             auth.saveToken(token);
-            this.$router.push('/trainerSearch');
+            this.$router.push('/search');
           }
         })
         .catch((err) => console.error(err));

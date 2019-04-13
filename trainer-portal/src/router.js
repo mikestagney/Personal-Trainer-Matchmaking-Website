@@ -3,6 +3,11 @@ import Router from 'vue-router';
 import auth from './auth';
 import Login from '@/views/Login';
 import Register from '@/views/Register';
+import Home from '@/views/Home';
+import ListTrainers from '@/views/ListTrainers'
+import TrainerProfile from '@/views/TrainerProfile'
+import MessageDetail from '@/views/MessageDetail';
+import WriteMessage from '@/views/WriteMessage';
 
 Vue.use(Router);
 
@@ -20,6 +25,32 @@ const router = new Router({
         name: 'register',
         component: Register,
       },
+      {
+        path: '/',
+        name: 'home',
+        component: Home
+      },
+      {
+        path: '/search',
+        name: 'search',
+        component: ListTrainers,
+      }, 
+      {
+        path: '/trainer/profile/:TrainerID',
+        name: 'trainerProfile',
+        component: TrainerProfile
+      },
+      {
+        path: '/trainer/privatemessage/:MesssageID',
+        name: 'trainerPM',
+        component: MessageDetail
+      },
+      {
+        path: '/trainer/writemessage',
+        name: 'trainer',
+        component: WriteMessage
+      },
+
       
     ],
   });
