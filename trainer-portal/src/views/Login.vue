@@ -29,21 +29,20 @@
         required
       />
       <router-link :to="{ name: 'register' }" class="orangeText">
-        Need an account?
+        Need an account
       </router-link>
       <button class="btn btn-lg btn-info btn-block mt-2" type="submit">
         Sign in
       </button>
     </form>
   </div>
-  <message-list></message-list>
+ 
   </default-layout>
 </template>
 
 <script>
 import auth from '../auth';
 import DefaultLayout from '@/layouts/DefaultLayout';
-import MessageList from '@/components/MessageList.vue'
 
 export default {
   name: 'login',
@@ -61,34 +60,38 @@ export default {
   },
   methods: {
     login() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/login`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}login`, {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(this.user),
       })
-        .then((response) => {
-          if (response.ok) {
-            return response.text();
-          } else {
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
             this.invalidCredentials = true;
+        }
+      })
+      .then((json) => {
+        if (json.token != undefined) {           
+          if (json.token.includes('"')) {
+            json.token = json.token.replace(/"/g, '');
           }
-        })
-        .then((token) => {
-          if (token != undefined) {
-            if (token.includes('"')) {
-              token = token.replace(/"/g, '');
-            }
-            auth.saveToken(token);
-            this.$router.push('/trainerSearch');
+          auth.saveToken(json.token);
+          if (json.role == 'Trainer') {
+            this.$router.push('/trainer/profile/' + json.userID);
+          } else if (json.role == 'Client') {
+              this.$router.push('/client/profile/' + json.userID);
           }
-        })
-        .catch((err) => console.error(err));
+        }
+      })
+      .catch((err) => console.error(err));
     },
-  },
-};
+  }
+}
 </script>
 
 <style>

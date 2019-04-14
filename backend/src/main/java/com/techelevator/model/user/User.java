@@ -5,34 +5,50 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-/**
- * User is an object that holds a First Name, Last Name, Username, Role, User Id,
- * Password, Confirmation Password, and if Password Matching boolean for a User
- */
-public class User {
-
+//TODO put login data here. remove from abstract
+public class User  {
+	//TODO BM -- ask David if this violates security considerations
+	public String token;
+	
+	@MapToDB("user_id")
 	protected long id;
+	
+	@MapToDB
 	@Size(min = 2, max = 25)
 	@NotBlank(message="Username is required")
 	protected String username;
+	
+	@MapToDB
 	@Size(min = 2, max = 10)
 	@NotBlank(message="Role is required")
     private String role;
+	
+	@MapToDB
 	@Size(min = 2, max = 256)
     @NotBlank(message="Password is required")
 	protected String password;
-	@Size(min = 2, max = 256)
+	
+	@MapToDB
 	protected String confirmPassword;
+	
+	@MapToDB("first_name")
 	@Size(min = 2, max = 25)
 	@NotBlank(message="First Name is required")
     private String firstName;
+
+	@MapToDB("last_name")
 	@Size(min = 2, max = 25)
 	@NotBlank(message="Last Name is required")
 	private String lastName;
+	
+	@MapToDB
 	@Size(min = 2, max = 30)
 	private String city;
+	
+	@MapToDB
 	@Size(min = 2, max = 2)
 	private String state;
+	
 
 	/**
      * @return True if Password Matches Confirm Password
@@ -106,6 +122,9 @@ public class User {
      */
     public long getId() {
         return id;
+    }
+    public long getUserID() {
+    	return id;
     }
 
     /**

@@ -32,33 +32,30 @@ public class AccountController {
     @Autowired
     private UserDao userDao;
 
+  
     /**
-	 * Method login() takes two parameters
-	 * <p>
-	 * This methods returns a String which is a token generated from the TokenHandler
-	 * using the User's username and role
-	 * <p>
+	 * Generates login credentials and returns a user object.
+	 *
 	 * If AuthProvider cannot authorize the login then an UnauthorizedException is thrown
 	 * @param user User object for person trying to login
-	 * @param flash RedirectAttributes to hold tempory data on screen if login is not successful
+	 * @param flash RedirectAttributes to hold temporary data on screen if login is not successful
+	 * 
 	 * @return CreatedToken if login is successful
 	 */
     @PostMapping("/login")
-    public String login(@RequestBody User user, RedirectAttributes flash) throws UnauthorizedException {
+    public User login(@RequestBody User user, RedirectAttributes flash) throws UnauthorizedException {
         if(auth.signIn(user.getUsername(), user.getPassword())) {
         	User currentUser = auth.getCurrentUser();
-            return tokenHandler.createToken(user.getUsername(), currentUser.getRole());
+        	currentUser.token = tokenHandler.createToken(user.getUsername(), currentUser.getRole()); 
+            return currentUser;
         } else {
             throw new UnauthorizedException();
         }
     }
 
     /**
-	 * Method register() takes two parameters
-	 * <p>
-	 * This methods returns a RegistrationResult object
-	 * using the information entered by the user
-	 * <p>
+	 * Creates a new user in the database and returns JSON indication success status.
+	 * 
 	 * If AuthProvider cannot authorize the registration then an UnauthorizedException is thrown
 	 * @param user User object for person trying to login
 	 * @param result BindingResult to check for errors when recieving the entered information

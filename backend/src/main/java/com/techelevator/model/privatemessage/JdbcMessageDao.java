@@ -32,9 +32,9 @@ public class JdbcMessageDao implements MessageDao{
 	 * @return List<PrivateMessage> that have been sent or recieved by the User
 	 */
 	@Override
-	public List<Message> getMessages(long user_id) {
+	public List<Message> getMessagesForUser(long user_id) {
 		List<Message> messageList = new ArrayList<Message>();
-		String sqlSearchForUsersMessages = "SELECT * FROM private_message WHERE sender_id = ? OR recipient_id = ?";
+		String sqlSearchForUsersMessages = "SELECT * FROM message WHERE recipient_id = ?";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForUsersMessages, user_id, user_id);
         while (results.next()) {
             messageList.add(mapResultToMessage(results));

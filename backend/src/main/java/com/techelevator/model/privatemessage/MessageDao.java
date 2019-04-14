@@ -9,10 +9,10 @@ import java.util.List;
 public interface MessageDao {
 	
 	/**
-	 * @param user_id the User Id of the User who's Messages are being displayed
-	 * @return List<PrivateMessage> that have been sent or recieved by the User
+	 * @param user_id The ID of the user receiving the message
+	 * @return List<PrivateMessage> list of messages
 	 */
-	public List<Message> getMessages(long user_id);
+	public List<Message> getMessagesForUser(long user_id);
 	
 	/**
 	 * @param userId1 the User Id of one the User who's Messages are being displayed

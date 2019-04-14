@@ -36,41 +36,33 @@ public class PersonalTrainerMatchController {
     @Autowired
     private UserDao userDao;
 	
-    
-    @GetMapping("/")
-    public void displayHomePage() {
-    	
-    }
-    
-    /**
-     * 
-     * @return a List of all the User's with role trainer and is_public true
-     */
-    @GetMapping("/trainerList")
+    @GetMapping("/trainers")
 	public List<Trainer> trainersList() {
-		return userDao.getListOfTrainers();
-	}
-    
-    
-    @GetMapping("/search")
-	public List<Trainer> trainersSearch(@RequestParam(defaultValue="") String name,
-										@RequestParam(defaultValue="") String city,
-										@RequestParam(defaultValue="") String state,
-										@RequestParam(defaultValue="0") int minHourlyRate,
-										@RequestParam(defaultValue="999") int maxHourlyRate,
-										@RequestParam(defaultValue="0") double rating) {
-		return userDao.getTrainersSearch(name,city,state,minHourlyRate,maxHourlyRate,rating);
-	}
-    
+    	return userDao.getTrainers();
+    }
     
     @GetMapping("/trainer/profile/{trainerId}")
 	public Trainer trainerProfilePage(@PathVariable long trainerId) throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
             throw new UnauthorizedException();
         }
-		return userDao.getTrainerById(trainerId);
+		return userDao.getTrainerByID(trainerId);
 	}
-    
+    @PutMapping("/trainer/profile/{trainerId}")
+	public void updateTrainerProfilePage(
+			@PathVariable long trainerId,
+			@Valid @RequestBody Trainer trainer, BindingResult result
+			) throws UnauthorizedException 
+    {
+		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
+            throw new UnauthorizedException();
+        }
+		//TODO ?? -- How do i send bindingresult errors to frontend?
+		if(!result.hasErrors()) {
+			userDao.putTrainerByID(trainerId, trainer);
+        }
+	}
+
     @GetMapping("/client/profile/{clientId}")
 	public User clientProfilePage(@PathVariable long clientId) throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"Client"})) {
@@ -79,20 +71,9 @@ public class PersonalTrainerMatchController {
 		return userDao.getClientById(clientId);
 	}
     
-    @PutMapping("/trainer/updateProfile")
-	public void updateTrainerProfilePage(@Valid @RequestBody Trainer trainer, BindingResult result) throws UnauthorizedException {
-		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
-            throw new UnauthorizedException();
-        }
-		if(!result.hasErrors()) {
-			userDao.updateTrainer(trainer);
-        }
-    	
-	}
-    
     @PutMapping("/client/updateProfile")
 	public void updateClientProfilePage(@Valid @RequestBody User user, BindingResult result) throws UnauthorizedException {
-		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
+		if(!authProvider.userHasRole(new String[] {"Client"})) {
             throw new UnauthorizedException();
         }
 		if(!result.hasErrors()) {
@@ -131,7 +112,7 @@ public class PersonalTrainerMatchController {
 	
 	@GetMapping("/inbox")
 	public List<Message> displayMessages() {
-		return privateMessageDao.getMessages(authProvider.getCurrentUser().getId());
+		return privateMessageDao.getMessagesForUser(authProvider.getCurrentUser().getId());
 	}
 	
 	@PostMapping("/send")
@@ -147,11 +128,6 @@ public class PersonalTrainerMatchController {
     	}
 	}
     
-    @GetMapping("/inbox/{messageId}")
-	public Message displayMessage(@PathVariable long messageId) {
-		return privateMessageDao.getMessage(messageId);
-	}
-    
     
     /**
 	 * Method displayMessageListBetweenUsers() takes one parameters
@@ -165,6 +141,12 @@ public class PersonalTrainerMatchController {
 		return privateMessageDao.getMessagesBetweenUsers(authProvider.getCurrentUser().getId(), userId);
 	}
 	
+    @GetMapping("/inbox/{messageId}")
+	public Message displayMessage(@PathVariable long messageId) {
+		return privateMessageDao.getMessage(messageId);
+	}
+    
+
 	@PutMapping("/inbox/{messageId}")
 	public void deleteMessage(@PathVariable long messageId) {
 		privateMessageDao.deleteMessage(authProvider.getCurrentUser().getId(), messageId);

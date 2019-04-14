@@ -66,7 +66,7 @@ public class RequestAuthProvider implements AuthProvider {
             return false;
         }
         User userFromDb = dao.getValidUserWithPassword(userFromSession.getUsername(), existingPassword);
-        if(userFromDb != null && userFromDb.getId() == userFromDb.getId()) {
+        if(userFromDb != null && userFromDb.getId() == userFromSession.getId()) {
             dao.changePassword(userFromSession, newPassword);
             return true;
         } else {

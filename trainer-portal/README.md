@@ -35,5 +35,5 @@ npm run test:e2e
 npm run test:unit
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Backend API
+VUE_APP_REMOTE_API=http://localhost:8080/trainer-backend/

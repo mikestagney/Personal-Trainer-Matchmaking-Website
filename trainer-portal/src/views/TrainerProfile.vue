@@ -1,60 +1,82 @@
 <template>
 <default-layout>
- <div class="trainerProfile">
-  <div class="container">
-   <!-- <h2>the trainer id is :{{this.$route.params.TrainerID}}</h2> -->
-   <div v-for="trainer in trainers" :key="trainer.user_id">
-     <div v-if="TrainerID == trainer.user_id">
-    <div class="row imageHeader text-light mb-3 p-5 shadow">
-        <div class="col">
-        <h3 id="test">{{trainer.first_name}} {{trainer.last_name}}</h3>
-        <h5>{{trainer.city}}, {{trainer.state}}</h5>
-        </div>
-        <div class="col">
-        <h4 class="font-italic">{{trainer.philosophy}}</h4>
-        </div>
-    </div>
-    <div class="row mb-2">
-        <div class="col blueBackground ml-1">
-            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/waterbottle.png" class="p-3"><span class="orangeText">  Rating:</span> {{trainer.rating}}</h6>
-            
-        </div>
-        <div class="col blueBackground ml-1">
-            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/scale.png" class="p-3"><span class="orangeText">  Price:</span> ${{trainer.hourly_rate}} per hour</h6>
-        </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col blueBackground">
-            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/shoe.png" class="p-3"><span class="orangeText">  Background:</span> {{trainer.bio_info}}</h6>
+      <div class="container">
+         <h2>
+            the trainer id is {{this.$route.params.TrainerID}}
+         </h2>
+         <div class="row imageHeader text-light mb-3 p-5 shadow">
+            <div class="col">
+               <h3 id="test">
+                  {{trainer.firstName}} {{trainer.lastName}}
+               </h3>
+               <h5>
+                  {{trainer.city}}, {{trainer.state}}
+               </h5>
+            </div>
+            <div class="col">
+               <h4 class="font-italic">
+                  {{trainer.philosophy}}
+               </h4>
+            </div>
+         </div>
+         <div class="row mb-2">
+            <div class="col blueBackground ml-1">
+               <h6 class="font-weight-bold">
+                  <img src="../assets/FitnessVectors/waterbottle.png" class="p-3" />
+                  <span class="orangeText">Rating:</span> {{trainer.rating}}
+               </h6>
             </div>
             <div class="col blueBackground ml-1">
-            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/muscles.png" class="p-3"><span class="orangeText"> Certifications:</span> {{trainer.certifications}}</h6>
+               <h6 class="font-weight-bold">
+                  <img src="../assets/FitnessVectors/scale.png" class="p-3" />
+                  <span class="orangeText">Price:</span> ${{trainer.hourlyRate}} per
+                  hour
+               </h6>
             </div>
-        </div>
-  </div>
- </div>
-  </div>
- </div>
+            <div class="row mb-3">
+               <div class="col blueBackground">
+                  <h6 class="font-weight-bold">
+                     <img src="../assets/FitnessVectors/shoe.png" class="p-3" />
+                     <span class="orangeText">Background:</span> {{trainer.bioInfo}}
+                  </h6>
+               </div>
+               <div class="col blueBackground ml-1">
+                  <h6 class="font-weight-bold">
+                     <img src="../assets/FitnessVectors/muscles.png" class="p-3" />
+                     <span class="orangeText">Certifications:</span>
+                     {{trainer.certifications}}
+                  </h6>
+               </div>
+            </div>
+         </div>
+      </div>
 </default-layout>
 </template>
 
 <script>
 import DefaultLayout from '@/layouts/DefaultLayout';
+import auth from '../auth';
 
- export default {
-  name:"trainerProfile",
-  components: {
-      DefaultLayout
-  },
-  data(){
-   return{
-    TrainerID: this.$route.params.TrainerID,
-    title:"trainerProfile",
-    trainers: []
-   }
-  },
+export default {
+    name:"trainerProfile",
+    components: {
+        DefaultLayout
+    },
+    data(){
+        return{
+            TrainerID: this.$route.params.TrainerID,
+            title:"trainerProfile",
+            trainers: []
+        }
+    },
   created() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/TrainerProfile`) 
+      fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/${this.TrainerID}`, {
+      method: 'GET',
+        headers: new Headers ({
+          Authorization: 'Bearer ' + auth.getToken(),
+        }),
+        credentials: 'same-origin',
+      }) 
         .then((response) => {
             return response.json();
         })
@@ -64,7 +86,7 @@ import DefaultLayout from '@/layouts/DefaultLayout';
         .catch((err) => console.error(err));
     }
  
- }
+}
 </script>
 
 <style>
