@@ -48,23 +48,13 @@ public interface UserDao {
      */
     public User getUserById(Long id);
     
-    public Trainer getTrainerByID(Long id);
+    
     
     public User getClientById(Long id);
     
     public void updateUser(User user);
-    
-	public void updateTrainer(Trainer trainer);
 	
-	/**
-	 * @param city this is the city to search for a trainer in
-	 * @param state this is the state to search for a trainer in
-	 * @param price_per_hour this is the minimum range price to search for a trainer in
-	 * @param rating this is the minimum rating to search for a trainer in
-	 * @param certifications these are the certifications a trainer must have
-	 * @return List<TrainerProfile> for all Trainer's that fall within the search criteria
-	 */
-	public List<Trainer> getTrainersSearch(String name, String city, String state, int minHourlyRate, int maxHourlyRate, double rating);	
+		
 	
 	/**
 	 * @param user_id the User Id of the Trainer who's Client List is being searched
@@ -81,5 +71,12 @@ public interface UserDao {
 	public void addPrivateNote(long trainer_id, long client_id, String privateNote);
 	
 	public void removePrivateNote(long trainer_id, long client_id, String privateNote);
+
+	// -- /trainers
+	public List<Trainer> getTrainers();
+	
+	// -- /trainers/id
+	public Trainer getTrainerByID(long trainerID);
+	public void    putTrainerByID(long trainerID, Trainer trainer);
 
 }

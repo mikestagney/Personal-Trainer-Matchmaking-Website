@@ -36,22 +36,10 @@ public class PersonalTrainerMatchController {
     @Autowired
     private UserDao userDao;
 	
-    
-    @GetMapping("/")
-    public void displayHomePage() {
-    	
+    @GetMapping("/trainers")
+	public List<Trainer> trainersList() {
+    	return userDao.getTrainers();
     }
-    
-    @GetMapping("/search")
-	public List<Trainer> trainersSearch(@RequestParam(defaultValue="") String name,
-										@RequestParam(defaultValue="") String city,
-										@RequestParam(defaultValue="") String state,
-										@RequestParam(defaultValue="0") int minHourlyRate,
-										@RequestParam(defaultValue="999") int maxHourlyRate,
-										@RequestParam(defaultValue="0") double rating) {
-		return userDao.getTrainersSearch(name,city,state,minHourlyRate,maxHourlyRate,rating);
-	}
-    
     
     @GetMapping("/trainer/profile/{trainerId}")
 	public Trainer trainerProfilePage(@PathVariable long trainerId) throws UnauthorizedException {
@@ -60,24 +48,27 @@ public class PersonalTrainerMatchController {
         }
 		return userDao.getTrainerByID(trainerId);
 	}
-    
+    @PutMapping("/trainer/profile/{trainerId}")
+	public void updateTrainerProfilePage(
+			@PathVariable long trainerId,
+			@Valid @RequestBody Trainer trainer, BindingResult result
+			) throws UnauthorizedException 
+    {
+		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
+            throw new UnauthorizedException();
+        }
+		//TODO ?? -- How do i send bindingresult errors to frontend?
+		if(!result.hasErrors()) {
+			userDao.putTrainerByID(trainerId, trainer);
+        }
+	}
+
     @GetMapping("/client/profile/{clientId}")
 	public User clientProfilePage(@PathVariable long clientId) throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"Client"})) {
             throw new UnauthorizedException();
         }
 		return userDao.getClientById(clientId);
-	}
-    
-    @PutMapping("/trainer/updateProfile")
-	public void updateTrainerProfilePage(@Valid @RequestBody Trainer trainer, BindingResult result) throws UnauthorizedException {
-		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
-            throw new UnauthorizedException();
-        }
-		if(!result.hasErrors()) {
-			userDao.updateTrainer(trainer);
-        }
-    	
 	}
     
     @PutMapping("/client/updateProfile")
