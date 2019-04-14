@@ -65,33 +65,35 @@ export default {
       fetch(`${process.env.VUE_APP_REMOTE_API}login`, {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(this.user),
       })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-              this.invalidCredentials = true;
+      .then((response) => {
+        if (response.ok) {
+          console.table(response)
+          return response.json();
+        } else {
+            this.invalidCredentials = true;
+        }
+      })
+      .then((json) => {
+        console.table(json)
+        if (json.token != undefined) {           
+          if (json.token.includes('"')) {
+            json.token = json.token.replace(/"/g, '');
           }
-        })
-        .then((json) => {
-          if (json.token != undefined) {           
-            if (json.token.includes('"')) {
-              json.token = json.token.replace(/"/g, '');
-            }
-            auth.saveToken(json.token);
-          if (json.role == 'trainer') {
-            this.$router.push('/trainer/profile/:' + json.userID);
-          } else if (json.role == 'client') {
-              this.$router.push('/client/profile/:' + json.userID);
-            }
+          auth.saveToken(json.token);
+          if (json.role == 'Trainer') {
+            this.$router.push('/trainer/profile/' + json.userID);
+          } else if (json.role == 'Client') {
+              this.$router.push('/client/profile/' + json.userID);
           }
-        })
-        .catch((err) => console.error(err));
-      },
+        }
+      })
+      .catch((err) => console.error(err));
+    },
   }
 }
 </script>

@@ -121,7 +121,7 @@ public class PersonalTrainerMatchController {
 	
 	@GetMapping("/inbox")
 	public List<Message> displayMessages() {
-		return privateMessageDao.getMessages(authProvider.getCurrentUser().getId());
+		return privateMessageDao.getMessagesForUser(authProvider.getCurrentUser().getId());
 	}
 	
 	@PostMapping("/send")
@@ -137,11 +137,6 @@ public class PersonalTrainerMatchController {
     	}
 	}
     
-    @GetMapping("/inbox/{messageId}")
-	public Message displayMessage(@PathVariable long messageId) {
-		return privateMessageDao.getMessage(messageId);
-	}
-    
     
     /**
 	 * Method displayMessageListBetweenUsers() takes one parameters
@@ -155,6 +150,12 @@ public class PersonalTrainerMatchController {
 		return privateMessageDao.getMessagesBetweenUsers(authProvider.getCurrentUser().getId(), userId);
 	}
 	
+    @GetMapping("/inbox/{messageId}")
+	public Message displayMessage(@PathVariable long messageId) {
+		return privateMessageDao.getMessage(messageId);
+	}
+    
+
 	@PutMapping("/inbox/{messageId}")
 	public void deleteMessage(@PathVariable long messageId) {
 		privateMessageDao.deleteMessage(authProvider.getCurrentUser().getId(), messageId);

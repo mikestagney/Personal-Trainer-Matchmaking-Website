@@ -104,15 +104,14 @@ export default {
         },
         body: JSON.stringify(this.user),
       })
-        .then((response) => {
-          if (response.ok) {
-            this.$router.push({ path: '/login', query: { registration: 'success' } });
-          } else {
-            this.registrationErrors = true;
-          }
-        })
-
-        .then((err) => console.error(err));
+      .then((response) => {
+        if (response.ok) {
+          this.$router.push({ path: '/login', query: { registration: 'success' } });
+        } else {
+          this.registrationErrors = true;
+        }
+      })
+      .catch((err) => console.error(err));
     },
   },
 };
