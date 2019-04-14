@@ -40,6 +40,7 @@
 
 <script>
 import DefaultLayout from '@/layouts/DefaultLayout';
+import auth from '../auth';
 
  export default {
   name:"clientProfile",
@@ -54,7 +55,13 @@ import DefaultLayout from '@/layouts/DefaultLayout';
    }
   },
   created() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/TrainerProfile`) 
+      fetch(`${process.env.VUE_APP_REMOTE_API}/TrainerProfile`, {
+      method: 'GET',
+        headers: new Headers ({
+          Authorization: 'Bearer ' + auth.getToken(),
+        }),
+        credentials: 'same-origin',
+      }) 
         .then((response) => {
             return response.json();
         })
