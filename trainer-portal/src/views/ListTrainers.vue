@@ -167,7 +167,11 @@ export default {
 
     },
     created() {
+<<<<<<< HEAD
       fetch(`${process.env.VUE_APP_REMOTE_API}TrainerProfile`) 
+=======
+      fetch(`${process.env.VUE_APP_REMOTE_API}/trainerList`) 
+>>>>>>> 881c02d4a33b833dad8b6a7804fec10c838a3ef6
         .then((response) => {
             return response.json();
         })
