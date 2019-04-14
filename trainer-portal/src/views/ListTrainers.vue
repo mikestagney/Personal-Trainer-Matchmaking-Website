@@ -99,7 +99,7 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for="trainer in filteredTrainers" :key="trainer.user_id">
+                <tr v-for="trainer in filterTrainers" :key="trainer.user_id">
                     <td><router-link v-bind:to="{ name: 'trainerProfile', params: { TrainerID: trainer.user_id }}" class="orangeText">{{trainer.first_name}} {{trainer.last_name}}</router-link></td>
                     <td>{{trainer.city}}</td>
                     <td>{{trainer.state}}</td>
@@ -131,10 +131,17 @@ export default {
             sortBy: '',
             price: '',
             trainers: [],
-            filters: { name: ["nameSearch"], city: ["citySearch"], state: ["stateSearch"], rating: ["ratingSearch"]}
+            filters: { first_name: ["nameSearch"], city: ["citySearch"], state: ["stateSearch"],}
         };
     },
     computed: {
+        filterTrainers() {
+            return this.trainers.filter(function(trainer) {
+                return trainer.first_name.indexOf(this.nameSearch) >= 0
+                && trainer.state.indexOf(this.stateSearch) >= 0
+                && trainer.city.indexOf(this.citySearch) >= 0;
+            })
+        }
         /* activeTrainers: function() {
             return this.trainers.filter(function(trainer) {
                 return trainer.public
@@ -149,14 +156,14 @@ export default {
             .catch(err => console.log(err)); 
         },
         filteredTrainers(trainers, filters) {
-            const filterKeys = object.keys(filters);
+            const filterKeys = Object.keys(filters);
             return this.trainers.filter((trainer) => {
                 return filterKeys.every(key => {
                     if (!filters[key].length) return true;
                     return filters[key].includes(trainer[key]);
                 }) 
             })
-        }
+        },
 
     },
     created() {
