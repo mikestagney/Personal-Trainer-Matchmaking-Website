@@ -42,6 +42,16 @@ public class PersonalTrainerMatchController {
     	
     }
     
+    /**
+     * 
+     * @return a List of all the User's with role trainer and is_public true
+     */
+    @GetMapping("/trainerList")
+	public List<Trainer> trainersList() {
+		return userDao.getListOfTrainers();
+	}
+    
+    
     @GetMapping("/search")
 	public List<Trainer> trainersSearch(@RequestParam(defaultValue="") String name,
 										@RequestParam(defaultValue="") String city,
