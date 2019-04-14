@@ -251,7 +251,7 @@ public class JdbcUserDao implements UserDao{
 	@Override
 	public List<Trainer> getListOfTrainers() {
 		List<Trainer> trainerList = new ArrayList<Trainer>();
-		String sqlGetTrainerList = "SELECT * FROM users JOIN trainer ON user_id = user_id WHERE role = 'Trainer' AND trainer.is_public = true GROUP BY user_id";
+		String sqlGetTrainerList = "SELECT * FROM users JOIN trainer ON users.user_id = trainer.user_id WHERE role = 'Trainer' AND trainer.is_public = true GROUP BY users.user_id, trainer.user_id";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlGetTrainerList);
 		while (results.next()) {
 			trainerList.add(createTrainer(results,createUser(results)));
