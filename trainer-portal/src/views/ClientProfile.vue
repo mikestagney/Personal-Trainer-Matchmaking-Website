@@ -2,33 +2,32 @@
 <default-layout>
  <div class="trainerProfile">
   <div class="container">
-   <!-- <h2>the trainer id is :{{this.$route.params.TrainerID}}</h2> -->
-   <div v-for="trainer in trainers" :key="trainer.user_id">
-     <div v-if="ClientID == trainer.user_id">
+   <div v-for="client in clients" :key="client.id">
+     <div v-if="ClientID == client.id">
     <div class="row imageHeader text-light mb-3 p-5 shadow">
         <div class="col">
-        <h3 id="test">{{client.first_name}} {{client.last_name}}</h3>
+        <h3 id="test">{{client.firstname}} {{client.lastname}}</h3>
         <h5>{{client.city}}, {{client.state}}</h5>
         </div>
         <div class="col">
-        <h4 class="font-italic">{{trainer.philosophy}}</h4>
+        <h4 class="font-italic">{{client.username}}</h4>
         </div>
     </div>
     <div class="row mb-2">
         <div class="col blueBackground ml-1">
-            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/waterbottle.png" class="p-3"><span class="orangeText">  Rating:</span> {{trainer.rating}}</h6>
+            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/waterbottle.png" class="p-3"><span class="orangeText"> placeholder for styling</span> </h6>
             
         </div>
         <div class="col blueBackground ml-1">
-            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/scale.png" class="p-3"><span class="orangeText">  Price:</span> ${{trainer.hourly_rate}} per hour</h6>
+            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/scale.png" class="p-3"><span class="orangeText">  placeholder for styling</span> </h6>
         </div>
         </div>
         <div class="row mb-3">
             <div class="col blueBackground">
-            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/shoe.png" class="p-3"><span class="orangeText">  Background:</span> {{trainer.bio_info}}</h6>
+            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/shoe.png" class="p-3"><span class="orangeText"> placeholder for styling</span> </h6>
             </div>
             <div class="col blueBackground ml-1">
-            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/muscles.png" class="p-3"><span class="orangeText"> Certifications:</span> {{trainer.certifications}}</h6>
+            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/muscles.png" class="p-3"><span class="orangeText">placeholder for styling</span> </h6>
             </div>
         </div>
   </div>
@@ -50,12 +49,12 @@ import auth from '../auth';
   data(){
    return{
     ClientID: this.$route.params.ClientID,
-    title:"client Profile",
+    title:"clientProfile",
     client: []
    }
   },
   created() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/TrainerProfile`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/client/profile/${this.clientId}`, {
       method: 'GET',
         headers: new Headers ({
           Authorization: 'Bearer ' + auth.getToken(),
