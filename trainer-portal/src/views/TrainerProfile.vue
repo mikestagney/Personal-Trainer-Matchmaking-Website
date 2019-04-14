@@ -3,6 +3,7 @@
       <div class="container">
          <h2>
             the trainer id is {{this.$route.params.TrainerID}}
+            Trainer Profile is {{ trainer.isPublic ? 'Public':'Private' }
          </h2>
          <div class="row imageHeader text-light mb-3 p-5 shadow">
             <div class="col">
