@@ -148,7 +148,7 @@ public class JdbcUserDao implements UserDao{
     	trainer.setRating(results.getDouble("rating"));
     	trainer.setPhilosophy(results.getString("philosophy"));
     	trainer.setBioInfo(results.getString("bio"));
-    	trainer.setCertifications(results.getObject("certifications", String[].class));
+    	//trainer.setCertifications(results.getObject("certifications", String[].class));
     	trainer.setCity(user.getCity());
     	trainer.setState(user.getState());
     	trainer.setIsPublic(results.getBoolean("is_public"));
