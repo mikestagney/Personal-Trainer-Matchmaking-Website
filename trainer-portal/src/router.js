@@ -4,10 +4,12 @@ import auth from './auth';
 import Login from '@/views/Login';
 import Register from '@/views/Register';
 import Home from '@/views/Home';
-import ListTrainers from '@/views/ListTrainers'
-import TrainerProfile from '@/views/TrainerProfile'
+import ListTrainers from '@/views/ListTrainers';
+import TrainerProfile from '@/views/TrainerProfile';
 import MessageDetail from '@/views/MessageDetail';
 import WriteMessage from '@/views/WriteMessage';
+import ClientProfile from '@/views/ClientProfile';
+
 
 Vue.use(Router);
 
@@ -34,6 +36,11 @@ const router = new Router({
         path: '/search',
         name: 'search',
         component: ListTrainers,
+      },
+      {
+        path: '/client/profile/:ClientID',
+        name: 'clientProfile',
+        component: ClientProfile
       }, 
       {
         path: '/trainer/profile/:TrainerID',

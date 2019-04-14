@@ -43,6 +43,7 @@
 <script>
 import auth from '../auth';
 import DefaultLayout from '@/layouts/DefaultLayout';
+
 //import MessageList from '@/components/MessageList.vue'
 
 export default {
@@ -71,24 +72,28 @@ export default {
       })
         .then((response) => {
           if (response.ok) {
-            return response.text();
+            return response.json();
           } else {
-            this.invalidCredentials = true;
+              this.invalidCredentials = true;
           }
         })
-        .then((token) => {
-          if (token != undefined) {           
-            if (token.includes('"')) {
-              token = token.replace(/"/g, '');
+        .then((json) => {
+          if (json.token != undefined) {           
+            if (json.token.includes('"')) {
+              json.token = json.token.replace(/"/g, '');
             }
-            auth.saveToken(token);
-            this.$router.push('/search');
+            auth.saveToken(json.token);
+          if (json.role == 'trainer') {
+            this.$router.push('/trainer/profile/:' + json.userID);
+          } else if (json.role == 'client') {
+              this.$router.push('/client/profile/:' + json.userID);
+            }
           }
         })
         .catch((err) => console.error(err));
-    },
-  },
-};
+      },
+  }
+}
 </script>
 
 <style>
