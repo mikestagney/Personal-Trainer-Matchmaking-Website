@@ -152,7 +152,7 @@ export default {
         getTrainers(){
             fetch(`${process.env.VUE_APP_REMOTE_API}/search`)
             .then(response => response.json())
-            .then(parsedData => this.trainers = parsedData)
+            .then(json => this.trainers = json)
             .catch(err => console.log(err)); 
         },
         filteredTrainers(trainers, filters) {

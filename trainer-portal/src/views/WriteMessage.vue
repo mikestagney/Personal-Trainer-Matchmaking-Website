@@ -8,14 +8,14 @@
         </div>
     <div class="form">
       <div class="form-input">
-        <span class="orangeText">First Name:</span> <input type="text" v-model="message.firstname" placeholder="First Name">
-        <span class="orangeText">Last Name:</span> <input type="text" v-model="message.lastname" placeholder="Last Name">
+        <span class="orangeText">First Name: sender id</span> <input type="text" v-model="message.senderId" placeholder="First Name">
+        <span class="orangeText">Last Name: receipent id</span> <input type="text" v-model="message.receipientId" placeholder="Last Name">
         <span class="orangeText">Subject:</span> <input type="text" v-model="message.subject" placeholder="Subject">
          
       </div>
        <div class="message">
         <!-- <span id="composeMessage">Message:</span> -->
-        <textarea name="body" cols="90" rows="5" v-model="message.body"></textarea>
+        <textarea name="body" cols="90" rows="5" v-model="message.message"></textarea>
       </div>    
       <button v-on:click="sendMessage">Send Message</button>  <!-- :disabled="!isValidForm" -->
     </div>
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import auth from '../auth';
+
 export default {
      name: 'WriteMessage',
     
@@ -34,14 +36,15 @@ export default {
     return {
       message: 
         {
-        firstname: '',
-        lastname: '',
-        role: '',
+        messageId: 0,
+        senderId: 0,
+        receipientId: 0,
+        postDate: '',
         subject: '',
-        date_sent: '',
+        message: '',
         unread: true,
-        body: '',
-        message_id: 0
+        senderDelete: false,
+        recipientDelete: false
       },
       sendSuccess: false
 
@@ -49,17 +52,18 @@ export default {
   },
     methods: {
       sendMessage() {
-        fetch(`${process.env.VUE_APP_REMOTE_API}/message`,{
+        fetch(`${process.env.VUE_APP_REMOTE_API}/send`,{
         method: 'POST',
-        headers: {
-          //need to add validation when posting to back end API
-          'Content-Type': 'application/json',
-        },
+        headers: new Headers ({
+          Authorization: 'Bearer ' + auth.getToken(),
+           'Content-Type': 'application/json',
+          }),
+        
         body: JSON.stringify(this.message)
       })
       .then((response) => {
         if(response.ok) {
-         this.$router.push({ path: '/home' });
+         this.$router.push({ path: '/inbox' });
           } 
       })
       .catch((err) => console.error(err));
