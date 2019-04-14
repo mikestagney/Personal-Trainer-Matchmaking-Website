@@ -48,7 +48,7 @@ public interface UserDao {
      */
     public User getUserById(Long id);
     
-    public Trainer getTrainerById(Long id);
+    public Trainer getTrainerByID(Long id);
     
     public User getClientById(Long id);
     

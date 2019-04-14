@@ -58,7 +58,7 @@ public class PersonalTrainerMatchController {
 		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
             throw new UnauthorizedException();
         }
-		return userDao.getTrainerById(trainerId);
+		return userDao.getTrainerByID(trainerId);
 	}
     
     @GetMapping("/client/profile/{clientId}")

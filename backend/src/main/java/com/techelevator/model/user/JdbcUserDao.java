@@ -154,24 +154,11 @@ public class JdbcUserDao implements UserDao {
 	}
 	
 	@Override
-	public Trainer getTrainerById(Long id) {
-		//TODO <<sql join here
-    	String sql = "SELECT username, is_public, first_name, last_name, city, state, hourly_rate, rating, philosophy, bio, certifications\n" + 
-    			     "FROM users JOIN trainer USING(user_id) WHERE user_id = ?";
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, id);
-        if(rowSet.next()) {
-        	System.out.println("if(rowSet.next())");
-        	
-        	Trainer t = new Trainer(rowSet);
-    		try {
-            	t.load(rowSet);
-    		} catch(Exception e) {}
+	public Trainer getTrainerByID(Long id) {
 
-        	
-        	return t;
-        } else {
-            return null;
-        }
+    	String sql = "SELECT user_id, username, is_public, first_name, last_name, city, state, hourly_rate, rating, philosophy, biography, certifications\n" + 
+    			     "FROM users JOIN trainer USING(user_id) WHERE user_id = ?";
+    	return new Trainer(jdbcTemplate.queryForRowSet(sql, id));
 	}
 	
 	@Override
@@ -189,7 +176,7 @@ public class JdbcUserDao implements UserDao {
 	public void updateTrainer(Trainer trainer) {
 		//TODO update trainer via multi query
 		jdbcTemplate.update("UPDATE trainer SET hourly_rate=?, rating=?, philosophy=?, bio_info=?, is_public=?, certifications=?  WHERE user_id=?",
-				trainer.getHourlyRate(), trainer.getRating(), trainer.getPhilosophy(), trainer.getBioInfo(), trainer.getIsPublic(), trainer.getCertifications(), trainer.getId());
+				trainer.getHourlyRate(), trainer.getRating(), trainer.getPhilosophy(), trainer.getBiography(), trainer.isPublic(), trainer.getCertifications(), trainer.getTrainerID());
 	}
 
 	@Override
