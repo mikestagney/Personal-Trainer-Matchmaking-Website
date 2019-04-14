@@ -66,6 +66,8 @@ public interface UserDao {
 	 */
 	public List<Trainer> getTrainersSearch(String name, String city, String state, int minHourlyRate, int maxHourlyRate, double rating);	
 	
+	public List<Trainer> getListOfTrainers();
+	
 	/**
 	 * @param user_id the User Id of the Trainer who's Client List is being searched
 	 * @param name the Name to search the client list for

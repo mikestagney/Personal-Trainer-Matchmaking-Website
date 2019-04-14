@@ -247,6 +247,17 @@ public class JdbcUserDao implements UserDao{
         }
         return trainerList;
 	}
+	
+	@Override
+	public List<Trainer> getListOfTrainers() {
+		List<Trainer> trainerList = new ArrayList<Trainer>();
+		String sqlGetTrainerList = "SELECT * FROM users JOIN trainer ON users.user_id = trainer.user_id WHERE role = 'Trainer' AND trainer.is_public = true GROUP BY users.user_id, trainer.user_id";
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlGetTrainerList);
+		while (results.next()) {
+			trainerList.add(createTrainer(results,createUser(results)));
+        }
+        return trainerList;
+	}
 
 	@Override
 	public ClientList searchClientList(long id, String name, String username) {
