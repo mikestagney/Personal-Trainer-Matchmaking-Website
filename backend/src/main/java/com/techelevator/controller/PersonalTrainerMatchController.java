@@ -46,11 +46,13 @@ public class PersonalTrainerMatchController {
      * 
      * @return a List of all the User's with role trainer and is_public true
      */
-    @GetMapping("/trainerList")
-	public List<Trainer> trainersList() {
+    @GetMapping("/search")
+	public List<Trainer> search() {
 		return userDao.getListOfTrainers();
 	}
     
+    
+    /*
     
     @GetMapping("/search")
 	public List<Trainer> trainersSearch(@RequestParam(defaultValue="") String name,
@@ -61,6 +63,8 @@ public class PersonalTrainerMatchController {
 										@RequestParam(defaultValue="0") double rating) {
 		return userDao.getTrainersSearch(name,city,state,minHourlyRate,maxHourlyRate,rating);
 	}
+	
+	*/
     
     
     @GetMapping("/trainer/profile/{trainerId}")

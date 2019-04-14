@@ -6,7 +6,7 @@
                 <h2 id="test">Available Trainers</h2>
                 </div>
             </div>
-      <form method="GET" class="form-inline" v-on:submit.prevent="getTrainers">
+      <form method="GET" class="form-inline" v-on:submit.prevent="filteredTrainers">
           <div class="form-row">
               <div class="col">
                 <input name="name" type="text" placeholder="Name" v-model="nameSearch" class="form-control">
@@ -16,7 +16,7 @@
             </div>
             <div class="col">
             <Select name="state" type="text" placeholder="State" v-model="stateSearch" class="form-control">
-                <option disabled value="">State</option>
+                <option value="">State</option>
                 <option value="AK">Alaska</option>
                 <option value="AL">Alabama</option>
                 <option value="AR">Arkansas</option>
@@ -150,7 +150,7 @@ export default {
     },
     methods: {
         getTrainers(){
-            fetch(`${process.env.VUE_APP_REMOTE_API}trainers/search/${this.searchText}`)
+            fetch(`${process.env.VUE_APP_REMOTE_API}/search`)
             .then(response => response.json())
             .then(parsedData => this.trainers = parsedData)
             .catch(err => console.log(err)); 
@@ -167,11 +167,7 @@ export default {
 
     },
     created() {
-<<<<<<< HEAD
-      fetch(`${process.env.VUE_APP_REMOTE_API}TrainerProfile`) 
-=======
-      fetch(`${process.env.VUE_APP_REMOTE_API}/trainerList`) 
->>>>>>> 881c02d4a33b833dad8b6a7804fec10c838a3ef6
+      fetch(`${process.env.VUE_APP_REMOTE_API}/search`) 
         .then((response) => {
             return response.json();
         })

@@ -27,7 +27,7 @@ const router = new Router({
       },
       {
         path: '/search',
-        name: 'search',
+        name: 'listTrainers',
         component: ListTrainers,
       }, 
       {
