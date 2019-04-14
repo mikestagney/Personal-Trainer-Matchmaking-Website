@@ -5,32 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 /**
  * ClientList Class is an object that holds a TrainerProfile
  * and a List<User> that are in that Trainer's Client List
  */
 public class ClientList {
 	
-	@NotBlank(message="Trainer Profile is required")
-	private Trainer trainer = new Trainer();
+	//@NotBlank(message="Trainer Profile is required")
+	//private Trainer trainer = new Trainer();
+	
 	private List<User> clientList = new ArrayList<User>();
 	private Map<User,String[]> privateNotes = new HashMap<User,String[]>();
 
-	/**
-	 * @return TrainerProfile object
-	 */
-	public Trainer getTrainer() {
-		return trainer;
-	}
 
-	/**
-	 * @param UserProfile object to be set to
-	 */
-	public void setTrainer(Trainer trainer) {
-		this.trainer = trainer;
-	}
 
 	/**
 	 * @return List<User> for all Users in Trainer's Client List

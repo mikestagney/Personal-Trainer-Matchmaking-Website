@@ -5,7 +5,17 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class Trainer extends User {
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
+public class Trainer extends AbstractUser<Trainer> {
+
+	public Trainer(SqlRowSet rowSet) {
+		super(Trainer.class);
+		try {
+			//load(rowSet);
+		} catch(Exception e) {}
+	}
+
 	
 	@Min(0)
 	private Integer hourlyRate;
@@ -55,5 +65,4 @@ public class Trainer extends User {
 	public void setIsPublic(Boolean isPublic) {
 		this.isPublic = isPublic;
 	}
-
 }

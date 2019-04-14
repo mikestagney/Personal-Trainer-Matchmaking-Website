@@ -82,7 +82,7 @@ public class PersonalTrainerMatchController {
     
     @PutMapping("/client/updateProfile")
 	public void updateClientProfilePage(@Valid @RequestBody User user, BindingResult result) throws UnauthorizedException {
-		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
+		if(!authProvider.userHasRole(new String[] {"Client"})) {
             throw new UnauthorizedException();
         }
 		if(!result.hasErrors()) {
