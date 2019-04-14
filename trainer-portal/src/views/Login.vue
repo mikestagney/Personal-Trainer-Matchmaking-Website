@@ -44,8 +44,6 @@
 import auth from '../auth';
 import DefaultLayout from '@/layouts/DefaultLayout';
 
-//import MessageList from '@/components/MessageList.vue'
-
 export default {
   name: 'login',
   components: {
@@ -72,14 +70,12 @@ export default {
       })
       .then((response) => {
         if (response.ok) {
-          console.table(response)
           return response.json();
         } else {
             this.invalidCredentials = true;
         }
       })
       .then((json) => {
-        console.table(json)
         if (json.token != undefined) {           
           if (json.token.includes('"')) {
             json.token = json.token.replace(/"/g, '');

@@ -18,7 +18,7 @@ import com.techelevator.model.user.ClientList;
  * 
  */
 @Component
-public class JdbcUserDao implements UserDao{
+public class JdbcUserDao implements UserDao {
 	
 	private JdbcTemplate jdbcTemplate;
     private PasswordHasher passwordHasher;
@@ -47,7 +47,7 @@ public class JdbcUserDao implements UserDao{
      * @return the new user
      */
     @Override
-    public User saveUser(String username, String firstName, String lastName, String password, String role) {
+    public void saveUser(String username, String firstName, String lastName, String password, String role) {
         byte[] salt = passwordHasher.generateRandomSalt();
         String hashedPassword = passwordHasher.computeHash(password, salt);
         String saltString = new String(Base64.encode(salt));
@@ -66,8 +66,6 @@ public class JdbcUserDao implements UserDao{
     	default:
     		throw new IllegalArgumentException("User has illegal role: " + role + ". Must be: Client, Trainer.");
         }
-        
-        return createUser(newId, username, firstName, lastName, password, role);
     }
     
 
@@ -113,48 +111,18 @@ public class JdbcUserDao implements UserDao{
         }
     }
     
-    //TODO BM -- why are there 2 of these?
-    private User createUser(Long id, String username, String firstName, String lastName, String password, String role) {
-    	User user = new Trainer();
-    	user.setId(id);
-    	user.setUsername(username);
-    	user.setFirstName(firstName);
-    	user.setLastName(lastName);
-    	user.setRole(role);
+    private User createUser(SqlRowSet results) {
+    	User user = new User();
+    	user.setId(results.getLong("user_id"));
+    	user.setUsername(results.getString("username"));
+    	user.setFirstName(results.getString("first_name"));
+    	user.setLastName(results.getString("last_name"));
+    	user.setRole(results.getString("role"));
+    	user.setCity(results.getString("city"));
+    	user.setState(results.getString("state"));
     	return user;
     }
-    
-    private User createUser(SqlRowSet results) {
-    	Client client = new Client();
-    	client.setId(results.getLong("user_id"));
-    	client.setUsername(results.getString("username"));
-    	client.setFirstName(results.getString("first_name"));
-    	client.setLastName(results.getString("last_name"));
-    	client.setRole(results.getString("role"));
-    	client.setCity(results.getString("city"));
-    	client.setState(results.getString("state"));
-    	return client;
-    }
 
-    
-    private Trainer createTrainer(SqlRowSet results, User user) {
-    	Trainer trainer = new Trainer();
-    	trainer.setId(user.getId());
-    	trainer.setUsername(user.getUsername());
-    	trainer.setFirstName(user.getFirstName());
-    	trainer.setLastName(user.getLastName());
-    	trainer.setRole(user.getRole());
-    	trainer.setHourlyRate(results.getInt("hourly_rate"));
-    	trainer.setRating(results.getDouble("rating"));
-    	trainer.setPhilosophy(results.getString("philosophy"));
-    	trainer.setBioInfo(results.getString("bio"));
-    	trainer.setCertifications(results.getObject("certifications", String[].class));
-    	trainer.setCity(user.getCity());
-    	trainer.setState(user.getState());
-    	trainer.setIsPublic(results.getBoolean("is_public"));
-    	return trainer;
-    }
-        
     /**
      * @param username the user name of the user requested
      * @return the User requested
@@ -186,22 +154,11 @@ public class JdbcUserDao implements UserDao{
 	}
 	
 	@Override
-	public Trainer getTrainerById(Long id) {
-    	String sqlSelectUserById = "SELECT * FROM users WHERE user_id = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserById, id);
-        if(results.next()) {
-        	User user = createUser(results);
-        	String sqlSelectTrainerById = "SELECT * FROM trainer WHERE user_id = ?";
-        	SqlRowSet results2 = jdbcTemplate.queryForRowSet(sqlSelectTrainerById, id);
-        	if(results2.next()) {
-        		return createTrainer(results2, user);
-        	}
-        	else {
-                return null;
-            }
-        } else {
-            return null;
-        }
+	public Trainer getTrainerByID(Long id) {
+
+    	String sql = "SELECT user_id, username, is_public, first_name, last_name, city, state, hourly_rate, rating, philosophy, biography, certifications\n" + 
+    			     "FROM users JOIN trainer USING(user_id) WHERE user_id = ?";
+    	return new Trainer(jdbcTemplate.queryForRowSet(sql, id));
 	}
 	
 	@Override
@@ -217,9 +174,9 @@ public class JdbcUserDao implements UserDao{
 	
 	@Override
 	public void updateTrainer(Trainer trainer) {
-		updateUser(trainer);
+		//TODO update trainer via multi query
 		jdbcTemplate.update("UPDATE trainer SET hourly_rate=?, rating=?, philosophy=?, bio_info=?, is_public=?, certifications=?  WHERE user_id=?",
-				trainer.getHourlyRate(), trainer.getRating(), trainer.getPhilosophy(), trainer.getBioInfo(), trainer.getIsPublic(), trainer.getCertifications(), trainer.getId());
+				trainer.getHourlyRate(), trainer.getRating(), trainer.getPhilosophy(), trainer.getBiography(), trainer.isPublic(), trainer.getCertifications(), trainer.getTrainerID());
 	}
 
 	@Override
@@ -232,27 +189,22 @@ public class JdbcUserDao implements UserDao{
 	//TODO BM -- either use join or return entire result set
 	@Override
 	public List<Trainer> getTrainersSearch(String name, String city, String state, int minHourlyRate, int maxHourlyRate, double rating) {
-		List<Trainer> trainerList = new ArrayList<Trainer>();
-		String sqlSearchUsers = "SELECT * FROM users WHERE first_name ILIKE ? AND city ILIKE ? AND state ILIKE ? AND role = 'Trainer'";
-		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchUsers, "%" + name + "%", "%" + city + "%", "%" + state + "%");
-		Map<Long,User> map = new HashMap<Long,User>();
-		while (results.next()) {
-        	User user = createUser(results);
-        	map.put(user.getId(), user);
+		
+		String sql = "SELECT * FROM users WHERE first_name ILIKE ? AND city ILIKE ? AND state ILIKE ? AND role = 'Trainer'";
+		SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, "%" + name + "%", "%" + city + "%", "%" + state + "%");
+
+		List<Trainer> results = new ArrayList<Trainer>();
+		while (rowSet.next()) {
+        	results.add(new Trainer(rowSet));
         }
-		String sqlSelectTrainersBySearchCriteria = "SELECT * FROM trainer WHERE hourly_rate >= ? AND hourly_rate <= ? AND rating >= ? AND is_public = true";
-        SqlRowSet results2 = jdbcTemplate.queryForRowSet(sqlSelectTrainersBySearchCriteria, minHourlyRate, maxHourlyRate, rating);
-        while (results2.next()) {
-        	trainerList.add(createTrainer(results2,map.get(results2.getLong("user_id"))));
-        }
-        return trainerList;
+        return results;
 	}
 
 	@Override
 	public ClientList searchClientList(long id, String name, String username) {
 		ClientList clientList = new ClientList();
 		clientList.setClientList(searchClientListOfTrainer(id, name, username));
-		clientList.setTrainer(getTrainerById(id));
+		//clientList.setTrainer(getTrainerById(id));
 		clientList.setPrivateNotes(getPrivateNotes(id, clientList.getClientList()));
 		return clientList;
 	}
