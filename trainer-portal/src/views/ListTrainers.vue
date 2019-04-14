@@ -150,7 +150,7 @@ export default {
     },
     methods: {
         getTrainers(){
-            fetch(`${process.env.VUE_APP_REMOTE_API}/trainers/search/${this.searchText}`)
+            fetch(`${process.env.VUE_APP_REMOTE_API}trainers/search/${this.searchText}`)
             .then(response => response.json())
             .then(parsedData => this.trainers = parsedData)
             .catch(err => console.log(err)); 
@@ -167,7 +167,7 @@ export default {
 
     },
     created() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/TrainerProfile`) 
+      fetch(`${process.env.VUE_APP_REMOTE_API}TrainerProfile`) 
         .then((response) => {
             return response.json();
         })
