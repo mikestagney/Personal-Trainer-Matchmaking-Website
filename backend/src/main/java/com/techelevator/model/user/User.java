@@ -6,10 +6,12 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * User is an object that holds a First Name, Last Name, Username, Role, User Id,
- * Password, Confirmation Password, and if Password Matching boolean for a User
+ * User data as needed by the back end to validate required services.
  */
 public class User {
+	//TODO BM -- ask David if this violates security considerations
+	public String token;
+	
 	protected long id;
 	@Size(min = 2, max = 25)
 	@NotBlank(message="Username is required")
@@ -105,6 +107,9 @@ public class User {
      */
     public long getId() {
         return id;
+    }
+    public long getUserID() {
+    	return id;
     }
 
     /**
