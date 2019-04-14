@@ -7,7 +7,7 @@
          <div class="row imageHeader text-light mb-3 p-5 shadow">
             <div class="col">
                <h3 id="test">
-                  {{trainer.first_name}} {{trainer.last_name}}
+                  {{trainer.firstName}} {{trainer.lastName}}
                </h3>
                <h5>
                   {{trainer.city}}, {{trainer.state}}
@@ -29,7 +29,7 @@
             <div class="col blueBackground ml-1">
                <h6 class="font-weight-bold">
                   <img src="../assets/FitnessVectors/scale.png" class="p-3" />
-                  <span class="orangeText">Price:</span> ${{trainer.hourly_rate}} per
+                  <span class="orangeText">Price:</span> ${{trainer.hourlyRate}} per
                   hour
                </h6>
             </div>
@@ -37,7 +37,7 @@
                <div class="col blueBackground">
                   <h6 class="font-weight-bold">
                      <img src="../assets/FitnessVectors/shoe.png" class="p-3" />
-                     <span class="orangeText">Background:</span> {{trainer.bio_info}}
+                     <span class="orangeText">Background:</span> {{trainer.bioInfo}}
                   </h6>
                </div>
                <div class="col blueBackground ml-1">
