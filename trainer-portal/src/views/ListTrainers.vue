@@ -80,7 +80,7 @@
                 <input name="maxPrice" type="text" placeholder="Max Price per Hour" v-model="maxPrice" class="form-control">
             </div>
             <div class="col">
-                <input name="rating" type="text" placeholder="Rating" v-model="rating" class="form-control">
+                <input name="rating" type="text" placeholder="Rating" v-model="ratingSearch" class="form-control">
             </div>
                 <div class="col">
                 <input name="submit" value="Search" type="submit" class="btn btn-info">
@@ -99,7 +99,7 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for="trainer in trainers" :key="trainer.user_id">
+                <tr v-for="trainer in filteredTrainers" :key="trainer.user_id">
                     <td><router-link v-bind:to="{ name: 'trainerProfile', params: { TrainerID: trainer.user_id }}" class="orangeText">{{trainer.first_name}} {{trainer.last_name}}</router-link></td>
                     <td>{{trainer.city}}</td>
                     <td>{{trainer.state}}</td>
@@ -127,8 +127,11 @@ export default {
             stateSearch: '',
             minPrice: '',
             maxPrice: '',
+            ratingSearch: '',
             sortBy: '',
-            trainers: []
+            price: '',
+            trainers: [],
+            filters: { name: ["nameSearch"], city: ["citySearch"], state: ["stateSearch"], rating: ["ratingSearch"]}
         };
     },
     computed: {
@@ -145,7 +148,15 @@ export default {
             .then(parsedData => this.trainers = parsedData)
             .catch(err => console.log(err)); 
         },
-
+        filteredTrainers(trainers, filters) {
+            const filterKeys = object.keys(filters);
+            return this.trainers.filter((trainer) => {
+                return filterKeys.every(key => {
+                    if (!filters[key].length) return true;
+                    return filters[key].includes(trainer[key]);
+                }) 
+            })
+        }
 
     },
     created() {

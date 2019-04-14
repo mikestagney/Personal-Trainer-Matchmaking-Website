@@ -10,18 +10,21 @@
                 </div>
                 </div>
         </div>
-        <div class="row text-center">
+        <div class="row">
             <div class="col subheading p-2 shadow">
-                <h4 class="orangeText">Login/Sign Up</h4>
+                <h4 class="orangeText text-center">Login/Sign Up</h4>
                 <hr class="my-3">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut justo tempus, ornare magna nec, malesuada ipsum. Sed nec scelerisque mauris. Nam urna sapien, consectetur vitae nisl quis, tristique luctus libero. Aenean eu aliquam ipsum, et semper sapien. Duis eget erat id velit tincidunt placerat. Sed pellentesque bibendum diam quis efficitur. Pellentesque eu leo tempus, mollis augue vitae, vestibulum enim.</p>
             </div>
-            <div class="col subheading p-2 ml-1 shadow">
-                <h4 class="orangeText">Benefits</h4>
+            <div class="col subheading p-2 ml-2 shadow">
+                <h4 class="orangeText text-center">Benefits</h4>
                 <hr class="my-3">
+                <p>Proin porttitor ante eget accumsan efficitur. Phasellus sollicitudin, tellus sit amet mattis vehicula, ligula elit vestibulum lectus, sit amet ullamcorper turpis eros ut purus. Nam mollis neque felis. Pellentesque tincidunt justo vel leo eleifend, at sollicitudin nibh imperdiet. Vestibulum ut elementum ante. Etiam lacinia, odio sit amet consequat varius, velit velit pharetra urna, et scelerisque urna tellus rhoncus ipsum. Maecenas lacinia mauris faucibus massa posuere vestibulum.</p>
             </div>
-            <div class="col subheading p-2 ml-1 shadow">
-                <h4 class="orangeText">About</h4>
+            <div class="col subheading p-2 ml-2 shadow">
+                <h4 class="orangeText text-center">About</h4>
                 <hr class="my-3">
+                <p>Sed in sem et sem imperdiet porta. Duis faucibus nunc leo, quis tempus massa malesuada et. Donec suscipit mauris non ex sodales bibendum. Donec id tempor turpis. Phasellus et lectus vitae purus ultricies ullamcorper in in diam. Mauris aliquet eros urna, a sodales lacus posuere eu. Curabitur aliquam at est sit amet tincidunt. Morbi non lectus at felis molestie laoreet vel nec ex. Nulla leo tortor, luctus et tellus auctor, malesuada commodo mi.</p>
             </div>
         </div>
     </default-layout>
@@ -50,7 +53,7 @@ export default {
 }
 
 .subheading {
-    background-color: #bdd0d6;
+    background-color: #e9f5f8;
     border-radius: 5px;
 }
 
