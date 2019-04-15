@@ -151,9 +151,9 @@ export default {
     methods: {
         updateTrainersList() {
             this.trainers = this.trainers.filter(function(trainer) {
-                return (this.name && trainer.name.indexOf(this.name) >= 0)
-                && (this.state &&  trainer.state.indexOf(this.state) >= 0)
-                && (this.city && trainer.city.indexOf(this.city) >= 0);
+                return this.name && trainer.name.indexOf(this.name) >= 0
+                && this.state &&  trainer.state.indexOf(this.state) >= 0
+                && this.city && trainer.city.indexOf(this.city) >= 0;
             })
         },
         filteredTrainers(trainers, filters) {
