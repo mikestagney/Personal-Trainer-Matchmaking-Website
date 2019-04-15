@@ -52,9 +52,6 @@ public class PersonalTrainerMatchController {
 			@Valid @RequestBody Trainer trainer, BindingResult result
 			) throws UnauthorizedException 
     {
-		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
-            throw new UnauthorizedException();
-        }
 		//TODO ?? -- How do i send bindingresult errors to frontend?
 		if(!result.hasErrors()) {
 			userDao.putTrainerByID(trainerId, trainer);
