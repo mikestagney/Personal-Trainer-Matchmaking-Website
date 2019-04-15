@@ -50,7 +50,7 @@ import auth from '../auth';
 export default {
   name: 'Navigation',
   data() {
-    isLoggedIn: auth.getToken() == null;
+    isLoggedIn: auth.getToken() != null;
   },
   methods: {
     logout() {
