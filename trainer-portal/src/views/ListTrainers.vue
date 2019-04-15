@@ -72,13 +72,14 @@
             </select>
             </div>
             </div>
+            <div class="form-row mt-2">
             <div class="col">
-                <select name="hourlyRate" type="number" placeholder="Any Hourly Rate" v-model="hourlyRate" class="form-control">
-                    <option value=999>Any Hourly Rate</option>
-                    <option value=20>$20 per Hour or Less</option>
-                    <option value=40>$40 per Hour or Less</option>
-                    <option value=100>$100 per Hour or Less</option>
-                    <option value=50>$50 per Hour or More</option>
+                <select name="hourlyRate" type="number" placeholder="Price" v-model="hourlyRate" class="form-control">
+                    <option value=999>Price</option>
+                    <option value=20>Max $20</option>
+                    <option value=40>Max $40</option>
+                    <option value=100>Max $100</option>
+                    <option value=50>Min $50</option>
                 </select>
             </div>
             <div class="col">
@@ -91,17 +92,17 @@
                 </select>
             </div>
             <div class="col">
-                <select name="sortBy" type="text" placeholder="sort by" v-model="sortBy" class="form-control">
-                    <option value="Nothing">sort by</option>
-                    <option value="Raiting">Raiting</option>
-                    <option value="HourlyRate">Hourly Rate</option>
-                    <option value="Name">Name</option>
+                <select name="sortBy" type="number" placeholder="Sort by Raiting" v-model="sortBy" class="form-control">
+                    <option value=0>Sort by Raiting</option>
+                    <option value=1>Sort by Hourly Rate</option>
+                    <option value=2>Sort by First Name</option>
+                    <option value=3>Sort by Last Name</option>
                 </select>
             </div>
                 <div class="col">
                 <input name="submit" value="Search" type="submit" class="btn btn-info">
                 </div>
-         
+            </div>         
       </form>
         <table class="table table-striped mt-4">
             <thead class="thead thead-light">
@@ -124,6 +125,7 @@
             </tbody>
         </table>
     </div>
+    
 </default-layout>
 </template>
 
@@ -143,12 +145,27 @@ export default {
             state: '',
             hourlyRate: 999,
             rating: 0,
-            sortBy: '',
+            sortBy: 0,
             trainers: [],
             filteredTrainers: [],
         };
     },
     methods: {
+        
+        sort() {
+            if (this.sortBy == 0) {
+                    this.filteredTrainers = this.filteredTrainers.sort((t1,t2) => (t1.rating < t2.rating) ? 1 : ((t2.rating < t1.rating) ? -1 : 0))
+                }
+                else if (this.sortBy == 1) {
+                    this.filteredTrainers = this.filteredTrainers.sort((t1,t2) => (t1.hourlyRate > t2.hourlyRate) ? 1 : ((t2.hourlyRate > t1.hourlyRate) ? -1 : 0))
+                }
+                else if (this.sortBy == 2) {
+                    this.filteredTrainers = this.filteredTrainers.sort((t1,t2) => (t1.firstName > t2.firstName) ? 1 : ((t2.firstName > t1.firstName) ? -1 : 0))
+                }
+                else if (this.sortBy == 3) {
+                    this.filteredTrainers = this.filteredTrainers.sort((t1,t2) => (t1.lastName > t2.lastName) ? 1 : ((t2.lastName > t1.lastName) ? -1 : 0))
+                }
+        },
         filterTrainers() {
 
                 this.filteredTrainers = this.trainers.filter((trainer) => {
@@ -159,8 +176,17 @@ export default {
                     && ((this.hourlyRate == 50 && trainer.hourlyRate >= this.hourlyRate)
                     || (this.hourlyRate != 50 && trainer.hourlyRate <= this.hourlyRate));
                 })
-        },
+                if (this.sortBy == 1) {
+                    this.filteredTrainers = this.filteredTrainers.sort((t1,t2) => (t1.hourlyRate > t2.hourlyRate) ? 1 : ((t2.hourlyRate > t1.hourlyRate) ? -1 : 0))
+                }
+                else if (this.sortBy == 2) {
+                    this.filteredTrainers = this.filteredTrainers.sort((t1,t2) => (t1.firstName > t2.firstName) ? 1 : ((t2.firstName > t1.firstName) ? -1 : 0))
+                }
+                else if (this.sortBy == 3) {
+                    this.filteredTrainers = this.filteredTrainers.sort((t1,t2) => (t1.lastName > t2.lastName) ? 1 : ((t2.lastName > t1.lastName) ? -1 : 0))
+                }
 
+        }
     },
     created() {
       fetch(`${process.env.VUE_APP_REMOTE_API}/trainers`, {
