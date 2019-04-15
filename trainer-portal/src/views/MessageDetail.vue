@@ -17,7 +17,7 @@
       </div>
         <button v-on:click="replyToSender">Reply</button>
         <button v-on:click="deleteMessage">Delete Message</button>
-
+        <button v-on:click="backToInbox">Return to inbox</button>
     </div>
   </div>
 </body> 
@@ -82,8 +82,13 @@ export default {
          
         })
         .catch((err) => console.error(err));
+    },
+    backToInbox() {
+      this.$emit('inbox');//need to add trainerId
+    },
+    replyToSender() {
+      this.$emit('trainer')//need to add senderId 
     }
-
   }
 }
 </script>

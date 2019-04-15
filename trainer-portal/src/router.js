@@ -9,7 +9,7 @@ import TrainerProfile from '@/views/TrainerProfile';
 import MessageDetail from '@/views/MessageDetail';
 import WriteMessage from '@/views/WriteMessage';
 import ClientProfile from '@/views/ClientProfile';
-
+import EditTrainerProfile from '@/views/EditTrainerProfile';
 
 Vue.use(Router);
 
@@ -56,6 +56,11 @@ const router = new Router({
         path: '/trainer/writemessage',
         name: 'trainer',
         component: WriteMessage
+      },
+      {
+        path: '/trainer/profile/:TrainerID/edit',
+        name: 'editTrainerProfile',
+        component: EditTrainerProfile
       },
 
       
