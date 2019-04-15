@@ -99,7 +99,7 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for="trainer in filterTrainers" :key="trainer.trainerID">
+                <tr v-for="trainer in trainers" :key="trainer.trainerID">
                     <td><router-link v-bind:to="{ name: 'trainerProfile', params: { TrainerID: trainer.trainerID }}" class="orangeText">{{trainer.firstName}} {{trainer.lastName}}</router-link></td>
                     <td>{{trainer.city}}</td>
                     <td>{{trainer.state}}</td>
@@ -151,9 +151,9 @@ export default {
     methods: {
         updateTrainersList() {
             this.trainers = this.trainers.filter(function(trainer) {
-                return trainer.name.indexOf(this.name) >= 0
-                && trainer.state.indexOf(this.state) >= 0
-                && trainer.city.indexOf(this.city) >= 0;
+                return (this.name && trainer.name.indexOf(this.name) >= 0)
+                && (this.state &&  trainer.state.indexOf(this.state) >= 0)
+                && (this.city && trainer.city.indexOf(this.city) >= 0);
             })
         },
         filteredTrainers(trainers, filters) {
