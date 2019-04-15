@@ -74,13 +74,13 @@
             </div>
             <div class="form-row mt-2">
             <div class="col">
-                <input name="minPrice" type="text" placeholder="Min Price per Hour" v-model="minPrice" class="form-control">
+                <input name="minPrice" type="number" placeholder=0 v-model="minPrice" class="form-control">
             </div>
             <div class="col">
-                <input name="maxPrice" type="text" placeholder="Max Price per Hour" v-model="maxPrice" class="form-control">
+                <input name="maxPrice" type="number" placeholder=1000 v-model="maxPrice" class="form-control">
             </div>
             <div class="col">
-                <input name="rating" type="text" placeholder="Rating" v-model="rating" class="form-control">
+                <input name="rating" type="number" placeholder="Rating" v-model="rating" class="form-control">
             </div>
                 <div class="col">
                 <input name="submit" value="Search" type="submit" class="btn btn-info">
@@ -141,7 +141,9 @@ export default {
                     return (trainer.firstName + ' ' + trainer.lastName).includes(this.name)
                     && trainer.city.includes(this.city)
                     && trainer.state.includes(this.state)
-                    ;
+                    && trainer.rating >= this.rating
+                    && trainer.hourlyRate >= this.minPrice
+                    && trainer.hourlyRate <= this.maxPrice;
                 })
         },
 
