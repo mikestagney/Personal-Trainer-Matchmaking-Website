@@ -21,22 +21,16 @@
         </router-link>
         <router-link tag="li" class="nav-item" to="/save" active-class="active">
         </router-link>
-       <!--  <router-link v-if="user.role === 'Trainer'" tag="li" class="nav-item" to="/clientList" active-class="active" exact>
-          <a class="nav-link">Client List</a>
-        </router-link>
-        <router-link v-else tag="li" class="nav-item" to="/trainerList" active-class="active" exact>
-          <a class="nav-link">Trainer List</a>
-        </router-link> -->
       </ul>
     </div>
     <div class="navbar-collapse collapse">
       <ul class="navbar-nav ml-auto">
-        <router-link v-if="this.isLoggedIn" tag="li" class="nav-item" @click="logout" active-class="active" exact>
-          <a class="nav-link" href="#">Logout</a>
-        </router-link>
+        <li v-if="isLoggedIn()" class="nav-item" @click="logout" >
+          Logout
+        </li>
       </ul>
-       <ul class="navbar-nav mr-auto" >
-      <router-link tag="li" class="nav-item" to="/login" active-class="active" exact>
+       <ul class="navbar-nav mr-auto">
+      <router-link v-if="!isLoggedIn()" tag="li" class="nav-item" to="/login" active-class="active" exact>
           <a class="nav-link">Login</a>
       </router-link>
       </ul>
@@ -49,15 +43,13 @@ import auth from '../auth';
 
 export default {
   name: 'Navigation',
-  data() {
-    return {
-    isLoggedIn: auth.getToken() != null
-    }
-  },
   methods: {
     logout() {
       auth.logout();
       this.$router.go('/');
+    },
+    isLoggedIn() {
+      return auth.getUser() != null;
     },
   },
 };
