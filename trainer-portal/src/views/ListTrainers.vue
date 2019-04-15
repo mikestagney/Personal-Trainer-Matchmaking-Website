@@ -103,8 +103,8 @@
                     <td><router-link v-bind:to="{ name: 'trainerProfile', params: { TrainerID: trainer.trainerID }}" class="orangeText">{{trainer.firstName}} {{trainer.lastName}}</router-link></td>
                     <td>{{trainer.city}}</td>
                     <td>{{trainer.state}}</td>
-                    <td>{{trainer.hourly_rate}}</td>
                     <td>{{trainer.hourlyRate}}</td>
+                    <td>{{trainer.rating}}</td>
                 </tr>
             </tbody>
         </table>
