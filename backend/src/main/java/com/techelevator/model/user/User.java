@@ -5,7 +5,6 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-//TODO put login data here. remove from abstract
 public class User  {
 	//TODO BM -- ask David if this violates security considerations
 	public String token;

@@ -308,6 +308,4 @@ public class JdbcUserDao implements UserDao {
 					privateNotesNew,trainer_id,client_id);
 		}
 	}
-
-	
 }

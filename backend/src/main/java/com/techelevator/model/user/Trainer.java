@@ -45,7 +45,8 @@ public class Trainer {
 	@MapToDB
 	private String biography;
 
-	ArrayList < String > certifications = new ArrayList < String > ();
+	@MapToDB
+	ArrayList<String> certifications = new ArrayList<String>();
 
 	public int getTrainerID() {
 		return trainerID;

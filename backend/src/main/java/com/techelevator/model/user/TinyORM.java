@@ -2,12 +2,16 @@ package com.techelevator.model.user;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
@@ -47,18 +51,35 @@ public final class TinyORM<T> {
         return fields;
     }
     
+    private void setFieldOf(T pojo, Field pojoField, SqlRowSet row, String rowLabel) 
+    		throws IllegalArgumentException, IllegalAccessException, SerialException 
+    {
+    	if( ArrayList.class == pojoField.getType() ) {
+    		//TODO<<< make SQL arrays work
+    		/*
+    		Array a = row..getArray(rowLabel);
+    		String[] nullable = (String[])a.getArray();
+    		
+    		System.out.println( new Array (data) );
+    		// pojoField.set( pojo, new ArrayList<T>(data) );
+    		 * 
+    		 */
+    	} else {
+        	pojoField.set( pojo, pojoField.getType().cast(row.getObject(rowLabel)) );    		
+    	}
+    }
+    
     public List<T> readAll(SqlRowSet row) {
     	List<T> results = new LinkedList<T>();
         try {
         	while( row.next() ) {
-        		T dto = (T) pojoClass.getConstructor().newInstance();
+        		T pojo= (T) pojoClass.getConstructor().newInstance();
                 for( Map.Entry<String, Field> entity: mappedFields.entrySet() ) {
                     final String dbFieldLabel = entity.getKey();
                     final Field  pojoField    = entity.getValue();
-                    
-                    pojoField.set( dto, pojoField.getType().cast(row.getObject(dbFieldLabel)) );
+                    setFieldOf(pojo, pojoField, row, dbFieldLabel);
                 }
-                results.add(dto);
+                results.add(pojo);
         	}
         } catch(Exception e) {
             e.printStackTrace();
@@ -70,14 +91,14 @@ public final class TinyORM<T> {
     public T readOne(SqlRowSet row) {
         try {
         	if( row.next() ) {
-        		T dto = (T) pojoClass.getConstructor().newInstance();
+        		T pojo = (T) pojoClass.getConstructor().newInstance();
                 for( Map.Entry<String, Field> entity: mappedFields.entrySet() ) {
                     final String dbFieldLabel = entity.getKey();
                     final Field  pojoField    = entity.getValue();
-                    
-                    pojoField.set( dto, pojoField.getType().cast(row.getObject(dbFieldLabel)) );
+                    setFieldOf(pojo, pojoField, row, dbFieldLabel);
+                    // setFieldOf(pojo, pojoField, row.getObject(dbFieldLabel));
                 }
-                return dto;
+                return pojo;
         	} 
         } catch(Exception e) {
             e.printStackTrace();
@@ -85,5 +106,4 @@ public final class TinyORM<T> {
         }
         return null;
     }
-    
 }

@@ -53,11 +53,7 @@ public interface UserDao {
     public User getClientById(Long id);
     
     public void updateUser(User user);
-	
 		
-	
-	public List<Trainer> getListOfTrainers();
-	
 	/**
 	 * @param user_id the User Id of the Trainer who's Client List is being searched
 	 * @param name the Name to search the client list for
