@@ -99,12 +99,12 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for="trainer in filterTrainers" :key="trainer.user_id">
-                    <td><router-link v-bind:to="{ name: 'trainerProfile', params: { TrainerID: trainer.user_id }}" class="orangeText">{{trainer.first_name}} {{trainer.last_name}}</router-link></td>
+                <tr v-for="trainer in filterTrainers" :key="trainer.trainerID">
+                    <td><router-link v-bind:to="{ name: 'trainerProfile', params: { TrainerID: trainer.trainerID }}" class="orangeText">{{trainer.firstName}} {{trainer.lastName}}</router-link></td>
                     <td>{{trainer.city}}</td>
                     <td>{{trainer.state}}</td>
                     <td>{{trainer.hourly_rate}}</td>
-                    <td>{{trainer.rating}}</td>
+                    <td>{{trainer.hourlyRate}}</td>
                 </tr>
             </tbody>
         </table>
@@ -134,6 +134,7 @@ export default {
         };
     },
     computed: {
+        /*
         filterTrainers(filters) {
             return this.trainers.filter(function(trainer) {
                 return trainer.name.indexOf(filters.nameSearch) >= 0
@@ -141,7 +142,7 @@ export default {
                 && trainer.city.indexOf(this.citySearch) >= 0;
             })
         }
-        /* activeTrainers: function() {
+         activeTrainers: function() {
             return this.trainers.filter(function(trainer) {
                 return trainer.public
             })
