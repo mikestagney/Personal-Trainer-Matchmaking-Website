@@ -74,10 +74,10 @@
             </div>
             <div class="form-row mt-2">
             <div class="col">
-                <input name="minPrice" type="number" placeholder=0 v-model="minPrice" class="form-control">
+                <input name="minPrice" type="number" placeholder="Min Price per Hour" v-model="minPrice" class="form-control">
             </div>
             <div class="col">
-                <input name="maxPrice" type="number" placeholder=1000 v-model="maxPrice" class="form-control">
+                <input name="maxPrice" type="number" placeholder="Max Price per Hour" v-model="maxPrice" class="form-control">
             </div>
             <div class="col">
                 <input name="rating" type="number" placeholder="Rating" v-model="rating" class="form-control">
