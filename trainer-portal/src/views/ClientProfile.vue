@@ -1,39 +1,17 @@
 <template>
 <default-layout>
- <div class="trainerProfile">
-  <div class="container">
-   <div v-for="client in clients" :key="client.id">
-     <div v-if="ClientID == client.id">
-    <div class="row imageHeader text-light mb-3 p-5 shadow">
-        <div class="col">
-        <h3 id="test">{{client.firstname}} {{client.lastname}}</h3>
-        <h5>{{client.city}}, {{client.state}}</h5>
-        </div>
-        <div class="col">
-        <h4 class="font-italic">{{client.username}}</h4>
-        </div>
-    </div>
-    <div class="row mb-2">
-        <div class="col blueBackground ml-1">
-            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/waterbottle.png" class="p-3"><span class="orangeText"> placeholder for styling</span> </h6>
-            
-        </div>
-        <div class="col blueBackground ml-1">
-            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/scale.png" class="p-3"><span class="orangeText">  placeholder for styling</span> </h6>
-        </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col blueBackground">
-            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/shoe.png" class="p-3"><span class="orangeText"> placeholder for styling</span> </h6>
+      <div class="container">
+         <div class="row imageHeader text-light mb-3 p-5 shadow">
+            <div class="col">
+               <h3 id="test">
+                  {{client.firstName}} {{client.lastName}}
+               </h3>
+               <h5>
+                  {{client.city}}, {{client.state}}
+               </h5>
             </div>
-            <div class="col blueBackground ml-1">
-            <h6 class="font-weight-bold"><img src="../assets/FitnessVectors/muscles.png" class="p-3"><span class="orangeText">placeholder for styling</span> </h6>
-            </div>
-        </div>
-  </div>
- </div>
-  </div>
- </div>
+         </div>
+      </div>
 </default-layout>
 </template>
 
@@ -54,7 +32,7 @@ import auth from '../auth';
    }
   },
   created() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/client/profile/${this.clientId}`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/client/profile/${this.ClientID}`, {
       method: 'GET',
         headers: new Headers ({
           Authorization: 'Bearer ' + auth.getToken(),
