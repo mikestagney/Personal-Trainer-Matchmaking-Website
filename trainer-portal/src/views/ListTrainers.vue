@@ -152,20 +152,6 @@ export default {
     },
     methods: {
         
-        sort() {
-            if (this.sortBy == 0) {
-                    this.filteredTrainers = this.filteredTrainers.sort((t1,t2) => (t1.rating < t2.rating) ? 1 : ((t2.rating < t1.rating) ? -1 : 0))
-                }
-                else if (this.sortBy == 1) {
-                    this.filteredTrainers = this.filteredTrainers.sort((t1,t2) => (t1.hourlyRate > t2.hourlyRate) ? 1 : ((t2.hourlyRate > t1.hourlyRate) ? -1 : 0))
-                }
-                else if (this.sortBy == 2) {
-                    this.filteredTrainers = this.filteredTrainers.sort((t1,t2) => (t1.firstName > t2.firstName) ? 1 : ((t2.firstName > t1.firstName) ? -1 : 0))
-                }
-                else if (this.sortBy == 3) {
-                    this.filteredTrainers = this.filteredTrainers.sort((t1,t2) => (t1.lastName > t2.lastName) ? 1 : ((t2.lastName > t1.lastName) ? -1 : 0))
-                }
-        },
         filterTrainers() {
 
                 this.filteredTrainers = this.trainers.filter((trainer) => {
