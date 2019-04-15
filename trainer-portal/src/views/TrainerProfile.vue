@@ -30,6 +30,7 @@
                   hour
                </h6>
             </div>
+            </div>
             <div class="row mb-3">
                <div class="col blueBackground">
                   <h6 class="font-weight-bold">
@@ -40,12 +41,14 @@
                <div class="col blueBackground ml-1">
                   <h6 class="font-weight-bold">
                      <img src="../assets/FitnessVectors/muscles.png" class="p-3" />
-                     <span class="orangeText">Certifications:</span>
-                     {{trainer.certifications}}
+                     <span class="orangeText">Certifications:</span> {{trainer.certifications}}
                   </h6>
                </div>
             </div>
-         </div>
+            <div>
+               <p v-if="trainerView() == true">This is a test</p>
+            </div>
+
       </div>
 </default-layout>
 </template>
@@ -65,6 +68,15 @@ export default {
             title:"trainerProfile",
             trainer: []
         }
+    },
+    methods: {
+       trainerView() {
+           if (json.role == 'Trainer') {
+            return true;
+          } else {
+             return false;
+          }
+       }
     },
   created() {
       fetch(`${process.env.VUE_APP_REMOTE_API}trainer/profile/${this.TrainerID}`, {

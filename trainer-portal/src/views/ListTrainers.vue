@@ -72,7 +72,7 @@
             </select>
             </div>
             </div>
-            <div class="form-row mt-2">
+            <div class="row mt-3">
             <div class="col">
                 <select name="hourlyRate" type="number" placeholder="Hourly Rate" v-model="hourlyRate" class="form-control">
                     <option value=999>Hourly Rate</option>
