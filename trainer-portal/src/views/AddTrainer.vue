@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import auth from '../auth';
+//import auth from '../auth';
 import DefaultLayout from '@/layouts/DefaultLayout';
 
 export default {
