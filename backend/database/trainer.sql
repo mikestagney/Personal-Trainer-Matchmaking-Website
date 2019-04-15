@@ -188,6 +188,14 @@ ADD FOREIGN KEY(sender_id)    REFERENCES users(user_id),
 ADD FOREIGN KEY(recipient_id) REFERENCES users(user_id);
 
 
+ALTER TABLE workout_plan
+ADD FOREIGN KEY(trainer_id) REFERENCES users(user_id),
+ADD FOREIGN KEY(client_id)  REFERENCES users(user_id);
+
+ALTER TABLE workout_plan_linker
+ADD FOREIGN KEY(workout_plan_id) REFERENCES workout_plan(workout_plan_id);
+
+
 -- Realistic values
 -- ================
 
