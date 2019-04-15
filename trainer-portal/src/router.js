@@ -66,7 +66,7 @@ const router = new Router({
         component: ClientList
       },
       {
-        path: '/addTrainer/{trainerId}',
+        path: '/addTrainer/:TrainerID',
         name: 'addTrainer',
         component: AddTrainer
       },
