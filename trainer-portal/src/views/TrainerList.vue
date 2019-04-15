@@ -61,7 +61,7 @@ export default {
         }
     },
     created() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/clientList`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/trainerList`, {
       method: 'GET',
         headers: new Headers ({
           Authorization: 'Bearer ' + auth.getToken(),
