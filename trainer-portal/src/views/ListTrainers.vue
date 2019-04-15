@@ -6,7 +6,7 @@
                 <h2 id="test">Available Trainers</h2>
                 </div>
             </div>
-      <form method="GET" class="form-inline" v-on:submit.prevent="updateTrainersList">
+      <form method="GET" class="form-inline" v-on:submit.prevent="filterTrainers">
           <div class="form-row">
               <div class="col">
                 <input name="name" type="text" placeholder="Name" v-model="name" class="form-control">
@@ -99,7 +99,7 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for="trainer in trainers" :key="trainer.trainerID">
+                <tr v-for="trainer in filteredTrainers" :key="trainer.trainerID">
                     <td><router-link v-bind:to="{ name: 'trainerProfile', params: { TrainerID: trainer.trainerID }}" class="orangeText">{{trainer.firstName}} {{trainer.lastName}}</router-link></td>
                     <td>{{trainer.city}}</td>
                     <td>{{trainer.state}}</td>
@@ -131,6 +131,7 @@ export default {
             ratingSearch: '',
             sortBy: '',
             trainers: [],
+            filteredTrainers: [],
         };
     },
     computed: {
@@ -149,16 +150,10 @@ export default {
         } */
     },
     methods: {
-        updateTrainersList() {
-            this.trainers = this.trainers.filter(function(trainer) {
-                return this.name && trainer.name.indexOf(this.name) >= 0
-                && this.state &&  trainer.state.indexOf(this.state) >= 0
-                && this.city && trainer.city.indexOf(this.city) >= 0;
-            })
-        },
-        filteredTrainers(trainers, filters) {
+        filterTrainers() {
+            const filters = [this.name,this.city,this.state];
             const filterKeys = Object.keys(filters);
-            return this.trainers.filter((trainer) => {
+            this.filteredTrainers = this.trainers.filter((trainer) => {
                 return filterKeys.every(key => {
                     if (!filters[key].length) return true;
                     return filters[key].includes(trainer[key]);
@@ -180,6 +175,7 @@ export default {
         })
         .then((json) => {
             this.trainers = json;
+            this.filteredTrainers = json;
         })
         .catch((err) => console.error(err));
     }
