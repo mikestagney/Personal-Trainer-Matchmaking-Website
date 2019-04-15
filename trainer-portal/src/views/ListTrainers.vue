@@ -142,8 +142,8 @@ export default {
                     && trainer.city.includes(this.city)
                     && trainer.state.includes(this.state)
                     && trainer.rating >= this.rating
-                    && trainer.hourlyRate >= minPrice
-                    && trainer.hourlyRate <= maxPrice;
+                    && trainer.hourlyRate >= this.minPrice
+                    && trainer.hourlyRate <= this.maxPrice;
                 })
         },
 
