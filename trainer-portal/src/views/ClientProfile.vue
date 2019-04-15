@@ -4,14 +4,26 @@
          <div class="row imageHeader text-light mb-3 p-5 shadow">
             <div class="col">
                <h3 id="test">
-                  {{client.firstName}} {{client.lastName}}
+                  Welcome back, {{client.firstName}}!
                </h3>
                <h5>
                   {{client.city}}, {{client.state}}
                </h5>
             </div>
          </div>
-      </div>
+         <div class="row">
+             <div class="col">
+                <router-link to="/trainerList" exact>
+                    <button class="btn btn-lg btn-info mt-2">View Trainers</button>
+                </router-link>
+            <div class="col">
+                <router-link to="MessageList" exact>
+                    <button class="btn btn-lg btn-info mt-2">Messages</button>
+                </router-link>
+            </div>
+            </div>
+        </div>
+    </div>
 </default-layout>
 </template>
 
