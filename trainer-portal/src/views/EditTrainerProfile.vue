@@ -29,18 +29,28 @@
                   placeholder="trainer.biography"</textarea>
             </div>  
             <div class="form-input">
+                <div id="app">
+                <h1>Finds</h1>
+                <div v-for="find in finds">
+                    <input v-model="find.value">
+                </div>
+                <button @click="addFind">
+                    New Find
+                </button>
+                <pre>{{ $data | json }}</pre>
+                </div>
+
                <span id="label">Certifications</span>
                 <div v-for="(certification, index) in trainer.certifications" :key="index">
                    
                     <input v-bind:value="certification">
                 </div>
-                <div>   
-                  <button @click="addCertification">
-
-                Add a new certification
+                
+                <button @click="addCertification">
+                    Add a new certification
                 </button>
                 <pre>{{ trainer.certifications }}</pre>
-                </div>
+                
 
             </div>  
             <div class="form-input">
@@ -68,6 +78,7 @@ export default {
     },
     data(){
         return{
+            finds: [],
             certification: '',
             title:"editTrainerProfile",
             TrainerID: this.$route.params.TrainerID,
@@ -91,6 +102,9 @@ export default {
         .catch((err) => console.error(err));
     },
     methods: {
+        addFind: function () {
+            this.finds.push({ value: '' });
+        },
         updateProfile() {
             fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/${this.TrainerID}`,{
             method: 'PUT',

@@ -2,7 +2,6 @@ package com.techelevator.model.user;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.sql.Array;
 
 import javax.sql.rowset.serial.SerialException;
 
@@ -64,6 +64,7 @@ public final class TinyORM<T> {
     		// pojoField.set( pojo, new ArrayList<T>(data) );
     		 * 
     		 */
+    		pojoField.set( pojo, row.getObject(rowLabel, java.sql.Array.class));    
     	} else {
         	pojoField.set( pojo, pojoField.getType().cast(row.getObject(rowLabel)) );    		
     	}

@@ -26,7 +26,7 @@
     <div class="navbar-collapse collapse">
       <ul class="navbar-nav ml-auto">
         <router-link tag="li" class="nav-item" @click="logout" active-class="active" exact>
-          <a class="nav-link" href="#"><!-- {{auth.getToken === null ? 'login' : 'logout'}} --></a>
+          <a class="nav-link" href="#">{{auth.getToken === null ? 'login' : 'logout'}}</a>
         </router-link>
       </ul>
        <ul class="navbar-nav mr-auto">

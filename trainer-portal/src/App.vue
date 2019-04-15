@@ -1,23 +1,18 @@
+// App.vue
+
 <template>
   <div id="app">
-    <transition name="fade" mode="out-in">
-    <router-view></router-view>
-    <update-trainer-profile></update-trainer-profile>
-    </transition>
-    
+    <nav>
+        <router-link to='/'>Home</router-link>
+        <router-link to='/register'>Register</router-link>
+        <router-link to='/login'>Login</router-link>
+    </nav>
+    <router-view />
   </div>
 </template>
 
 <script>
-import UpdateTrainerProfile from './views/UpdateTrainerProfile.vue'
-
-
 export default {
-  name: 'app', 
-  components: {
-    UpdateTrainerProfile,
-    
-  }
 }
 </script>
 
