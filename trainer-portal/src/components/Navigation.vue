@@ -24,24 +24,13 @@
       </ul>
     </div>
     <div class="navbar-collapse collapse">
-      <ul class="navbar-nav ml-auto">
-        <li v-if="isLoggedIn()" class="nav-item" @click="logout" >
-          Logout
-        </li>
-<<<<<<< HEAD
-        <router-link to="/home" tag="li" class="nav-item" @click="logout" active-class="active" exact>
-          <a class="nav-link" href="#">{{isLoggedIn() ? 'login' : 'logout'}}</a>
-        </router-link>
-      </ul>
       <ul class="navbar-nav mr-auto">
-      <router-link to="/login" v-if="!isLoggedIn()" tag="li" class="nav-item" active-class="active" exact>
-=======
-      </ul>
-       <ul class="navbar-nav mr-auto">
-      <router-link v-if="!isLoggedIn()" tag="li" class="nav-item" to="/login" active-class="active" exact>
->>>>>>> dev-elephant
-          <a class="nav-link">Login</a>
-      </router-link>
+        <router-link to="/login" v-if="!isLoggedIn()" tag="li" class="nav-item" active-class="active" exact>
+          <li><a class="nav-link">Login</a></li>
+        </router-link>
+        <router-link to="home" v-if="isLoggedIn()" tag="li" class="nav-item" active-class="active" @click.prevent="doLogout()" exact>
+          <li><a class="nav-link">Logout</a></li>
+        </router-link>
       </ul>
     </div>
   </nav>
@@ -53,20 +42,16 @@ import auth from '../auth';
 export default {
   name: 'Navigation',
   methods: {
-    logout() {
-
+    doLogout() {
+      console.log('doLogout()');
       auth.logout();
-      this.$router.go('/');
+      this.$router.go('home');
     },
     isLoggedIn() {
-<<<<<<< HEAD
+      console.log('isLoggedIn()');
       return auth.getToken() != null;
     }
-=======
-      return auth.getUser() != null;
-    },
->>>>>>> dev-elephant
-  },
+  }, 
 };
 </script>
 
