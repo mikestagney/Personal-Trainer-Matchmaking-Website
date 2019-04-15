@@ -71,6 +71,25 @@ CREATE TABLE message
     constraint pk_private_message primary key (message_id)
 );
 
+CREATE TABLE workout_plan
+(
+    workout_plan_id     int NOT NULL,
+    days_of_week        text[],
+    title               text,
+    body                text,
+
+    constraint pk_workout_plan primary key (workout_plan_id)
+);
+
+CREATE TABLE workout_plan_linker
+(
+    workout_plan_id     int NOT NULL,
+    trainer_id          int NOT NULL,
+    client_id           int NOT NULL,
+
+    constraint pk_workout_plan_linker primary key (workout_plan_id)
+);
+
 -- Stored Procedures
 CREATE OR REPLACE FUNCTION random_integer(low INT ,high INT)
 RETURNS INT AS
