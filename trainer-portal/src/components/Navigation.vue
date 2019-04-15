@@ -21,6 +21,12 @@
         </router-link>
         <router-link tag="li" class="nav-item" to="/save" active-class="active">
         </router-link>
+        <router-link v-if="user.role === 'Trainer'" tag="li" class="nav-item" to="/clientList" active-class="active" exact>
+          <a class="nav-link">Client List</a>
+        </router-link>
+        <router-link v-else tag="li" class="nav-item" to="/trainerList" active-class="active" exact>
+          <a class="nav-link">Trainer List</a>
+        </router-link>
       </ul>
     </div>
     <div class="navbar-collapse collapse">
@@ -29,7 +35,7 @@
           <a class="nav-link" href="#"><!-- {{auth.getToken === null ? 'login' : 'logout'}} --></a>
         </router-link>
       </ul>
-       <ul class="navbar-nav mr-auto">
+       <ul class="navbar-nav mr-auto" >
       <router-link tag="li" class="nav-item" to="/login" active-class="active" exact>
           <a class="nav-link">Login</a>
       </router-link>
