@@ -25,25 +25,14 @@ export default {
     name: 'messagelist',
   data() {
     return {
-      messages: [
-        {
-        messageId: 0,
-        senderId: 0,
-        receipientId: 0,
-        postDate: '',
-        subject: '',
-        message: '',
-        unread: true,
-        senderDelete: false,
-        recipientDelete: false
-      }
-      ]
+      messages: [],
+      TrainerID: this.$route.params.TrainerID 
     };
   },
  
-       
+       //fetch(`${process.env.VUE_APP_REMOTE_API}/inbox/${this.TrainerID}`,
   created() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/inbox`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/inbox/${this.TrainerID}`, {
         method: 'GET',
         headers: new Headers ({
           Authorization: 'Bearer ' + auth.getToken(),

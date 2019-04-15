@@ -45,7 +45,7 @@
                      <img src="../assets/FitnessVectors/muscles.png" class="p-3" />
                      <span class="orangeText">Certifications:</span>
                      <span v-for="(certification, index) in trainer.certifications" v-bind:key=index>
-                     {{ certification }}</span>
+                     {{ certification }}test</span>
                   </h6>
                </div>
             </div>
@@ -56,6 +56,8 @@
                <div class="col blueBackground ml-1"> 
             <button v-on:click="signUp">Sign up with this trainer</button>
                </div>
+               <message-list></message-list>
+
             </div>   
          </div> 
       </div>
@@ -67,12 +69,13 @@
 <script>
 import DefaultLayout from '@/layouts/DefaultLayout';
 import auth from '../auth';
+import MessageList from '@/components/MessageList'
 
 export default {
     name:"trainerProfile",
     components: {
-        DefaultLayout
-        
+        DefaultLayout,
+        MessageList
     },
     data(){
         return{
