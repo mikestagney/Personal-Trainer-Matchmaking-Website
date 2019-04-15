@@ -1,39 +1,51 @@
 <template>
 <default-layout>
       <div class="container">
-         <h2>
+         <h1>Edit Profile</h1>
+         <h2>   
             the trainer id is {{this.$route.params.TrainerID}}
             Trainer name: {{ trainer.firstName + ' ' + trainer.lastName }}
-            Profile is {{ trainer.isPublic ? 'Public':'Private' }
+            Profile is {{ trainer.public ? 'Public':'Private' }}
          </h2>
               
             <div class="form-input">
-               <span id="label">City></span> <input type="text" v-model="trainer.city" 
-                  placeholder="{{ trainer.city }}">
+               <span id="label">City</span> <input type="text" v-model="trainer.city" 
+                  placeholder="trainer.city">
             </div>           
             <div class="form-input">
-               <span id="label">First Name></span> <input type="text" v-model="trainer.state" 
-                  placeholder="{{ trainer.state }}">
+               <span id="label">State</span> <input type="text" v-model="trainer.state" 
+                  placeholder="trainer.state">
             </div>  
             <div class="form-input">
-               <span id="label">Philosphy (limit 50 characters)></span> <input type="text" v-model="trainer.philosophy" 
-                  placeholder="{{ trainer.philosophy }}">
+               <span id="label">Philosphy (limit 50 characters)</span><br> <textarea rows="1" cols="70" v-model="trainer.philosophy"> 
+                  placeholder="trainer.philosophy"</textarea>
             </div>  
             <div class="form-input">
-               <span id="label">Hourly rate ></span> <input type="text" v-model="trainer.hourlyRate" 
-                  placeholder="{{ trainer.hourlyRate }}">
+               <span id="label">Hourly rate</span> <input type="text" v-model="trainer.hourlyRate" 
+                  placeholder="trainer.hourlyRate">
             </div>  
             <div class="form-input">
-               <span id="label">Background information (limit 250 characters)></span> <input type="text" v-model="trainer.bioInfo" 
-                  placeholder="{{ trainer.bioInfo }}">
+               <span id="label">Background information (limit 250 characters)</span> <textarea rows="4 " cols="100" v-model="trainer.biography"> 
+                  placeholder="trainer.biography"</textarea>
             </div>  
             <div class="form-input">
-               <span id="label">Certifications></span> <input type="text" v-model="trainer.certifications" 
-                  placeholder="{{ trainer.certifications }}">
+               <span id="label">Certifications</span>
+                <div v-for="(certification, index) in trainer.certifications" :key="index">
+                    {{ certification}}
+                    <input v-model="certification.value">
+                </div>
+                <div>   
+                  <button @click="addCertification">
+
+                Add a new certification
+                </button>
+                <pre>{{ trainer.certifications }}</pre>
+                </div>
+
             </div>  
             <div class="form-input">
-               <input id="true" type="radio" value="true" v-model="trainer.isPublic"><label for="true">Profile is public</label>
-               <input id="false" type="radio" value="false" v-model="trainer.isPublic"><label for="false">Profile is private</label>
+               <input id="true" type="radio" value="true" v-model="trainer.public"><label for="true">Profile is public</label>
+               <input id="false" type="radio" value="false" v-model="trainer.public"><label for="false">Profile is private</label>
              </div>  
             <div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">
@@ -41,7 +53,7 @@
             </button>        
             </div> 
          </div>
-      </div>
+   
 </default-layout>
 </template>
 
@@ -51,20 +63,20 @@ import auth from '../auth';
 
 export default {
     name:"editTrainerProfile",
-    props: {
-        chosenTrainer: Object
-    },
     components: {
         DefaultLayout
     },
     data(){
         return{
-            trainer: this.chosenTrainer      
+           
+            title:"editTrainerProfile",
+            TrainerID: this.$route.params.TrainerID,
+            trainer: '',      
         }
     },
-  updateProfile() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/updateprofile/${this.TrainerID}`, {
-      method: 'PUT',
+    created() {  
+      fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/${this.TrainerID}`, {
+      method: 'GET',
         headers: new Headers ({
           Authorization: 'Bearer ' + auth.getToken(),
         }),
@@ -73,12 +85,32 @@ export default {
         .then((response) => {
             return response.json();
         })
-        .then((trainers) => {
-            this.trainers = trainers;
+        .then((trainer) => {
+            this.trainer = trainer;
         })
         .catch((err) => console.error(err));
+    },
+    methods: {
+        updateProfile() {
+            fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/updateprofile/${this.TrainerID}`,{
+            method: 'PUT',
+            headers: new Headers ({
+            Authorization: 'Bearer ' + auth.getToken(),
+            }),
+            credentials: 'same-origin',
+            }) 
+            .then((response) => {
+            return response.json();
+            })
+            .then((trainer) => {
+                this.trainer = trainer;
+            })
+            .catch((err) => console.error(err));
+        },
+        addCertification: function () {
+            this.trainer.certifications.push( { value: ''});
+        }
     }
- 
 }
 </script>
 

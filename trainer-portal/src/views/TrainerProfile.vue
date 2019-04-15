@@ -2,8 +2,7 @@
 <default-layout>
       <div class="container">
          <h2>
-            the trainer id is {{this.$route.params.TrainerID}}
-            Trainer Profile is {{ trainer.isPublic ? 'Public':'Private' }
+            Trainer Profile is {{ trainer.public ? 'Public': 'Private' }}
          </h2>
          <div class="row imageHeader text-light mb-3 p-5 shadow">
             <div class="col">
@@ -38,20 +37,31 @@
                <div class="col blueBackground">
                   <h6 class="font-weight-bold">
                      <img src="../assets/FitnessVectors/shoe.png" class="p-3" />
-                     <span class="orangeText">Background:</span> {{trainer.bioInfo}}
+                     <span class="orangeText">Background:</span> {{trainer.biography}}
                   </h6>
                </div>
                <div class="col blueBackground ml-1">
                   <h6 class="font-weight-bold">
                      <img src="../assets/FitnessVectors/muscles.png" class="p-3" />
                      <span class="orangeText">Certifications:</span>
-                     {{trainer.certifications}}
+                     <span v-for="(certification, index) in trainer.certifications" v-bind:key=index>
+                     {{ certification }}</span>
                   </h6>
                </div>
             </div>
-         </div>
+            <div class="row mb-3">
+                <div class="col blueBackground">
+                  <button v-on:click="messageTrainer">Send a message to this trainer</button>
+                </div>
+               <div class="col blueBackground ml-1"> 
+            <button v-on:click="signUp">Sign up with this trainer</button>
+               </div>
+            </div>   
+         </div> 
       </div>
+     
 </default-layout>
+      
 </template>
 
 <script>
@@ -62,12 +72,13 @@ export default {
     name:"trainerProfile",
     components: {
         DefaultLayout
+        
     },
     data(){
         return{
             TrainerID: this.$route.params.TrainerID,
             title:"trainerProfile",
-            trainers: []
+            trainer: ''
         }
     },
   created() {
@@ -81,8 +92,8 @@ export default {
         .then((response) => {
             return response.json();
         })
-        .then((trainers) => {
-            this.trainers = trainers;
+        .then((trainer) => {
+            this.trainer = trainer;
         })
         .catch((err) => console.error(err));
     }
