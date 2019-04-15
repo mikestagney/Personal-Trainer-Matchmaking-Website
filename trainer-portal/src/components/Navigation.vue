@@ -25,8 +25,8 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="navbar-nav ml-auto">
-        <li v-if="isLoggedIn()" class="nav-item" @click="logout" >
-          Logout
+        <li v-if="isLoggedIn()" class="nav-item" @click="logout" active-class="active">
+          <a class="nav-link">Logout</a>
         </li>
       </ul>
        <ul class="navbar-nav mr-auto">
