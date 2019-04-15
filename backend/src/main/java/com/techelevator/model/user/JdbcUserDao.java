@@ -155,7 +155,7 @@ public class JdbcUserDao implements UserDao {
 	
 	public List<Trainer> getTrainers() {
     	String sql = "SELECT user_id, username, is_public, first_name, last_name, city, state, hourly_rate, rating, philosophy, biography, certifications " + 
-                     "FROM users JOIN trainer USING(user_id)";
+                     "FROM users JOIN trainer USING(user_id) ORDER BY rating DESC, hourly_rate, last_name, first_name";
     	return new TinyORM<Trainer>(Trainer.class).readAll(jdbcTemplate.queryForRowSet(sql));
 	}
 	

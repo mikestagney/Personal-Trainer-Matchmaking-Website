@@ -90,6 +90,14 @@
                     <option value=5>5 Stars!!</option>
                 </select>
             </div>
+            <div class="col">
+                <select name="sortBy" type="text" placeholder="sort by" v-model="sortBy" class="form-control">
+                    <option value="Nothing">sort by</option>
+                    <option value="Raiting">Raiting</option>
+                    <option value="HourlyRate">Hourly Rate</option>
+                    <option value="Name">Name</option>
+                </select>
+            </div>
                 <div class="col">
                 <input name="submit" value="Search" type="submit" class="btn btn-info">
                 </div>
