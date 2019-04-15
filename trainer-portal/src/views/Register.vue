@@ -6,23 +6,23 @@
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         There were problems registering this user.
       </div>
-      <label for="firstname" class="sr-only">First Name</label>
+      <label for="firstName" class="sr-only">First Name</label>
       <input
         type="text"
         id="firstname"
         class="form-control"
         placeholder="First Name"
-        v-model="user.firstname"
+        v-model="user.firstName"
         required
         autofocus
       />
-      <label for="lastname" class="sr-only">Last Name</label>
+      <label for="lastName" class="sr-only">Last Name</label>
       <input
         type="text"
         id="lastname"
         class="form-control"
         placeholder="Last Name"
-        v-model="user.lastname"
+        v-model="user.lastName"
         required
         autofocus
       />
@@ -55,8 +55,8 @@
       />
       <label for="role">Role</label>
         <select v-model="user.role" class="ml-2">
-        <option value="client">Client</option>
-        <option value="trainer">Trainer</option>
+        <option value="Client">Client</option>
+        <option value="Trainer">Trainer</option>
       </select>
       <div class="row">
         <div class="col">
@@ -84,8 +84,8 @@ export default {
   data() {
     return {
       user: {
-        firstname: '',
-        lastname: '',
+        firstName: '',
+        lastName: '',
         username: '',
         password: '',
         confirmPassword: '',
@@ -96,7 +96,7 @@ export default {
   },
   methods: {
     register() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/register`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}register`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
