@@ -1,18 +1,11 @@
 <template>
   <default-layout>
-  <div id="addTrainer" class="text-center shadow bg-light">
-    <form class="form-signin" @submit.prevent="addTrainer">      
-      <button class="btn btn-lg btn-info btn-block mt-2" type="submit">
-        Add Trainer
-      </button>
-    </form>
-  </div>
  
   </default-layout>
 </template>
 
 <script>
-//import auth from '../auth';
+import auth from '../auth';
 import DefaultLayout from '@/layouts/DefaultLayout';
 
 export default {
@@ -20,16 +13,24 @@ export default {
   components: {
     DefaultLayout 
   },
-  data() {
-    return {
-      
-    };
-  },
-  methods: {
-    addTrainer() {
-        
+  data(){
+        return{
+            TrainerID: this.$route.params.TrainerID,
+        }
     },
-  }
+  created() {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/addTrainer/${this.TrainerID}`, {
+      method: 'Post',
+        headers: new Headers ({
+          Authorization: 'Bearer ' + auth.getToken(),
+        }),
+        credentials: 'same-origin',
+      }) 
+        .then(() => {
+            this.$router.push('/trainer/profile/' + this.TrainerID);
+        })
+        .catch((err) => console.error(err));
+    }
 }
 </script>
 
