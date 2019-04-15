@@ -114,6 +114,7 @@
 
 <script>
 import DefaultLayout from '@/layouts/DefaultLayout';
+import auth from '../auth';
 
 export default {
     name:"ListTrainers",
@@ -149,12 +150,6 @@ export default {
         } */
     },
     methods: {
-        getTrainers(){
-            fetch(`${process.env.VUE_APP_REMOTE_API}/search`)
-            .then(response => response.json())
-            .then(json => this.trainers = json)
-            .catch(err => console.log(err)); 
-        },
         filteredTrainers(trainers, filters) {
             const filterKeys = Object.keys(filters);
             return this.trainers.filter((trainer) => {
@@ -167,16 +162,21 @@ export default {
 
     },
     created() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/search`) 
+      fetch(`${process.env.VUE_APP_REMOTE_API}/trainers`, {
+      method: 'GET',
+        headers: new Headers ({
+          Authorization: 'Bearer ' + auth.getToken(),
+        }),
+        credentials: 'same-origin',
+      }) 
         .then((response) => {
             return response.json();
         })
-        .then((trainers) => {
-            this.trainers = trainers;
+        .then((json) => {
+            this.trainers = json;
         })
         .catch((err) => console.error(err));
     }
-
 };
 </script>
 

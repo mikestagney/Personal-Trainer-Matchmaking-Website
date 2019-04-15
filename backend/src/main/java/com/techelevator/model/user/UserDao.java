@@ -56,7 +56,6 @@ public interface UserDao {
 	
 		
 	
-	public List<Trainer> getListOfTrainers();
 	
 	/**
 	 * @param user_id the User Id of the Trainer who's Client List is being searched
