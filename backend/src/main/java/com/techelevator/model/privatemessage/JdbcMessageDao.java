@@ -35,7 +35,7 @@ public class JdbcMessageDao implements MessageDao{
 	public List<Message> getMessagesForUser(long user_id) {
 		List<Message> messageList = new ArrayList<Message>();
 		String sqlSearchForUsersMessages = "SELECT * FROM message WHERE recipient_id = ?";
-		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForUsersMessages, user_id, user_id);
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForUsersMessages, user_id);
         while (results.next()) {
             messageList.add(mapResultToMessage(results));
         }
@@ -63,12 +63,12 @@ public class JdbcMessageDao implements MessageDao{
 		message.setMessageId(results.getLong("message_id"));
 		message.setSenderId(results.getLong("sender_id"));
 		message.setRecipientId(results.getLong("recipient_id"));
-		message.setPostDate(results.getDate("date_sent").toLocalDate());
-		message.setUnread(results.getBoolean("read"));
+		message.setPostDate(results.getDate("post_date").toLocalDate());
+		message.setUnread(results.getBoolean("unread"));
 		message.setSubject(results.getString("subject"));
 		message.setMessage(results.getString("message"));
-		message.setSenderDelete(results.getBoolean("sender_delete"));
-		message.setRecipientDelete(results.getBoolean("recipient_delete"));
+		//message.setSenderDelete(results.getBoolean("sender_delete"));
+		//message.setRecipientDelete(results.getBoolean("recipient_delete"));
 		return message;
 	}
 

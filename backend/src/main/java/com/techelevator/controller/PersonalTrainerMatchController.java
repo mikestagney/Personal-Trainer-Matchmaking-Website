@@ -136,16 +136,18 @@ public class PersonalTrainerMatchController {
 	 * @param user_id this is the id of the user that the logged in User wants to see messages to and from
 	 * @return List<PrivateMessage> list of all Private Messages between user and User
 	 */
-	@GetMapping("/inbox/{userId}")
-	public List<Message> displayMessagesBetweenUsers(@PathVariable long userId) {
-		return privateMessageDao.getMessagesBetweenUsers(authProvider.getCurrentUser().getId(), userId);
+	@GetMapping("/inbox/{userId}")//this was calling wrong method getMessagesBetweenUsers   changed to getMessagesForUser 
+	public List<Message> MessagesForUser(@PathVariable long userId) {
+		return privateMessageDao.getMessagesForUser(userId);
+		
+		//return privateMessageDao.getMessagesForUser(authProvider.getCurrentUser().getId(), userId);
 	}
 	
-    @GetMapping("/inbox/{messageId}")
-	public Message displayMessage(@PathVariable long messageId) {
-		return privateMessageDao.getMessage(messageId);
-	}
-    
+//    @GetMapping("/inbox/{messageId}")
+//	public Message displayMessage(@PathVariable long messageId) {
+//		return privateMessageDao.getMessage(messageId);
+//	}
+//    
 
 	@PutMapping("/inbox/{messageId}")
 	public void deleteMessage(@PathVariable long messageId) {
