@@ -1,6 +1,6 @@
 package com.techelevator.model.user;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -153,13 +153,49 @@ public class JdbcUserDao implements UserDao {
         }
 	}
 	
-	@Override
-	public Trainer getTrainerByID(Long id) {
-
-    	String sql = "SELECT user_id, username, is_public, first_name, last_name, city, state, hourly_rate, rating, philosophy, biography, certifications\n" + 
-    			     "FROM users JOIN trainer USING(user_id) WHERE user_id = ?";
-    	return new Trainer(jdbcTemplate.queryForRowSet(sql, id));
+	public List<Trainer> getTrainers() {
+    	String sql = "SELECT user_id, username, is_public, first_name, last_name, city, state, hourly_rate, rating, philosophy, biography, certifications " + 
+                     "FROM users JOIN trainer USING(user_id)";
+    	return new TinyORM<Trainer>(Trainer.class).readAll(jdbcTemplate.queryForRowSet(sql));
 	}
+	
+	@Override
+	public Trainer getTrainerByID(long trainerID) {
+    	String sql = "SELECT user_id, username, is_public, first_name, last_name, city, state, hourly_rate, rating, philosophy, biography, certifications " + 
+    			     "FROM users JOIN trainer USING(user_id) WHERE user_id = ?";
+    	return new TinyORM<Trainer>(Trainer.class).readOne(jdbcTemplate.queryForRowSet(sql, trainerID));
+	}
+	@Override
+	public void putTrainerByID(long trainerID, Trainer trainer) {
+		String sql = "UPDATE trainer SET" +
+                     "username=?,"        +
+                     "is_public=?,"       +
+                     "first_name=?,"      +
+                     "last_name=?,"       +
+                     "city=?,"            +
+                     "state=?,"           +
+                     "hourly_rate=?,"     +
+                     "rating=?,"          +
+                     "philosophy=?,"      +
+                     "biography=?,"       +
+                     "certifications=? "  +
+                     "FROM users JOIN trainer USING(user_id) WHERE user_id = ?";
+
+    	jdbcTemplate.update(sql,
+    			trainer.getUsername(), 
+    			trainer.isPublic(), 
+    			trainer.getFirstName(), 
+    			trainer.getLastName(), 
+    			trainer.getCity(), 
+    			trainer.getState(), 
+    			trainer.getHourlyRate(), 
+    			trainer.getRating(), 
+    			trainer.getPhilosophy(), 
+    			trainer.getBiography(), 
+    			trainer.getCertifications(),
+    			trainerID); 
+	}
+
 	
 	@Override
 	public User getClientById(Long id) {
@@ -172,12 +208,6 @@ public class JdbcUserDao implements UserDao {
         }
 	}
 	
-	@Override
-	public void updateTrainer(Trainer trainer) {
-		//TODO update trainer via multi query
-		jdbcTemplate.update("UPDATE trainer SET hourly_rate=?, rating=?, philosophy=?, bio_info=?, is_public=?, certifications=?  WHERE user_id=?",
-				trainer.getHourlyRate(), trainer.getRating(), trainer.getPhilosophy(), trainer.getBiography(), trainer.isPublic(), trainer.getCertifications(), trainer.getTrainerID());
-	}
 
 	@Override
 	public void updateUser(User user) {
@@ -186,7 +216,8 @@ public class JdbcUserDao implements UserDao {
 		
 	}
 
-	//TODO BM -- either use join or return entire result set
+	//TODO BM -- remove this. either use join or return entire result set
+	/*
 	@Override
 	public List<Trainer> getTrainersSearch(String name, String city, String state, int minHourlyRate, int maxHourlyRate, double rating) {
 		
@@ -199,7 +230,8 @@ public class JdbcUserDao implements UserDao {
         }
         return results;
 	}
-
+	*/
+	
 	@Override
 	public ClientList searchClientList(long id, String name, String username) {
 		ClientList clientList = new ClientList();
@@ -210,7 +242,7 @@ public class JdbcUserDao implements UserDao {
 	}
 	
 	private List<User> searchClientListOfTrainer(long user_id, String name, String username) {
-		List<User> clientList = new ArrayList<User>();
+		List<User> clientList = new LinkedList<User>();
 		List<User> listOfAllClients = getClientListOfTrainer(user_id);
 		for (User user: listOfAllClients) {
 			if ((user.getFirstName() + " " + user.getLastName()).contains(name) &&
@@ -224,7 +256,7 @@ public class JdbcUserDao implements UserDao {
 	private List<User> getClientListOfTrainer(long user_id) {
 		String sqlSelectUsersByTrainerId = "SELECT client_id FROM client_list WHERE trainer_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUsersByTrainerId, user_id);
-        List<User> clientList = new ArrayList<User>();
+        List<User> clientList = new LinkedList<User>();
         while (results.next()) {
         	clientList.add(getUserById(results.getLong("client_id")));
         }

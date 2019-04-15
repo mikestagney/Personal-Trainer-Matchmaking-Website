@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.jdbc.support.rowset.SqlRowSet;
-
-public class Trainer extends TinyORM<Trainer> {
+public class Trainer {
 	@MapToDB("user_id")
 	private Integer trainerID;
 	
@@ -48,13 +46,6 @@ public class Trainer extends TinyORM<Trainer> {
 	private String biography;
 
 	ArrayList < String > certifications = new ArrayList < String > ();
-
-	public Trainer(SqlRowSet rowSet) {
-		super(Trainer.class);
-		try {
-			load(rowSet);
-		} catch(Exception e) {}
-	}
 
 	public int getTrainerID() {
 		return trainerID;

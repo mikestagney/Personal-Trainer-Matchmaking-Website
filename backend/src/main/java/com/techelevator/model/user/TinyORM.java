@@ -17,11 +17,13 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 	String value() default "";
 }
 
-public abstract class TinyORM<T> {
-    protected Class<T> pojoClass;
-    protected Map<String, Field> mappedFields = new HashMap<>();
+public final class TinyORM<T> {
+    private Class<T> pojoClass;
+    private Map<String, Field> mappedFields = new HashMap<>();
 
     public TinyORM(Class<T> pojo) {
+    	pojoClass = pojo;
+    	
         // extract names of all class variables mapped to db fields
         for( Field pojoField: allPOJO_Fields(new LinkedList<Field>(), pojo) ) {
         	MapToDB dbFieldLabel = pojoField.getAnnotation(MapToDB.class);
@@ -44,21 +46,44 @@ public abstract class TinyORM<T> {
 
         return fields;
     }
-
-    protected void load(SqlRowSet row) {
+    
+    public List<T> readAll(SqlRowSet row) {
+    	List<T> results = new LinkedList<T>();
         try {
         	while( row.next() ) {
+        		T dto = (T) pojoClass.getConstructor().newInstance();
                 for( Map.Entry<String, Field> entity: mappedFields.entrySet() ) {
                     final String dbFieldLabel = entity.getKey();
                     final Field  pojoField    = entity.getValue();
-                    System.out.println(dbFieldLabel + ": " + row.getObject(dbFieldLabel));System.out.flush();
-                    pojoField.set( this, pojoField.getType().cast(row.getObject(dbFieldLabel)) );
+                    
+                    pojoField.set( dto, pojoField.getType().cast(row.getObject(dbFieldLabel)) );
                 }
+                results.add(dto);
         	}
         } catch(Exception e) {
             e.printStackTrace();
             System.exit(1);
         }
+        return results.size() > 0? results: null; 
+    }
+    
+    public T readOne(SqlRowSet row) {
+        try {
+        	if( row.next() ) {
+        		T dto = (T) pojoClass.getConstructor().newInstance();
+                for( Map.Entry<String, Field> entity: mappedFields.entrySet() ) {
+                    final String dbFieldLabel = entity.getKey();
+                    final Field  pojoField    = entity.getValue();
+                    
+                    pojoField.set( dto, pojoField.getType().cast(row.getObject(dbFieldLabel)) );
+                }
+                return dto;
+        	} 
+        } catch(Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return null;
     }
     
 }

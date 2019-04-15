@@ -1,7 +1,6 @@
 package com.techelevator.model.user;
 
-public class Client extends AbstractUser<Client> {
+public class Client {
 	public Client() {
-		super(Client.class);
 	}
 }
