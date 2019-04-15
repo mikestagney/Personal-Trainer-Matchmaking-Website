@@ -106,6 +106,14 @@ public class PersonalTrainerMatchController {
 		return userDao.getClientList(authProvider.getCurrentUser().getId());
 	}
 	
+	@GetMapping("/trainerList")
+	public List<Trainer> displayTrainerList() throws UnauthorizedException {
+		if(!authProvider.userHasRole(new String[] {"Client"})) {
+            throw new UnauthorizedException();
+        }
+		return userDao.getTrainerList(authProvider.getCurrentUser().getId());
+	}
+	
 	@GetMapping("/inbox")
 	public List<Message> displayMessages() {
 		return privateMessageDao.getMessagesForUser(authProvider.getCurrentUser().getId());
@@ -146,6 +154,11 @@ public class PersonalTrainerMatchController {
 	@PutMapping("/inbox/{messageId}")
 	public void deleteMessage(@PathVariable long messageId) {
 		privateMessageDao.deleteMessage(authProvider.getCurrentUser().getId(), messageId);
+	}
+	
+	@PostMapping("/addTrainer/{trainerId}")
+	public void addClientToClientList(@PathVariable long trainerId) {
+		userDao.addClientToClientList(trainerId,authProvider.getCurrentUser().getId());
 	}
 	
 }

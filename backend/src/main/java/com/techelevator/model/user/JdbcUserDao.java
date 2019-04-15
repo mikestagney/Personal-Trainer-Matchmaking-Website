@@ -247,6 +247,17 @@ public class JdbcUserDao implements UserDao {
         return clientList;
 	}
 	
+	@Override
+	public List<Trainer> getTrainerList(long user_id) {
+		String sqlSelectUsersByTrainerId = "SELECT trainerId FROM client_list WHERE client_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUsersByTrainerId, user_id);
+        List<Trainer> trainerList = new LinkedList<Trainer>();
+        while (results.next()) {
+        	trainerList.add(getTrainerByID(results.getLong("trainer_id")));
+        }
+        return trainerList;
+	}
+	
 	private List<User> getClientListOfTrainer(long user_id) {
 		String sqlSelectUsersByTrainerId = "SELECT client_id FROM client_list WHERE trainer_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUsersByTrainerId, user_id);

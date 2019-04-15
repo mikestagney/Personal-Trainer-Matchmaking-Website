@@ -10,6 +10,8 @@ import MessageDetail from '@/views/MessageDetail';
 import WriteMessage from '@/views/WriteMessage';
 import ClientProfile from '@/views/ClientProfile';
 import ClientList from '@/views/ClientList';
+import AddTrainer from '@/views/AddTrainer';
+import TrainerList from '@/views/TrainerList';
 
 
 Vue.use(Router);
@@ -62,6 +64,16 @@ const router = new Router({
         path: '/clientList',
         name: 'listClients',
         component: ClientList
+      },
+      {
+        path: '/addTrainer/{trainerId}',
+        name: 'addTrainer',
+        component: AddTrainer
+      },
+      {
+        path: '/trainerList',
+        name: 'listTrainers',
+        component: TrainerList
       },
     ],
   });

@@ -66,6 +66,8 @@ public interface UserDao {
 	public ClientList searchClientList(long id, String name, String userName);
 	
 	public List<User> getClientList(long user_id);
+	
+	public List<Trainer> getTrainerList(long user_id);
 			
 	public void addClientToClientList(long trainer_id, long client_id);
 	
