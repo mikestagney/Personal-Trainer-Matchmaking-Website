@@ -67,7 +67,7 @@ export default {
         }
     },
   created() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/${this.TrainerID}`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}trainer/profile/${this.TrainerID}`, {
       method: 'GET',
         headers: new Headers ({
           Authorization: 'Bearer ' + auth.getToken(),

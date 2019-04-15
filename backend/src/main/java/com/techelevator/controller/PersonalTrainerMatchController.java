@@ -41,9 +41,6 @@ public class PersonalTrainerMatchController {
     
     @GetMapping("/trainer/profile/{trainerId}")
 	public Trainer trainerProfilePage(@PathVariable long trainerId) throws UnauthorizedException {
-		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
-            throw new UnauthorizedException();
-        }
 		return userDao.getTrainerByID(trainerId);
 	}
     @PutMapping("/trainer/profile/{trainerId}")
@@ -52,6 +49,9 @@ public class PersonalTrainerMatchController {
 			@Valid @RequestBody Trainer trainer, BindingResult result
 			) throws UnauthorizedException 
     {
+		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
+            throw new UnauthorizedException();
+        }
 		//TODO ?? -- How do i send bindingresult errors to frontend?
 		if(!result.hasErrors()) {
 			userDao.putTrainerByID(trainerId, trainer);
