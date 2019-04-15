@@ -1,9 +1,6 @@
 <template>
 <default-layout>
       <div class="container">
-         <h2>
-            the trainer id is {{this.$route.params.TrainerID}}
-         </h2>
          <div class="row imageHeader text-light mb-3 p-5 shadow">
             <div class="col">
                <h3 id="test">
@@ -37,7 +34,7 @@
                <div class="col blueBackground">
                   <h6 class="font-weight-bold">
                      <img src="../assets/FitnessVectors/shoe.png" class="p-3" />
-                     <span class="orangeText">Background:</span> {{trainer.bioInfo}}
+                     <span class="orangeText">Background:</span> {{trainer.biography}}
                   </h6>
                </div>
                <div class="col blueBackground ml-1">
@@ -66,7 +63,7 @@ export default {
         return{
             TrainerID: this.$route.params.TrainerID,
             title:"trainerProfile",
-            trainers: []
+            trainer: []
         }
     },
   created() {
@@ -80,8 +77,8 @@ export default {
         .then((response) => {
             return response.json();
         })
-        .then((trainers) => {
-            this.trainers = trainers;
+        .then((json) => {
+            this.trainer = json;
         })
         .catch((err) => console.error(err));
     }

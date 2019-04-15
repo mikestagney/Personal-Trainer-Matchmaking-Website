@@ -64,8 +64,8 @@ import auth from '../auth';
         .then((response) => {
             return response.json();
         })
-        .then((clients) => {
-            this.clients = clients;
+        .then((json) => {
+            this.client = json;
         })
         .catch((err) => console.error(err));
     }
