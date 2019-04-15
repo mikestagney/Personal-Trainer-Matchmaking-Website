@@ -68,7 +68,7 @@ public interface UserDao {
 	public List<User> getClientList(long user_id);
 	
 	public List<Trainer> getTrainerList(long user_id);
-			
+				
 	public void addClientToClientList(long trainer_id, long client_id);
 	
 	public void removeClientFromClientList(long trainer_id, long client_id);

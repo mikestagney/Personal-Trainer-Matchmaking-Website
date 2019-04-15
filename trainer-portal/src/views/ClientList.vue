@@ -40,7 +40,6 @@ import DefaultLayout from '@/layouts/DefaultLayout';
 import auth from '../auth';
 
 export default {
-    name:"ListTrainers",
     components: {
         DefaultLayout,
     },

@@ -153,6 +153,7 @@ public class JdbcUserDao implements UserDao {
         }
 	}
 	
+	@Override
 	public List<Trainer> getTrainers() {
     	String sql = "SELECT user_id, username, is_public, first_name, last_name, city, state, hourly_rate, rating, philosophy, biography, certifications " + 
                      "FROM users JOIN trainer USING(user_id) ORDER BY rating DESC, hourly_rate, last_name, first_name";
@@ -249,7 +250,7 @@ public class JdbcUserDao implements UserDao {
 	
 	@Override
 	public List<Trainer> getTrainerList(long user_id) {
-		String sqlSelectUsersByTrainerId = "SELECT trainerId FROM client_list WHERE client_id = ?";
+		String sqlSelectUsersByTrainerId = "SELECT trainer_id FROM client_list WHERE client_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUsersByTrainerId, user_id);
         List<Trainer> trainerList = new LinkedList<Trainer>();
         while (results.next()) {

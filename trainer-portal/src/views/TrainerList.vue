@@ -3,7 +3,7 @@
     <div class="trainer-list container">
             <div class="row listHeader text-light mb-3 p-5 shadow">
                 <div class="col">
-                <h2 id="test">Client List</h2>
+                <h2 id="test">Trainer List</h2>
                 </div>
             </div>
       <form method="GET" class="form-inline" v-on:submit.prevent="filterTrainerList">
@@ -17,14 +17,14 @@
         <table class="table table-striped mt-4">
             <thead class="thead thead-light">
             <tr>
-            <th scope="col">Client Name</th>
+            <th scope="col">Trainer Name</th>
             <th scope="col">City</th>
             <th scope="col">State</th>
             </tr>
             </thead>
             <tbody>
                 <tr v-for="trainer in filteredTrainerList" :key="trainer.trainerID">
-                    <td><router-link v-bind:to="{ name: 'trainerProfile', params: { CliendID: trainer.userID }}" class="orangeText">{{trainer.firstName}} {{trainer.lastName}}</router-link></td>
+                    <td><router-link v-bind:to="{ name: 'trainerProfile', params: { TrainerID: trainer.trainerID }}" class="orangeText">{{trainer.firstName}} {{trainer.lastName}}</router-link></td>
                     <td>{{trainer.city}}</td>
                     <td>{{trainer.state}}</td>
                 </tr>
@@ -40,7 +40,6 @@ import DefaultLayout from '@/layouts/DefaultLayout';
 import auth from '../auth';
 
 export default {
-    name:"ListTrainers",
     components: {
         DefaultLayout,
     },
@@ -53,10 +52,10 @@ export default {
     },
     methods: {
         
-        filterTrainerList() {
+        filterClientList() {
 
-                this.filteredClientList = this.clientList.filter((client) => {
-                    return (client.firstName + ' ' + client.lastName).includes(this.name);
+                this.filteredTrainerList = this.trainerList.filter((trainer) => {
+                    return (trainer.firstName + ' ' + trainer.lastName).includes(this.name);
                 })
         }
     },
@@ -73,7 +72,7 @@ export default {
         })
         .then((json) => {
             this.trainerList = json;
-            this.filterTrainerList = json;
+            this.filteredTrainerList = json;
         })
         .catch((err) => console.error(err));
     }
