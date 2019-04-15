@@ -74,8 +74,8 @@
             </div>
             <div class="form-row mt-2">
             <div class="col">
-                <select name="hourlyRate" type="number" placeholder="Price" v-model="hourlyRate" class="form-control">
-                    <option value=999>Price</option>
+                <select name="hourlyRate" type="number" placeholder="Hourly Rate" v-model="hourlyRate" class="form-control">
+                    <option value=999>Hourly Rate</option>
                     <option value=20>Max $20</option>
                     <option value=40>Max $40</option>
                     <option value=100>Max $100</option>
@@ -110,7 +110,7 @@
             <th scope="col">Trainer Name</th>
             <th scope="col">City</th>
             <th scope="col">State</th>
-            <th scope="col">Price</th>
+            <th scope="col">Hourly Rate</th>
             <th scope="col">Rating</th>
             </tr>
             </thead>
