@@ -21,12 +21,12 @@
         </router-link>
         <router-link tag="li" class="nav-item" to="/save" active-class="active">
         </router-link>
-        <router-link v-if="user.role === 'Trainer'" tag="li" class="nav-item" to="/clientList" active-class="active" exact>
+       <!--  <router-link v-if="user.role === 'Trainer'" tag="li" class="nav-item" to="/clientList" active-class="active" exact>
           <a class="nav-link">Client List</a>
         </router-link>
         <router-link v-else tag="li" class="nav-item" to="/trainerList" active-class="active" exact>
           <a class="nav-link">Trainer List</a>
-        </router-link>
+        </router-link> -->
       </ul>
     </div>
     <div class="navbar-collapse collapse">
