@@ -80,7 +80,7 @@
                 <input name="maxPrice" type="text" placeholder="Max Price per Hour" v-model="maxPrice" class="form-control">
             </div>
             <div class="col">
-                <input name="rating" type="text" placeholder="Rating" v-model="ratingSearch" class="form-control">
+                <input name="rating" type="text" placeholder="Rating" v-model="rating" class="form-control">
             </div>
                 <div class="col">
                 <input name="submit" value="Search" type="submit" class="btn btn-info">
@@ -128,37 +128,23 @@ export default {
             state: '',
             minPrice: '',
             maxPrice: '',
-            ratingSearch: '',
+            rating: '',
             sortBy: '',
             trainers: [],
             filteredTrainers: [],
         };
     },
-    computed: {
-        /*
-        filterTrainers(filters) {
-            return this.trainers.filter(function(trainer) {
-                return trainer.name.indexOf(filters.nameSearch) >= 0
-                && trainer.state.indexOf(this.stateSearch) >= 0
-                && trainer.city.indexOf(this.citySearch) >= 0;
-            })
-        }
-         activeTrainers: function() {
-            return this.trainers.filter(function(trainer) {
-                return trainer.public
-            })
-        } */
-    },
     methods: {
         filterTrainers() {
-            const filters = [this.name,this.city,this.state];
-            const filterKeys = Object.keys(filters);
-            this.filteredTrainers = this.trainers.filter((trainer) => {
-                return filterKeys.every(key => {
-                    if (!filters[key].length) return true;
-                    return filters[key].includes(trainer[key]);
-                }) 
-            })
+
+                this.filteredTrainers = this.trainers.filter((trainer) => {
+                    return (trainer.firstName + ' ' + trainer.lastName).includes(this.name)
+                    && trainer.city.includes(this.city)
+                    && trainer.state.includes(this.state)
+                    && trainer.rating >= this.rating
+                    && trainer.hourlyRate >= minPrice
+                    && trainer.hourlyRate <= maxPrice;
+                })
         },
 
     },
