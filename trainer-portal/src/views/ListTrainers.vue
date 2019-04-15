@@ -141,9 +141,7 @@ export default {
                     return (trainer.firstName + ' ' + trainer.lastName).includes(this.name)
                     && trainer.city.includes(this.city)
                     && trainer.state.includes(this.state)
-                    && trainer.rating >= this.rating
-                    && trainer.hourlyRate >= this.minPrice
-                    && trainer.hourlyRate <= this.maxPrice;
+                    ;
                 })
         },
 
