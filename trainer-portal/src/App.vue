@@ -3,13 +3,25 @@
 <template>
   <div id="app">
     <nav>
-        <router-link to='/'>Home</router-link>
-        <router-link to='/register'>Register</router-link>
-        <router-link to='/login'>Login</router-link>
+        <ul>
+            <li>
+                <router-link :to="{name: 'home'}">Home</router-link>
+            </li>
+            <li>
+                <router-link :to="{name: 'register'}">Register</router-link>
+            </li>
+            <li>
+                <router-link :to="{name: 'login'}">Login</router-link>
+            </li>
+            <li>
+                <router-link :to="{name: 'student', params: {id: 2}}">Student</router-link>
+            </li>
+        </ul>
     </nav>
     <router-view />
   </div>
 </template>
+
 
 <script>
 export default {
@@ -18,18 +30,8 @@ export default {
 
 <style>
 #app {
-   font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
   margin: 0px;
   padding: 0px;
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition-duration: 0.3s;
-  transition-property: opacity;
-  transition-timing-function: ease;
-}
-.fade-enter,
-.fade-leave-active {
-  opacity: 0;
 }
 </style>

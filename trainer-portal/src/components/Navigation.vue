@@ -16,21 +16,24 @@
     </button>
     <div class="collapse navbar-collapse" id="trainer-navbar">
       <ul class="navbar-nav mr-auto">
-        <router-link tag="li" class="nav-item" to="/search" active-class="active" exact>
+        <router-link to="/search" tag="li" class="nav-item" active-class="active" exact>
           <a class="nav-link">Search Trainers</a>
         </router-link>
-        <router-link tag="li" class="nav-item" to="/save" active-class="active">
+        <router-link to="/save"  tag="li" class="nav-item" active-class="active">
         </router-link>
       </ul>
     </div>
     <div class="navbar-collapse collapse">
       <ul class="navbar-nav ml-auto">
-        <router-link tag="li" class="nav-item" @click="logout" active-class="active" exact>
-          <a class="nav-link" href="#">{{auth.getToken === null ? 'login' : 'logout'}}</a>
+        <li v-if="isLoggedIn()" class="nav-item" @click="logout" >
+          Logout
+        </li>
+        <router-link to="/home" tag="li" class="nav-item" @click="logout" active-class="active" exact>
+          <a class="nav-link" href="#">{{isLoggedIn() ? 'login' : 'logout'}}</a>
         </router-link>
       </ul>
-       <ul class="navbar-nav mr-auto">
-      <router-link tag="li" class="nav-item" to="/login" active-class="active" exact>
+      <ul class="navbar-nav mr-auto">
+      <router-link to="/login" v-if="!isLoggedIn()" tag="li" class="nav-item" active-class="active" exact>
           <a class="nav-link">Login</a>
       </router-link>
       </ul>
@@ -45,9 +48,13 @@ export default {
   name: 'Navigation',
   methods: {
     logout() {
+
       auth.logout();
       this.$router.go('/');
     },
+    isLoggedIn() {
+      return auth.getToken() != null;
+    }
   },
 };
 </script>
