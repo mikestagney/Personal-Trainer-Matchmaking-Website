@@ -153,9 +153,10 @@ public class JdbcUserDao implements UserDao {
         }
 	}
 	
+	@Override
 	public List<Trainer> getTrainers() {
     	String sql = "SELECT user_id, username, is_public, first_name, last_name, city, state, hourly_rate, rating, philosophy, biography, certifications " + 
-                     "FROM users JOIN trainer USING(user_id)";
+                     "FROM users JOIN trainer USING(user_id) ORDER BY rating DESC, hourly_rate, last_name, first_name";
     	return new TinyORM<Trainer>(Trainer.class).readAll(jdbcTemplate.queryForRowSet(sql));
 	}
 	
@@ -219,9 +220,8 @@ public class JdbcUserDao implements UserDao {
 	@Override
 	public ClientList searchClientList(long id, String name, String username) {
 		ClientList clientList = new ClientList();
-		clientList.setClientList(searchClientListOfTrainer(id, name, username));
-		//clientList.setTrainer(getTrainerById(id));
-		clientList.setPrivateNotes(getPrivateNotes(id, clientList.getClientList()));
+		clientList.setListOfClients(searchClientListOfTrainer(id, name, username));
+		clientList.setPrivateNotes(getPrivateNotes(id, clientList.getListOfClients()));
 		return clientList;
 	}
 	
@@ -235,6 +235,28 @@ public class JdbcUserDao implements UserDao {
 			}
 		}
         return clientList;
+	}
+	
+	@Override
+	public List<User> getClientList(long user_id) {
+		String sqlSelectUsersByTrainerId = "SELECT client_id FROM client_list WHERE trainer_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUsersByTrainerId, user_id);
+        List<User> clientList = new LinkedList<User>();
+        while (results.next()) {
+        	clientList.add(getUserById(results.getLong("client_id")));
+        }
+        return clientList;
+	}
+	
+	@Override
+	public List<Trainer> getTrainerList(long user_id) {
+		String sqlSelectUsersByTrainerId = "SELECT trainer_id FROM client_list WHERE client_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUsersByTrainerId, user_id);
+        List<Trainer> trainerList = new LinkedList<Trainer>();
+        while (results.next()) {
+        	trainerList.add(getTrainerByID(results.getLong("trainer_id")));
+        }
+        return trainerList;
 	}
 	
 	private List<User> getClientListOfTrainer(long user_id) {

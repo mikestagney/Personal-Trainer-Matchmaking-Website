@@ -10,6 +10,10 @@ import MessageDetail from '@/views/MessageDetail';
 import WriteMessage from '@/views/WriteMessage';
 import ClientProfile from '@/views/ClientProfile';
 import EditTrainerProfile from '@/views/EditTrainerProfile';
+import ClientList from '@/views/ClientList';
+import AddTrainer from '@/views/AddTrainer';
+import TrainerList from '@/views/TrainerList';
+
 
 Vue.use(Router);
 
@@ -34,7 +38,7 @@ const router = new Router({
       },
       {
         path: '/search',
-        name: 'search',
+        name: 'listTrainers',
         component: ListTrainers,
       },
       {
@@ -62,12 +66,23 @@ const router = new Router({
         name: 'editTrainerProfile',
         component: EditTrainerProfile
       },
-
-      
+      {
+        path: '/clientList',
+        name: 'listClients',
+        component: ClientList
+      },
+      {
+        path: '/addTrainer/:TrainerID',
+        name: 'addTrainer',
+        component: AddTrainer
+      },
+      {
+        path: '/trainerList',
+        name: 'listTrainers',
+        component: TrainerList
+      },
     ],
   });
-  
-  
   
   export default router;
   

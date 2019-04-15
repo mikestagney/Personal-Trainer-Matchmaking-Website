@@ -1,9 +1,6 @@
 <template>
 <default-layout>
       <div class="container">
-         <h2>
-            Trainer Profile is {{ trainer.public ? 'Public': 'Private' }}
-         </h2>
          <div class="row imageHeader text-light mb-3 p-5 shadow">
             <div class="col">
                <h3 id="test">
@@ -81,7 +78,7 @@ export default {
         return{
             TrainerID: this.$route.params.TrainerID,
             title:"trainerProfile",
-            trainer: ''
+            trainer: []
         }
     },
   created() {
@@ -95,8 +92,8 @@ export default {
         .then((response) => {
             return response.json();
         })
-        .then((trainer) => {
-            this.trainer = trainer;
+        .then((json) => {
+            this.trainer = json;
         })
         .catch((err) => console.error(err));
     }

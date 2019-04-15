@@ -6,17 +6,17 @@
                 <h2 id="test">Available Trainers</h2>
                 </div>
             </div>
-      <form method="GET" class="form-inline" v-on:submit.prevent="getTrainers">
+      <form method="GET" class="form-inline" v-on:submit.prevent="filterTrainers">
           <div class="form-row">
               <div class="col">
-                <input name="name" type="text" placeholder="Name" v-model="nameSearch" class="form-control">
+                <input name="name" type="text" placeholder="Name" v-model="name" class="form-control">
             </div>
             <div class="col">
-                <input name="city" type="text" placeholder="City"  v-model="citySearch" class="form-control">
+                <input name="city" type="text" placeholder="City"  v-model="city" class="form-control">
             </div>
             <div class="col">
-            <Select name="state" type="text" placeholder="State" v-model="stateSearch" class="form-control">
-                <option disabled value="">State</option>
+            <select name="state" type="text" placeholder="State" v-model="state" class="form-control">
+                <option value="">State</option>
                 <option value="AK">Alaska</option>
                 <option value="AL">Alabama</option>
                 <option value="AR">Arkansas</option>
@@ -74,19 +74,35 @@
             </div>
             <div class="form-row mt-2">
             <div class="col">
-                <input name="minPrice" type="text" placeholder="Min Price per Hour" v-model="minPrice" class="form-control">
+                <select name="hourlyRate" type="number" placeholder="Hourly Rate" v-model="hourlyRate" class="form-control">
+                    <option value=999>Hourly Rate</option>
+                    <option value=20>Max $20</option>
+                    <option value=40>Max $40</option>
+                    <option value=100>Max $100</option>
+                    <option value=50>Min $50</option>
+                </select>
             </div>
             <div class="col">
-                <input name="maxPrice" type="text" placeholder="Max Price per Hour" v-model="maxPrice" class="form-control">
+                <select name="rating" type="number" placeholder="Any Rating" v-model="rating" class="form-control">
+                    <option value=0>Any Rating</option>
+                    <option value=2>2 Stars or Higher</option>
+                    <option value=3>3 Stars or Higher</option>
+                    <option value=4>4 or 5 Stars</option>
+                    <option value=5>5 Stars!!</option>
+                </select>
             </div>
             <div class="col">
-                <input name="rating" type="text" placeholder="Rating" v-model="ratingSearch" class="form-control">
+                <select name="sortBy" type="number" placeholder="Sort by Raiting" v-model="sortBy" class="form-control">
+                    <option value=0>Sort by Raiting</option>
+                    <option value=1>Sort by Hourly Rate</option>
+                    <option value=2>Sort by First Name</option>
+                    <option value=3>Sort by Last Name</option>
+                </select>
             </div>
                 <div class="col">
                 <input name="submit" value="Search" type="submit" class="btn btn-info">
                 </div>
-            </div>
-         
+            </div>         
       </form>
         <table class="table table-striped mt-4">
             <thead class="thead thead-light">
@@ -94,26 +110,28 @@
             <th scope="col">Trainer Name</th>
             <th scope="col">City</th>
             <th scope="col">State</th>
-            <th scope="col">Price</th>
+            <th scope="col">Hourly Rate</th>
             <th scope="col">Rating</th>
             </tr>
             </thead>
             <tbody>
-                <tr v-for="trainer in filterTrainers" :key="trainer.user_id">
-                    <td><router-link v-bind:to="{ name: 'trainerProfile', params: { TrainerID: trainer.user_id }}" class="orangeText">{{trainer.first_name}} {{trainer.last_name}}</router-link></td>
+                <tr v-for="trainer in filteredTrainers" :key="trainer.trainerID">
+                    <td><router-link v-bind:to="{ name: 'trainerProfile', params: { TrainerID: trainer.trainerID }}" class="orangeText">{{trainer.firstName}} {{trainer.lastName}}</router-link></td>
                     <td>{{trainer.city}}</td>
                     <td>{{trainer.state}}</td>
-                    <td>{{trainer.hourly_rate}}</td>
+                    <td>{{trainer.hourlyRate}}</td>
                     <td>{{trainer.rating}}</td>
                 </tr>
             </tbody>
         </table>
     </div>
+    
 </default-layout>
 </template>
 
 <script>
 import DefaultLayout from '@/layouts/DefaultLayout';
+import auth from '../auth';
 
 export default {
     name:"ListTrainers",
@@ -122,61 +140,57 @@ export default {
     },
     data() {
         return {
-            nameSearch: '',
-            citySearch: '',
-            stateSearch: '',
-            minPrice: '',
-            maxPrice: '',
-            ratingSearch: '',
-            sortBy: '',
-            price: '',
+            name: '',
+            city: '',
+            state: '',
+            hourlyRate: 999,
+            rating: 0,
+            sortBy: 0,
             trainers: [],
-            filters: { first_name: ["nameSearch"], city: ["citySearch"], state: ["stateSearch"],}
+            filteredTrainers: [],
         };
     },
-    computed: {
-        filterTrainers() {
-            return this.trainers.filter(function(trainer) {
-                return trainer.first_name.indexOf(this.nameSearch) >= 0
-                && trainer.state.indexOf(this.stateSearch) >= 0
-                && trainer.city.indexOf(this.citySearch) >= 0;
-            })
-        }
-        /* activeTrainers: function() {
-            return this.trainers.filter(function(trainer) {
-                return trainer.public
-            })
-        } */
-    },
     methods: {
-        getTrainers(){
-            fetch(`${process.env.VUE_APP_REMOTE_API}/trainers/search/${this.searchText}`)
-            .then(response => response.json())
-            .then(json => this.trainers = json)
-            .catch(err => console.log(err)); 
-        },
-        filteredTrainers(trainers, filters) {
-            const filterKeys = Object.keys(filters);
-            return this.trainers.filter((trainer) => {
-                return filterKeys.every(key => {
-                    if (!filters[key].length) return true;
-                    return filters[key].includes(trainer[key]);
-                }) 
-            })
-        },
+        
+        filterTrainers() {
 
+                this.filteredTrainers = this.trainers.filter((trainer) => {
+                    return (trainer.firstName + ' ' + trainer.lastName).includes(this.name)
+                    && trainer.city.includes(this.city)
+                    && trainer.state.includes(this.state)
+                    && trainer.rating >= this.rating
+                    && ((this.hourlyRate == 50 && trainer.hourlyRate >= this.hourlyRate)
+                    || (this.hourlyRate != 50 && trainer.hourlyRate <= this.hourlyRate));
+                })
+                if (this.sortBy == 1) {
+                    this.filteredTrainers = this.filteredTrainers.sort((t1,t2) => (t1.hourlyRate > t2.hourlyRate) ? 1 : ((t2.hourlyRate > t1.hourlyRate) ? -1 : 0))
+                }
+                else if (this.sortBy == 2) {
+                    this.filteredTrainers = this.filteredTrainers.sort((t1,t2) => (t1.firstName > t2.firstName) ? 1 : ((t2.firstName > t1.firstName) ? -1 : 0))
+                }
+                else if (this.sortBy == 3) {
+                    this.filteredTrainers = this.filteredTrainers.sort((t1,t2) => (t1.lastName > t2.lastName) ? 1 : ((t2.lastName > t1.lastName) ? -1 : 0))
+                }
+
+        }
     },
     created() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/trainerList`) 
+      fetch(`${process.env.VUE_APP_REMOTE_API}/trainers`, {
+      method: 'GET',
+        headers: new Headers ({
+          Authorization: 'Bearer ' + auth.getToken(),
+        }),
+        credentials: 'same-origin',
+      }) 
         .then((response) => {
             return response.json();
         })
-        .then((trainers) => {
-            this.trainers = trainers;
+        .then((json) => {
+            this.trainers = json;
+            this.filteredTrainers = json;
         })
         .catch((err) => console.error(err));
     }
-
 };
 </script>
 

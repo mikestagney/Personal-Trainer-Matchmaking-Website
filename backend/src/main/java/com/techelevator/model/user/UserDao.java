@@ -48,12 +48,10 @@ public interface UserDao {
      */
     public User getUserById(Long id);
     
-    
-    
     public User getClientById(Long id);
     
     public void updateUser(User user);
-		
+	
 	/**
 	 * @param user_id the User Id of the Trainer who's Client List is being searched
 	 * @param name the Name to search the client list for
@@ -61,7 +59,11 @@ public interface UserDao {
 	 * @return ClientList for Clients in the Trainer's Client List that match the search criteria
 	 */
 	public ClientList searchClientList(long id, String name, String userName);
-			
+	
+	public List<User> getClientList(long user_id);
+	
+	public List<Trainer> getTrainerList(long user_id);
+				
 	public void addClientToClientList(long trainer_id, long client_id);
 	
 	public void removeClientFromClientList(long trainer_id, long client_id);

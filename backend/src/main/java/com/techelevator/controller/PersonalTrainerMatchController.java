@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.techelevator.authentication.AuthProvider;
 import com.techelevator.authentication.RegistrationResult;
@@ -19,7 +18,6 @@ import com.techelevator.authentication.UnauthorizedException;
 import com.techelevator.model.privatemessage.Message;
 import com.techelevator.model.privatemessage.MessageDao;
 import com.techelevator.model.user.UserDao;
-import com.techelevator.model.user.ClientList;
 import com.techelevator.model.user.Trainer;
 import com.techelevator.model.user.User;
 
@@ -101,13 +99,19 @@ public class PersonalTrainerMatchController {
 	 * @return List<User> for all Client's that fall within the search criteria
 	 */
 	@GetMapping("/clientList")
-	public ClientList displayClientListSearch(@RequestParam(defaultValue="") String name,
-												@RequestParam(defaultValue="") String username)
-												throws UnauthorizedException {
+	public List<User> displayClientList() throws UnauthorizedException {
 		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
             throw new UnauthorizedException();
         }
-		return userDao.searchClientList(authProvider.getCurrentUser().getId(), name, username);
+		return userDao.getClientList(authProvider.getCurrentUser().getId());
+	}
+	
+	@GetMapping("/trainerList")
+	public List<Trainer> displayTrainerList() throws UnauthorizedException {
+		if(!authProvider.userHasRole(new String[] {"Client"})) {
+            throw new UnauthorizedException();
+        }
+		return userDao.getTrainerList(authProvider.getCurrentUser().getId());
 	}
 	
 	@GetMapping("/inbox")
@@ -152,6 +156,11 @@ public class PersonalTrainerMatchController {
 	@PutMapping("/inbox/{messageId}")
 	public void deleteMessage(@PathVariable long messageId) {
 		privateMessageDao.deleteMessage(authProvider.getCurrentUser().getId(), messageId);
+	}
+	
+	@PostMapping("/addTrainer/{trainerId}")
+	public void addClientToClientList(@PathVariable long trainerId) {
+		userDao.addClientToClientList(trainerId,authProvider.getCurrentUser().getId());
 	}
 	
 }

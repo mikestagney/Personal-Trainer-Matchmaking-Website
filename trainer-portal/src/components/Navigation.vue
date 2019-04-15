@@ -28,12 +28,18 @@
         <li v-if="isLoggedIn()" class="nav-item" @click="logout" >
           Logout
         </li>
+<<<<<<< HEAD
         <router-link to="/home" tag="li" class="nav-item" @click="logout" active-class="active" exact>
           <a class="nav-link" href="#">{{isLoggedIn() ? 'login' : 'logout'}}</a>
         </router-link>
       </ul>
       <ul class="navbar-nav mr-auto">
       <router-link to="/login" v-if="!isLoggedIn()" tag="li" class="nav-item" active-class="active" exact>
+=======
+      </ul>
+       <ul class="navbar-nav mr-auto">
+      <router-link v-if="!isLoggedIn()" tag="li" class="nav-item" to="/login" active-class="active" exact>
+>>>>>>> dev-elephant
           <a class="nav-link">Login</a>
       </router-link>
       </ul>
@@ -53,8 +59,13 @@ export default {
       this.$router.go('/');
     },
     isLoggedIn() {
+<<<<<<< HEAD
       return auth.getToken() != null;
     }
+=======
+      return auth.getUser() != null;
+    },
+>>>>>>> dev-elephant
   },
 };
 </script>
