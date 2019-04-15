@@ -72,20 +72,27 @@
             </select>
             </div>
             </div>
-            <div class="form-row mt-2">
             <div class="col">
-                <input name="minPrice" type="number" placeholder="Min Price per Hour" v-model="minPrice" class="form-control">
+                <select name="hourlyRate" type="number" placeholder="Any Hourly Rate" v-model="hourlyRate" class="form-control">
+                    <option value=999>Any Hourly Rate</option>
+                    <option value=20>$20 per Hour or Less</option>
+                    <option value=40>$40 per Hour or Less</option>
+                    <option value=100>$100 per Hour or Less</option>
+                    <option value=50>$50 per Hour or More</option>
+                </select>
             </div>
             <div class="col">
-                <input name="maxPrice" type="number" placeholder="Max Price per Hour" v-model="maxPrice" class="form-control">
-            </div>
-            <div class="col">
-                <input name="rating" type="number" placeholder="Rating" v-model="rating" class="form-control">
+                <select name="rating" type="number" placeholder="Any Rating" v-model="rating" class="form-control">
+                    <option value=0>Any Rating</option>
+                    <option value=2>2 Stars or Higher</option>
+                    <option value=3>3 Stars or Higher</option>
+                    <option value=4>4 or 5 Stars</option>
+                    <option value=5>5 Stars!!</option>
+                </select>
             </div>
                 <div class="col">
                 <input name="submit" value="Search" type="submit" class="btn btn-info">
                 </div>
-            </div>
          
       </form>
         <table class="table table-striped mt-4">
@@ -126,9 +133,8 @@ export default {
             name: '',
             city: '',
             state: '',
-            minPrice: '',
-            maxPrice: '',
-            rating: '',
+            hourlyRate: 999,
+            rating: 0,
             sortBy: '',
             trainers: [],
             filteredTrainers: [],
@@ -142,8 +148,8 @@ export default {
                     && trainer.city.includes(this.city)
                     && trainer.state.includes(this.state)
                     && trainer.rating >= this.rating
-                    && trainer.hourlyRate >= this.minPrice
-                    && trainer.hourlyRate <= this.maxPrice;
+                    && ((this.hourlyRate == 50 && trainer.hourlyRate >= this.hourlyRate)
+                    || (this.hourlyRate != 50 && trainer.hourlyRate <= this.hourlyRate));
                 })
         },
 
