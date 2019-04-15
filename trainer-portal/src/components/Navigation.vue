@@ -31,8 +31,8 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="navbar-nav ml-auto">
-        <router-link tag="li" class="nav-item" @click="logout" active-class="active" exact>
-          <a class="nav-link" href="#"><!-- {{auth.getToken === null ? 'login' : 'logout'}} --></a>
+        <router-link v-if="this.isLoggedIn" tag="li" class="nav-item" @click="logout" active-class="active" exact>
+          <a class="nav-link" href="#">Logout</a>
         </router-link>
       </ul>
        <ul class="navbar-nav mr-auto" >
@@ -50,7 +50,9 @@ import auth from '../auth';
 export default {
   name: 'Navigation',
   data() {
-    isLoggedIn: auth.getToken() != null;
+    return {
+    isLoggedIn: auth.getToken() != null
+    }
   },
   methods: {
     logout() {
