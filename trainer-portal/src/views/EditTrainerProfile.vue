@@ -31,8 +31,8 @@
             <div class="form-input">
                <span id="label">Certifications</span>
                 <div v-for="(certification, index) in trainer.certifications" :key="index">
-                    {{ certification}}
-                    <input v-model="certification.value">
+                   
+                    <input v-bind:value="certification">
                 </div>
                 <div>   
                   <button @click="addCertification">
@@ -68,7 +68,7 @@ export default {
     },
     data(){
         return{
-           
+            certification: '',
             title:"editTrainerProfile",
             TrainerID: this.$route.params.TrainerID,
             trainer: '',      
@@ -92,7 +92,7 @@ export default {
     },
     methods: {
         updateProfile() {
-            fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/updateprofile/${this.TrainerID}`,{
+            fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/${this.TrainerID}`,{
             method: 'PUT',
             headers: new Headers ({
             Authorization: 'Bearer ' + auth.getToken(),
@@ -108,7 +108,7 @@ export default {
             .catch((err) => console.error(err));
         },
         addCertification: function () {
-            this.trainer.certifications.push( { value: ''});
+            this.trainer.certifications.push("");
         }
     }
 }
