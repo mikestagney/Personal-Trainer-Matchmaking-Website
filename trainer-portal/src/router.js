@@ -9,6 +9,7 @@ import TrainerProfile from '@/views/TrainerProfile';
 import MessageDetail from '@/views/MessageDetail';
 import WriteMessage from '@/views/WriteMessage';
 import ClientProfile from '@/views/ClientProfile';
+import ClientList from '@/views/ClientList';
 
 
 Vue.use(Router);
@@ -57,8 +58,11 @@ const router = new Router({
         name: 'trainer',
         component: WriteMessage
       },
-
-      
+      {
+        path: '/clientList',
+        name: 'listClients',
+        component: ClientList
+      },
     ],
   });
   

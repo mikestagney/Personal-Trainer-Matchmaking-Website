@@ -14,7 +14,7 @@ public class ClientList {
 	//@NotBlank(message="Trainer Profile is required")
 	//private Trainer trainer = new Trainer();
 	
-	private List<User> clientList = new ArrayList<User>();
+	private List<User> listOfClients = new ArrayList<User>();
 	private Map<User,String[]> privateNotes = new HashMap<User,String[]>();
 
 
@@ -22,15 +22,15 @@ public class ClientList {
 	/**
 	 * @return List<User> for all Users in Trainer's Client List
 	 */
-	public List<User> getClientList() {
-		return clientList;
+	public List<User> getListOfClients() {
+		return listOfClients;
 	}
 
 	/**
 	 * @param List<User> for all Users in Trainer's Client List to be set to
 	 */
-	public void setClientList(List<User> clientList) {
-		this.clientList = clientList;
+	public void setListOfClients(List<User> listOfClients) {
+		this.listOfClients = listOfClients;
 	}
 	
 	public Map<User, String[]> getPrivateNotes() {

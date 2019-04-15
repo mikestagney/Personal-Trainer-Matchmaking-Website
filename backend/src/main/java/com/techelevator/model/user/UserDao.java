@@ -64,6 +64,8 @@ public interface UserDao {
 	 * @return ClientList for Clients in the Trainer's Client List that match the search criteria
 	 */
 	public ClientList searchClientList(long id, String name, String userName);
+	
+	public List<User> getClientList(long user_id);
 			
 	public void addClientToClientList(long trainer_id, long client_id);
 	

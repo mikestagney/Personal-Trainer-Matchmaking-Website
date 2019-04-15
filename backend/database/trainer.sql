@@ -192,4 +192,10 @@ INSERT INTO client (user_id)
 SELECT user_id FROM users
 WHERE user_id > 5;
 
+-- client list
+INSERT INTO client_list (trainer_id, client_id) VALUES
+ (1,6)
+,(1,7);
+
 COMMIT TRANSACTION;
+
