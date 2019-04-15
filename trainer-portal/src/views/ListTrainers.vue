@@ -6,16 +6,16 @@
                 <h2 id="test">Available Trainers</h2>
                 </div>
             </div>
-      <form method="GET" class="form-inline" v-on:submit.prevent="filterTrainers">
+      <form method="GET" class="form-inline" v-on:submit.prevent="updateTrainersList">
           <div class="form-row">
               <div class="col">
-                <input name="name" type="text" placeholder="Name" v-model="nameSearch" class="form-control">
+                <input name="name" type="text" placeholder="Name" v-model="name" class="form-control">
             </div>
             <div class="col">
-                <input name="city" type="text" placeholder="City"  v-model="citySearch" class="form-control">
+                <input name="city" type="text" placeholder="City"  v-model="city" class="form-control">
             </div>
             <div class="col">
-            <Select name="state" type="text" placeholder="State" v-model="stateSearch" class="form-control">
+            <select name="state" type="text" placeholder="State" v-model="state" class="form-control">
                 <option value="">State</option>
                 <option value="AK">Alaska</option>
                 <option value="AL">Alabama</option>
@@ -123,19 +123,20 @@ export default {
     },
     data() {
         return {
+            name: '',
+            city: '',
+            state: '',
             minPrice: '',
             maxPrice: '',
             ratingSearch: '',
             sortBy: '',
-            price: '',
             trainers: [],
-            filters: { name: ["nameSearch"], city: ["citySearch"], state: ["stateSearch"],}
         };
     },
     computed: {
-        filterTrainers() {
+        filterTrainers(filters) {
             return this.trainers.filter(function(trainer) {
-                return trainer.name.indexOf(this.nameSearch) >= 0
+                return trainer.name.indexOf(filters.nameSearch) >= 0
                 && trainer.state.indexOf(this.stateSearch) >= 0
                 && trainer.city.indexOf(this.citySearch) >= 0;
             })
@@ -147,6 +148,13 @@ export default {
         } */
     },
     methods: {
+        updateTrainersList() {
+            this.trainers = this.trainers.filter(function(trainer) {
+                return trainer.name.indexOf(this.name) >= 0
+                && trainer.state.indexOf(this.state) >= 0
+                && trainer.city.indexOf(this.city) >= 0;
+            })
+        },
         filteredTrainers(trainers, filters) {
             const filterKeys = Object.keys(filters);
             return this.trainers.filter((trainer) => {
