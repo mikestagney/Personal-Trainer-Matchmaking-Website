@@ -6,7 +6,7 @@
                 <h2 id="test">Available Trainers</h2>
                 </div>
             </div>
-      <form method="GET" class="form-inline" v-on:submit.prevent="filteredTrainers">
+      <form method="GET" class="form-inline" v-on:submit.prevent="filterTrainers">
           <div class="form-row">
               <div class="col">
                 <input name="name" type="text" placeholder="Name" v-model="nameSearch" class="form-control">
@@ -123,22 +123,19 @@ export default {
     },
     data() {
         return {
-            nameSearch: '',
-            citySearch: '',
-            stateSearch: '',
             minPrice: '',
             maxPrice: '',
             ratingSearch: '',
             sortBy: '',
             price: '',
             trainers: [],
-            filters: { first_name: ["nameSearch"], city: ["citySearch"], state: ["stateSearch"],}
+            filters: { name: ["nameSearch"], city: ["citySearch"], state: ["stateSearch"],}
         };
     },
     computed: {
         filterTrainers() {
             return this.trainers.filter(function(trainer) {
-                return trainer.first_name.indexOf(this.nameSearch) >= 0
+                return trainer.name.indexOf(this.nameSearch) >= 0
                 && trainer.state.indexOf(this.stateSearch) >= 0
                 && trainer.city.indexOf(this.citySearch) >= 0;
             })
