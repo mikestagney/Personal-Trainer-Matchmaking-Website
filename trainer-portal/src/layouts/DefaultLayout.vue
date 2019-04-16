@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <navigation></navigation>
+    <navigation v-on:login-updated='handleLogin'></navigation>
     <div class="page-view">
       <slot />
     </div>
@@ -15,6 +15,12 @@ export default {
   components: {
     Navigation,
   },
+  methods: {
+    handleLogin() {
+      console.log("DefaultLayout handleLogin()");
+      alert("DefaultLayout handleLogin()");
+    },
+  }
 };
 </script>
 

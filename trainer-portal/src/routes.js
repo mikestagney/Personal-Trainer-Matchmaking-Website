@@ -1,21 +1,36 @@
-import Home     from '@/views/Home';
 
-import Register from './components/Register.vue';
-import Login    from './components/Login.vue';
-import Student  from './components/Student.vue';
-import Redirect from './components/Redirect.vue';
-import Error    from './components/404.vue';
+import Home           from '@/views/Home';
+import Login          from '@/views/Login';
+      
+import TrainerProfile from '@/views/trainer/Profile';      
+      
+import Register       from './components/Register.vue';
+      
+import Student        from './components/Student.vue';
+import Redirect       from './components/Redirect.vue';
+import Error          from './components/404.vue';
+
+
 
 const routes = [
-    { name: 'home'     , path: '/'           , component: Home      },
-    { name: 'register' , path: '/register'   , component: Register  },
-    { name: 'login'    , path: '/login'      , component: Login     },
-    { name: 'student'  , path: '/student/:id', component: Student   },
-    { name: 'redirect' , path: '/redirect'   , component: Redirect  },
-    { name: '404'      , path: '/404'        , component: Error     },
+    { name: 'home'            , path: '/', alias: 'default'          , component: Home      },
+    { name: 'login'           , path: '/login'                       , component: Login     },
+    { name: 'trainer profile' , path: '/trainer/profile/:TrainerID'  , component: TrainerProfile },
+
+    { name: 'register'        , path: '/register'                    , component: Register  },
+                        
+    { name: 'student'         , path: '/student/:id'                 , component: Student   },
+    { name: 'redirect'        , path: '/redirect'                    , component: Redirect  },
+    { name: '404'             , path: '/404'                         , component: Error     },
 ];
+/*
+    {
+      path: ,
+      name: 'trainerProfile',
+      component: TrainerProfile
+    },
 
-const routes = [
+const aaa = [
     {
       path: '/login',
       name: 'login',
@@ -41,11 +56,6 @@ const routes = [
       name: 'clientProfile',
       component: ClientProfile
     }, 
-    {
-      path: '/trainer/profile/:TrainerID',
-      name: 'trainerProfile',
-      component: TrainerProfile
-    },
     {
       path: '/trainer/privatemessage/:MesssageID',
       name: 'trainerPM',
@@ -77,7 +87,7 @@ const routes = [
       component: TrainerList
     },
 ];
-
+*/
 
 
 export default routes;

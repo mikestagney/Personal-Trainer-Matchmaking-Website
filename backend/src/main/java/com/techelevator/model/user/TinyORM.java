@@ -64,7 +64,7 @@ public final class TinyORM<T> {
     		// pojoField.set( pojo, new ArrayList<T>(data) );
     		 * 
     		 */
-    		pojoField.set( pojo, row.getObject(rowLabel, java.sql.Array.class));    
+    		//pojoField.set( pojo, row.getObject(rowLabel, java.sql.Array.class));    
     	} else {
         	pojoField.set( pojo, pojoField.getType().cast(row.getObject(rowLabel)) );    		
     	}

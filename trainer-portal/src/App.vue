@@ -1,14 +1,22 @@
-// App.vue
-
 <template>
   <div id="app">
-    <router-view />
+    <router-view 
+      v-on:login-updated='handleLogin'
+    />
   </div>
 </template>
 
-
 <script>
 export default {
+  components: {
+  },
+  methods: {
+    handleLogin() {
+      console.log("app handleLogin()");
+      alert("app handleLogin()");
+    },
+  }
+
 }
 </script>
 

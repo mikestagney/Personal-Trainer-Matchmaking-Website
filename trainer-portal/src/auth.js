@@ -2,7 +2,14 @@ export default {
     /**
      * Returns the authentication token from local storage.
      */
-    getToken: function() {
+    methods: function() {
+      try {
+        return localStorage.getItem('Authorization');
+      } catch {
+        return null;
+      }
+    },
+    getToken() {
       try {
         return localStorage.getItem('Authorization');
       } catch {
@@ -27,8 +34,13 @@ export default {
      * @function
      */
     getUser() {
-      const token = localStorage.getItem('Authorization');
+      let token = null;
       let user = null;
+      try {
+        token = localStorage.getItem('Authorization');
+      } catch {
+        return user;
+      }
   
       // If a token exists then decode it
       if (token) {
@@ -44,7 +56,6 @@ export default {
           user = parsedToken;
         }
       }
-  
       return user;
     },
     logout() {

@@ -19,38 +19,56 @@
         <router-link to="/search" tag="li" class="nav-item" active-class="active" exact>
           <a class="nav-link">Search Trainers</a>
         </router-link>
-        <router-link to="/save"  tag="li" class="nav-item" active-class="active">
+        <router-link to="/" tag="li" class="nav-item" active-class="active" v-on:click.native="userLoginLogout()">
+           <a class="nav-link">{{ (isLoggedIn)? 'Logout': 'Login' }}</a>
         </router-link>
       </ul>
     </div>
     <div class="navbar-collapse collapse">
       <ul class="navbar-nav mr-auto">
-        <router-link to="/login" v-if="!isLoggedIn()" tag="li" class="nav-item" active-class="active" exact>
-          <li><a class="nav-link">Login</a></li>
-        </router-link>
-        <router-link to="home" v-if="isLoggedIn()" tag="li" class="nav-item" active-class="active" @click.prevent="doLogout()" exact>
-          <li><a class="nav-link">Logout</a></li>
-        </router-link>
       </ul>
     </div>
   </nav>
 </template>
 
 <script>
-import auth from '../auth';
+import auth from '@/auth';
+
 
 export default {
   name: 'Navigation',
-  methods: {
-    doLogout() {
-      console.log('doLogout()');
-      auth.logout();
-      this.$router.go('home');
-    },
-    isLoggedIn() {
-      console.log('isLoggedIn()');
-      return auth.getToken() != null;
+  data () {
+    return {
+      isLoggedIn: auth.getUser() != null
     }
+  },
+  /*
+  computed: {
+    isLoggedIn: function () {
+      console.log('isLoggedIn(auth.getUser() != null): ' + (auth.getUser() != null).toString());
+      return auth.getUser() != null;
+    }
+  },
+  created () {
+    this.$bus.$on('logged', () => {
+      this.isLogged = this.isLoggedIn()
+    })
+  },
+  */  
+  methods: {
+    userLoginLogout() {
+      console.log('userLoginLogout(this.isLoggedIn): ' + this.isLoggedIn);
+      if( this.isLoggedIn ) {
+        auth.logout();
+        console.log('after logout: ' + this.isLoggedIn);
+        console.log('isLoggedIn(auth.getUser() != null): ' + (auth.getUser() != null).toString());
+        this.isLoggedIn = false;
+        this.$router.push({ name: 'home'});
+      } else {
+        console.log('push login');
+        this.$router.push({ name: 'login'});
+      }
+    },
   }, 
 };
 </script>

@@ -6,7 +6,7 @@
                     <h1 class="display-4">Welcome to Trainer Portal</h1>
                     <h3>A Client - Trainer Matcher</h3>
                      <hr class="my-4">
-                    <h2 class="lead">Find a personal trainer and create a customized fitness plan that will "work out" for YOU!</h2>
+                    <h2 class="lead">Find a personal trainer and create a customized fitness plan that will &ldquo;work out&rdquo; for YOU!</h2>
                 </div>
                 </div>
         </div>
