@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface WorkoutDao {
 	
-	public WorkoutPlans getWorkOutPlan(long workoutId);
+	public WorkoutPlan getWorkOutPlan(long workoutId);
 	
-	public WorkoutPlans getWorkOutPlanForId(long userId);
+	public WorkoutPlan getWorkOutPlanForId(long userId);
 	
-	public List<WorkoutPlans> getWorkOutPlansForIds(long trainerId, long clientId);
+	public List<WorkoutPlan> getWorkOutPlansForIds(long trainerId, long clientId);
 }

@@ -5,8 +5,11 @@ import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
+
 import com.techelevator.model.user.TinyORM;
 
+@Component
 public class JdbcWorkoutDao implements WorkoutDao{
 	
 	private JdbcTemplate jdbcTemplate;
@@ -17,21 +20,21 @@ public class JdbcWorkoutDao implements WorkoutDao{
     }
 
 	@Override
-	public WorkoutPlans getWorkOutPlan(long workoutId) {
+	public WorkoutPlan getWorkOutPlan(long workoutId) {
 		String sql = "SELECT workout_plan_id, client_id, trainer_id, days_of_week, title, body FROM workout_plan WHERE workout_plan_id = ?";
-        return new TinyORM<WorkoutPlans>(WorkoutPlans.class).readOne(jdbcTemplate.queryForRowSet(sql, workoutId));
+        return new TinyORM<WorkoutPlan>(WorkoutPlan.class).readOne(jdbcTemplate.queryForRowSet(sql, workoutId));
 	}
 
 	@Override
-	public WorkoutPlans getWorkOutPlanForId(long userId) {
+	public WorkoutPlan getWorkOutPlanForId(long userId) {
 		String sql = "SELECT workout_plan_id, client_id, trainer_id, days_of_week, title, body FROM workout_plan WHERE client_id = ? OR trainer_id=?";
-        return new TinyORM<WorkoutPlans>(WorkoutPlans.class).readOne(jdbcTemplate.queryForRowSet(sql, userId, userId));
+        return new TinyORM<WorkoutPlan>(WorkoutPlan.class).readOne(jdbcTemplate.queryForRowSet(sql, userId, userId));
 	}
 	
 	@Override
-	public List<WorkoutPlans> getWorkOutPlansForIds(long trainerId, long clientId) {
+	public List<WorkoutPlan> getWorkOutPlansForIds(long trainerId, long clientId) {
 		String sql = "SELECT workout_plan_id, client_id, trainer_id, days_of_week, title, body FROM workout_plan WHERE (client_id = ? OR trainer_id=?) AND (client_id = ? OR trainer_id=?)";
-        return new TinyORM<WorkoutPlans>(WorkoutPlans.class).readAll(jdbcTemplate.queryForRowSet(sql, trainerId, trainerId, clientId, clientId));
+        return new TinyORM<WorkoutPlan>(WorkoutPlan.class).readAll(jdbcTemplate.queryForRowSet(sql, trainerId, trainerId, clientId, clientId));
 	}
 	
 	
