@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import com.techelevator.model.user.TinyORM;
+import com.techelevator.model.user.WorkoutPlan;
 
 @Component
 public class JdbcWorkoutDao implements WorkoutDao{

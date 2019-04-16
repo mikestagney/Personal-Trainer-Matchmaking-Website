@@ -18,8 +18,8 @@ import com.techelevator.authentication.UnauthorizedException;
 import com.techelevator.model.privatemessage.Message;
 import com.techelevator.model.privatemessage.MessageDao;
 import com.techelevator.model.user.UserDao;
+import com.techelevator.model.user.WorkoutPlan;
 import com.techelevator.model.workout.WorkoutDao;
-import com.techelevator.model.workout.WorkoutPlan;
 import com.techelevator.model.user.Trainer;
 import com.techelevator.model.user.User;
 
