@@ -9,8 +9,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.sql.Array;
+import java.util.stream.Collectors;
 
+import javax.sql.rowset.serial.SerialArray;
 import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -55,16 +56,16 @@ public final class TinyORM<T> {
     		throws IllegalArgumentException, IllegalAccessException, SerialException 
     {
     	if( ArrayList.class == pojoField.getType() ) {
-    		//TODO<<< make SQL arrays work
-    		/*
-    		Array a = row..getArray(rowLabel);
-    		String[] nullable = (String[])a.getArray();
-    		
-    		System.out.println( new Array (data) );
-    		// pojoField.set( pojo, new ArrayList<T>(data) );
-    		 * 
-    		 */
-    		//pojoField.set( pojo, row.getObject(rowLabel, java.sql.Array.class));    
+			
+			try {
+				SerialArray serialArray = (SerialArray) row.getObject(rowLabel);
+				Object[] object = ((Object[]) serialArray.getArray());
+				List<Object> stringList = Arrays.stream(object).map(Object::toString).collect(Collectors.toList());
+				pojoField.set( pojo, stringList );
+			}
+			catch (Exception e) {
+				System.err.println(e);
+			}
     	} else {
         	pojoField.set( pojo, pojoField.getType().cast(row.getObject(rowLabel)) );    		
     	}

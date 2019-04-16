@@ -1,6 +1,9 @@
 package com.techelevator.model.user;
 
 import java.util.LinkedList;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +12,7 @@ import javax.sql.DataSource;
 import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 import com.techelevator.authentication.PasswordHasher;
@@ -20,6 +24,7 @@ import com.techelevator.model.user.ClientList;
 @Component
 public class JdbcUserDao implements UserDao {
 	
+	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
     private PasswordHasher passwordHasher;
 
@@ -32,6 +37,7 @@ public class JdbcUserDao implements UserDao {
      */
     @Autowired
     public JdbcUserDao(DataSource dataSource, PasswordHasher passwordHasher) {
+    	this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.passwordHasher = passwordHasher;
     }
@@ -168,19 +174,36 @@ public class JdbcUserDao implements UserDao {
 	}
 	@Override
 	public void putTrainerByID(long trainerID, Trainer trainer) {
+		final String ARRAY_DATATYPE = "varchar";
+		final String SQL_UPDATE = "UPDATE trainer SET certifications=? WHERE user_id = ?";
+		try {
+			Connection con = this.dataSource.getConnection();
+			jdbcTemplate.update(new PreparedStatementCreator() {
+				
+			    @Override
+			    public PreparedStatement createPreparedStatement(final Connection con) throws SQLException {
+			    	
+			        final PreparedStatement ret = con.prepareStatement(SQL_UPDATE);
+			        ret.setArray(1, con.createArrayOf(ARRAY_DATATYPE, (trainer.certifications).toArray()));
+			        ret.setLong(2, trainerID);
+			        return ret;
+			    }
+			});
+		} catch(Exception e) {};
+		
 		String sql = "UPDATE trainer SET" +
-                     "username=?,"        +
-                     "is_public=?,"       +
-                     "first_name=?,"      +
-                     "last_name=?,"       +
-                     "city=?,"            +
-                     "state=?,"           +
-                     "hourly_rate=?,"     +
-                     "rating=?,"          +
-                     "philosophy=?,"      +
-                     "biography=?,"       +
-                     "certifications=? "  +
-                     "FROM users JOIN trainer USING(user_id) WHERE user_id = ?";
+                "username=?,"        +
+                "is_public=?,"       +
+                "first_name=?,"      +
+                "last_name=?,"       +
+                "city=?,"            +
+                "state=?,"           +
+                "hourly_rate=?,"     +
+                "rating=?,"          +
+                "philosophy=?,"      +
+                "biography=?"       +
+                "FROM users JOIN trainer USING(user_id) WHERE user_id = ?";
+
 
     	jdbcTemplate.update(sql,
     			trainer.getUsername(), 
@@ -193,8 +216,8 @@ public class JdbcUserDao implements UserDao {
     			trainer.getRating(), 
     			trainer.getPhilosophy(), 
     			trainer.getBiography(), 
-    			trainer.getCertifications(),
-    			trainerID); 
+    			trainerID);
+    	
 	}
 
 	
