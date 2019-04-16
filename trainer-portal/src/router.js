@@ -83,11 +83,6 @@ const router = new Router({
         component: EditTrainerProfile
       },
       {
-        path: '/workout/:UserID',
-        name: 'listWorkoutPlans',
-        component: WorkoutPlan
-      },
-      {
         path: '/workoutPlans/:UserID',
         name: 'listWorkoutPlans',
         component: WorkoutPlans

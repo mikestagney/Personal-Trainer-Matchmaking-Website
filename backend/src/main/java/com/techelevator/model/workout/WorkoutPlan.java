@@ -9,7 +9,7 @@ public class WorkoutPlan {
 	
 	@Min(1)
 	@NotBlank(message="Work Out Id is required")
-	private long workOutId;
+	private long workoutId;
 	@Min(1)
 	@NotBlank(message="Trainer Id is required")
 	private long trainerId;
@@ -25,12 +25,12 @@ public class WorkoutPlan {
 	private String message;
 	private String daysOfWeek;
 	
-	public long getWorkOutId() {
-		return workOutId;
+	public long getWorkoutId() {
+		return workoutId;
 	}
 
-	public void setWorkOutId(long workOutId) {
-		this.workOutId = workOutId;
+	public void setWork0utId(long workoutId) {
+		this.workoutId = workoutId;
 	}
 
 	public long getTrainerId() {
