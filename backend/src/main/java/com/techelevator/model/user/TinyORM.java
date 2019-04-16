@@ -1,5 +1,8 @@
 package com.techelevator.model.user;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.beans.Statement;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Field;
@@ -12,8 +15,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.sql.rowset.serial.SerialArray;
-import javax.sql.rowset.serial.SerialException;
 
+import org.springframework.jdbc.InvalidResultSetAccessException;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 // annotated variable is mapped to a RecordSet field
@@ -53,8 +56,9 @@ public final class TinyORM<T> {
     }
     
     private void setFieldOf(T pojo, Field pojoField, SqlRowSet row, String rowLabel) 
-    		throws IllegalArgumentException, IllegalAccessException, SerialException 
+    		throws InvalidResultSetAccessException, IllegalArgumentException, IllegalAccessException 
     {
+    		
     	if( ArrayList.class == pojoField.getType() ) {
 			
 			try {
@@ -67,8 +71,8 @@ public final class TinyORM<T> {
 				System.err.println(e);
 			}
     	} else {
-        	pojoField.set( pojo, pojoField.getType().cast(row.getObject(rowLabel)) );    		
-    	}
+    		pojoField.set( pojo, pojoField.getType().cast(row.getObject(rowLabel)) );
+		}
     }
     
     public List<T> readAll(SqlRowSet row) {
@@ -98,7 +102,6 @@ public final class TinyORM<T> {
                     final String dbFieldLabel = entity.getKey();
                     final Field  pojoField    = entity.getValue();
                     setFieldOf(pojo, pojoField, row, dbFieldLabel);
-                    // setFieldOf(pojo, pojoField, row.getObject(dbFieldLabel));
                 }
                 return pojo;
         	} 

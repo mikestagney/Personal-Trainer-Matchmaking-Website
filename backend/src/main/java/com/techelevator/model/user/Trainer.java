@@ -1,9 +1,17 @@
 package com.techelevator.model.user;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Trainer {
 	@MapToDB("user_id")
@@ -45,8 +53,12 @@ public class Trainer {
 	@MapToDB
 	private String biography;
 
-	@MapToDB
-	ArrayList<String> certifications = new ArrayList<String>();
+	@MapToDB("certifications_pickle")
+	private String certificationsPickle;
+	
+	private ArrayList<String> certifications = new ArrayList<String>();
+	
+	private ObjectMapper jsonMapper = new ObjectMapper();
 
 	public int getTrainerID() {
 		return trainerID;
@@ -144,16 +156,6 @@ public class Trainer {
 		this.isPublic = isPublic;
 	}
 
-	/*
-	public String[] getCertifications() {
-		return certifications;
-	}
-
-	public void setCertifications(String[] certifications) {
-		this.certifications = certifications;
-	}
-	*/
-
 	public void setTrainerID(Integer trainerID) {
 		this.trainerID = trainerID;
 	}
@@ -173,8 +175,28 @@ public class Trainer {
 
 	public void setCertifications(ArrayList<String> certifications) {
 		this.certifications = certifications;
+		
+	    final ByteArrayOutputStream out = new ByteArrayOutputStream();
+	    try {
+			jsonMapper.writeValue(out, certifications);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	    this.certificationsPickle = out.toString();
 	}
-	
+
+	public String getCertificationsPickle() {
+		return certificationsPickle;
+	}
+
+	public void setCertificationsPickle(String certificationsPickle) {
+		this.certificationsPickle = certificationsPickle;
+		try {
+			this.certifications = jsonMapper.readValue(certificationsPickle, new TypeReference<List<String>>(){});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
 
 

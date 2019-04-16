@@ -1,8 +1,11 @@
 package com.techelevator.controller;
 
 import java.util.List;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,14 +15,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.techelevator.authentication.AuthProvider;
 import com.techelevator.authentication.RegistrationResult;
 import com.techelevator.authentication.UnauthorizedException;
 import com.techelevator.model.privatemessage.Message;
 import com.techelevator.model.privatemessage.MessageDao;
-import com.techelevator.model.user.UserDao;
 import com.techelevator.model.user.Trainer;
 import com.techelevator.model.user.User;
+import com.techelevator.model.user.UserDao;
 
 
 //TODO BM -- split this into TrainerController, ClientController, AccountController
@@ -44,12 +48,13 @@ public class PersonalTrainerMatchController {
 		return userDao.getTrainerByID(trainerId);
 	}
     
-    @PutMapping("/trainer/profile/{trainerId}")
+    //@PutMapping("/trainer/profile/{trainerId}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void updateTrainerProfilePage(
 			@PathVariable long trainerId,
 			@Valid @RequestBody Trainer trainer, BindingResult result
 			) throws UnauthorizedException 
     {
+    	System.out.println("updateTrainerProfilePage");
 		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
             throw new UnauthorizedException();
         }

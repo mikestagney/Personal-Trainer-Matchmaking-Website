@@ -1,18 +1,24 @@
 package com.techelevator.model.user;
 
-import java.util.LinkedList;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
+
 import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techelevator.authentication.PasswordHasher;
-import com.techelevator.model.user.ClientList;
 
 /**
  * 
@@ -157,31 +163,41 @@ public class JdbcUserDao implements UserDao {
 	public List<Trainer> getTrainers() {
     	String sql = "SELECT user_id, username, is_public, first_name, last_name, city, state, hourly_rate, rating, philosophy, biography, certifications " + 
                      "FROM users JOIN trainer USING(user_id) ORDER BY rating DESC, hourly_rate, last_name, first_name";
-    	return new TinyORM<Trainer>(Trainer.class).readAll(jdbcTemplate.queryForRowSet(sql));
+    	List<Trainer> results = new TinyORM<Trainer>(Trainer.class).readAll(jdbcTemplate.queryForRowSet(sql));
+    	
+    	for( Trainer r: results ) {
+    		r.setCertificationsPickle(r.getCertificationsPickle());
+    	}
+    	return results;
 	}
 	
 	@Override
 	public Trainer getTrainerByID(long trainerID) {
-    	String sql = "SELECT user_id, username, is_public, first_name, last_name, city, state, hourly_rate, rating, philosophy, biography, certifications " + 
+    	String sql = "SELECT user_id, username, is_public, first_name, last_name, city, state, hourly_rate, rating, philosophy, biography, certifications_pickle " + 
     			     "FROM users JOIN trainer USING(user_id) WHERE user_id = ?";
-    	return new TinyORM<Trainer>(Trainer.class).readOne(jdbcTemplate.queryForRowSet(sql, trainerID));
+    	Trainer result = new TinyORM<Trainer>(Trainer.class).readOne(jdbcTemplate.queryForRowSet(sql, trainerID));
+    	result.setCertificationsPickle(result.getCertificationsPickle());
+    	return result;
 	}
+
 	@Override
 	public void putTrainerByID(long trainerID, Trainer trainer) {
-		String sql = "UPDATE trainer SET" +
-                     "username=?,"        +
-                     "is_public=?,"       +
-                     "first_name=?,"      +
-                     "last_name=?,"       +
-                     "city=?,"            +
-                     "state=?,"           +
-                     "hourly_rate=?,"     +
-                     "rating=?,"          +
-                     "philosophy=?,"      +
-                     "biography=?,"       +
-                     "certifications=? "  +
+		String sql = "UPDATE trainer SET"        +
+                     "username=?,"               +
+                     "is_public=?,"              +
+                     "first_name=?,"             +
+                     "last_name=?,"              +
+                     "city=?,"                   +
+                     "state=?,"                  +
+                     "hourly_rate=?,"            +
+                     "rating=?,"                 +
+                     "philosophy=?,"             +
+                     "biography=?,"              +
+                     "certifications_pickle=? "  +
                      "FROM users JOIN trainer USING(user_id) WHERE user_id = ?";
 
+		
+		
     	jdbcTemplate.update(sql,
     			trainer.getUsername(), 
     			trainer.isPublic(), 
@@ -193,7 +209,7 @@ public class JdbcUserDao implements UserDao {
     			trainer.getRating(), 
     			trainer.getPhilosophy(), 
     			trainer.getBiography(), 
-    			trainer.getCertifications(),
+    			trainer.getCertificationsPickle(),
     			trainerID); 
 	}
 
