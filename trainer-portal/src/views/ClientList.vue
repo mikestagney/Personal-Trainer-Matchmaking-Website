@@ -1,7 +1,7 @@
 <template>
 <default-layout>
     <div class="trainer-list container">
-            <div class="row listHeader text-light mb-3 p-5 shadow">
+            <div class="row listHeader3 text-light mb-3 p-5 shadow">
                 <div class="col">
                 <h2 id="test">Client List</h2>
                 </div>
@@ -81,7 +81,7 @@ export default {
 
 <style>
 
-.listHeader {
+.listHeader3 {
     background-image: url("../assets/FitnessImages/fitnessImage7.jpg");
     background-size: cover;
     background-position: center;

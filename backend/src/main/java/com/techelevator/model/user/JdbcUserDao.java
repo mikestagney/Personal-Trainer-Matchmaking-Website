@@ -173,7 +173,7 @@ public class JdbcUserDao implements UserDao {
 	
 	@Override
 	public Trainer getTrainerByID(long trainerID) {
-    	String sql = "SELECT user_id, username, is_public, first_name, last_name, city, state, hourly_rate, rating, philosophy, biography, certifications_pickle " + 
+    	String sql = "SELECT user_id, username, is_public, first_name, last_name, address, city, state, zip, hourly_rate, rating, philosophy, biography, certifications_pickle " + 
     			     "FROM users JOIN trainer USING(user_id) WHERE user_id = ?";
     	Trainer result = new TinyORM<Trainer>(Trainer.class).readOne(jdbcTemplate.queryForRowSet(sql, trainerID));
     	result.setCertificationsPickle(result.getCertificationsPickle());
@@ -182,34 +182,41 @@ public class JdbcUserDao implements UserDao {
 
 	@Override
 	public void putTrainerByID(long trainerID, Trainer trainer) {
-		String sql = "UPDATE trainer SET"        +
-                     "username=?,"               +
+		String sql = "UPDATE trainer SET "       +
                      "is_public=?,"              +
-                     "first_name=?,"             +
-                     "last_name=?,"              +
-                     "city=?,"                   +
-                     "state=?,"                  +
                      "hourly_rate=?,"            +
                      "rating=?,"                 +
                      "philosophy=?,"             +
                      "biography=?,"              +
                      "certifications_pickle=? "  +
-                     "FROM users JOIN trainer USING(user_id) WHERE user_id = ?";
-
-		
-		
+                     "WHERE user_id = ?";
+		jdbcTemplate.update(sql,
+					 trainer.isPublic(), 
+					 trainer.getHourlyRate(), 
+					 trainer.getRating(), 
+					 trainer.getPhilosophy(), 
+					 trainer.getBiography(), 
+					 trainer.getCertificationsPickle(),
+					 trainerID); 
+	 
+		sql = "UPDATE user SET "   +
+			  "username=?,"        +  
+			  "first_name=?,"      +
+			  "last_name=?,"       +
+			  "address=?,"         +
+			  "city=?,"            +
+			  "state=?,"           +
+			  "zip=?"              +
+			  "WHERE user_id = ?";
+		  	
     	jdbcTemplate.update(sql,
     			trainer.getUsername(), 
-    			trainer.isPublic(), 
     			trainer.getFirstName(), 
-    			trainer.getLastName(), 
+				trainer.getLastName(), 
+				trainer.getAddress(),
     			trainer.getCity(), 
     			trainer.getState(), 
-    			trainer.getHourlyRate(), 
-    			trainer.getRating(), 
-    			trainer.getPhilosophy(), 
-    			trainer.getBiography(), 
-    			trainer.getCertificationsPickle(),
+    			trainer.getZip(), 
     			trainerID); 
 	}
 

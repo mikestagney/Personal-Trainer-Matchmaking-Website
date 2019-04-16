@@ -64,10 +64,9 @@ public class Trainer {
 		return trainerID;
 	}
 
-	public void setTrainerID(int trainerID) {
-		this.trainerID = trainerID;
+	public Integer  getHourlyRate() {
+		return this.hourlyRate;
 	}
-
 	public String getUsername() {
 		return username;
 	}
@@ -116,20 +115,8 @@ public class Trainer {
 		this.isPublic = isPublic;
 	}
 
-	public int getHourlyRate() {
-		return hourlyRate;
-	}
-
-	public void setHourlyRate(int hourlyRate) {
-		this.hourlyRate = hourlyRate;
-	}
-
 	public int getRating() {
 		return rating;
-	}
-
-	public void setRating(int rating) {
-		this.rating = rating;
 	}
 
 	public String getPhilosophy() {

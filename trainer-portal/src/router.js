@@ -13,6 +13,8 @@ import ClientList from '@/views/ClientList';
 import AddTrainer from '@/views/AddTrainer';
 import TrainerList from '@/views/TrainerList';
 import EditTrainerProfile from '@/views/EditTrainerProfile';
+import WorkoutPlan from '@/views/WorkoutPlan';
+import WorkoutPlans from '@/views/WorkoutPlans';
 
 Vue.use(Router);
 
@@ -79,6 +81,16 @@ const router = new Router({
         path: '/trainer/profile/:TrainerID/edit',
         name: 'editTrainerProfile',
         component: EditTrainerProfile
+      },
+      {
+        path: '/workoutPlans/:UserID',
+        name: 'listWorkoutPlans',
+        component: WorkoutPlans
+      },
+      {
+        path: '/workoutPlan/:WorkoutPlanID',
+        name: 'workoutPlan',
+        component: WorkoutPlan
       },
     ],
   });

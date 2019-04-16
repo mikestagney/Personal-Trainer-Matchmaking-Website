@@ -1,6 +1,6 @@
 <template>
 <default-layout>
-  <div id="register" class="text-center shadow light-bg">
+  <div id="register" class="text-center shadow light-bg border border-warning">
     <form class="form-register" @submit.prevent="register">
       <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">

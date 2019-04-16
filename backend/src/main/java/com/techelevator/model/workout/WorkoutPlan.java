@@ -1,17 +1,15 @@
 package com.techelevator.model.workout;
 
-import java.util.HashMap;
-import java.util.Map;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
-public class WorkOut {
+public class WorkoutPlan {
 	
 	
 	@Min(1)
 	@NotBlank(message="Work Out Id is required")
-	private long workOutId;
+	private long workoutId;
 	@Min(1)
 	@NotBlank(message="Trainer Id is required")
 	private long trainerId;
@@ -25,15 +23,14 @@ public class WorkOut {
 	@Size(min = 2, max = 250)
 	@NotBlank(message="Message body text is required")
 	private String message;
+	private String daysOfWeek;
 	
-	private Map<Long,String[]> workOutPlans = new HashMap<Long,String[]>();
-
-	public long getWorkOutId() {
-		return workOutId;
+	public long getWorkoutId() {
+		return workoutId;
 	}
 
-	public void setWorkOutId(long workOutId) {
-		this.workOutId = workOutId;
+	public void setWork0utId(long workoutId) {
+		this.workoutId = workoutId;
 	}
 
 	public long getTrainerId() {
@@ -68,12 +65,12 @@ public class WorkOut {
 		this.message = message;
 	}
 
-	public Map<Long, String[]> getWorkOutPlans() {
-		return workOutPlans;
+	public String getDaysOfWeek() {
+		return daysOfWeek;
 	}
 
-	public void setWorkOutPlans(Map<Long, String[]> workOutPlans) {
-		this.workOutPlans = workOutPlans;
+	public void setDaysOfWeek(String daysOfWeek) {
+		this.daysOfWeek = daysOfWeek;
 	}
 	
 	
