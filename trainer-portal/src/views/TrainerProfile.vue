@@ -45,10 +45,6 @@
                   </h6>
                </div>
             </div>
-            <div>
-               <p v-if="trainerView() == true">This is a test</p>
-            </div>
-
       </div>
 </default-layout>
 </template>
@@ -70,13 +66,7 @@ export default {
         }
     },
     methods: {
-       trainerView() {
-           if (json.role == 'Trainer') {
-            return true;
-          } else {
-             return false;
-          }
-       }
+
     },
   created() {
       fetch(`${process.env.VUE_APP_REMOTE_API}trainer/profile/${this.TrainerID}`, {
