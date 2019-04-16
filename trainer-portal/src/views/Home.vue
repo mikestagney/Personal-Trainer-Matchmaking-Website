@@ -1,8 +1,8 @@
 <template>
     <default-layout>
-        <div class="jumbotron homeHeader shadow" style="height: 450px;">
+        <div class="jumbotron homeHeader shadow">
             <div class="container">
-                <div class="site-heading text-light orangeTransparent p-2">
+                <div class="site-heading text-light orangeTransparent p-2 shadow">
                     <h1 class="display-4 p-2">Welcome to Workout</h1>
                     <h3>A Client - Trainer Matcher</h3>
                 </div>
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="mt-4">Sed in sem et sem imperdiet porta. Duis faucibus nunc leo, quis tempus massa malesuada et.</p>
+                <p class="mt-4">Find a personal trainer and create a customized fitness plan that will "work out" for YOU!</p>
             </div>
         </div>
     </default-layout>
@@ -72,11 +72,22 @@ export default {
 
 <style>
 
+@import url('https://fonts.googleapis.com/css?family=Roboto:500|Rubik');
+
+h1, h2, h3 {
+    font-family: 'Roboto', sans-serif;
+}
+
+h4, p {
+    font-family: 'Rubik', sans-serif;
+}
+
 .homeHeader {
     background-image: url("../assets/FitnessImages/fitnessImage15.jpg");
     background-size: cover;
      background-position: center;
     border-radius: 4px;
+    height: 450px;
     
 }
 
