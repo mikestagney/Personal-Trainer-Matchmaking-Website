@@ -12,8 +12,8 @@
         class="form-control"
         placeholder="city"
         v-model="trainer.city"/>
-      <label for="state" class="sr-only">State</label>
-      <select v-model="trainerprofile.state">
+      <label for="state">State</label>
+      <select name="state" v-model="trainerprofile.state">
         <option disabled value="">State</option>
         <option value="AK">Alaska</option>
         <option value="AL">Alabama</option>

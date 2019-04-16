@@ -18,7 +18,6 @@ public class WorkOut {
 	@Min(1)
 	@NotBlank(message="Client Id is required")
 	private long clientId;
-	
 
 	@Size(min = 2, max = 20)
 	@NotBlank(message="Message subject line is required")

@@ -43,6 +43,7 @@ public class PersonalTrainerMatchController {
 	public Trainer trainerProfilePage(@PathVariable long trainerId) throws UnauthorizedException {
 		return userDao.getTrainerByID(trainerId);
 	}
+    
     @PutMapping("/trainer/profile/{trainerId}")
 	public void updateTrainerProfilePage(
 			@PathVariable long trainerId,

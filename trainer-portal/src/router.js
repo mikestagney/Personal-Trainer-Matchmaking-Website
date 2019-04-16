@@ -12,7 +12,7 @@ import ClientProfile from '@/views/ClientProfile';
 import ClientList from '@/views/ClientList';
 import AddTrainer from '@/views/AddTrainer';
 import TrainerList from '@/views/TrainerList';
-
+import EditTrainerProfile from '@/views/EditTrainerProfile';
 
 Vue.use(Router);
 
@@ -74,6 +74,11 @@ const router = new Router({
         path: '/trainerList',
         name: 'listTrainers',
         component: TrainerList
+      },
+      {
+        path: '/trainer/profile/:TrainerID/edit',
+        name: 'editTrainerProfile',
+        component: EditTrainerProfile
       },
     ],
   });

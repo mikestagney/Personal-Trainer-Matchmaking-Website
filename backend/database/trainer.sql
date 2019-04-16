@@ -1,5 +1,5 @@
 -- Create the TrainerPortal database
-DROP DATABASE IF EXISTS trainer_portal;
+DROP DATABASE trainer_portal;
 CREATE DATABASE trainer_portal;
 \c trainer_portal
 

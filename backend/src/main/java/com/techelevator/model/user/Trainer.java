@@ -44,6 +44,8 @@ public class Trainer {
 	
 	@MapToDB
 	private String biography;
+	
+	//private String[] certifications ;
 
 	ArrayList < String > certifications = new ArrayList < String > ();
 
@@ -135,6 +137,37 @@ public class Trainer {
 		this.biography = biography;
 	}
 
+	public Boolean getIsPublic() {
+		return isPublic;
+	}
+
+	public void setIsPublic(Boolean isPublic) {
+		this.isPublic = isPublic;
+	}
+
+	/*
+	public String[] getCertifications() {
+		return certifications;
+	}
+
+	public void setCertifications(String[] certifications) {
+		this.certifications = certifications;
+	}
+	*/
+
+	public void setTrainerID(Integer trainerID) {
+		this.trainerID = trainerID;
+	}
+
+	public void setHourlyRate(Integer hourlyRate) {
+		this.hourlyRate = hourlyRate;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+
+	
 	public ArrayList<String> getCertifications() {
 		return certifications;
 	}
@@ -142,6 +175,7 @@ public class Trainer {
 	public void setCertifications(ArrayList<String> certifications) {
 		this.certifications = certifications;
 	}
+	
 }
 
 
