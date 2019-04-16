@@ -88,12 +88,12 @@ const router = new Router({
         component: WorkoutPlan
       },
       {
-        path: '/workout/:UserID',
+        path: '/workoutPlans/:UserID',
         name: 'listWorkoutPlans',
         component: WorkoutPlans
       },
       {
-        path: '/workout/:WorkoutPlanID',
+        path: '/workoutPlan/:WorkoutPlanID',
         name: 'workoutPlan',
         component: WorkoutPlan
       },

@@ -12,8 +12,8 @@
             <tbody>
                 <tr v-for="workout in workoutPlans" :key="workout.workoutplanID">
                     <td>{{ workout.daysOfWeek }}</td>
-                    <td>{{trainer.title}}</td>
-                    <td>{{trainer.body}}</td>
+                    <td>{{workout.title}}</td>
+                    <td>{{workout.body}}</td>
                 </tr>
             </tbody>
         </table>

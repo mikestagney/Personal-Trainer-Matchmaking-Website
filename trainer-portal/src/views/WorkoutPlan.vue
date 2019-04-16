@@ -11,9 +11,9 @@
             </thead>
             <tbody>
                 <tr >
-                    <td>{{ workout.daysOfWeek }}</td>
-                    <td>{{trainer.title}}</td>
-                    <td>{{trainer.body}}</td>
+                    <td>{{ workoutPlan.daysOfWeek }}</td>
+                    <td>{{workoutPlan.title}}</td>
+                    <td>{{workoutPlan.body}}</td>
                 </tr>
             </tbody>
         </table>

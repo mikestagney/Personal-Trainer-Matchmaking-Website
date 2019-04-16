@@ -163,7 +163,7 @@ public class PersonalTrainerMatchController {
 		userDao.addClientToClientList(trainerId,authProvider.getCurrentUser().getId());
 	}
 	
-	@GetMapping("/workout/{userId}")
+	@GetMapping("/workoutPlans/{userId}")
 	public List<WorkoutPlan> getWorkoutPlans(@PathVariable long userId) throws UnauthorizedException {
 		if (authProvider.userHasRole(new String[] {"Client"})) {
 			return workoutDao.getWorkOutPlansForIds(userId,authProvider.getCurrentUser().getId());
@@ -176,8 +176,8 @@ public class PersonalTrainerMatchController {
 		}
 	}
 	
-	@GetMapping("/workout/{workoutplanId}")
-	public List<Message> getWorkoutPlan(@PathVariable long userId) {
-		return privateMessageDao.getMessagesBetweenUsers(authProvider.getCurrentUser().getId(), userId);
+	@GetMapping("/workoutPlan/{workoutplanId}")
+	public WorkoutPlan getWorkoutPlan(@PathVariable long workoutplanId) {
+		return workoutDao.getWorkOutPlan(workoutplanId);
 	}
 }
