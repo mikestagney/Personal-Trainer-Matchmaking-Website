@@ -18,6 +18,8 @@ import com.techelevator.authentication.UnauthorizedException;
 import com.techelevator.model.privatemessage.Message;
 import com.techelevator.model.privatemessage.MessageDao;
 import com.techelevator.model.user.UserDao;
+import com.techelevator.model.workout.WorkoutDao;
+import com.techelevator.model.workout.WorkoutPlans;
 import com.techelevator.model.user.Trainer;
 import com.techelevator.model.user.User;
 
@@ -33,6 +35,8 @@ public class PersonalTrainerMatchController {
     private MessageDao privateMessageDao;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private WorkoutDao workoutDao;
 	
     @GetMapping("/trainers")
 	public List<Trainer> trainersList() {
@@ -159,4 +163,21 @@ public class PersonalTrainerMatchController {
 		userDao.addClientToClientList(trainerId,authProvider.getCurrentUser().getId());
 	}
 	
+	@GetMapping("/workout/{userId}")
+	public List<WorkoutPlans> getWorkoutPlans(@PathVariable long userId) throws UnauthorizedException {
+		if (authProvider.userHasRole(new String[] {"Client"})) {
+			return workoutDao.getWorkOutPlansForIds(userId,authProvider.getCurrentUser().getId());
+        }
+		else if (authProvider.userHasRole(new String[] {"Trainer"})) {
+			return workoutDao.getWorkOutPlansForIds(authProvider.getCurrentUser().getId(),userId);
+		}
+		else {
+			throw new UnauthorizedException();
+		}
+	}
+	
+	@GetMapping("/workout/{workoutplanId}")
+	public List<Message> getWorkoutPlan(@PathVariable long userId) {
+		return privateMessageDao.getMessagesBetweenUsers(authProvider.getCurrentUser().getId(), userId);
+	}
 }
