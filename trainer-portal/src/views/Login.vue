@@ -1,6 +1,6 @@
 <template>
   <default-layout>
-  <div id="login" class="text-center shadow bg-light">
+  <div id="login" class="text-center shadow bg-light border border-warning">
     <form class="form-signin" @submit.prevent="login">
       <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
       <div class="alert alert-danger" role="alert" v-if="invalidCredentials">

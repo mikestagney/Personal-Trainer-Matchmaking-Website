@@ -94,6 +94,10 @@ export default {
     color: 	#FF8C00;
 }
 
+.orangeBackground {
+   background-color: 	#FF8C00;
+}
+
 .imageHeader {
     background-image: url("../assets/FitnessImages/fitnessImage5.jpg");
     background-size: cover;
