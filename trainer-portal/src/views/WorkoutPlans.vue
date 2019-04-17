@@ -1,11 +1,18 @@
 <template>
 <default-layout>
-    <div class="trainer-list container">
-        <table class="table table-striped mt-4">
-            <thead class="thead thead-light">
+    <div class="container">
+           <div class="row workoutHeader text-light mb-4 shadow">
+<!--             <div class="col">
+                <h2 class="p-4">
+                    Current Workouts
+                </h2>
+            </div> -->
+    </div>
+        <table class="table table-striped table-hover mt-3">
+            <thead class="thead text-light orangeBackground">
             <tr>
             <th scope="col">Days Of Week (Sun,Mon,Tues,Wed,Thurs,Fri,Sat)</th>
-            <th scope="col">Work Out: </th>
+            <th scope="col">Focus: </th>
             <th scope="col">Plan: </th>
             </tr>
             </thead>
@@ -60,6 +67,16 @@ export default {
 </script>
 
 <style>
+
+
+.workoutHeader {
+    background-image:  url('/img/FitnessCollage.png');
+    background-size: cover;
+    background-position: bottom;
+    border-radius: 4px;
+    height: 250px;
+
+}
 
 
 </style>
