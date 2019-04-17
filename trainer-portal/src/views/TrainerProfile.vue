@@ -1,48 +1,40 @@
 <template>
 <default-layout>
       <div class="container">
-         <div class="row imageHeader text-light mb-3 p-5 shadow">
+         <div class="row trainerHeader text-dark mb-3 p-5 shadow">
             <div class="col">
-               <h3 id="test">
+               <h1>
                   {{trainer.firstName}} {{trainer.lastName}}
-               </h3>
-               <h5>
+               </h1>
+               <h3>
                   {{trainer.city}}, {{trainer.state}}
-               </h5>
+               </h3>
             </div>
             <div class="col">
-               <h4 class="font-italic">
-                  {{trainer.philosophy}}
-               </h4>
+               <h3 class="font-italic">
+                  "{{trainer.philosophy}}"
+               </h3>
             </div>
          </div>
-         <div class="row mb-2">
-            <div class="col blueBackground ml-1">
-               <h6 class="font-weight-bold">
-                  <img src="../assets/FitnessVectors/waterbottle.png" class="p-3" />
-                  <span class="orangeText">Rating:</span> {{trainer.rating}}
-               </h6>
+         <div class="row mb-3 subheading shadow border border-info">
+            <div class="col">
+                <h5 class="text-center pt-2"><img src="../assets/FitnessVectors/waterbottle.png" class="pr-3"/><span class="orangeText">Rating:</span><img src="../assets/star.png" v-bind:title="trainer.rating + ' Star Review'" class="ratingStar pl-2" v-for="n in trainer.rating" v-bind:key="n" /></h5>
             </div>
-            <div class="col blueBackground ml-1">
-               <h6 class="font-weight-bold">
-                  <img src="../assets/FitnessVectors/scale.png" class="p-3" />
-                  <span class="orangeText">Price:</span> ${{trainer.hourlyRate}} per
-                  hour
-               </h6>
+            <div class="col">
+                  <h5 class="text-center pt-2"><img src="../assets/FitnessVectors/scale.png" class="pr-3"/><span class="orangeText">Price:</span> ${{trainer.hourlyRate}} per
+                  hour</h5>
             </div>
             </div>
             <div class="row mb-3">
-               <div class="col blueBackground">
-                  <h6 class="font-weight-bold">
-                     <img src="../assets/FitnessVectors/shoe.png" class="p-3" />
-                     <span class="orangeText">Background:</span> {{trainer.biography}}
-                  </h6>
+               <div class="col subheading shadow border border-info">
+                 <h5 class="orangeText text-center pt-2"><img src="../assets/FitnessVectors/shoe.png" class="pr-3"/>Background</h5>
+                <hr class="my-3">
+                     <h6>{{trainer.biography}}</h6>
                </div>
-               <div class="col blueBackground ml-1">
-                  <h6 class="font-weight-bold">
-                     <img src="../assets/FitnessVectors/muscles.png" class="p-3" />
-                     <span class="orangeText">Certifications:</span> {{trainer.certifications}}
-                  </h6>
+               <div class="col subheading ml-3 shadow border border-info">
+                 <h5 class="orangeText text-center pt-2"><img src="../assets/FitnessVectors/muscles.png" class="pr-3"/>Certifications</h5>
+                <hr class="my-3">
+                     <h6>{{trainer.certifications}}</h6>
                </div>
             </div>
       </div>
@@ -95,14 +87,15 @@ export default {
 }
 
 .orangeBackground {
-   background-color: 	#FF8C00;
+   background-color:	#ffaf4e;
 }
 
-.imageHeader {
-    background-image: url("../assets/FitnessImages/fitnessImage5.jpg");
+.trainerHeader {
+    background-image: url("../assets/FitnessImages/fitnessImage21.jpg");
     background-size: cover;
-    background-position: bottom;
+    background-position: center;
     border-radius: 4px;
+    height: 250px;
     
 }
 
@@ -112,15 +105,8 @@ export default {
   box-shadow:         3px 3px 5px 6px #ccc;
 }
 
-.blueBackground {
-    background-color: #e9f5f8;
-
-}
-
-@font-face {
-font-family:"bebas-neue-by-fontfabric";
-src:url("https://use.typekit.net/af/630fe9/00000000000000003b9b1558/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"),url("https://use.typekit.net/af/630fe9/00000000000000003b9b1558/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"),url("https://use.typekit.net/af/630fe9/00000000000000003b9b1558/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
-font-style:normal;font-weight:400;
+.ratingStar {
+   width: 8%;
 }
 
 

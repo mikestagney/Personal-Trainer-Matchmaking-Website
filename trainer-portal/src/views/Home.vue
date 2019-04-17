@@ -78,7 +78,7 @@ h1, h2, h3 {
     font-family: 'Roboto', sans-serif;
 }
 
-h4, p {
+h4, h5, h6, p {
     font-family: 'Rubik', sans-serif;
 }
 
@@ -97,7 +97,7 @@ h4, p {
 }
 
 .blueTransparent {
-    background-color: rgba(91, 192, 222, 0.5);
+    background-color: rgba(91, 192, 222, 0.2);
 }
 
 .orangeTransparent {

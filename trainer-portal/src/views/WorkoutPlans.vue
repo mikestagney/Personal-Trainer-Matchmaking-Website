@@ -13,7 +13,7 @@
                 <tr v-for="workout in workoutPlans" :key="workout.workoutplanID">
                     <td>{{ workout.daysOfWeek }}</td>
                     <td>{{workout.title}}</td>
-                    <td>{{workout.body}}</td>
+                    <td>{{workout.message}}</td>
                 </tr>
             </tbody>
         </table>

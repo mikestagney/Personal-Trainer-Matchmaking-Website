@@ -13,7 +13,7 @@
                 <tr >
                     <td>{{ workoutPlan.daysOfWeek }}</td>
                     <td>{{workoutPlan.title}}</td>
-                    <td>{{workoutPlan.body}}</td>
+                    <td>{{workoutPlan.message}}</td>
                 </tr>
             </tbody>
         </table>
