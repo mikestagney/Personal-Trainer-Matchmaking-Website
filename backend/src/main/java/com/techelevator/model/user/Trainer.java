@@ -30,12 +30,20 @@ public class Trainer {
 	private String lastName;
 	
 	@MapToDB
+	@Size(min = 0, max = 30)
+	private String address;
+	
+	@MapToDB
 	@Size(min = 1, max = 30)
 	private String city;
 	
 	@MapToDB
 	@Size(min = 2, max = 2)
 	private String state;
+
+	@MapToDB
+	@Size(min = 5, max = 16)
+	private String zip;
 
 	@MapToDB("is_public")
 	@NotNull(message="isPublic is required")
@@ -183,6 +191,22 @@ public class Trainer {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
 	}
 }
 
