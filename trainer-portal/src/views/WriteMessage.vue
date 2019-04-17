@@ -89,7 +89,7 @@ export default {
 }
 
 .messageHeader {
-    background-image: url("../assets/FitnessImages/fitnessImage8.jpg");
+    background-image: url('/img/fitnessImage8.jpg');
     background-size: cover;
     background-position: center;
     border-radius: 15px;
