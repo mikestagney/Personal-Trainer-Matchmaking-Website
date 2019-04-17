@@ -12,6 +12,9 @@ import ClientProfile  from '@/views/client/Profile';
 import Redirect       from './components/Redirect.vue';
 import Error          from './components/404.vue';
 
+import WorkoutPlan   from '@/views/WorkoutPlan';
+import WorkoutPlans   from '@/views/WorkoutPlans';
+
 const routes = [
     /* authentication pages */
     { name: 'home'            , path: '/', alias: 'default'          , component: Home      },
@@ -29,5 +32,9 @@ const routes = [
 
     { name: 'redirect'        , path: '/redirect'                    , component: Redirect  },
     { name: '404'             , path: '/404'                         , component: Error     },
+
+    /* workout plan */
+    { name: 'workout-plan'   , path: '/workoutPlans/:WorkoutPlanID'        , component: WorkoutPlans },
+    { name: 'workout-plans'   , path: '/workoutPlans/:UserID'              , component: WorkoutPlan },
 ];
 export default routes;
