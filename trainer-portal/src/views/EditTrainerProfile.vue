@@ -171,7 +171,7 @@ export default {
 }
 
 .imageHeader {
-    background-image: url("../assets/FitnessImages/fitnessImage5.jpg");
+    background-image: url('img/fitnessImage05.jpg');
     background-size: cover;
     background-position: bottom;
     border-radius: 4px;

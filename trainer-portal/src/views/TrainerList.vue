@@ -81,7 +81,7 @@ export default {
 
 <style>
 .listHeader2 {
-    background-image: url("../assets/FitnessImages/fitnessImage7.jpg");
+    background-image: url('/img/fitnessImage7.jpg');
     background-size: cover;
     background-position: center;
     border-radius: 4px;

@@ -16,7 +16,7 @@
                 <div class="hexa">
                     <div class="hex1">
                         <div class="hex2 shadow">
-                            <img src="../assets/FitnessImages/fitnessImage16.jpg" alt="" width="200" height="193" />
+                            <img src="/img/fitnessImage16.jpg" alt="" width="200" height="193" />
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                  <div class="hexa">
                     <div class="hex1">
                         <div class="hex2 shadow">
-                            <img src="../assets/FitnessImages/fitnessImage18.jpg" alt="" width="200" height="193" />
+                            <img src="/img/fitnessImage18.jpg" alt="" width="200" height="193" />
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                 <div class="hexa">
                     <div class="hex1">
                         <div class="hex2 shadow">
-                            <img src="../assets/FitnessImages/fitnessImage17.jpg" alt="" width="200" height="193" />
+                            <img src="/img/fitnessImage17.jpg" alt="" width="200" height="193" />
                         </div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@ h4, h5, h6, p {
 }
 
 .homeHeader {
-    background-image: url("../assets/FitnessImages/fitnessImage15.jpg");
+    background-image: url('/img/fitnessImage15.jpg');
     background-size: cover;
      background-position: center;
     border-radius: 4px;
