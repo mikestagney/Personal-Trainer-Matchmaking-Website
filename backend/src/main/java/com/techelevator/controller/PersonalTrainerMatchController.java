@@ -39,10 +39,7 @@ public class PersonalTrainerMatchController {
     private WorkoutDao workoutDao;
 	
     @GetMapping("/dir/trainers")
-	public List<Trainer> trainersList() throws UnauthorizedException {
-		if(!authProvider.userHasRole(new String[] {"Trainer, Client"})) {
-            throw new UnauthorizedException();
-        }
+	public List<Trainer> trainersList() {
     	return userDao.getTrainers();
     }
     
