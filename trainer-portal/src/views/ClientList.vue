@@ -82,7 +82,7 @@ export default {
 <style>
 
 .listHeader3 {
-    background-image: url('img/fitnessImage7.jpg');
+    background-image: url('');
     background-size: cover;
     background-position: center;
     border-radius: 4px;
