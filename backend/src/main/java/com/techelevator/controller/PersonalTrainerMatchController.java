@@ -18,6 +18,8 @@ import com.techelevator.authentication.UnauthorizedException;
 import com.techelevator.model.privatemessage.Message;
 import com.techelevator.model.privatemessage.MessageDao;
 import com.techelevator.model.user.UserDao;
+import com.techelevator.model.user.WorkoutPlan;
+import com.techelevator.model.workout.WorkoutDao;
 import com.techelevator.model.user.Trainer;
 import com.techelevator.model.user.User;
 
@@ -33,6 +35,8 @@ public class PersonalTrainerMatchController {
     private MessageDao privateMessageDao;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private WorkoutDao workoutDao;
 	
     @GetMapping("/trainers")
 	public List<Trainer> trainersList() {
@@ -46,6 +50,7 @@ public class PersonalTrainerMatchController {
         }
 		return userDao.getTrainerByID(trainerId);
 	}
+
     @PutMapping("/trainer/profile/{trainerId}")
 	public void updateTrainerProfilePage(
 			@PathVariable long trainerId,
@@ -77,14 +82,6 @@ public class PersonalTrainerMatchController {
 		if(!result.hasErrors()) {
 			userDao.updateUser(user);
 		}
-	}
-    
-    @GetMapping("/profile")
-	public User profilePage() throws UnauthorizedException {
-		if(!authProvider.userHasRole(new String[] {"Trainer", "Client"})) {
-            throw new UnauthorizedException();
-        }
-		return userDao.getClientById(authProvider.getCurrentUser().getId());
 	}
     
     /**
@@ -140,18 +137,16 @@ public class PersonalTrainerMatchController {
 	 * @param user_id this is the id of the user that the logged in User wants to see messages to and from
 	 * @return List<PrivateMessage> list of all Private Messages between user and User
 	 */
-	@GetMapping("/inbox/{userId}")//this was calling wrong method getMessagesBetweenUsers   changed to getMessagesForUser 
-	public List<Message> MessagesForUser(@PathVariable long userId) {
-		return privateMessageDao.getMessagesForUser(userId);
-		
-		//return privateMessageDao.getMessagesForUser(authProvider.getCurrentUser().getId(), userId);
+	@GetMapping("/inbox/{userId}")
+	public List<Message> displayMessagesBetweenUsers(@PathVariable long userId) {
+		return privateMessageDao.getMessagesBetweenUsers(authProvider.getCurrentUser().getId(), userId);
 	}
 	
-//    @GetMapping("/inbox/{messageId}")
-//	public Message displayMessage(@PathVariable long messageId) {
-//		return privateMessageDao.getMessage(messageId);
-//	}
-//    
+    @GetMapping("/inbox/{messageId}")
+	public Message displayMessage(@PathVariable long messageId) {
+		return privateMessageDao.getMessage(messageId);
+	}
+    
 
 	@PutMapping("/inbox/{messageId}")
 	public void deleteMessage(@PathVariable long messageId) {
@@ -163,4 +158,21 @@ public class PersonalTrainerMatchController {
 		userDao.addClientToClientList(trainerId,authProvider.getCurrentUser().getId());
 	}
 	
+	@GetMapping("/workoutPlans/{userId}")
+	public List<WorkoutPlan> getWorkoutPlans(@PathVariable long userId) throws UnauthorizedException {
+		if (authProvider.userHasRole(new String[] {"Client"})) {
+			return workoutDao.getWorkOutPlansForIds(userId,authProvider.getCurrentUser().getId());
+        }
+		else if (authProvider.userHasRole(new String[] {"Trainer"})) {
+			return workoutDao.getWorkOutPlansForIds(authProvider.getCurrentUser().getId(),userId);
+		}
+		else {
+			throw new UnauthorizedException();
+		}
+	}
+	
+	@GetMapping("/workoutPlan/{workoutplanId}")
+	public WorkoutPlan getWorkoutPlan(@PathVariable long workoutplanId) {
+		return workoutDao.getWorkOutPlan(workoutplanId);
+	}
 }
