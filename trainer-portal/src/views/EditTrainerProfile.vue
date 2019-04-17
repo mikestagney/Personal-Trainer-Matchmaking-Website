@@ -90,7 +90,6 @@
                 <button @click="addCertification">
                     Add a new certification
                 </button>
-                <pre>{{ certifications | json }}</pre>
             </div>  
             <div class="form-input">
                <input id="true" type="radio" value="true" v-model="trainer.public"><label for="true">Profile is public</label>
@@ -158,7 +157,13 @@ export default {
             .catch((err) => console.error(err));
         },
         addCertification() {
-            this.certificationsList.push({ value: '' });
+            try {
+                this.trainer.certifications.push(this.certification.value);
+            }
+            catch (Exception) {
+                this.trainer.certifications.push('');
+            }
+            this.certificationsList = this.trainer.certifications;
         }
     }
 }
