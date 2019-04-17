@@ -33,7 +33,6 @@ import auth from '@/auth';
 
 export default {
   name: 'Navigation',
-  isLoggedIn: '',
   data () {
     return {
       isLoggedIn: auth.getUser() != null
