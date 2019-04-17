@@ -101,7 +101,7 @@
             <div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">
                 Update profile
-            </button>
+            </button>        
             </div> 
          </div>
    
@@ -125,7 +125,7 @@ export default {
         }
     },
     created() {  
-      fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/edit/${this.TrainerID}`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/${this.TrainerID}`, {
       method: 'GET',
         headers: new Headers ({
           Authorization: 'Bearer ' + auth.getToken(),
@@ -142,7 +142,7 @@ export default {
     },
     methods: {
         updateProfile() {
-            fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/edit/${this.TrainerID}`,{
+            fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/${this.TrainerID}`,{
             method: 'PUT',
             headers: new Headers ({
             Authorization: 'Bearer ' + auth.getToken(),
