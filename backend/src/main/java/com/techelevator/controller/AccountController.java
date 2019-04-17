@@ -3,7 +3,7 @@ package com.techelevator.controller;
 import javax.validation.Valid;
 import com.techelevator.authentication.AuthProvider;
 import com.techelevator.authentication.JwtTokenHandler;
-import com.techelevator.authentication.RegistrationResult;
+import com.techelevator.authentication.API_ErrorResult;
 import com.techelevator.authentication.UnauthorizedException;
 import com.techelevator.model.user.User;
 import com.techelevator.model.user.UserDao;
@@ -58,12 +58,12 @@ public class AccountController {
 	 * 
 	 * If AuthProvider cannot authorize the registration then an UnauthorizedException is thrown
 	 * @param user User object for person trying to login
-	 * @param result BindingResult to check for errors when recieving the entered information
+	 * @param result BindingResult to check for errors when receiving the entered information
 	 * @return RegistrationResult if registration is successful
 	 */
     @PostMapping("/register")
-    public RegistrationResult register(@Valid @RequestBody User user, BindingResult result) {
-    	RegistrationResult registrationResult = new RegistrationResult();
+    public API_ErrorResult register(@Valid @RequestBody User user, BindingResult result) {
+    	API_ErrorResult registrationResult = new API_ErrorResult();
     	if(result.hasErrors()) {
             for(ObjectError error : result.getAllErrors()) {
                 registrationResult.addError(error.getDefaultMessage());
@@ -77,8 +77,6 @@ public class AccountController {
     }
     
     /**
-	 * Method updatePassword() takes two parameters
-	 * <p>
 	 * This methods returns a updates the User's password
 	 * using the new password String entered by the user
 	 * @param user_id the user_id of the User changing their password
