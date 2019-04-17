@@ -11,7 +11,7 @@
                </h3>
             </div>
          </div>
-         <client-tools></client-tools>
+         <client-tools :ClientID = "ClientID"></client-tools>
     </div>
 </default-layout>
 </template>
