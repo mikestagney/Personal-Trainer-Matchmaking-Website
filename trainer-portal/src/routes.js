@@ -6,6 +6,8 @@ import Register       from '@/views/Register';
 import Directory      from '@/views/TrainerDirectory';
 
 import TrainerProfile from '@/views/trainer/Profile';
+import EditTrainerProfile from '@/views/EditTrainerProfile';
+import AddTrainer from '@/views/AddTrainer';
 
 import ClientList from '@/views/ClientList';
 
@@ -30,8 +32,10 @@ const routes = [
     { name: 'dir-trainer'     , path: '/directory'                   , component: Directory  },
 
     /* trainer */
-    { name: 'trainer-profile' , path: '/trainer/profile/:TrainerID'  , component: TrainerProfile },
-    { name: 'client-list',      path: '/clientList'                  , component: ClientList },
+    { name: 'trainer-profile' ,    path: '/trainer/profile/:TrainerID'      , component: TrainerProfile },
+    { name: 'client-list',         path: '/clientList'                      , component: ClientList },
+    { name: 'editTrainerProfile' , path: '/trainer/profile/:TrainerID/edit' , component: EditTrainerProfile },
+    { name: 'addTrainer' ,         path: '/addTrainer/:TrainerID'           , component: AddTrainer },
 
     /* client */
     { name: 'client-profile'  , path: '/client/profile/:ClientID'    , component: ClientProfile },
