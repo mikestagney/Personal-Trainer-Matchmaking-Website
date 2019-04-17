@@ -18,7 +18,7 @@ import MessageDetail from '@/views/MessageDetail';
 
 import WorkoutPlan         from '@/views/WorkoutPlan';
 import WorkoutPlans        from '@/views/WorkoutPlans';
-import CreateWorkoutPlan   from '@/views/WorkoutPlans';
+import CreateWorkoutPlan   from '@/views/CreateWorkoutPlan';
 
 const routes = [
     /* authentication pages */

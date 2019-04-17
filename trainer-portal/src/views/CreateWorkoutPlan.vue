@@ -14,7 +14,7 @@ export default {
     },
     data(){
         return{
-            ClientID: this.$route.params.ClientID,
+            ClientID: ('${process.env.VUE_APP_REMOTE_API}/createWorkoutPlan/').params.ClientID,
             workoutPlan: {
                 TrainerID: auth.getUser().getID(),
                 ClientID: this.ClientID,
@@ -53,6 +53,7 @@ export default {
                     return response.json();
                 })
                 .then((json) => {
+                    this.workoutPlan = json;
                 })
                 .catch((err) => console.error(err));
         },
