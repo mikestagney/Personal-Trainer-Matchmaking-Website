@@ -41,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="mt-4">Proin porttitor ante eget accumsan efficitur. Phasellus sollicitudin, tellus sit amet mattis vehicula, ligula elit vestibulum lectus, sit amet ullamcorper turpis eros ut purus. Nam mollis neque felis. Pellentesque tincidunt justo vel leo eleifend, at sollicitudin nibh imperdiet.</p>
+                <p class="mt-4">Working out can be intimidating. It’s normal to have goals and be unsure how to achieve them, and it’s completely normal to lack motivation at times. A personal trainer can help you overcome your obstacles and take you to new heights on your fitness journey. There are trainers to suit all personalities, fitness types, and budgets, and our site makes it easy to find the perfect fit for you.</p>
             </div>
             <div class="col subheading p-2 ml-4 shadow border border-info">
                 <h4 class="orangeText text-center">About</h4>

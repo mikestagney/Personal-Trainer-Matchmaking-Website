@@ -1,30 +1,24 @@
 <template>
-    <div class="mb-3">
+    <div class="mb-3 bg-light border border-warning">
        <div class="row">
            <div class="col">
-               <h5 class="text-center">Quick Tools</h5>
+               <h4 class="text-center orangeText pt-3">Quick Tools</h4>
                <hr class="my-3">
             </div>
         </div>
-        <div class="row">
+        <div class="row text-center mb-3">
             <div class="col">
                 <router-link to="" exact>
-                    <button class="btn btn-lg btn-info">View Clients</button>
+                    <button class="text-light btn-lg exclusiveButton">View Clients</button>
                 </router-link>
-            </div>
-            <div class="col">
                 <router-link to="" exact>
-                    <button class="btn btn-lg btn-info">Create Workouts</button>
+                    <button class="text-light btn-lg exclusiveButton ml-2">Create Workouts</button>
                 </router-link>
-            </div>
-            <div class="col">
                 <router-link to="" exact>
-                    <button class="btn btn-lg btn-info">Messages</button>
+                    <button class="text-light btn-lg exclusiveButton ml-2">Messages</button>
                 </router-link>
-            </div>
-            <div class="col">
                 <router-link to="" exact>
-                    <button class="btn btn-lg btn-info">Edit Profile</button>
+                    <button class="text-light btn-lg exclusiveButton ml-2">Edit Profile</button>
                 </router-link>
             </div>
         </div>
@@ -39,5 +33,8 @@ export default {
 </script>
 
 <style>
+.exclusiveButton {
+    background-color: #c71585;
+}
 
 </style>
