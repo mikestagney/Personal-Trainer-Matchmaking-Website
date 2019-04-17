@@ -26,7 +26,7 @@ export default {
     },
     methods: {
         createWorkoutPlan() {
-            fetch(`${process.env.VUE_APP_REMOTE_API}/workoutPlan`, {
+            fetch(`${process.env.VUE_APP_REMOTE_API}/createWorkoutPlan`, {
                 method: 'POST',
                     headers: new Headers ({
                     Authorization: 'Bearer ' + auth.getToken(),
@@ -42,7 +42,7 @@ export default {
                     .catch((err) => console.error(err));
         },
         created() {
-            fetch(`${process.env.VUE_APP_REMOTE_API}/workoutPlan/${this.ClientID}`, {
+            fetch(`${process.env.VUE_APP_REMOTE_API}/createWorkoutPlan/${this.ClientID}`, {
             method: 'GET',
                 headers: new Headers ({
                 Authorization: 'Bearer ' + auth.getToken(),
