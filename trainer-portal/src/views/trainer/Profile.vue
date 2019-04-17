@@ -16,6 +16,17 @@
          </h3>
       </div>
    </div>
+   <trainer-tools></trainer-tools>
+   <div class="row pb-3">
+      <div class="col">
+         <router-link to="" exact>
+             <button class="btn btn-lg btn-info pl-4 pr-4">Book</button>
+          </router-link>
+          <router-link to="/trainer" exact>
+             <button class="btn btn-lg btn-info pl-4 pr-4 ml-2">Message</button>
+          </router-link>
+      </div>
+   </div>
    <div class="row mb-3 subheading shadow border border-info">
       <div class="col">
          <h5 class="text-center pt-2"><img src="@/assets/FitnessVectors/waterbottle.png" class="pr-3"/><span class="orangeText">Rating:</span><img src="@/assets/star.png" v-bind:title="trainer.rating + ' Star Review'" class="ratingStar pl-2" v-for="n in trainer.rating" v-bind:key="n" /></h5>
@@ -46,12 +57,14 @@
 
 <script>
 import DefaultLayout from '@/layouts/DefaultLayout';
+import TrainerTools from '@/components/TrainerTools';
 import auth from '@/auth';
 
 export default {
    name:"trainer-profile",
    components: {
-      DefaultLayout
+      DefaultLayout,
+      TrainerTools
    },
    data(){
       return{
