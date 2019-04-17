@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * RegistrationResult has methods to check if the Registraion's Result
- * has errors or if it was Successful
+ * API Result has errors or if it was Successful.
  */
-public class RegistrationResult {
+public class API_ErrorResult {
 	
 	private boolean success;
 	private List<String> errors = new ArrayList<String>();

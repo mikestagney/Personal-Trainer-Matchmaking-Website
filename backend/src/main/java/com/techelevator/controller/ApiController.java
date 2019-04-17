@@ -24,7 +24,7 @@ public class ApiController {
 	 * 
 	 * Method authorizedOnly() takes no parameters
 	 * <p>
-	 * This methods returns a String of "Succes" if user has role of "Trainer" or "Client"
+	 * This methods returns a String of "Success" if user has role of "Trainer" or "Client"
 	 * <p>
 	 * If no role or any other role then an UnauthorizedException is thrown
 	 * @return "Success" if currently logged in User has either role of "Trainer" or "Client"

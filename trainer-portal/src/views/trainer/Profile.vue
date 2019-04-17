@@ -69,7 +69,7 @@ export default {
    data(){
       return{
          TrainerID: this.$route.params.TrainerID,
-         title:"trainerProfile",
+         title:"Trainer Profile",
          trainer: []
       }
    },
