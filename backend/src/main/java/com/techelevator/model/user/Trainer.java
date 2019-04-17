@@ -15,51 +15,51 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Trainer {
 	@MapToDB("user_id")
-	private Integer trainerID;
+	private Integer trainerID = 0;
 	
 	@MapToDB
 	@Size(min = 5, max = 25)
-	private String username;
+	private String username = "";
 	
 	@MapToDB("first_name")
 	@Size(min = 0, max = 25)
-	private String firstName;
+	private String firstName = "";
 	
 	@MapToDB("last_name")
 	@Size(min = 0, max = 25)
-	private String lastName;
+	private String lastName = "";
 	
 	@MapToDB
 	@Size(min = 0, max = 30)
-	private String address;
+	private String address = "";
 	
 	@MapToDB
 	@Size(min = 1, max = 30)
-	private String city;
+	private String city = "";
 	
 	@MapToDB
 	@Size(min = 2, max = 2)
-	private String state;
+	private String state = "";
 
 	@MapToDB
 	@Size(min = 5, max = 16)
-	private String zip;
+	private String zip = "";
 
 	@MapToDB("is_public")
 	@NotNull(message="isPublic is required")
-	private Boolean isPublic;
+	private Boolean isPublic = true;
 
 	@MapToDB("hourly_rate")
-	private Integer hourlyRate;
+	private Integer hourlyRate = 0;
 	
 	@MapToDB
-	private Integer rating;
+	private Integer rating = 0;
 	
 	@MapToDB
-	private String philosophy;
+	private String philosophy = "";
 	
 	@MapToDB
-	private String biography;
+	private String biography = "";
 
 	@MapToDB("certifications_pickle")
 	private String certificationsPickle;
@@ -185,6 +185,7 @@ public class Trainer {
 	}
 
 	public void setCertificationsPickle(String certificationsPickle) {
+		System.out.println(certificationsPickle);
 		this.certificationsPickle = certificationsPickle;
 		try {
 			this.certifications = jsonMapper.readValue(certificationsPickle, new TypeReference<List<String>>(){});

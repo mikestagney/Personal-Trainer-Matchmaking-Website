@@ -58,7 +58,7 @@ public class JdbcUserDao implements UserDao {
         String hashedPassword = passwordHasher.computeHash(password, salt);
         String saltString = new String(Base64.encode(salt));
         long newId = jdbcTemplate.queryForObject(
-        		"INSERT INTO users(	username, first_name, last_name, password, salt, role) VALUES (?, ?, ?, ?, ?, ?) "
+        		"INSERT INTO app_user(	username, first_name, last_name, password, salt, role) VALUES (?, ?, ?, ?, ?, ?) "
         		+ "RETURNING user_id", Long.class,
         							username, firstName,  lastName,  hashedPassword, saltString, role);
         
@@ -85,7 +85,7 @@ public class JdbcUserDao implements UserDao {
         String hashedPassword = passwordHasher.computeHash(newPassword, salt);
         String saltString = new String(Base64.encode(salt));
 
-        jdbcTemplate.update("UPDATE users SET password=?, salt=? WHERE user_id=?",
+        jdbcTemplate.update("UPDATE app_user SET password=?, salt=? WHERE user_id=?",
                 hashedPassword, saltString, user.getId());
     }
 
@@ -100,7 +100,7 @@ public class JdbcUserDao implements UserDao {
      */
     @Override
     public User getValidUserWithPassword(String userName, String password) {
-        String sqlSearchForUser = "SELECT * FROM users WHERE username = ?";
+        String sqlSearchForUser = "SELECT * FROM app_user WHERE username = ?";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForUser, userName.toUpperCase());
         if (results.next()) {
@@ -135,7 +135,7 @@ public class JdbcUserDao implements UserDao {
      */
     @Override
     public User getUserByUsername(String username) {
-    	String sqlSelectUserByUsername = "SELECT * FROM users WHERE username = ?";
+    	String sqlSelectUserByUsername = "SELECT * FROM app_user WHERE username = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserByUsername, username);
         if(results.next()) {
             return createUser(results);
@@ -150,7 +150,7 @@ public class JdbcUserDao implements UserDao {
      */
 	@Override
 	public User getUserById(Long id) {
-    	String sqlSelectUserById = "SELECT * FROM users WHERE user_id = ?";
+    	String sqlSelectUserById = "SELECT * FROM app_user WHERE user_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserById, id);
         if(results.next()) {
             return createUser(results);
@@ -162,7 +162,7 @@ public class JdbcUserDao implements UserDao {
 	@Override
 	public List<Trainer> getTrainers() {
     	String sql = "SELECT user_id, username, is_public, first_name, last_name, city, state, hourly_rate, rating, philosophy, biography, certifications " + 
-                     "FROM users JOIN trainer USING(user_id) ORDER BY rating DESC, hourly_rate, last_name, first_name";
+                     "FROM app_user JOIN trainer USING(user_id) ORDER BY rating DESC, hourly_rate, last_name, first_name";
     	List<Trainer> results = new TinyORM<Trainer>(Trainer.class).readAll(jdbcTemplate.queryForRowSet(sql));
     	
     	for( Trainer r: results ) {
@@ -174,7 +174,7 @@ public class JdbcUserDao implements UserDao {
 	@Override
 	public Trainer getTrainerByID(long trainerID) {
     	String sql = "SELECT user_id, username, is_public, first_name, last_name, address, city, state, zip, hourly_rate, rating, philosophy, biography, certifications_pickle " + 
-    			     "FROM users JOIN trainer USING(user_id) WHERE user_id = ?";
+    			     "FROM app_user JOIN trainer USING(user_id) WHERE user_id = ?";
     	Trainer result = new TinyORM<Trainer>(Trainer.class).readOne(jdbcTemplate.queryForRowSet(sql, trainerID));
     	result.setCertificationsPickle(result.getCertificationsPickle());
     	return result;
@@ -182,6 +182,7 @@ public class JdbcUserDao implements UserDao {
 
 	@Override
 	public void putTrainerByID(long trainerID, Trainer trainer) {
+		trainer.setCertifications(trainer.getCertifications());
 		String sql = "UPDATE trainer SET "       +
                      "is_public=?,"              +
                      "hourly_rate=?,"            +
@@ -199,14 +200,14 @@ public class JdbcUserDao implements UserDao {
 					 trainer.getCertificationsPickle(),
 					 trainerID); 
 	 
-		sql = "UPDATE user SET "   +
+		sql = "UPDATE app_user SET "   +
 			  "username=?,"        +  
 			  "first_name=?,"      +
 			  "last_name=?,"       +
 			  "address=?,"         +
 			  "city=?,"            +
 			  "state=?,"           +
-			  "zip=?"              +
+			  "zip=? "             +
 			  "WHERE user_id = ?";
 		  	
     	jdbcTemplate.update(sql,
@@ -223,7 +224,7 @@ public class JdbcUserDao implements UserDao {
 	
 	@Override
 	public User getClientById(Long id) {
-    	String sqlSelectUserById = "SELECT * FROM users WHERE user_id = ?";
+    	String sqlSelectUserById = "SELECT * FROM app_user WHERE user_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserById, id);
         if(results.next()) {
             return createUser(results);
@@ -235,9 +236,8 @@ public class JdbcUserDao implements UserDao {
 
 	@Override
 	public void updateUser(User user) {
-		jdbcTemplate.update("UPDATE user_profile SET username=?, first_name=?, last_name=?, city=?, state=? WHERE user_id=?",
-				user.getUsername(), user.getFirstName(), user.getLastName(), user.getCity(), user.getState(), user.getId());
-		
+		System.err.print("Need UpdateUser() code");
+		System.exit(1);
 	}
 	
 	@Override
