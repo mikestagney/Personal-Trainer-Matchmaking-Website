@@ -159,7 +159,7 @@ public class JdbcUserDao implements UserDao {
 	@Override
 	public List<Trainer> getTrainers() {
     	String sql = "SELECT user_id, username, is_public, first_name, last_name, address, city, state, zip, hourly_rate, rating, philosophy, biography, certifications_pickle " +
-                     "FROM app_user JOIN trainer USING(user_id) ORDER BY rating DESC, hourly_rate, last_name, first_name";
+                     "FROM app_user JOIN trainer USING(user_id) WHERE is_public = true ORDER BY rating DESC, hourly_rate, last_name, first_name";
     	List<Trainer> results = new TinyORM<Trainer>(Trainer.class).readAll(jdbcTemplate.queryForRowSet(sql));
     	
     	for( Trainer r: results ) {

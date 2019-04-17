@@ -125,7 +125,7 @@ export default {
         }
     },
     created() {  
-      fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/${this.TrainerID}`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/edit/${this.TrainerID}`, {
       method: 'GET',
         headers: new Headers ({
           Authorization: 'Bearer ' + auth.getToken(),
@@ -142,7 +142,7 @@ export default {
     },
     methods: {
         updateProfile() {
-            fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/${this.TrainerID}`,{
+            fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/edit/${this.TrainerID}`,{
             method: 'PUT',
             headers: new Headers ({
             Authorization: 'Bearer ' + auth.getToken(),

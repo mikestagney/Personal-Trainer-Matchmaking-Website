@@ -34,7 +34,7 @@ const routes = [
     /* trainer */
     { name: 'trainer-profile' ,    path: '/trainer/profile/:TrainerID'      , component: TrainerProfile },
     { name: 'client-list',         path: '/clientList'                      , component: ClientList },
-    { name: 'editTrainerProfile' , path: '/trainer/profile/:TrainerID/edit' , component: EditTrainerProfile },
+    { name: 'editTrainerProfile' , path: '/trainer/profile/edit/:TrainerID' , component: EditTrainerProfile },
 
     /* client */
     { name: 'client-profile'  , path: '/client/profile/:ClientID'    , component: ClientProfile },
@@ -44,7 +44,7 @@ const routes = [
     { name: '404'             , path: '/404'                         , component: Error     },
 
     /* message */
-    {name: 'message-detail'   , path: '/message/:MesssageID'         , component: MessageDetail },
+    {name: 'message-detail'   , path: '/message/:MessageID'         , component: MessageDetail },
 
     /* workout plan */
     { name: 'workout-plan'   , path: '/workoutPlan/:WorkoutPlanID'         , component: WorkoutPlan },
