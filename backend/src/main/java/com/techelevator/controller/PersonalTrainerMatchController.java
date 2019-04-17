@@ -50,8 +50,16 @@ public class PersonalTrainerMatchController {
         }
 		return userDao.getTrainerByID(trainerId);
 	}
+    
+    @GetMapping("/trainer/profile/edit/{trainerId}")
+	public Trainer editTrainerProfilePage(@PathVariable long trainerId) throws UnauthorizedException {
+    	if(!authProvider.userHasRole(new String[] {"Trainer"})) {
+    		throw new UnauthorizedException();
+    	}
+    	return userDao.getTrainerByID(trainerId);
+	}
 
-    @PutMapping("/trainer/profile/{trainerId}")
+    @PutMapping("/trainer/profile/edit/{trainerId}")
 	public void updateTrainerProfilePage(
 			@PathVariable long trainerId,
 			@Valid @RequestBody Trainer trainer, BindingResult result
