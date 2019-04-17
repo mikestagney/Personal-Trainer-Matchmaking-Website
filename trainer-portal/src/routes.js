@@ -3,7 +3,7 @@ import Home           from '@/views/Home';
 import Login          from '@/views/Login';
 import Register       from '@/views/Register';
 
-import Directory      from '@/views/TrainerList';
+import Directory      from '@/views/TrainerDirectory';
 
 import TrainerProfile from '@/views/trainer/Profile';      
 
