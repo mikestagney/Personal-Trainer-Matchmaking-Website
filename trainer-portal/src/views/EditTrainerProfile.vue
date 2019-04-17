@@ -9,15 +9,6 @@
          </h2>
               
             <div class="form-input">
-<<<<<<< HEAD
-               <span id="label">City</span> <input type="text" v-model="trainer.city" 
-                  placeholder="trainer.city">
-            </div>           
-            <div class="form-input">
-               <span id="label">State</span> <input type="text" v-model="trainer.state" 
-                  placeholder="trainer.state">
-            </div>  
-=======
                <span id="label">City: </span> <input type="text" v-model="trainer.city" 
                   placeholder="trainer.city">
             </div>
@@ -77,17 +68,12 @@
             <option value="WV">West Virginia</option>
             <option value="WY">Wyoming</option>
         </select>   
->>>>>>> dev-elephant
             <div class="form-input">
                <span id="label">Philosphy (limit 50 characters)</span><br> <textarea rows="1" cols="70" v-model="trainer.philosophy"> 
                   placeholder="trainer.philosophy"</textarea>
             </div>  
             <div class="form-input">
-<<<<<<< HEAD
-               <span id="label">Hourly rate</span> <input type="text" v-model="trainer.hourlyRate" 
-=======
                <span id="label">Hourly rate: </span> <input type="text" v-model="trainer.hourlyRate" 
->>>>>>> dev-elephant
                   placeholder="trainer.hourlyRate">
             </div>  
             <div class="form-input">
@@ -95,38 +81,16 @@
                   placeholder="trainer.biography"</textarea>
             </div>  
             <div class="form-input">
-<<<<<<< HEAD
-                <div id="app">
-                <h1>Finds</h1>
-                <div v-for="find in finds">
-                    <input v-model="find.value">
-                </div>
-                <button @click="addFind">
-                    New Find
-                </button>
-                <pre>{{ $data | json }}</pre>
-                </div>
-
-               <span id="label">Certifications</span>
-                <div v-for="(certification, index) in trainer.certifications" :key="index">
-                   
-                    <input v-bind:value="certification">
-=======
 
                <span id="label">Certifications</span>
                 <div v-for="(certification, index) in trainer.certifications" :key="index">
                     <input v-model="certification.value">
->>>>>>> dev-elephant
                 </div>
                 
                 <button @click="addCertification">
                     Add a new certification
                 </button>
-<<<<<<< HEAD
-                <pre>{{ trainer.certifications }}</pre>
-=======
                 <pre>{{ certifications | json }}</pre>
->>>>>>> dev-elephant
                 
 
             </div>  
@@ -155,17 +119,9 @@ export default {
     },
     data(){
         return{
-<<<<<<< HEAD
-            finds: [],
-            certification: '',
-            title:"editTrainerProfile",
-            TrainerID: this.$route.params.TrainerID,
-            trainer: '',      
-=======
             title:"editTrainerProfile",
             TrainerID: this.$route.params.TrainerID,
             trainer: ''
->>>>>>> dev-elephant
         }
     },
     created() {  
@@ -179,23 +135,12 @@ export default {
         .then((response) => {
             return response.json();
         })
-<<<<<<< HEAD
-        .then((trainer) => {
-            this.trainer = trainer;
-=======
         .then((json) => {
             this.trainer = json;
->>>>>>> dev-elephant
         })
         .catch((err) => console.error(err));
     },
     methods: {
-<<<<<<< HEAD
-        addFind: function () {
-            this.finds.push({ value: '' });
-        },
-=======
->>>>>>> dev-elephant
         updateProfile() {
             fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/${this.TrainerID}`,{
             method: 'PUT',
@@ -212,13 +157,8 @@ export default {
             })
             .catch((err) => console.error(err));
         },
-<<<<<<< HEAD
-        addCertification: function () {
-            this.trainer.certifications.push("");
-=======
         addCertification() {
             this.trainer.certifications.push({ value: '' });
->>>>>>> dev-elephant
         }
     }
 }
