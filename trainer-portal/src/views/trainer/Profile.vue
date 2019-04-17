@@ -35,7 +35,9 @@
          <div class="col subheading ml-3 shadow border border-info">
             <h5 class="orangeText text-center pt-2"><img src="@/assets/FitnessVectors/muscles.png" class="pr-3"/>Certifications</h5>
             <hr class="my-3">
-            <h6>{{trainer.certifications}}</h6>
+            <div v-for="(certification, index) in trainer.certifications" :key="index">
+               <h6>{{certification}}</h6>
+            </div>
          </div>
       </div>
 </div>
