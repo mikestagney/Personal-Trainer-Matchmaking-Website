@@ -34,7 +34,7 @@ const routes = [
     { name: '404'             , path: '/404'                         , component: Error     },
 
     /* workout plan */
-    { name: 'workout-plan'   , path: '/workoutPlan/:WorkoutPlanID'        , component: WorkoutPlans },
-    { name: 'workout-plans'   , path: '/workoutPlans/:UserID'              , component: WorkoutPlan },
+    { name: 'workout-plan'   , path: '/workoutPlan/:WorkoutPlanID'        , component: WorkoutPlan },
+    { name: 'workout-plans'   , path: '/workoutPlans/:UserID'              , component: WorkoutPlans },
 ];
 export default routes;
