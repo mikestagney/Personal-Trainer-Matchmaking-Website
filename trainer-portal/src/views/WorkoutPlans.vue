@@ -10,9 +10,9 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for="workout in workoutPlans" :key="workout.workoutplanID">
+                <tr v-for="workout in workoutPlans" :key="workout.workoutId">
                     <td>{{ workout.daysOfWeek }}</td>
-                    <td>{{workout.title}}</td>
+                    <td><router-link v-bind:to="{ name: 'workout-plan', params: { WorkoutPlanID: workout.workoutId }}" class="orangeText">{{workout.title}}</router-link></td>
                     <td>{{workout.message}}</td>
                 </tr>
             </tbody>

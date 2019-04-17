@@ -8,7 +8,7 @@
         </div>
         <div class="row text-center mb-3">
             <div class="col">
-                <router-link to="" exact>
+                <router-link v-bind:to="{ name: 'workout-plans', params: { UserID: ClientID }}" exact>
                     <button class="text-light btn-lg exclusiveButton">Current Workouts</button>
                 </router-link>
                 <router-link to="" exact>
@@ -25,6 +25,10 @@
 <script>
 export default {
     name: 'TrainerTools',
+
+    props: {
+        ClientID: Object, 
+    }
 
 }
 </script>
