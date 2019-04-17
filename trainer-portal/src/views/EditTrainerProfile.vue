@@ -101,7 +101,7 @@
             <div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">
                 Update profile
-            </button>        
+            </button>
             </div> 
          </div>
    
