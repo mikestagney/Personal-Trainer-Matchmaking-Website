@@ -86,7 +86,7 @@ export default {
 }
 
 .trainerHeader {
-    background-image: require('./../../assets/FitnessImages/fitnessImage21.jpg');
+    background-image: url('/img/fitnessImage21.jpg');
     background-size: cover;
     background-position: center;
     border-radius: 4px;
