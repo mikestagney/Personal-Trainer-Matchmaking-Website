@@ -1,5 +1,5 @@
 import ListTrainers from '@/views/ListTrainers';
-import TrainerProfile from '@/views/TrainerProfile';
+import TrainerProfile from '@/views/trainer/Profile';
 import MessageDetail from '@/views/MessageDetail';
 import WriteMessage from '@/views/WriteMessage';
 import ClientProfile from '@/views/ClientProfile';
