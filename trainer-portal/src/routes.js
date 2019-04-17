@@ -45,6 +45,6 @@ const routes = [
     /* workout plan */
     { name: 'workout-plan'   , path: '/workoutPlan/:WorkoutPlanID'    , component: WorkoutPlan },
     { name: 'workout-plans'   , path: '/workoutPlans/:UserID'         , component: WorkoutPlans },
-    { name: 'create-workout-plan'   , path: '/workoutPlan/:TrainerID' , component: CreateWorkoutPlan },
+    { name: 'create-workout-plan'   , path: '/createWorkoutPlan/:ClientID' , component: CreateWorkoutPlan },
 ];
 export default routes;
