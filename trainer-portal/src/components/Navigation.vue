@@ -16,16 +16,12 @@
     </button>
     <div class="collapse navbar-collapse" id="trainer-navbar">
       <ul class="navbar-nav mr-auto">
-        <router-link to="/search" tag="li" class="nav-item" active-class="active" exact>
-          <a class="nav-link">Search Trainers</a>
+        <router-link :to="{name: 'dir-trainer'}" tag="li" class="nav-item" active-class="active" exact>
+          <a class="nav-link">Trainer Directory</a>
         </router-link>
         <router-link to="/" tag="li" class="nav-item" active-class="active" v-on:click.native="userLoginLogout()">
            <a class="nav-link">{{ (isLoggedIn)? 'Logout': 'Login' }}</a>
         </router-link>
-      </ul>
-    </div>
-    <div class="navbar-collapse collapse">
-      <ul class="navbar-nav mr-auto">
       </ul>
     </div>
   </nav>

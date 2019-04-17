@@ -1,5 +1,5 @@
 -- Create the TrainerPortal database
-DROP DATABASE IF EXISTS trainer_portal;
+DROP DATABASE trainer_portal;
 CREATE DATABASE trainer_portal;
 \c trainer_portal
 
@@ -80,7 +80,7 @@ CREATE TABLE workout_plan
     title               varchar(30),
     body                varchar(250),
 
-    constraint pk_workout_plan primary key (workoutplan_id, trainer_id, client_id)
+    constraint pk_orkout_plan primary key (workoutplan_id,trainer_id, client_id)
 );
 
 -- Stored Procedures
@@ -95,7 +95,7 @@ LANGUAGE 'plpgsql' STRICT;
 
 CREATE OR REPLACE FUNCTION random_boolean()
 RETURNS BOOLEAN AS
-$$
+$$ 
 BEGIN
     IF random() < 0.5 THEN
         RETURN false;
@@ -107,38 +107,37 @@ $$
 LANGUAGE 'plpgsql' STRICT;
 
 -- user data
-INSERT INTO app_user 
- (user_id , first_name , last_name   , username                 , password , salt   , role     , address                  , city                , state , zip) VALUES
- (1       , 'Test'     , 'Trainer'   , 'trainer'                , 'pass'   , 'salt' , 'Client' , '558 Cliffe Knoll'       , 'Koelpinberg'       , 'OH'  , '41042')
-,(2       , 'Elise'    , 'Mayert'    , 'Lewis.Paucek'           , 'pass'   , 'salt' , 'Client' , '705 Fenton Ride'        , 'South Yvonne'      , 'MD'  , '41042')
-,(3       , 'Zella'    , 'Hilpert'   , 'Arvel.Ruecker'          , 'pass'   , 'salt' , 'Client' , '626 Lunnfields Lane'    , 'Doramouth'         , 'OR'  , '41042')
-,(4       , 'Darius'   , 'Thompson'  , 'Ebba.Mueller47'         , 'pass'   , 'salt' , 'Client' , '261 Crossley West'      , 'East Carlotta'     , 'IN'  , '41042')
-,(5       , 'Cristina' , 'Russel'    , 'Bradford.Ziemann'       , 'pass'   , 'salt' , 'Client' , '658 Rosebank By-Pass'   , 'Orionburgh'        , 'DE'  , '41042')
-,(6       , 'Test'     , 'Client'    , 'client'                 , 'pass'   , 'salt' , 'Client' , '648 Hanbury Green'      , 'Langoshmouth'      , 'ME'  , '41042')
-,(7       , 'Ellsworth', 'Rutherford', 'Maximillian.Schamberger', 'pass'   , 'salt' , 'Client' , '557 Spa Road'           , 'East Janis'        , 'RI'  , '41042')
-,(8       , 'Eloise'   , 'Skiles'    , 'Catherine.Moore'        , 'pass'   , 'salt' , 'Client' , '921 Johnson Moorings'   , 'Stoltenbergside'   , 'WY'  , '41042')
-,(9       , 'Wilhelm'  , 'Effertz'   , 'Skyla_Rowe46'           , 'pass'   , 'salt' , 'Client' , '232 Shannon Glas'       , 'South Cassidyton'  , 'WY'  , '41042')
-,(10      , 'Bridgette', 'Wisozk'    , 'Jerrod55'               , 'pass'   , 'salt' , 'Client' , '639 Old Oak Rise'       , 'Swaniawskifurt'    , 'PA'  , '41042')
-,(11      , 'Lesley'   , 'Harris'    , 'Carter29'               , 'pass'   , 'salt' , 'Client' , '330 Knole Grove'        , 'New Braeden'       , 'AR'  , '41042')
-,(12      , 'Dayna'    , 'Rohan'     , 'Sheila67'               , 'pass'   , 'salt' , 'Client' , '336 Ferndale Dell'      , 'North Foster'      , 'NJ'  , '41042')
-,(13      , 'Morton'   , 'Schaefer'  , 'Obie_Rath'              , 'pass'   , 'salt' , 'Client' , '897 Hay Lea'            , 'North Naomiemouth' , 'WA'  , '41042')
-,(14      , 'Amira'    , 'Sawayn'    , 'Jenifer.Bernier'        , 'pass'   , 'salt' , 'Client' , '487 Tudor Orchard'      , 'South Dusty'       , 'WA'  , '41042')
-,(15      , 'Gino'     , 'Gutmann'   , 'Warren79'               , 'pass'   , 'salt' , 'Client' , '895 Barnes Crest'       , 'East Alysson'      , 'NH'  , '41042')
-,(16      , 'Reilly'   , 'Mayer'     , 'Keegan_Maggio'          , 'pass'   , 'salt' , 'Client' , '365 Ger-Y-Ffrwd'        , 'South Sherman'     , 'CT'  , '41042')
-,(17      , 'Sonny'    , 'Mohr'      , 'Bernadette_Gorczany'    , 'pass'   , 'salt' , 'Client' , '355 Rusland Park'       , 'Stantonberg'       , 'CT'  , '41042')
-,(18      , 'Hayley'   , 'Anderson'  , 'Ellis_Brakus'           , 'pass'   , 'salt' , 'Client' , '671 Buckley Park'       , 'West Norval'       , 'KY'  , '41042')
-,(19      , 'Hailee'   , 'Glover'    , 'Aida78'                 , 'pass'   , 'salt' , 'Client' , '136 Almond Elms'        , 'New Annetta'       , 'IN'  , '41042')
-,(20      , 'Conner'   , 'Abshire'   , 'Lessie.McKenzie98'      , 'pass'   , 'salt' , 'Client' , '849 Sutton Parkway'     , 'McLaughlinbury'    , 'OR'  , '41042')
-,(21      , 'Isaias'   , 'Medhurst'  , 'Brendon_Hegmann'        , 'pass'   , 'salt' , 'Client' , '486 Blenkarne Road'     , 'Kristopherberg'    , 'WA'  , '41042')
-,(22      , 'Christine', 'Tillman'   , 'Unique_Davis'           , 'pass'   , 'salt' , 'Client' , '740 Jesmond Isaf'       , 'North Mekhi'       , 'NC'  , '41042')
-,(23      , 'Dandre'   , 'Romaguera' , 'Monserrate.Yost81'      , 'pass'   , 'salt' , 'Client' , '539 Colliers Villas'    , 'Melbaport'         , 'CT'  , '41042')
-,(24      , 'Gayle'    , 'Dare'      , 'Emerson_Labadie'        , 'pass'   , 'salt' , 'Client' , '913 Sandpiper Laurels'  , 'South Monroe'      , 'OK'  , '41042')
-,(25      , 'Ezra'     , 'Zemlak'    , 'Irving.Pouros'          , 'pass'   , 'salt' , 'Client' , '260 Davis Farm'         , 'Guillermoton'      , 'AR'  , '41042')
-,(26      , 'Maiya'    , 'Grady'     , 'Leonor.Sawayn38'        , 'pass'   , 'salt' , 'Client' , '862 Greenfinch Gardens' , 'Thompsonmouth'     , 'SD'  , '41042')
-,(27      , 'Jonatan'  , 'Feeney'    , 'Maybelle_Lang92'        , 'pass'   , 'salt' , 'Client' , '692 Henry Side'         , 'South Genevieveton , 'DE'  , '41042')
-,(28      , 'Jalon'    , 'Robel'     , 'Felicita1'              , 'pass'   , 'salt' , 'Client' , '530 Allan Celyn'        , 'West Kodymouth'    , 'AZ'  , '41042')
-,(29      , 'Einar'    , 'Herzog'    , 'Rusty.Cormier18'        , 'pass'   , 'salt' , 'Client' , '291 Devonshire Street'  , 'South Karliport'   , 'VT'  , '41042')
-,(30      , 'Casandra' , 'Reichel'   , 'Elisabeth.Auer'         , 'pass'   , 'salt' , 'Client' , '210 Austin Court'       , 'South Karliport'   , 'VT'  , '41042')
+INSERT INTO app_user (user_id,first_name,last_name,username,password,salt,role,city,state) VALUES
+ (1,'Test','Trainer','trainer','pKkjz5CLGGIh4ND','fOzycrWX4cXAGGV','Client'                             ,'Koelpinberg'       ,'OH')
+,(2,'Elise','Mayert','Lewis.Paucek','UAs6zyKsgghmcZw','cmvaE2gYpCkM59d','Client'                        ,'South Yvonne'      ,'MD')
+,(3,'Zella','Hilpert','Arvel.Ruecker','AjQc1h8S3cPyKTm','zPa43KHWCeNl9yi','Client'                      ,'Doramouth'         ,'OR')
+,(4,'Darius','Thompson','Ebba.Mueller47','1RQFACvS2fLeeup','GCXIVxeMYZVfxZn','Client'                   ,'East Carlotta'     ,'IN')
+,(5,'Cristina','Russel','Bradford.Ziemann','09X7f1tKIgbIND7','rMirr4sFnQ0bkAW','Client'                 ,'Orionburgh'        ,'DE')
+,(6,'Test','Client','client','ttuMvaHBZ0HWVCX','fPpyI1PLJaFOvSQ','Client'                               ,'Langoshmouth'      ,'ME')
+,(7,'Ellsworth','Rutherford','Maximillian.Schamberger','3aTCI28burpURRh','PfvkPqKIwMN1Wwd','Client'     ,'East Janis'        ,'RI')
+,(8,'Eloise','Skiles','Catherine.Moore','Skeor05X3nJBcwB','LwkU4KSFfhDRc4E','Client'                    ,'Stoltenbergside'   ,'WY')
+,(9,'Wilhelm','Effertz','Skyla_Rowe46','oU_PkXeGP_A4q9x','T_EVPauG96wGJsD','Client'                     ,'South Cassidyton'  ,'WY')
+,(10,'Bridgette','Wisozk','Jerrod55','AidVtlC0bclToof','mM6i_tySQ4xMWe_','Client'                       ,'Swaniawskifurt'    ,'PA')
+,(11,'Lesley','Harris','Carter29','kkQUtIpwSg6uqQA','vt_ZpYEQ06eZ2KR','Client'                          ,'New Braeden'       ,'AR')
+,(12,'Dayna','Rohan','Sheila67','EGli40Llqzw_HE8','fbDL72CvOFoffcF','Client'                            ,'North Foster'      ,'NJ')
+,(13,'Morton','Schaefer','Obie_Rath','qW6ZQRlKxFlh7Sx','mg3CjDywPaWJFQ_','Client'                       ,'North Naomiemouth' ,'WA')
+,(14,'Amira','Sawayn','Jenifer.Bernier','MtYx92ZZ7vsodi9','B5EfSZjGr3OKjLX','Client'                    ,'South Dusty'       ,'WA')
+,(15,'Gino','Gutmann','Warren79','ICDkwylkzVqI2nx','5DeAEIONGxwVk8e','Client'                           ,'East Alysson'      ,'NH')
+,(16,'Reilly','Mayer','Keegan_Maggio','Q3VEYXYJuwt7oWT','44EsZaKbLXv7kIp','Client'                      ,'South Sherman'     ,'CT')
+,(17,'Sonny','Mohr','Bernadette_Gorczany','TI4e73cmara8rPb','7E1tC3bFiDkRajp','Client'                  ,'Stantonberg'       ,'CT')
+,(18,'Hayley','Anderson','Ellis_Brakus','hklek6OycU3upx3','S38vsXgq7IpbLN7','Client'                    ,'West Norval'       ,'KY')
+,(19,'Hailee','Glover','Aida78','9QC6mQdcGruBUOq','nhdMcQNuoH5rRHa','Client'                            ,'New Annetta'       ,'IN')
+,(20,'Conner','Abshire','Lessie.McKenzie98','mmBLag7Dt9ovgqb','1i68Ns09XorOkrK','Client'                ,'McLaughlinbury'    ,'OR')
+,(21,'Isaias','Medhurst','Brendon_Hegmann','fDWN7L_aNElDWlB','pcggOUXY36ScmdZ','Client'                 ,'Kristopherberg'    ,'WA')
+,(22,'Christine','Tillman','Unique_Davis','4oBQoYM7mceodjI','kDhbkGpIowia4n9','Client'                  ,'North Mekhi'       ,'NC')
+,(23,'Dandre','Romaguera','Monserrate.Yost81','d7ZDXioVEs7TsxT','UehUbtLP2dGdzH_','Client'              ,'Melbaport'         ,'CT')
+,(24,'Gayle','Dare','Emerson_Labadie','EtPDoxbFcaQyUZ8','JtfZoOPeo3zWxEP','Client'                      ,'South Monroe'      ,'OK')
+,(25,'Ezra','Zemlak','Irving.Pouros','39ZRF8UP0f4iX8E','8Lin5ITYfmWgolI','Client'                       ,'Guillermoton'      ,'AR')
+,(26,'Maiya','Grady','Leonor.Sawayn38','nCqtVzqSSdq8uhv','G5EDeUR_OyGbMwt','Client'                     ,'Thompsonmouth'     ,'SD')
+,(27,'Jonatan','Feeney','Maybelle_Lang92','TUeJ0uWqaTRDi0Z','29JqvAZsSnCbQMI','Client'                  ,'South Genevieveton','DE')
+,(28,'Jalon','Robel','Felicita1','ExDfSHfnWFxxJuY','PZuWr5xdzq9aoQt','Client'                           ,'West Kodymouth'    ,'AZ')
+,(29,'Einar','Herzog','Rusty.Cormier18','8bF1iWNjqJg9ICL','AXbu_Zx26UWc3Rf','Client'                    ,'South Karliport'   ,'VT')
+,(30,'Casandra','Reichel','Elisabeth.Auer','oawIZfF9NvJhIGh','agQ9E6kyL1tIMau','Client'                 ,'South Karliport'   ,'VT')
 ;
 
 INSERT INTO trainer (user_id,hourly_rate,rating,is_public,philosophy,biography,certifications_pickle) VALUES
@@ -156,21 +155,6 @@ INSERT INTO message (message_id, sender_id, recipient_id, post_date, unread, sub
 ,(3,1,2,'1/10/2019',true,'Subject 3', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')
 ,(4,2,1,'1/11/2019',true,'Reply 1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')
 ,(5,2,1,'1/11/2019',false,'Reply 2', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')
-;
-
--- client list
-INSERT INTO client_list (trainer_id, client_id) VALUES
- (1,6)
-,(1,7)
-;
-
--- work_out plan
-INSERT INTO workout_plan (trainer_id, client_id, days_of_week, title, body) VALUES 
-(1, 6, 'FTFTFTF', 'Legs', 'Do 5 sets of 10 squats and 5 sets of 20 lunges'),
-(1, 6, 'FFTFTFF', 'Arms and Chest', 'Do 3 sets of bench, 2 sets of cleans, and 2 sets of 10 pull-ups'),
-(1, 6, 'FFFFFFT', 'Cardio', 'Run for 45 minutes'),
-(1, 7, 'FTFTFTF', 'Marathon Training', 'Run for 1 hour'),
-(1, 7, 'FFTFTFF', 'Marathon Training', 'Run 5 miles for the first week for each day and 10 miles durring the second week')
 ;
 
 -- Fixup Schema
@@ -223,6 +207,21 @@ UPDATE trainer SET is_public = random_boolean();
 INSERT INTO client (user_id)
 SELECT user_id FROM app_user
 WHERE user_id > 5;
+
+
+-- client list
+INSERT INTO client_list (trainer_id, client_id) VALUES
+ (1,6)
+,(1,7);
+
+-- work_out plan
+INSERT INTO workout_plan (trainer_id, client_id, days_of_week, title, body)
+VALUES (1, 6, 'FTFTFTF', 'Legs', 'Do 5 sets of 10 squats and 5 sets of 20 lunges'),
+(1, 6, 'FFTFTFF', 'Arms and Chest', 'Do 3 sets of bench, 2 sets of cleans, and 2 sets of 10 pull-ups'),
+(1, 6, 'FFFFFFT', 'Cardio', 'Run for 45 minutes'),
+(1, 7, 'FTFTFTF', 'Marathon Training', 'Run for 1 hour'),
+(1, 7, 'FFTFTFF', 'Marathon Training', 'Run 5 miles for the first week for each day and 10 miles durring the second week');
+
 
 COMMIT TRANSACTION;
 

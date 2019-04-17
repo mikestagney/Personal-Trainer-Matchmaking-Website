@@ -9,6 +9,7 @@
          </h2>
               
             <div class="form-input">
+<<<<<<< HEAD
                <span id="label">City</span> <input type="text" v-model="trainer.city" 
                   placeholder="trainer.city">
             </div>           
@@ -16,12 +17,77 @@
                <span id="label">State</span> <input type="text" v-model="trainer.state" 
                   placeholder="trainer.state">
             </div>  
+=======
+               <span id="label">City: </span> <input type="text" v-model="trainer.city" 
+                  placeholder="trainer.city">
+            </div>
+            
+        <label for="state">State: </label>
+        <select name="state" v-model="trainer.state">
+            <option value="AK">Alaska</option>
+            <option value="AL">Alabama</option>
+            <option value="AR">Arkansas</option>
+            <option value="AZ">Arizona</option>
+            <option value="CA">California</option>
+            <option value="CO">Colorado</option>
+            <option value="CT">Connecticut</option>
+            <option value="DC">District of Columbia</option>
+            <option value="DE">Delaware</option>
+            <option value="FL">Florida</option>
+            <option value="GA">Georgia</option>
+            <option value="HI">Hawaii</option>
+            <option value="IA">Iowa</option>
+            <option value="ID">Idaho</option>
+            <option value="IL">Illinois</option>
+            <option value="IN">Indiana</option>
+            <option value="KS">Kansas</option>
+            <option value="KY">Kentucky</option>
+            <option value="LA">Louisiana</option>
+            <option value="MA">Massachusetts</option>
+            <option value="MD">Maryland</option>
+            <option value="ME">Maine</option>
+            <option value="MI">Michigan</option>
+            <option value="MN">Minnesota</option>
+            <option value="MO">Missouri</option>
+            <option value="MS">Mississippi</option>
+            <option value="MT">Montana</option>
+            <option value="NC">North Carolina</option>
+            <option value="ND">North Dakota</option>
+            <option value="NE">Nebraska</option>
+            <option value="NH">New Hampshire</option>
+            <option value="NJ">New Jersey</option>
+            <option value="NM">New Mexico</option>
+            <option value="NV">Nevada</option>
+            <option value="NY">New York</option>
+            <option value="OH">Ohio</option>
+            <option value="OK">Oklahoma</option>
+            <option value="OR">Oregon</option>
+            <option value="PA">Pennsylvania</option>
+            <option value="PR">Puerto Rico</option>
+            <option value="RI">Rhode Island</option>
+            <option value="SC">South Carolina</option>
+            <option value="SD">South Dakota</option>
+            <option value="TN">Tennessee</option>
+            <option value="TX">Texas</option>
+            <option value="UT">Utah</option>
+            <option value="VA">Virginia</option>
+            <option value="VT">Vermont</option>
+            <option value="WA">Washington</option>
+            <option value="WI">Wisconsin</option>
+            <option value="WV">West Virginia</option>
+            <option value="WY">Wyoming</option>
+        </select>   
+>>>>>>> dev-elephant
             <div class="form-input">
                <span id="label">Philosphy (limit 50 characters)</span><br> <textarea rows="1" cols="70" v-model="trainer.philosophy"> 
                   placeholder="trainer.philosophy"</textarea>
             </div>  
             <div class="form-input">
+<<<<<<< HEAD
                <span id="label">Hourly rate</span> <input type="text" v-model="trainer.hourlyRate" 
+=======
+               <span id="label">Hourly rate: </span> <input type="text" v-model="trainer.hourlyRate" 
+>>>>>>> dev-elephant
                   placeholder="trainer.hourlyRate">
             </div>  
             <div class="form-input">
@@ -29,6 +95,7 @@
                   placeholder="trainer.biography"</textarea>
             </div>  
             <div class="form-input">
+<<<<<<< HEAD
                 <div id="app">
                 <h1>Finds</h1>
                 <div v-for="find in finds">
@@ -44,12 +111,22 @@
                 <div v-for="(certification, index) in trainer.certifications" :key="index">
                    
                     <input v-bind:value="certification">
+=======
+
+               <span id="label">Certifications</span>
+                <div v-for="(certification, index) in trainer.certifications" :key="index">
+                    <input v-model="certification.value">
+>>>>>>> dev-elephant
                 </div>
                 
                 <button @click="addCertification">
                     Add a new certification
                 </button>
+<<<<<<< HEAD
                 <pre>{{ trainer.certifications }}</pre>
+=======
+                <pre>{{ certifications | json }}</pre>
+>>>>>>> dev-elephant
                 
 
             </div>  
@@ -78,11 +155,17 @@ export default {
     },
     data(){
         return{
+<<<<<<< HEAD
             finds: [],
             certification: '',
             title:"editTrainerProfile",
             TrainerID: this.$route.params.TrainerID,
             trainer: '',      
+=======
+            title:"editTrainerProfile",
+            TrainerID: this.$route.params.TrainerID,
+            trainer: ''
+>>>>>>> dev-elephant
         }
     },
     created() {  
@@ -96,15 +179,23 @@ export default {
         .then((response) => {
             return response.json();
         })
+<<<<<<< HEAD
         .then((trainer) => {
             this.trainer = trainer;
+=======
+        .then((json) => {
+            this.trainer = json;
+>>>>>>> dev-elephant
         })
         .catch((err) => console.error(err));
     },
     methods: {
+<<<<<<< HEAD
         addFind: function () {
             this.finds.push({ value: '' });
         },
+=======
+>>>>>>> dev-elephant
         updateProfile() {
             fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/${this.TrainerID}`,{
             method: 'PUT',
@@ -121,8 +212,13 @@ export default {
             })
             .catch((err) => console.error(err));
         },
+<<<<<<< HEAD
         addCertification: function () {
             this.trainer.certifications.push("");
+=======
+        addCertification() {
+            this.trainer.certifications.push({ value: '' });
+>>>>>>> dev-elephant
         }
     }
 }

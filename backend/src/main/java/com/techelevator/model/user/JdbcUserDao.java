@@ -1,30 +1,26 @@
 package com.techelevator.model.user;
 
+
 import java.util.LinkedList;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
+
 import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+
 import com.techelevator.authentication.PasswordHasher;
-import com.techelevator.model.user.ClientList;
 
 /**
- * 
+ *
  */
 @Component
 public class JdbcUserDao implements UserDao {
-	
-	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
     private PasswordHasher passwordHasher;
 
@@ -37,7 +33,6 @@ public class JdbcUserDao implements UserDao {
      */
     @Autowired
     public JdbcUserDao(DataSource dataSource, PasswordHasher passwordHasher) {
-    	this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.passwordHasher = passwordHasher;
     }
@@ -58,10 +53,10 @@ public class JdbcUserDao implements UserDao {
         String hashedPassword = passwordHasher.computeHash(password, salt);
         String saltString = new String(Base64.encode(salt));
         long newId = jdbcTemplate.queryForObject(
-        		"INSERT INTO users(	username, first_name, last_name, password, salt, role) VALUES (?, ?, ?, ?, ?, ?) "
+        		"INSERT INTO app_user(	username, first_name, last_name, password, salt, role) VALUES (?, ?, ?, ?, ?, ?) "
         		+ "RETURNING user_id", Long.class,
         							username, firstName,  lastName,  hashedPassword, saltString, role);
-        
+
         switch( role ) {
         case "Trainer":
         	jdbcTemplate.update("INSERT INTO trainer(user_id) VALUES (?)", newId);
@@ -73,7 +68,6 @@ public class JdbcUserDao implements UserDao {
     		throw new IllegalArgumentException("User has illegal role: " + role + ". Must be: Client, Trainer.");
         }
     }
-    
 
     /**
 	 * @param User object of the user to change password for
@@ -85,7 +79,7 @@ public class JdbcUserDao implements UserDao {
         String hashedPassword = passwordHasher.computeHash(newPassword, salt);
         String saltString = new String(Base64.encode(salt));
 
-        jdbcTemplate.update("UPDATE users SET password=?, salt=? WHERE user_id=?",
+        jdbcTemplate.update("UPDATE app_user SET password=?, salt=? WHERE user_id=?",
                 hashedPassword, saltString, user.getId());
     }
 
@@ -100,7 +94,7 @@ public class JdbcUserDao implements UserDao {
      */
     @Override
     public User getValidUserWithPassword(String userName, String password) {
-        String sqlSearchForUser = "SELECT * FROM users WHERE username = ?";
+        String sqlSearchForUser = "SELECT * FROM app_user WHERE username = ?";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForUser, userName.toUpperCase());
         if (results.next()) {
@@ -116,7 +110,7 @@ public class JdbcUserDao implements UserDao {
             return null;
         }
     }
-    
+
     private User createUser(SqlRowSet results) {
     	User user = new User();
     	user.setId(results.getLong("user_id"));
@@ -135,7 +129,7 @@ public class JdbcUserDao implements UserDao {
      */
     @Override
     public User getUserByUsername(String username) {
-    	String sqlSelectUserByUsername = "SELECT * FROM users WHERE username = ?";
+    	String sqlSelectUserByUsername = "SELECT * FROM app_user WHERE username = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserByUsername, username);
         if(results.next()) {
             return createUser(results);
@@ -150,7 +144,7 @@ public class JdbcUserDao implements UserDao {
      */
 	@Override
 	public User getUserById(Long id) {
-    	String sqlSelectUserById = "SELECT * FROM users WHERE user_id = ?";
+    	String sqlSelectUserById = "SELECT * FROM app_user WHERE user_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserById, id);
         if(results.next()) {
             return createUser(results);
@@ -161,69 +155,69 @@ public class JdbcUserDao implements UserDao {
 	
 	@Override
 	public List<Trainer> getTrainers() {
-    	String sql = "SELECT user_id, username, is_public, first_name, last_name, city, state, hourly_rate, rating, philosophy, biography, certifications " + 
-                     "FROM users JOIN trainer USING(user_id) ORDER BY rating DESC, hourly_rate, last_name, first_name";
-    	return new TinyORM<Trainer>(Trainer.class).readAll(jdbcTemplate.queryForRowSet(sql));
+    	String sql = "SELECT user_id, username, is_public, first_name, last_name, address, city, state, zip, hourly_rate, rating, philosophy, biography, certifications_pickle " +
+                     "FROM app_user JOIN trainer USING(user_id) ORDER BY rating DESC, hourly_rate, last_name, first_name";
+    	List<Trainer> results = new TinyORM<Trainer>(Trainer.class).readAll(jdbcTemplate.queryForRowSet(sql));
+    	
+    	for( Trainer r: results ) {
+    		r.setCertificationsPickle(r.getCertificationsPickle());
+    	}
+    	return results;
 	}
 	
 	@Override
 	public Trainer getTrainerByID(long trainerID) {
-    	String sql = "SELECT user_id, username, is_public, first_name, last_name, city, state, hourly_rate, rating, philosophy, biography, certifications " + 
-    			     "FROM users JOIN trainer USING(user_id) WHERE user_id = ?";
-    	return new TinyORM<Trainer>(Trainer.class).readOne(jdbcTemplate.queryForRowSet(sql, trainerID));
+    	String sql = "SELECT user_id, username, is_public, first_name, last_name, address, city, state, zip, hourly_rate, rating, philosophy, biography, certifications_pickle " +
+    			     "FROM app_user JOIN trainer USING(user_id) WHERE user_id = ?";
+    	Trainer result = new TinyORM<Trainer>(Trainer.class).readOne(jdbcTemplate.queryForRowSet(sql, trainerID));
+    	result.setCertificationsPickle(result.getCertificationsPickle());
+    	return result;
 	}
+
 	@Override
 	public void putTrainerByID(long trainerID, Trainer trainer) {
-		final String ARRAY_DATATYPE = "varchar";
-		final String SQL_UPDATE = "UPDATE trainer SET certifications=? WHERE user_id = ?";
-		try {
-			Connection con = this.dataSource.getConnection();
-			jdbcTemplate.update(new PreparedStatementCreator() {
-				
-			    @Override
-			    public PreparedStatement createPreparedStatement(final Connection con) throws SQLException {
-			    	
-			        final PreparedStatement ret = con.prepareStatement(SQL_UPDATE);
-			        ret.setArray(1, con.createArrayOf(ARRAY_DATATYPE, (trainer.certifications).toArray()));
-			        ret.setLong(2, trainerID);
-			        return ret;
-			    }
-			});
-		} catch(Exception e) {};
-		
-		String sql = "UPDATE trainer SET" +
-                "username=?,"        +
-                "is_public=?,"       +
-                "first_name=?,"      +
-                "last_name=?,"       +
-                "city=?,"            +
-                "state=?,"           +
-                "hourly_rate=?,"     +
-                "rating=?,"          +
-                "philosophy=?,"      +
-                "biography=?"       +
-                "FROM users JOIN trainer USING(user_id) WHERE user_id = ?";
-
-
+		trainer.setCertifications(trainer.getCertifications());
+		String sql = "UPDATE trainer SET "       +
+                     "is_public=?,"              +
+                     "hourly_rate=?,"            +
+                     "rating=?,"                 +
+                     "philosophy=?,"             +
+                     "biography=?,"              +
+                     "certifications_pickle=? "  +
+                     "WHERE user_id = ?";
+		jdbcTemplate.update(sql,
+					 trainer.isPublic(),
+					 trainer.getHourlyRate(),
+					 trainer.getRating(),
+					 trainer.getPhilosophy(),
+					 trainer.getBiography(),
+					 trainer.getCertificationsPickle(),
+					 trainerID);
+	
+		sql = "UPDATE app_user SET "   +
+			  "username=?,"        +
+			  "first_name=?,"      +
+			  "last_name=?,"       +
+			  "address=?,"         +
+			  "city=?,"            +
+			  "state=?,"           +
+			  "zip=? "             +
+			  "WHERE user_id = ?";
+		  	
     	jdbcTemplate.update(sql,
-    			trainer.getUsername(), 
-    			trainer.isPublic(), 
-    			trainer.getFirstName(), 
-    			trainer.getLastName(), 
-    			trainer.getCity(), 
-    			trainer.getState(), 
-    			trainer.getHourlyRate(), 
-    			trainer.getRating(), 
-    			trainer.getPhilosophy(), 
-    			trainer.getBiography(), 
+    			trainer.getUsername(),
+    			trainer.getFirstName(),
+				trainer.getLastName(),
+				trainer.getAddress(),
+    			trainer.getCity(),
+    			trainer.getState(),
+    			trainer.getZip(),
     			trainerID);
-    	
 	}
 
-	
 	@Override
 	public User getClientById(Long id) {
-    	String sqlSelectUserById = "SELECT * FROM users WHERE user_id = ?";
+    	String sqlSelectUserById = "SELECT * FROM app_user WHERE user_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUserById, id);
         if(results.next()) {
             return createUser(results);
@@ -231,13 +225,11 @@ public class JdbcUserDao implements UserDao {
             return null;
         }
 	}
-	
 
 	@Override
 	public void updateUser(User user) {
-		jdbcTemplate.update("UPDATE user_profile SET username=?, first_name=?, last_name=?, city=?, state=? WHERE user_id=?",
-				user.getUsername(), user.getFirstName(), user.getLastName(), user.getCity(), user.getState(), user.getId());
-		
+		System.err.print("Need UpdateUser() code");
+		System.exit(1);
 	}
 	
 	@Override
@@ -291,8 +283,7 @@ public class JdbcUserDao implements UserDao {
         }
         return clientList;
 	}
-	
-	
+
 	private Map<User,String[]> getPrivateNotes(long id, List<User> clientList) {
 		Map<User,String[]> privateNotes = new HashMap<User,String[]>();
 		for (User user: clientList) {
@@ -300,7 +291,7 @@ public class JdbcUserDao implements UserDao {
 		}
         return privateNotes;
 	}
-	
+
 	private String[] getPrivateNotesStringArr(long user_id, long client_id) {
 		String[] privateNotes = null;
 		String sqlSelectPrivateNotes = "SELECT private_notes FROM client_list WHERE trainer_id = ? and client_id = ?";

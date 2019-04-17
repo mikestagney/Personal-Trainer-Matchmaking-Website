@@ -1,8 +1,5 @@
 package com.techelevator.model.user;
 
-import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
-import java.beans.Statement;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Field;

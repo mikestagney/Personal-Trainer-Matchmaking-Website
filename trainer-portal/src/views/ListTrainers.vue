@@ -1,9 +1,9 @@
 <template>
 <default-layout>
     <div class="trainer-list container">
-            <div class="row listHeader text-light mb-3 p-5 shadow">
+            <div class="row listHeader text-dark mb-4 shadow">
                 <div class="col">
-                <h2 id="test">Available Trainers</h2>
+                <h2 id="test" class="p-4">Available Trainers</h2>
                 </div>
             </div>
       <form method="GET" class="form-inline" v-on:submit.prevent="filterTrainers">
@@ -71,8 +71,6 @@
                 <option value="WY">Wyoming</option>
             </select>
             </div>
-            </div>
-            <div class="form-row mt-2">
             <div class="col">
                 <select name="hourlyRate" type="number" placeholder="Hourly Rate" v-model="hourlyRate" class="form-control">
                     <option value=999>Hourly Rate</option>
@@ -88,12 +86,12 @@
                     <option value=2>2 Stars or Higher</option>
                     <option value=3>3 Stars or Higher</option>
                     <option value=4>4 or 5 Stars</option>
-                    <option value=5>5 Stars!!</option>
+                    <option value=5>5 Stars!</option>
                 </select>
             </div>
             <div class="col">
-                <select name="sortBy" type="number" placeholder="Sort by Raiting" v-model="sortBy" class="form-control">
-                    <option value=0>Sort by Raiting</option>
+                <select name="sortBy" type="number" placeholder="Sort by Rating" v-model="sortBy" class="form-control">
+                    <option value=0>Sort by Rating</option>
                     <option value=1>Sort by Hourly Rate</option>
                     <option value=2>Sort by First Name</option>
                     <option value=3>Sort by Last Name</option>
@@ -104,8 +102,8 @@
                 </div>
             </div>         
       </form>
-        <table class="table table-striped mt-4">
-            <thead class="thead thead-light">
+        <table class="table table-striped table-hover mt-3">
+            <thead class="thead text-light orangeBackground">
             <tr>
             <th scope="col">Trainer Name</th>
             <th scope="col">City</th>
@@ -197,10 +195,11 @@ export default {
 <style>
 
 .listHeader {
-    background-image: url("../assets/FitnessImages/fitnessImage7.jpg");
+    background-image: url("../assets/FitnessImages/fitnessImage3.jpg");
     background-size: cover;
-    background-position: center;
+    background-position: bottom;
     border-radius: 4px;
+    height: 250px;
 
 }
 
