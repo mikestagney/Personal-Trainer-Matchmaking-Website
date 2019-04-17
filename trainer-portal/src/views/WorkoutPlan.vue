@@ -32,7 +32,7 @@ export default {
     },
     data(){
         return{
-            UserID: this.$route.params.UserID,
+            WorkoutPlanID: this.$route.params.WorkoutPlanID,
             workoutPlan: ''
         }
     },
@@ -40,7 +40,7 @@ export default {
 
     },
   created() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}workoutPlan/1`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/workoutPlan/${this.WorkoutPlanID}`, {
       method: 'GET',
         headers: new Headers ({
           Authorization: 'Bearer ' + auth.getToken(),

@@ -39,10 +39,7 @@ public class PersonalTrainerMatchController {
     private WorkoutDao workoutDao;
 	
     @GetMapping("/dir/trainers")
-	public List<Trainer> trainersList() throws UnauthorizedException {
-		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
-            throw new UnauthorizedException();
-        }
+	public List<Trainer> trainersList() {
     	return userDao.getTrainers();
     }
     
@@ -174,8 +171,16 @@ public class PersonalTrainerMatchController {
 		}
 	}
 	
-	@GetMapping("/workoutPlan/{workoutplanId}")
-	public WorkoutPlan getWorkoutPlan(@PathVariable long workoutplanId) {
-		return workoutDao.getWorkOutPlan(workoutplanId);
+	@GetMapping("/workoutPlan/{workoutPlanId}")
+	public WorkoutPlan getWorkoutPlan(@PathVariable long workoutPlanId) {
+		return workoutDao.getWorkOutPlan(workoutPlanId);
+	}
+	
+	@GetMapping("/createWorkoutPlan/{clientId}")
+	public void getIdForCreateWorkoutPlan(@PathVariable long clientId) {
+	}
+	
+	@PostMapping("/createWorkoutPlan")
+	public void createWorkoutPlan(@PathVariable long clientId) {
 	}
 }
