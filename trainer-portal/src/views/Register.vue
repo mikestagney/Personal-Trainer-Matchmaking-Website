@@ -3,7 +3,7 @@
   <div id="register" class="text-center shadow light-bg border border-warning">
     <form class="form-register" @submit.prevent="register">
       <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
-      <div class="alert alert-danger" role="alert" v-if="registrationErrors">
+      <div class="alert alert-danger" role="alert" v-if="apiHasError">
         There were problems registering this user.
       </div>
       <label for="firstName" class="sr-only">First Name</label>
@@ -53,21 +53,23 @@
         v-model="user.confirmPassword"
         required
       />
-      <label for="role">Role</label>
-        <select v-model="user.role" class="ml-2">
-        <option value="Client">Client</option>
-        <option value="Trainer">Trainer</option>
-      </select>
+      <label for="role" class="text-left">Role:
+        <input type="radio" name="role" v-model="user.role" value="Client"> Client
+        <input type="radio" name="role" v-model="user.role" value="Trainer"> Trainer
+      </label>
       <div class="row">
         <div class="col">
-      <router-link :to="{ name: 'login' }" class="orangeText">
-        Have an account?
-      </router-link>
+        <router-link :to="{ name: 'login' }" class="orangeText">
+          Have an account?
+        </router-link>
         </div>
       </div>
       <button class="btn btn-lg btn-info btn-block mt-2" type="submit">
         Create Account
       </button>
+      <ul v-for="(error, index) in apiErrorList" :key="index"  class="alert alert-danger" role="alert">
+        <li>{{error}}</li>
+      </ul>
     </form>
   </div>
 </default-layout>
@@ -91,12 +93,13 @@ export default {
         confirmPassword: '',
         role: '',
       },
-      registrationErrors: false,
+      apiHasError: false,
+      apiErrorList: []
     };
   },
   methods: {
     register() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}register`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/register`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -105,10 +108,23 @@ export default {
         body: JSON.stringify(this.user),
       })
       .then((response) => {
-        if (response.ok) {
+        if( response.ok ) {
+          this.apiHasError = false;
+          return response.json();
+        } else {
+          this.apiHasError = true;
+          this.apiErrorList = ['Internal Server Error.'];
+        }
+      })
+      .then((json) => {
+        if( this.apiHasError )
+          return;
+        if( json.success  ) {
+          this.apiHasError = false;
           this.$router.push({ path: '/login', query: { registration: 'success' } });
         } else {
-          this.registrationErrors = true;
+          this.apiHasError = true;
+          this.apiErrorList = json.errors;
         }
       })
       .catch((err) => console.error(err));

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.techelevator.authentication.AuthProvider;
-import com.techelevator.authentication.RegistrationResult;
+import com.techelevator.authentication.API_ErrorResult;
 import com.techelevator.authentication.UnauthorizedException;
 import com.techelevator.model.privatemessage.Message;
 import com.techelevator.model.privatemessage.MessageDao;
@@ -121,7 +121,7 @@ public class PersonalTrainerMatchController {
 	
 	@PostMapping("/send")
 	public void sendMessage(@Valid @RequestBody Message message, BindingResult result) {
-		RegistrationResult registrationResult = new RegistrationResult();
+		API_ErrorResult registrationResult = new API_ErrorResult();
 		if(result.hasErrors()) {
             for(ObjectError error : result.getAllErrors()) {
                 registrationResult.addError(error.getDefaultMessage());

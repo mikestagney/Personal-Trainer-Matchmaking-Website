@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <router-view 
-      v-on:login-updated='handleLogin'
-    />
+    <router-view />
   </div>
 </template>
 
@@ -10,13 +8,6 @@
 export default {
   components: {
   },
-  methods: {
-    handleLogin() {
-      console.log("app handleLogin()");
-      alert("app handleLogin()");
-    },
-  }
-
 }
 </script>
 

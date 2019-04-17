@@ -20,7 +20,7 @@
           <a class="nav-link">Trainer Directory</a>
         </router-link>
         <router-link to="/" tag="li" class="nav-item" active-class="active" v-on:click.native="userLoginLogout()">
-           <a class="nav-link">{{ (isLoggedIn)? 'Logout': 'Login' }}</a>
+           <a class="nav-link">{{ isLoggedIn()? 'Logout': 'Login' }}</a>
         </router-link>
       </ul>
     </div>
@@ -34,31 +34,18 @@ import auth from '@/auth';
 export default {
   name: 'Navigation',
   data () {
-    return {
-      isLoggedIn: auth.getUser() != null
-    }
+    return {};
   },
-  /*
-  computed: {
-    isLoggedIn: function () {
-      console.log('isLoggedIn(auth.getUser() != null): ' + (auth.getUser() != null).toString());
-      return auth.getUser() != null;
-    }
-  },
-  created () {
-    this.$bus.$on('logged', () => {
-      this.isLogged = this.isLoggedIn()
-    })
-  },
-  */  
   methods: {
+    isLoggedIn() {
+      return auth.getUser() != null;
+    },
     userLoginLogout() {
-      console.log('userLoginLogout(this.isLoggedIn): ' + this.isLoggedIn);
-      if( this.isLoggedIn ) {
+      console.log('userLoginLogout()');
+      console.log('this.isLoggedIn(): ' + this.isLoggedIn());
+      if( this.isLoggedIn() ) {
         auth.logout();
-        console.log('after logout: ' + this.isLoggedIn);
-        console.log('isLoggedIn(auth.getUser() != null): ' + (auth.getUser() != null).toString());
-        this.isLoggedIn = false;
+        console.log('after logout: ' + this.isLoggedIn());
         this.$router.push({ name: 'home'});
       } else {
         console.log('push login');

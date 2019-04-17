@@ -1,5 +1,7 @@
 package com.techelevator.model.user;
 
+import java.util.Arrays;
+
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Size;
 
@@ -13,17 +15,15 @@ public class User  {
 	protected long id;
 	
 	@MapToDB
-	@Size(min = 2, max = 25)
+	@Size(min = 2, max = 25, message="Username must be between 2 and 25 letters long")
 	@NotBlank(message="Username is required")
 	protected String username;
 	
 	@MapToDB
-	@Size(min = 2, max = 10)
-	@NotBlank(message="Role is required")
     private String role;
 	
 	@MapToDB
-	@Size(min = 2, max = 256)
+	@Size(min = 2, max = 256, message="Password length is invalid")
     @NotBlank(message="Password is required")
 	protected String password;
 	
@@ -31,23 +31,30 @@ public class User  {
 	protected String confirmPassword;
 	
 	@MapToDB("first_name")
-	@Size(min = 2, max = 25)
+	@Size(min = 2, max = 25, message="First Name must be between 2 and 25 letters long")
 	@NotBlank(message="First Name is required")
     private String firstName;
 
 	@MapToDB("last_name")
-	@Size(min = 2, max = 25)
+	@Size(min = 2, max = 25, message="Last Name must be between 2 and 25 letters long")
 	@NotBlank(message="Last Name is required")
 	private String lastName;
 	
 	@MapToDB
-	@Size(min = 2, max = 30)
+	@Size(min = 5, max = 120, message="Address must be between 5 and 120 letters long")
+	private String address;
+
+	@MapToDB
+	@Size(min = 2, max = 30, message="City must be between 2 and 25 letters long")
 	private String city;
 	
 	@MapToDB
-	@Size(min = 2, max = 2)
+	@Size(min = 2, max = 2, message="State must be exactly 2 letters long")
 	private String state;
 	
+	@MapToDB
+	@Size(min = 5, max = 16, message="Zip must be between 5 and 16 letters long")
+	private String zip;
 
 	/**
      * @return True if Password Matches Confirm Password
@@ -57,7 +64,13 @@ public class User  {
         if (password != null) {
             return password.equals(confirmPassword);
         }
-        return true;
+        return false;
+    }
+    
+    @AssertTrue(message = "Role must be: Client or Trainer")
+    public boolean isRoleValid() {
+    	final String[] values = {"Client","Trainer"};
+    	return Arrays.asList(values).contains(this.role);
     }
     
     /**
@@ -194,5 +207,21 @@ public class User  {
 	 */
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
 	}
 }

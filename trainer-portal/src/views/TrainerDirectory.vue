@@ -129,7 +129,7 @@
 
 <script>
 import DefaultLayout from '@/layouts/DefaultLayout';
-import auth from '../auth';
+import auth from '@/auth';
 
 export default {
     name:"TrainerDirectory",
@@ -149,9 +149,7 @@ export default {
         };
     },
     methods: {
-        
         filterTrainers() {
-
                 this.filteredTrainers = this.trainers.filter((trainer) => {
                     return (trainer.firstName + ' ' + trainer.lastName).includes(this.name)
                     && trainer.city.includes(this.city)
@@ -180,10 +178,8 @@ export default {
         }),
         credentials: 'same-origin',
       }) 
-        .then((response) => {
-            return response.json();
-        })
-        .then((json) => {
+        .then( response => response.json())
+        .then( json => {
             this.trainers = json;
             this.filteredTrainers = json;
         })

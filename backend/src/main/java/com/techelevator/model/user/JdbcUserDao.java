@@ -1,8 +1,8 @@
 package com.techelevator.model.user;
 
 
-import java.util.LinkedList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 
 import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -48,7 +49,9 @@ public class JdbcUserDao implements UserDao {
      * @return the new user
      */
     @Override
-    public void saveUser(String username, String firstName, String lastName, String password, String role) {
+    public void saveUser(String username, String firstName, String lastName, String password, String role) 
+    throws DuplicateKeyException
+    {
         byte[] salt = passwordHasher.generateRandomSalt();
         String hashedPassword = passwordHasher.computeHash(password, salt);
         String saltString = new String(Base64.encode(salt));

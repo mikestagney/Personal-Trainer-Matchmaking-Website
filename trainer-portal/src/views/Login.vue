@@ -81,7 +81,6 @@ export default {
             json.token = json.token.replace(/"/g, '');
           }
           auth.saveToken(json.token);
-          //this.$emit('login-updated', 'login data');
           if (auth.getUser().rol == 'Trainer') {
             this.$router.push('/trainer/profile/' + json.userID);
           } else if (auth.getUser().rol == 'Client') {
