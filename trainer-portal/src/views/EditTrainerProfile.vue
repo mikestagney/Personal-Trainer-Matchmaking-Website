@@ -83,16 +83,14 @@
             <div class="form-input">
 
                <span id="label">Certifications</span>
-                <div v-for="(certification, index) in trainer.certifications" :key="index">
-                    <input v-model="certification.value">
+                <div v-for="certification in this.certificationsList" :key="certification">
+                    <input v-bind:value="certification">
                 </div>
                 
                 <button @click="addCertification">
                     Add a new certification
                 </button>
                 <pre>{{ certifications | json }}</pre>
-                
-
             </div>  
             <div class="form-input">
                <input id="true" type="radio" value="true" v-model="trainer.public"><label for="true">Profile is public</label>
@@ -121,7 +119,8 @@ export default {
         return{
             title:"editTrainerProfile",
             TrainerID: this.$route.params.TrainerID,
-            trainer: ''
+            trainer: '',
+            certificationsList: [],
         }
     },
     created() {  
@@ -137,6 +136,7 @@ export default {
         })
         .then((json) => {
             this.trainer = json;
+            this.certificationsList = this.trainer.certifications;
         })
         .catch((err) => console.error(err));
     },
@@ -158,7 +158,7 @@ export default {
             .catch((err) => console.error(err));
         },
         addCertification() {
-            this.trainer.certifications.push({ value: '' });
+            this.certificationsList.push({ value: '' });
         }
     }
 }
