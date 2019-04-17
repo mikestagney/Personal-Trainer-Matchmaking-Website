@@ -179,7 +179,11 @@ public class PersonalTrainerMatchController {
 		return workoutDao.getWorkOutPlan(workoutPlanId);
 	}
 	
-	@PostMapping("/createWorkoutPlan/{clientId}")
+	@GetMapping("/createWorkoutPlan/{clientId}")
+	public void getIdForCreateWorkoutPlan(@PathVariable long clientId) {
+	}
+	
+	@PostMapping("/createWorkoutPlan")
 	public void createWorkoutPlan(@PathVariable long clientId) {
 	}
 }
