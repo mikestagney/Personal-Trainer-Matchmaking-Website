@@ -114,7 +114,7 @@
             </thead>
             <tbody>
                 <tr v-for="trainer in filteredTrainers" :key="trainer.trainerID">
-                    <td><router-link v-bind:to="{ name: 'trainerProfile', params: { TrainerID: trainer.trainerID }}" class="orangeText">{{trainer.firstName}} {{trainer.lastName}}</router-link></td>
+                    <td><router-link v-bind:to="{ name: 'trainer-profile', params: { TrainerID: trainer.trainerID }}" class="orangeText">{{trainer.firstName}} {{trainer.lastName}}</router-link></td>
                     <td>{{trainer.city}}</td>
                     <td>{{trainer.state}}</td>
                     <td>{{trainer.hourlyRate}}</td>
@@ -132,7 +132,7 @@ import DefaultLayout from '@/layouts/DefaultLayout';
 import auth from '../auth';
 
 export default {
-    name:"ListTrainers",
+    name:"TrainerDirectory",
     components: {
         DefaultLayout,
     },
@@ -173,7 +173,7 @@ export default {
         }
     },
     created() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/trainers`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/dir/trainers`, {
       method: 'GET',
         headers: new Headers ({
           Authorization: 'Bearer ' + auth.getToken(),
