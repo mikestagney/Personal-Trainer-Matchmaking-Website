@@ -174,8 +174,8 @@ public class PersonalTrainerMatchController {
 		}
 	}
 	
-	@GetMapping("/workoutPlan/{workoutplanId}")
-	public WorkoutPlan getWorkoutPlan(@PathVariable long workoutplanId) {
-		return workoutDao.getWorkOutPlan(workoutplanId);
+	@GetMapping("/workoutPlan/{workoutPlanId}")
+	public WorkoutPlan getWorkoutPlan(@PathVariable long workoutPlanId) {
+		return workoutDao.getWorkOutPlan(workoutPlanId);
 	}
 }
