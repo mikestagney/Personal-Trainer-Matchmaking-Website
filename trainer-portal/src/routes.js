@@ -44,7 +44,7 @@ const routes = [
     { name: '404'             , path: '/404'                         , component: Error     },
 
     /* message */
-    {name: 'message-detail'   , path: '/message/:MesssageID'         , component: MessageDetail },
+    {name: 'message-detail'   , path: '/message/:MessageID'         , component: MessageDetail },
 
     /* workout plan */
     { name: 'workout-plan'   , path: '/workoutPlan/:WorkoutPlanID'         , component: WorkoutPlan },
