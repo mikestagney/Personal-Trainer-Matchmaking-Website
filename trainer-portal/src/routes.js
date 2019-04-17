@@ -16,8 +16,9 @@ import Error          from './components/404.vue';
 
 import MessageDetail from '@/views/MessageDetail';
 
-import WorkoutPlan   from '@/views/WorkoutPlan';
-import WorkoutPlans   from '@/views/WorkoutPlans';
+import WorkoutPlan         from '@/views/WorkoutPlan';
+import WorkoutPlans        from '@/views/WorkoutPlans';
+import CreateWorkoutPlan   from '@/views/WorkoutPlans';
 
 const routes = [
     /* authentication pages */
@@ -42,7 +43,8 @@ const routes = [
     {name: 'message-detail'   , path: '/message/:MesssageID'         , component: MessageDetail },
 
     /* workout plan */
-    { name: 'workout-plan'   , path: '/workoutPlan/:WorkoutPlanID'        , component: WorkoutPlan },
-    { name: 'workout-plans'   , path: '/workoutPlans/:UserID'              , component: WorkoutPlans },
+    { name: 'workout-plan'   , path: '/workoutPlan/:WorkoutPlanID'    , component: WorkoutPlan },
+    { name: 'workout-plans'   , path: '/workoutPlans/:UserID'         , component: WorkoutPlans },
+    { name: 'create-workout-plan'   , path: '/workoutPlan/:TrainerID' , component: CreateWorkoutPlan },
 ];
 export default routes;
