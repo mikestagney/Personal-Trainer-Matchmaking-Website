@@ -35,10 +35,10 @@ const routes = [
     { name: 'trainer-profile' ,    path: '/trainer/profile/:TrainerID'      , component: TrainerProfile },
     { name: 'client-list',         path: '/clientList'                      , component: ClientList },
     { name: 'editTrainerProfile' , path: '/trainer/profile/:TrainerID/edit' , component: EditTrainerProfile },
-    { name: 'addTrainer' ,         path: '/addTrainer/:TrainerID'           , component: AddTrainer },
 
     /* client */
     { name: 'client-profile'  , path: '/client/profile/:ClientID'    , component: ClientProfile },
+    { name: 'addTrainer' ,         path: '/addTrainer/:TrainerID'           , component: AddTrainer },
 
     { name: 'redirect'        , path: '/redirect'                    , component: Redirect  },
     { name: '404'             , path: '/404'                         , component: Error     },
