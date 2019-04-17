@@ -25,6 +25,7 @@
             hour
          </h5>
       </div>
+      </div>
       <div class="row mb-3">
          <div class="col subheading shadow border border-info">
             <h5 class="orangeText text-center pt-2"><img src="@/assets/FitnessVectors/shoe.png" class="pr-3"/>Background</h5>
@@ -37,7 +38,6 @@
             <h6>{{trainer.certifications}}</h6>
          </div>
       </div>
-   </div>
 </div>
 </default-layout>
 </template>
