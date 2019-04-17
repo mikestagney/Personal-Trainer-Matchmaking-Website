@@ -32,7 +32,7 @@ export default {
     },
     data(){
         return{
-            UserID: this.$route.params.UserID,
+            WorkoutPlanID: this.$route.params.WorkoutPlanID,
             workoutPlan: ''
         }
     },
