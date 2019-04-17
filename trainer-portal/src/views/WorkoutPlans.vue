@@ -40,7 +40,7 @@ export default {
 
     },
   created() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}workoutPlans/${this.UserID}`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/workoutPlans/${this.UserID}`, {
       method: 'GET',
         headers: new Headers ({
           Authorization: 'Bearer ' + auth.getToken(),
