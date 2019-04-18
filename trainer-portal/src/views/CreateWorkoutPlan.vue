@@ -10,19 +10,19 @@
                 <input name="title" type="text" placeholder="ex: Cardio Day, Chest Day, Arms and Abs, ..." v-model="workoutPlan.title" class="form-control mb-3">
             </div>
             <h3>Days to Implement: </h3>
-            <input class="mr-1" type="checkbox" id="sunday" v-model="daysOfWeekArr.sunday.bool">
+            <input class="mr-1" type="checkbox" id="sunday" v-model="daysOfWeekArr.sunday">
             <label class="mr-2" for="checkbox">Sunday</label>
-            <input class="mr-1" type="checkbox" id="monday" v-model="daysOfWeekArr.monday.bool">
+            <input class="mr-1" type="checkbox" id="monday" v-model="daysOfWeekArr.monday">
             <label class="mr-2" for="checkbox">Monday</label>
-            <input class="mr-1" type="checkbox" id="tuesday" v-model="daysOfWeekArr.tuesday.bool">
+            <input class="mr-1" type="checkbox" id="tuesday" v-model="daysOfWeekArr.tuesday">
             <label class="mr-2" for="checkbox">Tuesday</label>
-            <input class="mr-1" type="checkbox" id="wednesday" v-model="daysOfWeekArr.wednesday.bool">
+            <input class="mr-1" type="checkbox" id="wednesday" v-model="daysOfWeekArr.wednesday">
             <label class="mr-2" for="checkbox">Wednesday</label>
-            <input class="mr-1" type="checkbox" id="thursday" v-model="daysOfWeekArr.thursday.bool">
+            <input class="mr-1" type="checkbox" id="thursday" v-model="daysOfWeekArr.thursday">
             <label class="mr-2" for="checkbox">Thursday</label>
-            <input class="mr-1" type="checkbox" id="friday" v-model="daysOfWeekArr.friday.bool">
+            <input class="mr-1" type="checkbox" id="friday" v-model="daysOfWeekArr.friday">
             <label class="mr-2" for="checkbox">Friday</label>
-            <input class="mr-1" type="checkbox" id="saturday" v-model="daysOfWeekArr.saturday.bool">
+            <input class="mr-1" type="checkbox" id="saturday" v-model="daysOfWeekArr.saturday">
             <label class="mr-2" for="checkbox">Saturday</label>
             <h3 class="mt-3">Description: </h3>
             <div class="col">
@@ -61,15 +61,14 @@ export default {
                 message:    '',
             },
             daysOfWeekArr: {
-                sunday:    {bool: false, day: 'Sunday, '   },
-                monday:    {bool: false, day: 'Monday, '   },
-                tuesday:   {bool: false, day: 'Tuesday, '  },
-                wednesday: {bool: false, day: 'Wednesday, '},
-                thursday:  {bool: false, day: 'Thursday, ' },
-                friday:    {bool: false, day: 'Friday, '   },
-                saturday:  {bool: false, day: 'Saturday, ' },
+                sunday:    false,
+                monday:    false,
+                tuesday:   false,
+                wednesday: false,
+                thursday:  false,
+                friday:    false,
+                saturday:  false,
             },
-            daysOfWeekString: '',
         }
     },
     methods: {
@@ -78,31 +77,19 @@ export default {
             this.workoutPlan.daysOfWeek = '';
             this.workoutPlan.trainerId = this.TrainerID;
             this.workoutPlan.clientId = this.ClientID;
-            let lastTrueDay = '';
             this.daysOfWeekArr.forEach(dayOfWeek => {
-                this.workoutPlan.daysOfWeek  += (dayOfWeek.bool ? 'T' : 'F');
-                this.daysOfWeekString += (dayOfWeek ? dayOfWeek.day : '');
-                lastTrueDay = (dayOfWeek ? dayOfWeek.day : lastTrueDay);
+                this.workoutPlan.daysOfWeek  += (dayOfWeek ? 'T' : 'F');
             });
-            if (this.daysOfWeekString.length > 11) {
-                this.daysOfWeekString = this.daysOfWeekString.substring(0, this.daysOfWeekString.length - lastTrueDay.length);
-                this.daysOfWeekString += 'and ' + lastTrueDay.substring(0, lastTrueDay.length - 2);
-            }
-            else {
-                this.daysOfWeekString = this.daysOfWeekString.substring(0, this.daysOfWeekString.length - 2);
-            }
             fetch(`${process.env.VUE_APP_REMOTE_API}/createWorkoutPlan`, {
                 method: 'POST',
                     headers: new Headers ({
                     Authorization: 'Bearer ' + auth.getToken(),
                     }),
                     credentials: 'same-origin',
+                    body: JSON.stringify(this.workoutPlan),
                 }) 
                     .then((response) => {
                         return response.json();
-                    })
-                    .then((json) => {
-                        this.workoutPlan = json;
                     })
                     .catch((err) => console.error(err));
         },
