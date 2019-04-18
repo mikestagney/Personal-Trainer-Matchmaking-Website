@@ -49,10 +49,8 @@ export default {
     },
     data(){
         return{
-            ids: {
-                TrainerID: '',
-                ClientID: '',
-            },
+            TrainerID: '',
+            ClientID: this.$route.params.ClientID,
             workoutPlan: {
                 trainerId: '',
                 clientId: '',
@@ -110,7 +108,7 @@ export default {
                     return response.json();
                 })
                 .then((json) => {
-                    this.ids = json;
+                    this.TrainerID = json;
                 })
                 .catch((err) => console.error(err));
         },
