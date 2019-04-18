@@ -96,6 +96,9 @@ export default {
             }
             this.daysOfWeekStrings.push(this.daysOfWeekString);
         });
+        this.workoutPlans.forEach(workoutPlan => {
+            workoutPlan.push({completed: false});
+        });
     }
  
 }
