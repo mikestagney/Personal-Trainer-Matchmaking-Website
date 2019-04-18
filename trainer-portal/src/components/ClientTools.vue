@@ -11,7 +11,7 @@
                 <router-link v-bind:to="{ name: 'workout-plans', params: { UserID: ClientID }}" exact>
                     <button class="text-light btn-lg exclusiveButton">Current Workouts</button>
                 </router-link>
-                <router-link to="" exact>
+                <router-link v-bind:to="{ name: 'messages'}" exact>
                     <button class="text-light btn-lg exclusiveButton ml-2">Messages</button>
                 </router-link>
                 <router-link to="/directory" exact>

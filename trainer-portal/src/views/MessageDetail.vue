@@ -1,8 +1,8 @@
 <template>
 <body>
   <div class="container page-view pt-2">
-    <div class="messageContainer pb-4 pl-4 pr-4 pt-2">
-      <div class="row messageHeader text-light mb-3 p-5 shadow">
+    <div class="messageContainer pb-4 pl-4 pr-4 pt-2 shadow subheading border border-info">
+      <div class="row messageHeader text-dark mb-3 p-5 shadow">
                 <div class="col">
                 <h2 id="test">Private Message</h2>
                 </div>
@@ -12,12 +12,12 @@
       </div>
       <p><span class="orangeText">From:</span> {{ message.senderId  + ' ' + message.receipientId }}, {{message.role}}
       <span class="orangeText">Sent on:</span> {{ message.postDate  }}</p>
-      <div class="message p-3">
+      <div class="message p-3 mb-3">
       <p> {{ message.message }} </p>
       </div>
         <button v-on:click="replyToSender">Reply</button>
-        <button v-on:click="deleteMessage">Delete Message</button>
-        <button v-on:click="backToInbox">Return to inbox</button>
+        <button v-on:click="deleteMessage" class="ml-2">Delete Message</button>
+        <button v-on:click="backToInbox" class="ml-2">Return to inbox</button>
     </div>
   </div>
 </body> 
@@ -129,7 +129,7 @@ export default {
 }
 
 .messageHeader {
-    background-image: url('/img/fitnessImage8.jpg');
+    background-image: url('/img/fitnessImage08.jpg');
     background-size: cover;
     background-position: center;
     border-radius: 15px;

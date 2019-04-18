@@ -8,16 +8,16 @@
        </div>
        <!-- <message-list></message-list> -->
     <table>
-      <tr v-for="message in messages" v-bind:key="message">
+      <!-- <tr v-for="message in messages" v-bind:key="message"> -->
         <th>Date sent</th>
         <th>senderId recipientId</th>
         <th>Subject</th>
         <th>Unread?</th>
-      </tr>
+      <!-- </tr> -->
       <tr v-for="(message, index) in messages" v-bind:key="index">
         <td>{{ message.postDate }}</td>
         <td>{{ message.senderId + ' ' + message.receipientId }}</td>
-        <td><router-link v-bind:to="{ name: 'trainerPM', params: { MessageID: message.messageId }}">{{ message.subject }}</router-link></td>
+        <td><router-link v-bind:to="{ name: 'message-detail', params: { MessageID: message.messageId }}">{{ message.subject }}</router-link></td>
         <td>{{ message.unread ? 'Yes':'No' }}</td>
       </tr>
     </table>
