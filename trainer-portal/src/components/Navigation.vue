@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand navbar-dark bg-info">
     <router-link to="/" class="navbar-brand">
-      Personal Trainer Portal
+      WORKOUT
     </router-link>
     <button
       class="navbar-toggler"
@@ -31,6 +31,13 @@
         </router-link>
       </ul>
     </div>
+        <div class="navbar-collapse collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item text-light" v-if="isLoggedIn()">
+          Hello, {{userName}}!
+        </li>
+      </ul>
+    </div>
   </nav>
 </template>
 
@@ -43,9 +50,11 @@ export default {
   data () {
     return {
       isTrainer: auth.getUser().rol == 'Trainer',
-      UserID: auth.getUser().jti
+      UserID: auth.getUser().jti,
+      userName: auth.getUser().sub
     };
   },
+
   methods: {
     isLoggedIn() {
       return auth.getUser() != null;

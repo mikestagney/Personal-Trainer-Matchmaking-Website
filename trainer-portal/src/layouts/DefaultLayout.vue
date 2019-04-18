@@ -15,6 +15,7 @@ export default {
   components: {
     Navigation,
   },
+
   methods: {
     handleLogin() {
       console.log("DefaultLayout handleLogin()");
