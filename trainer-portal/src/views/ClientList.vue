@@ -53,7 +53,7 @@ export default {
     methods: {
         filterClientList() {
                 this.filteredClientList = this.clientList.filter((client) => {
-                    return (client.firstName + ' ' + client.lastName).includes(this.name);
+                    return (client.firstName + ' ' + client.lastName).toLowerCase().includes(this.name.toLowerCase());
                 })
         }
     },
