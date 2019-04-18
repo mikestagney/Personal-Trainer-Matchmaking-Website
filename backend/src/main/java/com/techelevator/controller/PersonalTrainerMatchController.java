@@ -193,4 +193,9 @@ public class PersonalTrainerMatchController {
     		workoutDao.createWorkoutPlan(workoutPlan);
     	}
 	}
+	
+	@PutMapping("/updateWorkoutPlan")
+	public void updateWorkoutPlan(@RequestBody boolean completed) {
+    		workoutDao.updateWorkoutPlan(completed);
+	}
 }

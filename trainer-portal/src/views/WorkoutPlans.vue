@@ -48,6 +48,19 @@ export default {
         changeStatus(id) {
             const arrIndex = this.workoutPlans.findIndex((workout) => workout.workoutId == id);
             this.workoutPlans[arrIndex].completed = !this.workoutPlans[arrIndex].completed;
+            fetch(`${process.env.VUE_APP_REMOTE_API}/createWorkoutPlan`, {
+                method: 'POST',
+                    headers: new Headers ({
+                    Authorization: 'Bearer ' + auth.getToken(),
+                    'Content-Type': 'application/json',
+                    }),
+                    credentials: 'same-origin',
+                    body: JSON.stringify(this.workoutPlan),
+                }) 
+                    .then(() => {
+                        this.$router.push({name: 'workout-plans' , params: {UserID: this.ClientID}});
+                    })
+                    .catch((err) => console.error(err));
         },
         weekFlagToText(weekFlag) {
             var days = [];
@@ -72,7 +85,6 @@ export default {
             this.workoutPlan.daysOfWeek = val;
             this.workoutPlan.trainerId = this.TrainerID;
             this.workoutPlan.clientId = this.ClientID;
-            console.log(this.workoutPlan.trainerId, this.workoutPlan.clientId, this.workoutPlan.daysOfWeek);
             fetch(`${process.env.VUE_APP_REMOTE_API}/createWorkoutPlan`, {
                 method: 'POST',
                     headers: new Headers ({

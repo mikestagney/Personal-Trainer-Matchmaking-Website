@@ -44,5 +44,8 @@ public class JdbcWorkoutDao implements WorkoutDao{
 				+ "VALUES (?,?,?,?,?)", workoutPlan.getTrainerId(), workoutPlan.getClientId(), workoutPlan.getTitle(), workoutPlan.getMessage(), workoutPlan.getDaysOfWeek());
 	}
 	
-	
+	@Override
+	public void updateWorkoutPlan(boolean completed) {
+		jdbcTemplate.update("UPDATE workout_plan (completed) VALUES (?)", completed);
+	}
 }
