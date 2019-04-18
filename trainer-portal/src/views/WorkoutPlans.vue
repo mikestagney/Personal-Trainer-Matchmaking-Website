@@ -82,6 +82,9 @@ export default {
         let lastTrueDay = '';
         let counter = 0;
         this.workoutPlans.forEach(workoutPlan => {
+            workoutPlan.push({completed: false});
+        });
+        this.workoutPlans.forEach(workoutPlan => {
             this.daysOfWeekArr.forEach(dayOfWeek => {
                 this.daysOfWeekString += (workoutPlan.dayOfWeek.indexOf(counter) == 'T' ? dayOfWeek : '');
                 lastTrueDay = (workoutPlan.dayOfWeek.indexOf(counter) == 'T' ? dayOfWeek : lastTrueDay);
