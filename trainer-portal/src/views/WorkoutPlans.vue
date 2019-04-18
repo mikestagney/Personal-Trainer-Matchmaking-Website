@@ -11,13 +11,15 @@
         <table class="table table-striped table-hover mt-3">
             <thead class="thead text-light orangeBackground">
             <tr>
+            <th scope="col">Done? </th>
             <th scope="col">Focus: </th>
             <th scope="col">Plan: </th>
             <th scope="col">Days Of Week: </th>
             </tr>
             </thead>
             <tbody>
-                <tr v-for="workout in workoutPlans" :key="workout.workoutId">
+                <tr v-for="workout in workoutPlans" :key="workout.workoutId" v-bind:class="{'workout-completed': workout.completed}">
+                    <input type="checkbox" v-on:click="changeStatus(workout.workoutId)"/>
                     <td><router-link v-bind:to="{ name: 'workout-plan', params: { WorkoutPlanID: workout.workoutId }}" class="orangeText">{{workout.title}}</router-link></td>
                     <td>{{workout.message}}</td>
                     
@@ -55,7 +57,12 @@ export default {
         }
     },
     methods: {
+         changeStatus(id) {
+            const arrIndex = this.workoutPlans.findIndex((workout) => workout.workoutId == id);
+            this.workoutPlans[arrIndex].completed = !this.workoutPlans[arrIndex].completed;
+        }
     },
+
     created() {
       fetch(`${process.env.VUE_APP_REMOTE_API}/workoutPlans/${this.UserID}`, {
       method: 'GET',
@@ -104,6 +111,11 @@ export default {
     border-radius: 4px;
     height: 250px;
 
+}
+
+tr.workout-completed {
+    text-decoration: line-through;
+    color: darkgray;
 }
 
 

@@ -1,6 +1,5 @@
 <template>
   <default-layout>
-    <default-layout>
      <div class="jumbotron addTrainerHeader shadow">
             <div class="container">
         <div class="site-heading text-dark text-center pinkTransparent p-2 shadow">
@@ -13,9 +12,6 @@
     </div>
     </div>
     </div>
-    
-</default-layout>
- 
   </default-layout>
 </template>
 
