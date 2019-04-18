@@ -119,7 +119,7 @@
         </fieldset>
         <div class="form-group row">
             <div class="col-sm-12">
-            <button type="submit" class="btn btn-info">Update Profile</button>
+            <button type="submit" class="btn btn-info" @click="updateProfile">Update Profile</button>
             </div>
         </div>
         </form>
