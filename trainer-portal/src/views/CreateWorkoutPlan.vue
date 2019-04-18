@@ -1,7 +1,5 @@
 <template>
 <default-layout>
-    <template>
-<default-layout>
     <div class="container">
             <div class="row listHeader2 text-light mb-3 p-5 shadow">
                 <div class="col">
@@ -35,8 +33,6 @@
       </form>
     </div>
     
-</default-layout>
-</template>
 </default-layout>
 </template>
 
