@@ -16,9 +16,9 @@
          </h3>
       </div>
    </div>
-   <trainer-tools></trainer-tools>
+   <trainer-tools v-if="jwt_token.getUser().rol === 'Trainer'" :TrainerID="TrainerID"></trainer-tools>
    <div class="row pb-3">
-      <div class="col">
+      <div class="col" v-if="jwt_token.getUser().rol === 'Client'">
          <router-link to="" exact>
              <button class="btn btn-lg btn-info pl-4 pr-4">Book</button>
           </router-link>
@@ -70,7 +70,8 @@ export default {
       return{
          TrainerID: this.$route.params.TrainerID,
          title:"Trainer Profile",
-         trainer: []
+         trainer: [],
+         jwt_token: auth
       }
    },
    methods: {

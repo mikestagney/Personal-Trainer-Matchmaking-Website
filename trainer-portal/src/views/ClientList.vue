@@ -1,21 +1,17 @@
 <template>
 <default-layout>
     <div class="trainer-list container">
-            <div class="row listHeader3 text-light mb-3 p-5 shadow">
-                <div class="col">
-                <h2 id="test">Client List</h2>
+            <div class="row clientListHeader text-dark mb-4 shadow">
+                <div class="ol">
+                <h2 id="test" class="pl-5 p-4">Current Clients</h2>
                 </div>
             </div>
       <form method="GET" class="form-inline" v-on:submit.prevent="filterClientList">
-              <div class="col">
-                <input name="name" type="text" placeholder="Name" v-model="name" class="form-control">
-            </div>
-                <div class="col">
+                <input name="name" type="text" placeholder="Name" v-model="name" class="form-control mr-2">
                 <input name="submit" value="Search" type="submit" class="btn btn-info">
-                </div>
       </form>
-        <table class="table table-striped mt-4">
-            <thead class="thead thead-light">
+        <table class="table table-striped table-hover mt-3">
+            <thead class="thead text-light orangeBackground">
             <tr>
             <th scope="col">Client Name</th>
             <th scope="col">City</th>
@@ -51,9 +47,7 @@ export default {
         };
     },
     methods: {
-        
         filterClientList() {
-
                 this.filteredClientList = this.clientList.filter((client) => {
                     return (client.firstName + ' ' + client.lastName).includes(this.name);
                 })
@@ -81,11 +75,12 @@ export default {
 
 <style>
 
-.listHeader3 {
-    background-image: url('');
+.clientListHeader {
+    background-image: url('/img/fitnessImage10.jpg');
     background-size: cover;
     background-position: center;
     border-radius: 4px;
+    height: 250px;
 
 }
 
