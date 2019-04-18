@@ -6,34 +6,35 @@
                 <h2 id="test">Inbox</h2>
                 </div>
        </div>
-       <message-list></message-list>
-       <!--
-      <div v-for="message in messages" v-bind:key="message">
-      <div class="subject text-center">
-      <h3>Subject: {{ message.subject }}</h3>
-      </div>
-      <p><span class="orangeText">From:</span> {{ message.senderId  + ' ' + message.receipientId }}, {{message.role}}
-      <span class="orangeText">Sent on:</span> {{ message.postDate  }}</p>
-      <div class="message p-3">
-      <p> {{ message.message }} </p>
-      </div>
-        <button v-on:click="replyToSender">Reply</button>
-        <button v-on:click="deleteMessage">Delete Message</button>
-    </div>
-    -->
+       <!-- <message-list></message-list> -->
+    <table>
+      <tr v-for="message in messages" v-bind:key="message">
+        <th>Date sent</th>
+        <th>senderId recipientId</th>
+        <th>Subject</th>
+        <th>Unread?</th>
+      </tr>
+      <tr v-for="(message, index) in messages" v-bind:key="index">
+        <td>{{ message.postDate }}</td>
+        <td>{{ message.senderId + ' ' + message.receipientId }}</td>
+        <td><router-link v-bind:to="{ name: 'trainerPM', params: { MessageID: message.messageId }}">{{ message.subject }}</router-link></td>
+        <td>{{ message.unread ? 'Yes':'No' }}</td>
+      </tr>
+    </table>
   </div>
 </default-layout>
 </template>
 
 <script>
 import auth from '../auth';
-import MessageList from '@/components/MessageList';
+//import MessageList from '@/components/MessageList';
 
 export default {
     name: 'Messages',
+    /*
     components() {
         MessageList
-    },
+    }, */
     data() {
         return {
         messages: [],
@@ -67,6 +68,10 @@ export default {
     background-position: center;
     border-radius: 15px;
 
+}
+
+table {
+  width: 100%;
 }
 
 
