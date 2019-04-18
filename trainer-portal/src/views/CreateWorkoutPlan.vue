@@ -125,5 +125,13 @@ export default {
 
 <style>
 
+.listHeader {
+    background-image:  url('/img/fitnessImage25.jpg');
+    background-size: cover;
+    background-position: bottom;
+    border-radius: 4px;
+    height: 250px;
+
+}
 
 </style>
