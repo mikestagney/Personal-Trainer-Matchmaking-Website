@@ -59,7 +59,34 @@ export default {
             if( weekFlag.charAt(5) === 'T' ) days.push('Fri');
             if( weekFlag.charAt(6) === 'T' ) days.push('Sat');
             return days.join(', ');
-        }
+        },
+        createWorkoutPlan() {
+            let val = '';
+            val += (this.daysOfWeekArr.sunday ? 'T' : 'F');
+            val += (this.daysOfWeekArr.monday ? 'T' : 'F');
+            val += (this.daysOfWeekArr.tuesday ? 'T' : 'F');
+            val += (this.daysOfWeekArr.wednesday ? 'T' : 'F');
+            val += (this.daysOfWeekArr.thursday ? 'T' : 'F');
+            val += (this.daysOfWeekArr.friday ? 'T' : 'F');
+            val += (this.daysOfWeekArr.saturday ? 'T' : 'F');
+            this.workoutPlan.daysOfWeek = val;
+            this.workoutPlan.trainerId = this.TrainerID;
+            this.workoutPlan.clientId = this.ClientID;
+            console.log(this.workoutPlan.trainerId, this.workoutPlan.clientId, this.workoutPlan.daysOfWeek);
+            fetch(`${process.env.VUE_APP_REMOTE_API}/createWorkoutPlan`, {
+                method: 'POST',
+                    headers: new Headers ({
+                    Authorization: 'Bearer ' + auth.getToken(),
+                    'Content-Type': 'application/json',
+                    }),
+                    credentials: 'same-origin',
+                    body: JSON.stringify(this.workoutPlan),
+                }) 
+                    .then(() => {
+                        this.$router.push({name: 'workout-plans' , params: {UserID: this.ClientID}});
+                    })
+                    .catch((err) => console.error(err));
+        },
     },
 
     created() {
