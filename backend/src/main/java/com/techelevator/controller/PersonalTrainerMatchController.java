@@ -190,6 +190,12 @@ public class PersonalTrainerMatchController {
 	}
 	
 	@PostMapping("/createWorkoutPlan")
-	public void createWorkoutPlan(@PathVariable long clientId) {
+	public void createWorkoutPlan(@Valid @RequestBody WorkoutPlan workoutPlan, BindingResult result) throws UnauthorizedException {
+		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
+            throw new UnauthorizedException();
+        }
+		if(!result.hasErrors()) {
+    		workoutDao.createWorkoutPlan(workoutPlan);
+    	}
 	}
 }
