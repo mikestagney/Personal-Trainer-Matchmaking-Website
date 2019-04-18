@@ -11,16 +11,18 @@
         <table class="table table-striped table-hover mt-3">
             <thead class="thead text-light orangeBackground">
             <tr>
-            <th scope="col">Days Of Week (Sun,Mon,Tues,Wed,Thurs,Fri,Sat)</th>
             <th scope="col">Focus: </th>
             <th scope="col">Plan: </th>
+            <th scope="col">Days Of Week</th>
             </tr>
             </thead>
             <tbody>
                 <tr v-for="workout in workoutPlans" :key="workout.workoutId">
-                    <td>{{ workout.daysOfWeek }}</td>
                     <td><router-link v-bind:to="{ name: 'workout-plan', params: { WorkoutPlanID: workout.workoutId }}" class="orangeText">{{workout.title}}</router-link></td>
                     <td>{{workout.message}}</td>
+                    <td v-for="(thisArr, index) in daysOfWeekStrings" :key="index">
+                        <span v-if="thisArr.id == workout.workoutId">{{ thisArr.str }}</span>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -42,27 +44,28 @@ export default {
             UserID: this.$route.params.UserID,
             workoutPlans: [],
             daysOfWeekArr: {
-                sunday:    {bool: false, day: 'Sunday, '   },
-                monday:    {bool: false, day: 'Monday, '   },
-                tuesday:   {bool: false, day: 'Tuesday, '  },
-                wednesday: {bool: false, day: 'Wednesday, '},
-                thursday:  {bool: false, day: 'Thursday, ' },
-                friday:    {bool: false, day: 'Friday, '   },
-                saturday:  {bool: false, day: 'Saturday, ' },
+                sunday:    'Sun, ',
+                monday:    'Mon, ',
+                tuesday:   'Tues, ',
+                wednesday: 'Wed, ',
+                thursday:  'Thur, ',
+                friday:    'Fri, ',
+                saturday:  'Sat, ',
             },
+            daysOfWeekStrings: [],
             daysOfWeekString: '',
         }
     },
     methods: {
     },
-  created() {
+    created() {
       fetch(`${process.env.VUE_APP_REMOTE_API}/workoutPlans/${this.UserID}`, {
       method: 'GET',
         headers: new Headers ({
           Authorization: 'Bearer ' + auth.getToken(),
         }),
         credentials: 'same-origin',
-      }) 
+        }) 
         .then((response) => {
             return response.json();
         })
@@ -75,8 +78,8 @@ export default {
         let counter = 0;
         this.workoutPlans.forEach(workoutPlan => {
             this.daysOfWeekArr.forEach(dayOfWeek => {
-                this.daysOfWeekString += (workoutPlan.dayOfWeek.indexOf(counter) == 'T' ? dayOfWeek.day : '');
-                lastTrueDay = (workoutPlan.dayOfWeek.indexOf(counter) == 'T' ? dayOfWeek.day : lastTrueDay);
+                this.daysOfWeekString += (workoutPlan.dayOfWeek.indexOf(counter) == 'T' ? dayOfWeek : '');
+                lastTrueDay = (workoutPlan.dayOfWeek.indexOf(counter) == 'T' ? dayOfWeek : lastTrueDay);
                 counter++;
             });
             if (this.daysOfWeekString.length > 11) {
@@ -86,6 +89,9 @@ export default {
             else {
                 this.daysOfWeekString = this.daysOfWeekString.substring(0, this.daysOfWeekString.length - 2);
             }
+            let passInId = workoutPlan.workoutPlanId;
+            let passInStr = this.daysOfWeekString;
+            this.daysOfWeekStrings.push({id: passInId, str: passInStr});
         });
     }
  
