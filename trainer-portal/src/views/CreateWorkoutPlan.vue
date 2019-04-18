@@ -1,11 +1,9 @@
 <template>
 <default-layout>
-    <div class="crete-workout-plan container">
-            <div class="row creteWorkoutPlanHeader text-dark mb-4 shadow">
-                <div class="col">
-                <h2 id="test" class="p-4">Workout Plan</h2>
-                </div>
-            </div>
+     <div class="jumbotron creteWorkoutPlanHeader shadow">
+            <div class="crete-workout-plan container">
+        <div class="site-heading text-light pinkTransparent p-2 shadow">
+            <h1 class="display-4 p-2">Create a customized Workout Plan for your Client</h1>
       <form method="POST" class="form-inline" v-on:submit.prevent="createWorkoutPlan">
             <div class="col">
                 <input name="title" type="text" placeholder="Title" v-model="workoutPlan.title" class="form-control">
@@ -31,6 +29,8 @@
                 <input name="submit" value="Submit Workout Plan" type="submit" class="btn btn-info">
                 </div>
       </form>
+    </div>
+    </div>
     </div>
     
 </default-layout>
@@ -131,6 +131,10 @@ export default {
      background-position: center;
     border-radius: 4px;
     height: 450px;
+}
+
+.pinkTransparent {
+    background-color: rgba(255,182,193, 0.6);
 }
 
 </style>
