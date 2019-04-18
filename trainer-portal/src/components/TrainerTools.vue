@@ -30,7 +30,7 @@ export default {
     name: 'TrainerTools',
     
     props: {
-        TrainerID: Object
+        TrainerID: String
     }
 
 }
