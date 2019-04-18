@@ -1,7 +1,7 @@
 <template>
 <default-layout>
     <div class="crete-workout-plan container">
-            <div class="row listHeader text-dark mb-4 shadow">
+            <div class="row creteWorkoutPlanHeader text-dark mb-4 shadow">
                 <div class="col">
                 <h2 id="test" class="p-4">Workout Plan</h2>
                 </div>
@@ -125,13 +125,12 @@ export default {
 
 <style>
 
-.listHeader {
-    background-image:  url('/img/fitnessImage03.jpg');
+.creteWorkoutPlanHeader {
+    background-image: url('/img/fitnessImage25.jpg');
     background-size: cover;
-    background-position: bottom;
+     background-position: center;
     border-radius: 4px;
-    height: 250px;
-
+    height: 450px;
 }
 
 </style>
