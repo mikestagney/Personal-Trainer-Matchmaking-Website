@@ -4,14 +4,21 @@
          <div class="row clientHeader text-dark mb-3 p-5 shadow">
             <div class="col">
                <h1 id="test">
-                  Hello, {{client.firstName}}!
+                  {{client.firstName}} {{client.lastName}}
                </h1>
                <h3>
                   {{client.city}}, {{client.state}}
                </h3>
             </div>
          </div>
-         <client-tools :ClientID = "ClientID"></client-tools>
+         <client-tools v-if="jwt_token.getUser().rol === 'Client'" :ClientID = "ClientID"></client-tools>
+        <div class="row pb-3">
+            <div class="col" v-if="jwt_token.getUser().rol === 'Trainer'">
+            <router-link v-bind:to="{ name: 'create-workout-plan', params: { ClientID: ClientID }}" exact>
+                <button class="btn btn-lg btn-info pl-4 pr-4">Create Client Workout</button>
+            </router-link>
+            </div> 
+         </div>
     </div>
 </default-layout>
 </template>
@@ -31,7 +38,8 @@ import auth from '@/auth';
    return{
     ClientID: this.$route.params.ClientID,
     title:"client-profile",
-    client: []
+    client: [],
+    jwt_token: auth
    }
   },
   created() {
