@@ -50,9 +50,13 @@ export default {
     },
     data(){
         return{
+            ids: {
+                TrainerID: '',
+                ClientID: '',
+            },
             workoutPlan: {
-                trainerId: auth.getUser().getID(),
-                clientId: ('${process.env.VUE_APP_REMOTE_API}/createWorkoutPlan/').params.clientId,
+                trainerId: '',
+                clientId: '',
                 daysOfWeek: '',
                 title:      '',
                 message:    '',
@@ -73,6 +77,8 @@ export default {
         createWorkoutPlan() {
             this.daysOfWeekString       = '';
             this.workoutPlan.daysOfWeek = '';
+            this.workoutPlan.trainerId = this.TrainerID;
+            this.workoutPlan.clientId = this.ClientID;
             let lastTrueDay = '';
             this.daysOfWeekArr.forEach(dayOfWeek => {
                 this.workoutPlan.daysOfWeek  += (dayOfWeek.bool ? 'T' : 'F');
@@ -113,7 +119,7 @@ export default {
                     return response.json();
                 })
                 .then((json) => {
-                    this.workoutPlan = json;
+                    this.ids = json;
                 })
                 .catch((err) => console.error(err));
         },

@@ -185,12 +185,11 @@ public class PersonalTrainerMatchController {
 	}
 	
 	@GetMapping("/createWorkoutPlan/{clientId}")
-	public long getIdForCreateWorkoutPlan(@PathVariable long clientId) {
-		return clientId;
+	public long[] getIdForCreateWorkoutPlan(@PathVariable long clientId) {
+		return new long[] {authProvider.getCurrentUser().getId(), clientId};
 	}
 	
 	@PostMapping("/createWorkoutPlan")
-	public long createWorkoutPlan(@PathVariable long clientId) {
-		return clientId;
+	public void createWorkoutPlan(@PathVariable long clientId) {
 	}
 }

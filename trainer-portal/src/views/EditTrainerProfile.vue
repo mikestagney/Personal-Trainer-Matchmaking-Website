@@ -107,12 +107,12 @@
 
 <script>
 import DefaultLayout from '@/layouts/DefaultLayout';
-import auth from '../auth';
+import auth from '@/auth';
 
 export default {
     name:"editTrainerProfile",
     components: {
-        DefaultLayout
+        DefaultLayout,
     },
     data(){
         return{
