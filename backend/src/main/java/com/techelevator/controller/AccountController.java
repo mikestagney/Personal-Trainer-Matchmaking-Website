@@ -46,7 +46,7 @@ public class AccountController {
     public User login(@RequestBody User user, RedirectAttributes flash) throws UnauthorizedException {
         if(auth.signIn(user.getUsername(), user.getPassword())) {
         	User currentUser = auth.getCurrentUser();
-        	currentUser.token = tokenHandler.createToken(user.getUsername(), currentUser.getRole()); 
+        	currentUser.token = tokenHandler.createToken(user.getUsername(), currentUser.getRole(), currentUser.getId()); 
             return currentUser;
         } else {
             throw new UnauthorizedException();
