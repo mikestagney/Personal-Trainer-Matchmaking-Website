@@ -347,4 +347,11 @@ public class JdbcUserDao implements UserDao {
 					privateNotesNew,trainer_id,client_id);
 		}
 	}
+	
+	@Override
+	public boolean setUserBool(long user_id) {
+		String sqlSelectUsersByTrainerId = "SELECT client_id FROM client_list WHERE trainer_id = ? OR client_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectUsersByTrainerId, user_id, user_id);
+        return results.next();
+	}
 }

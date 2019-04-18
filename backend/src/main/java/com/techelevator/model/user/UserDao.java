@@ -78,5 +78,7 @@ public interface UserDao {
 	// -- /trainers/id
 	public Trainer getTrainerByID(long trainerID);
 	public void    putTrainerByID(long trainerID, Trainer trainer);
+	
+	public boolean setUserBool(long user_id);
 
 }

@@ -73,7 +73,9 @@ public class PersonalTrainerMatchController {
 
     @GetMapping("/client/profile/{clientId}")
 	public User clientProfilePage(@PathVariable long clientId) throws UnauthorizedException {
-		return userDao.getClientById(clientId);
+    	User user = userDao.getClientById(clientId);
+    	user.setHasTrainersOrClients(userDao.setUserBool(clientId));;
+		return user;
 	}
     
     @PutMapping("/client/updateProfile")

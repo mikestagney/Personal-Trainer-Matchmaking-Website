@@ -55,6 +55,16 @@ public class User  {
 	@MapToDB
 	@Size(min = 5, max = 16, message="Zip must be between 5 and 16 letters long")
 	private String zip;
+	
+	private Boolean hasTrainersOrClients;
+
+	public Boolean getHasTrainersOrClients() {
+		return hasTrainersOrClients;
+	}
+
+	public void setHasTrainersOrClients(Boolean hasTrainersOrClients) {
+		this.hasTrainersOrClients = hasTrainersOrClients;
+	}
 
 	/**
      * @return True if Password Matches Confirm Password
