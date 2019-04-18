@@ -6,14 +6,12 @@ import Register       from '@/views/Register';
 import Directory      from '@/views/TrainerDirectory';
 
 import TrainerProfile from '@/views/trainer/Profile';
-import CurrentTrainerProfile from '@/views/trainer/ProfileUser';
 import EditTrainerProfile from '@/views/EditTrainerProfile';
 import AddTrainer from '@/views/AddTrainer';
 
 import ClientList from '@/views/ClientList';
 
 import ClientProfile  from '@/views/client/Profile';   
-import CurrentClientProfile  from '@/views/client/ProfileUser';
 
 import Redirect       from './components/Redirect.vue';
 import Error          from './components/404.vue';
@@ -36,13 +34,15 @@ const routes = [
 
     /* trainer */
     { name: 'trainer-profile' ,    path: '/trainer/profile/:TrainerID'        , component: TrainerProfile },
-    { name: 'trainer-profile-user' ,    path: '/trainer/profile'        , component: CurrentTrainerProfile },
     { name: 'client-list',         path: '/clientList'                        , component: ClientList },
     { name: 'edit-trainer-profile' , path: '/trainer/profile/edit/:TrainerID' , component: EditTrainerProfile },
 
     /* client */
     { name: 'client-profile'  , path: '/client/profile/:ClientID'    , component: ClientProfile },
+<<<<<<< HEAD
     { name: 'client-profile-user'  , path: '/client/profile'         , component: CurrentClientProfile },
+=======
+>>>>>>> c65808e230e3d608a517612e176d5d94a910c45b
     { name: 'addTrainer' ,         path: '/addTrainer/:TrainerID'    , component: AddTrainer },
 
     { name: 'redirect'        , path: '/redirect'                    , component: Redirect  },
