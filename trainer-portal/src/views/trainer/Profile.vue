@@ -20,7 +20,7 @@
    <div class="row pb-3">
       <div class="col" v-if="jwt_token.getUser().rol === 'Client'">
          <router-link v-bind:to="{ name: 'addTrainer', params: { TrainerID: TrainerID }}" exact>
-             <button class="btn btn-lg btn-info pl-4 pr-4">Book</button>
+             <button v-on:click="displayAlert" class="btn btn-lg btn-info pl-4 pr-4">Book</button>
           </router-link>
           <router-link to="/trainer" exact>
              <button class="btn btn-lg btn-info pl-4 pr-4 ml-2">Message</button>
@@ -75,6 +75,9 @@ export default {
       }
    },
    methods: {
+      displayAlert() {
+         alert("You have successfully been added to this Trainer's Client List!");
+      }
    },
    created() {
       fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/${this.TrainerID}`, {
