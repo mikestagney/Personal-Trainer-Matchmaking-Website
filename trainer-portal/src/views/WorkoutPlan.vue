@@ -1,22 +1,17 @@
 <template>
 <default-layout>
-    <div class="trainer-list container">
-        <table class="table table-striped mt-4">
-            <thead class="thead thead-light">
-            <tr>
-            <th scope="col">Work Out: </th>
-            <th scope="col">Focus: </th>
-            <th scope="col">Days Of Week: </th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr >
-                    <td>{{workoutPlan.title}}</td>
-                    <td>{{workoutPlan.message}}</td>
-                    <td>{{ this.daysOfWeekString }}</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="d-flex justify-content-center container ">
+        <div class="card shadow bg-light border border-warning" style="width: 23rem;">
+            <img class="card-img-top" src="">
+        <div class="card-body text-center">
+            <h5 class="card-title">{{workoutPlan.title}}</h5>
+            <h6 class="card-text">{{ this.daysOfWeekString }}</h6>
+            <p class="card-text">{{workoutPlan.message}}</p>
+         </div>
+         </div>
+         <router-link v-bind:to="{ name: 'workout-plans', params: { UserID: UserID }}" exact>
+                    <button class="text-light btn-lg btn-info ml-2">Back to Workouts</button>
+          </router-link>
     </div>
     
 </default-layout>
@@ -34,6 +29,7 @@ export default {
         return{
             WorkoutPlanID: this.$route.params.WorkoutPlanID,
             workoutPlan: '',
+            UserID: '',
             daysOfWeekArr: {
                 sunday:    'Sun, ',
                 monday:    'Mon, ',
