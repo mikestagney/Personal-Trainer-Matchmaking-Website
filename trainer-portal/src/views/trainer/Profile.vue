@@ -11,7 +11,7 @@
          </h3>
       </div>
       <div class="col">
-         <h3 class="font-italic">
+         <h3 id="philosophy" class="font-italic">
             "{{trainer.philosophy}}"
          </h3>
       </div>
@@ -121,6 +121,19 @@ export default {
 
 .ratingStar {
    width: 8%;
+}
+
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    #philosophy {
+       display: none;
+       }
+
+   .ratingStar {
+      width: 5%;
+   }
 }
 
 

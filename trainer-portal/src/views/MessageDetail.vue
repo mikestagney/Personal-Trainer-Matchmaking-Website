@@ -1,8 +1,9 @@
 <template>
+<default-layout>
 <body>
   <div class="container page-view pt-2">
     <div class="messageContainer pb-4 pl-4 pr-4 pt-2 shadow subheading border border-info">
-      <div class="row messageHeader text-dark mb-3 p-5 shadow">
+      <div class="row messageHeader text-light mb-3 p-5 shadow">
                 <div class="col">
                 <h2 id="test">Private Message</h2>
                 </div>
@@ -17,18 +18,22 @@
       </div>
         <button v-on:click="replyToSender">Reply</button>
         <button v-on:click="deleteMessage" class="ml-2">Delete Message</button>
-        <button v-on:click="backToInbox" class="ml-2">Return to inbox</button>
+        <router-link to="/inbox"><button v-on:click="backToInbox" class="ml-2">Return to inbox</button></router-link>
     </div>
   </div>
 </body> 
-    
+</default-layout>  
 </template>
 
 <script>
+import DefaultLayout from '@/layouts/DefaultLayout';
 import auth from '../auth';
 
 export default {
     name: 'MessageDetail',
+    components: {
+        DefaultLayout,
+    },
     
   data() {
     return {
