@@ -13,7 +13,7 @@
             <tr>
             <th scope="col">Focus: </th>
             <th scope="col">Plan: </th>
-            <th scope="col">Days Of Week</th>
+            <th scope="col">Days Of Week: </th>
             </tr>
             </thead>
             <tbody>
@@ -71,7 +71,7 @@ export default {
             this.workoutPlans = json;
         })
         .catch((err) => console.error(err));
-        this.daysOfWeekString       = '';
+        this.daysOfWeekString = '';
         let lastTrueDay = '';
         let counter = 0;
         this.workoutPlans.forEach(workoutPlan => {

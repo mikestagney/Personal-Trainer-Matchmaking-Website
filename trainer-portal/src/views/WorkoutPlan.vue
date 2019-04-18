@@ -4,16 +4,16 @@
         <table class="table table-striped mt-4">
             <thead class="thead thead-light">
             <tr>
-            <th scope="col">Days Of Week (Sun,Mon,Tues,Wed,Thurs,Fri,Sat)</th>
             <th scope="col">Work Out: </th>
-            <th scope="col">Plan: </th>
+            <th scope="col">Focus: </th>
+            <th scope="col">Days Of Week: </th>
             </tr>
             </thead>
             <tbody>
                 <tr >
-                    <td>{{ workoutPlan.daysOfWeek }}</td>
                     <td>{{workoutPlan.title}}</td>
                     <td>{{workoutPlan.message}}</td>
+                    <td>{{ this.daysOfWeekString }}</td>
                 </tr>
             </tbody>
         </table>
@@ -35,13 +35,13 @@ export default {
             WorkoutPlanID: this.$route.params.WorkoutPlanID,
             workoutPlan: '',
             daysOfWeekArr: {
-                sunday:    {bool: false, day: 'Sunday, '   },
-                monday:    {bool: false, day: 'Monday, '   },
-                tuesday:   {bool: false, day: 'Tuesday, '  },
-                wednesday: {bool: false, day: 'Wednesday, '},
-                thursday:  {bool: false, day: 'Thursday, ' },
-                friday:    {bool: false, day: 'Friday, '   },
-                saturday:  {bool: false, day: 'Saturday, ' },
+                sunday:    'Sun, ',
+                monday:    'Mon, ',
+                tuesday:   'Tues, ',
+                wednesday: 'Wed, ',
+                thursday:  'Thur, ',
+                friday:    'Fri, ',
+                saturday:  'Sat, ',
             },
             daysOfWeekString: '',
         }
@@ -64,6 +64,23 @@ export default {
             this.workoutPlan = json;
         })
         .catch((err) => console.error(err));
+        this.daysOfWeekString = '';
+        let lastTrueDay = '';
+        let counter = 0;
+        this.workoutPlans.forEach(workoutPlan => {
+            this.daysOfWeekArr.forEach(dayOfWeek => {
+                this.daysOfWeekString += (workoutPlan.dayOfWeek.indexOf(counter) == 'T' ? dayOfWeek : '');
+                lastTrueDay = (workoutPlan.dayOfWeek.indexOf(counter) == 'T' ? dayOfWeek : lastTrueDay);
+                counter++;
+            });
+            if (this.daysOfWeekString.length > 11) {
+                this.daysOfWeekString = this.daysOfWeekString.substring(0, this.daysOfWeekString.length - lastTrueDay.length);
+                this.daysOfWeekString += 'and ' + lastTrueDay.substring(0, lastTrueDay.length - 2);
+            }
+            else {
+                this.daysOfWeekString = this.daysOfWeekString.substring(0, this.daysOfWeekString.length - 2);
+            }
+        });
     }
  
 }
