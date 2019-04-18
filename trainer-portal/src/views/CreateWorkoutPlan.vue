@@ -3,7 +3,7 @@
      <div class="jumbotron creteWorkoutPlanHeader shadow">
             <div class="crete-workout-plan container">
         <div class="site-heading text-light pinkTransparent p-2 shadow">
-            <h1 class="display-4 p-2">Create a customized Workout Plan for your Client</h1>
+            <h1 class="display-5 p-2">Create a customized Workout Plan for your Client</h1>
       <form method="POST" class="form-inline" v-on:submit.prevent="createWorkoutPlan">
             <div class="col">
                 <input name="title" type="text" placeholder="Title" v-model="workoutPlan.title" class="form-control">
