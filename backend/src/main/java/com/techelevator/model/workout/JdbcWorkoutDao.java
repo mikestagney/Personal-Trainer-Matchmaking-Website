@@ -22,19 +22,19 @@ public class JdbcWorkoutDao implements WorkoutDao{
 
 	@Override
 	public WorkoutPlan getWorkOutPlan(long workoutId) {
-		String sql = "SELECT workoutplan_id, client_id, trainer_id, days_of_week, title, body FROM workout_plan WHERE workoutplan_id = ?";
+		String sql = "SELECT workoutplan_id, client_id, trainer_id, days_of_week, title, body, completed FROM workout_plan WHERE workoutplan_id = ?";
         return new TinyORM<WorkoutPlan>(WorkoutPlan.class).readOne(jdbcTemplate.queryForRowSet(sql, workoutId));
 	}
 
 	@Override
 	public WorkoutPlan getWorkOutPlanForId(long userId) {
-		String sql = "SELECT workoutplan_id, client_id, trainer_id, days_of_week, title, body FROM workout_plan WHERE client_id = ? OR trainer_id=?";
+		String sql = "SELECT workoutplan_id, client_id, trainer_id, days_of_week, title, body, completed FROM workout_plan WHERE client_id = ? OR trainer_id=?";
         return new TinyORM<WorkoutPlan>(WorkoutPlan.class).readOne(jdbcTemplate.queryForRowSet(sql, userId, userId));
 	}
 	
 	@Override
 	public List<WorkoutPlan> getWorkOutPlansForIds(long trainerId, long clientId) {
-		String sql = "SELECT workoutplan_id, client_id, trainer_id, days_of_week, title, body FROM workout_plan WHERE (client_id = ? OR trainer_id=?) AND (client_id = ? OR trainer_id=?)";
+		String sql = "SELECT workoutplan_id, client_id, trainer_id, days_of_week, title, body, completed FROM workout_plan WHERE (client_id = ? OR trainer_id=?) AND (client_id = ? OR trainer_id=?)";
         return new TinyORM<WorkoutPlan>(WorkoutPlan.class).readAll(jdbcTemplate.queryForRowSet(sql, trainerId, trainerId, clientId, clientId));
 	}
 	
