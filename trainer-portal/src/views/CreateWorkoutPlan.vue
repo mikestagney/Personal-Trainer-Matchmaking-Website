@@ -28,7 +28,7 @@
                 <input name="message" type="text" placeholder="What is the workout?" v-model="workoutPlan.message" class="form-control">
             </div>
                 <div class="col">
-                <input name="submit" value="Update" type="submit" class="btn btn-info">
+                <input name="submit" value="Submit Workout Plan" type="submit" class="btn btn-info">
                 </div>
       </form>
     </div>
