@@ -2,11 +2,6 @@
 <default-layout>
     <div class="container">
            <div class="row workoutHeader text-light mb-4 shadow">
-<!--             <div class="col">
-                <h2 class="p-4">
-                    Current Workouts
-                </h2>
-            </div> -->
     </div>
         <table class="table table-striped table-hover mt-3">
             <thead class="thead text-light orangeBackground">

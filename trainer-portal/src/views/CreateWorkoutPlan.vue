@@ -72,13 +72,16 @@ export default {
         }
     },
     methods: {
-        setDaysOfWeek() {
-            this.workoutPlan.daysOfWeek = '';
-            this.daysOfWeekArr.forEach(dayOfWeek => {
-                this.workoutPlan.daysOfWeek  += (dayOfWeek ? 'T' : 'F');
-            });
-        },
         createWorkoutPlan() {
+            let val = '';
+            val += (this.daysOfWeekArr.sunday ? 'T' : 'F');
+            val += (this.daysOfWeekArr.monday ? 'T' : 'F');
+            val += (this.daysOfWeekArr.tuesday ? 'T' : 'F');
+            val += (this.daysOfWeekArr.wednesday ? 'T' : 'F');
+            val += (this.daysOfWeekArr.thursday ? 'T' : 'F');
+            val += (this.daysOfWeekArr.friday ? 'T' : 'F');
+            val += (this.daysOfWeekArr.saturday ? 'T' : 'F');
+            this.workoutPlan.daysOfWeek = val;
             this.workoutPlan.trainerId = this.TrainerID;
             this.workoutPlan.clientId = this.ClientID;
             fetch(`${process.env.VUE_APP_REMOTE_API}/createWorkoutPlan`, {
