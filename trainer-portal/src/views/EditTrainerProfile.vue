@@ -121,7 +121,7 @@
         </fieldset>
         <div class="form-group row">
             <div class="col-sm-12">
-            <button type="submit" class="btn btn-info" @click="updateProfile">Update Profile</button>
+            <button type="submit" class="btn btn-info" @click.prevent="updateProfile">Update Profile</button>
             </div>
         </div>
         </form>
@@ -169,17 +169,13 @@ export default {
             method: 'PUT',
             headers: new Headers ({
             Authorization: 'Bearer ' + auth.getToken(),
+            'Content-Type': 'application/json',
             }),
             credentials: 'same-origin',
+            body: JSON.stringify(this.trainer),
             }) 
-            .then((response) => {
-            return response.json();
-            })
-            .then((json) => {
-                this.trainer = json;
-            })
             .then(() => {
-            this.$router.push('/trainer/profile/' + this.TrainerID);
+            this.$router.push({name: 'trainer-profile' , params: {TrainerID: this.TrainerID}});
             })
             .catch((err) => console.error(err));
         },
@@ -205,7 +201,6 @@ export default {
     background-position: bottom;
     border-radius: 4px;
     height: 250px;
-
 }
 
 

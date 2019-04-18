@@ -47,17 +47,6 @@ export default {
         return{
             UserID: this.$route.params.UserID,
             workoutPlans: [],
-            daysOfWeekArr: {
-                sunday:    'Sun, ',
-                monday:    'Mon, ',
-                tuesday:   'Tues, ',
-                wednesday: 'Wed, ',
-                thursday:  'Thur, ',
-                friday:    'Fri, ',
-                saturday:  'Sat, ',
-            },
-            daysOfWeekStrings: [],
-            daysOfWeekString: '',
         }
     },
     methods: {

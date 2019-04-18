@@ -32,7 +32,7 @@ const routes = [
     { name: 'dir-trainer'     , path: '/directory'                   , component: Directory  },
 
     /* trainer */
-    { name: 'trainer-profile' ,    path: '/trainer/profile/:TrainerID'        , component: TrainerProfile },
+    { name: 'trainer-profile' ,    path: '/trainer/profile/:TrainerID'        , component: TrainerProfile},
     { name: 'client-list',         path: '/clientList'                        , component: ClientList },
     { name: 'edit-trainer-profile' , path: '/trainer/profile/edit/:TrainerID' , component: EditTrainerProfile },
 
