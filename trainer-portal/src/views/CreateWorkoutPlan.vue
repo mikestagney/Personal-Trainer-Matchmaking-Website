@@ -130,7 +130,7 @@ export default {
     background-size: cover;
      background-position: center;
     border-radius: 4px;
-    height: 450px;
+    height: 626px;
 }
 
 .pinkTransparent {
