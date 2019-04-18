@@ -16,6 +16,7 @@
             <th scope="col">Client Name</th>
             <th scope="col">City</th>
             <th scope="col">State</th>
+            <th scope="col">New Workout Plan?</th>
             </tr>
             </thead>
             <tbody>
@@ -23,6 +24,7 @@
                     <td><router-link v-bind:to="{ name: 'client-profile', params: { ClientID: client.userID }}" class="orangeText">{{client.firstName}} {{client.lastName}}</router-link></td>
                     <td>{{client.city}}</td>
                     <td>{{client.state}}</td>
+                    <td><router-link v-bind:to="{ name: 'create-workout-plan', params: { ClientID: client.userID }}" class="orangeText">Create Workout</router-link></td>
                 </tr>
             </tbody>
         </table>
