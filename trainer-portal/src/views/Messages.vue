@@ -1,12 +1,13 @@
 <template>
-<body>
-  <div class="container page-view pt-2">
-    <div class="messageContainer pb-4 pl-4 pr-4 pt-2">
+<default-layout>
+  <div class="container">
       <div class="row messagesHeader text-light mb-3 p-5 shadow">
                 <div class="col">
                 <h2 id="test">Inbox</h2>
                 </div>
        </div>
+       <message-list></message-list>
+       <!--
       <div v-for="message in messages" v-bind:key="message">
       <div class="subject text-center">
       <h3>Subject: {{ message.subject }}</h3>
@@ -19,17 +20,20 @@
         <button v-on:click="replyToSender">Reply</button>
         <button v-on:click="deleteMessage">Delete Message</button>
     </div>
-    </div>
+    -->
   </div>
-</body> 
-    
+</default-layout>
 </template>
 
 <script>
 import auth from '../auth';
+import MessageList from '@/components/MessageList';
 
 export default {
     name: 'Messages',
+    components() {
+        MessageList
+    },
     data() {
         return {
         messages: [],
