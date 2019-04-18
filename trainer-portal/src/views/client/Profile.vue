@@ -11,7 +11,7 @@
                </h3>
             </div>
          </div>
-         <client-tools v-if="jwt_token.getUser().rol === 'Client'" :ClientID = "ClientID"></client-tools>
+         <client-tools v-if="jwt_token.getUser().rol === 'Client'" :ClientID = "ClientID" :ClientStatus = "client.hasTrainer"></client-tools>
     </div>
 </default-layout>
 </template>
