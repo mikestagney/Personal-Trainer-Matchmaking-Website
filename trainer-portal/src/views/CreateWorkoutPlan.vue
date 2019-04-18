@@ -1,7 +1,5 @@
 <template>
 <default-layout>
-    <template>
-<default-layout>
     <div class="container">
             <div class="row listHeader2 text-light mb-3 p-5 shadow">
                 <div class="col">
@@ -10,7 +8,7 @@
             </div>
       <form method="POST" class="form-inline" v-on:submit.prevent="createWorkoutPlan">
             <div class="col">
-                <input name="title" type="text" placeholder="Title" v-model="this.workoutPlan.title" class="form-control">
+                <input name="title" type="text" placeholder="Title" v-model="workoutPlan.title" class="form-control">
             </div>
             <input type="checkbox" id="sunday" v-model="daysOfWeekArr.sunday.bool">
             <label for="checkbox">Sunday</label>
@@ -30,13 +28,11 @@
                 <input name="message" type="text" placeholder="What is the workout?" v-model="workoutPlan.message" class="form-control">
             </div>
                 <div class="col">
-                <input name="submit" value="Update" type="submit" class="btn btn-info">
+                <input name="submit" value="Submit Workout Plan" type="submit" class="btn btn-info">
                 </div>
       </form>
     </div>
     
-</default-layout>
-</template>
 </default-layout>
 </template>
 
@@ -50,22 +46,25 @@ export default {
     },
     data(){
         return{
-            ClientID: ('${process.env.VUE_APP_REMOTE_API}/createWorkoutPlan/').params.ClientID,
+            ids: {
+                TrainerID: '',
+                ClientID: '',
+            },
             workoutPlan: {
-                TrainerID: auth.getUser().getID(),
-                ClientID: this.ClientID,
+                trainerId: '',
+                clientId: '',
                 daysOfWeek: '',
                 title:      '',
                 message:    '',
             },
             daysOfWeekArr: {
-                sunday:    {bool: '', day: 'Sunday, '   },
-                monday:    {bool: '', day: 'Monday, '   },
-                tuesday:   {bool: '', day: 'Tuesday, '  },
-                wednesday: {bool: '', day: 'Wednesday, '},
-                thursday:  {bool: '', day: 'Thursday, ' },
-                friday:    {bool: '', day: 'Friday, '   },
-                saturday:  {bool: '', day: 'Saturday, ' },
+                sunday:    {bool: false, day: 'Sunday, '   },
+                monday:    {bool: false, day: 'Monday, '   },
+                tuesday:   {bool: false, day: 'Tuesday, '  },
+                wednesday: {bool: false, day: 'Wednesday, '},
+                thursday:  {bool: false, day: 'Thursday, ' },
+                friday:    {bool: false, day: 'Friday, '   },
+                saturday:  {bool: false, day: 'Saturday, ' },
             },
             daysOfWeekString: '',
         }
@@ -74,6 +73,8 @@ export default {
         createWorkoutPlan() {
             this.daysOfWeekString       = '';
             this.workoutPlan.daysOfWeek = '';
+            this.workoutPlan.trainerId = this.TrainerID;
+            this.workoutPlan.clientId = this.ClientID;
             let lastTrueDay = '';
             this.daysOfWeekArr.forEach(dayOfWeek => {
                 this.workoutPlan.daysOfWeek  += (dayOfWeek.bool ? 'T' : 'F');
@@ -114,7 +115,7 @@ export default {
                     return response.json();
                 })
                 .then((json) => {
-                    this.workoutPlan = json;
+                    this.ids = json;
                 })
                 .catch((err) => console.error(err));
         },
@@ -124,5 +125,13 @@ export default {
 
 <style>
 
+.listHeader {
+    
+    background-size: cover;
+    background-position: bottom;
+    border-radius: 4px;
+    height: 250px;
+
+}
 
 </style>

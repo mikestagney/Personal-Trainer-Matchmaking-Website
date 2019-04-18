@@ -11,4 +11,6 @@ public interface WorkoutDao {
 	public WorkoutPlan getWorkOutPlanForId(long userId);
 	
 	public List<WorkoutPlan> getWorkOutPlansForIds(long trainerId, long clientId);
+	
+	public void createWorkoutPlan(WorkoutPlan workoutPlan);
 }

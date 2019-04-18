@@ -38,5 +38,11 @@ public class JdbcWorkoutDao implements WorkoutDao{
         return new TinyORM<WorkoutPlan>(WorkoutPlan.class).readAll(jdbcTemplate.queryForRowSet(sql, trainerId, trainerId, clientId, clientId));
 	}
 	
+	@Override
+	public void createWorkoutPlan(WorkoutPlan workoutPlan) {
+		jdbcTemplate.update("INSERT INTO workout_plan (trainer_id, client_id, title, body, days_of_week) "
+				+ "VALUES (?,?,?,?,?)", workoutPlan.getTrainerId(), workoutPlan.getClientId(), workoutPlan.getTitle(), workoutPlan.getMessage(), workoutPlan.getDaysOfWeek());
+	}
+	
 	
 }
