@@ -19,6 +19,13 @@
         <router-link :to="{name: 'dir-trainer'}" tag="li" class="nav-item" active-class="active" exact>
           <a class="nav-link">Trainer Directory</a>
         </router-link>
+
+        <router-link :to="{name: 'trainer-profile-user'}" tag="li" v-if="this.isTrainer" class="nav-item" active-class="active" exact>
+          <a class="nav-link">Profile</a>
+        </router-link>
+        <router-link :to="{name: 'client-profile-user'}" tag="li" v-else class="nav-item" active-class="active" exact>
+          <a class="nav-link">Profile</a>
+        </router-link>
         <router-link to="/" tag="li" class="nav-item" active-class="active" v-on:click.native="userLoginLogout()">
            <a class="nav-link">{{ isLoggedIn()? 'Logout': 'Login' }}</a>
         </router-link>
@@ -34,7 +41,9 @@ import auth from '@/auth';
 export default {
   name: 'Navigation',
   data () {
-    return {};
+    return {
+      isTrainer: auth.getUser().rol == 'Trainer',
+    };
   },
   methods: {
     isLoggedIn() {
