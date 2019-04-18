@@ -49,7 +49,7 @@ export default {
     },
     data(){
         return{
-            TrainerID: '',
+            TrainerID: auth.getUser().jti,
             ClientID: this.$route.params.ClientID,
             workoutPlan: {
                 trainerId: '',
@@ -57,6 +57,7 @@ export default {
                 daysOfWeek: '',
                 title:      '',
                 message:    '',
+                completed: false,
             },
             daysOfWeekArr: {
                 sunday:    false,
@@ -82,6 +83,7 @@ export default {
             this.workoutPlan.daysOfWeek = val;
             this.workoutPlan.trainerId = this.TrainerID;
             this.workoutPlan.clientId = this.ClientID;
+            console.log(this.workoutPlan.trainerId, this.workoutPlan.clientId, this.workoutPlan.daysOfWeek);
             fetch(`${process.env.VUE_APP_REMOTE_API}/createWorkoutPlan`, {
                 method: 'POST',
                     headers: new Headers ({
@@ -95,22 +97,6 @@ export default {
                         this.$router.push({name: 'workout-plans' , params: {UserID: this.ClientID}});
                     })
                     .catch((err) => console.error(err));
-        },
-        created() {
-            fetch(`${process.env.VUE_APP_REMOTE_API}/createWorkoutPlan/${this.ClientID}`, {
-            method: 'GET',
-                headers: new Headers ({
-                Authorization: 'Bearer ' + auth.getToken(),
-                }),
-                credentials: 'same-origin',
-            }) 
-                .then((response) => {
-                    return response.json();
-                })
-                .then((json) => {
-                    this.TrainerID = json;
-                })
-                .catch((err) => console.error(err));
         },
     },
 }
