@@ -45,7 +45,7 @@ public class JdbcWorkoutDao implements WorkoutDao{
 	}
 	
 	@Override
-	public void updateWorkoutPlan(boolean completed) {
-		jdbcTemplate.update("UPDATE workout_plan (completed) VALUES (?)", completed);
+	public void updateWorkoutPlan(boolean completed, long userId) {
+		jdbcTemplate.update("UPDATE workout_plan SET completed=? WHERE user_id = ?", completed, userId);
 	}
 }

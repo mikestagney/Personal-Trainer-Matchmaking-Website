@@ -196,6 +196,6 @@ public class PersonalTrainerMatchController {
 	
 	@PutMapping("/updateWorkoutPlan")
 	public void updateWorkoutPlan(@RequestBody boolean completed) {
-    		workoutDao.updateWorkoutPlan(completed);
+    		workoutDao.updateWorkoutPlan(completed,authProvider.getCurrentUser().getId());
 	}
 }

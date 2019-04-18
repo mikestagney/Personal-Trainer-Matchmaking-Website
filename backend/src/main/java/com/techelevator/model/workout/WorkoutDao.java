@@ -14,5 +14,5 @@ public interface WorkoutDao {
 	
 	public void createWorkoutPlan(WorkoutPlan workoutPlan);
 	
-	public void updateWorkoutPlan(boolean completed);
+	public void updateWorkoutPlan(boolean completed, long userId);
 }
