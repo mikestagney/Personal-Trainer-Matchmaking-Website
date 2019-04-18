@@ -91,6 +91,7 @@
             <textarea type="text" class="form-control" v-model="trainer.biography" rows="4" placeholder="trainer.biography"></textarea>
             </div>
         </div>
+        <!---
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Certifications</label>
             <div class="col-sm-10">
@@ -102,6 +103,7 @@
                 </button>
         </div>
         </div>
+        --->
         <fieldset class="form-group">
             <div class="row">
             <legend class="col-form-label col-sm-2 pt-0">Profile Status</legend>
@@ -163,7 +165,7 @@ export default {
     },
     methods: {
         updateProfile() {
-            fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/${this.TrainerID}`,{
+            fetch(`${process.env.VUE_APP_REMOTE_API}/trainer/profile/edit/${this.TrainerID}`,{
             method: 'PUT',
             headers: new Headers ({
             Authorization: 'Bearer ' + auth.getToken(),
@@ -173,8 +175,8 @@ export default {
             .then((response) => {
             return response.json();
             })
-            .then((trainer) => {
-                this.trainer = trainer;
+            .then(() => {
+            this.$router.push('/trainer/profile/' + this.TrainerID);
             })
             .catch((err) => console.error(err));
         },
