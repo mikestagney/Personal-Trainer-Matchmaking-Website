@@ -10,7 +10,7 @@
             </div>
       <form method="POST" class="form-inline" v-on:submit.prevent="createWorkoutPlan">
             <div class="col">
-                <input name="title" type="text" placeholder="Title" v-model="title" class="form-control">
+                <input name="title" type="text" placeholder="Title" v-model="this.workoutPlan.title" class="form-control">
             </div>
             <input type="checkbox" id="sunday" v-model="daysOfWeekArr.sunday.bool">
             <label for="checkbox">Sunday</label>
@@ -27,7 +27,7 @@
             <input type="checkbox" id="saturday" v-model="daysOfWeekArr.saturday.bool">
             <label for="checkbox">Saturday</label>
             <div class="col">
-                <input name="message" type="text" placeholder="What is the workout?" v-model="message" class="form-control">
+                <input name="message" type="text" placeholder="What is the workout?" v-model="workoutPlan.message" class="form-control">
             </div>
                 <div class="col">
                 <input name="submit" value="Update" type="submit" class="btn btn-info">

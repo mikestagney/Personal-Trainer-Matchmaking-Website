@@ -185,10 +185,12 @@ public class PersonalTrainerMatchController {
 	}
 	
 	@GetMapping("/createWorkoutPlan/{clientId}")
-	public void getIdForCreateWorkoutPlan(@PathVariable long clientId) {
+	public long getIdForCreateWorkoutPlan(@PathVariable long clientId) {
+		return clientId;
 	}
 	
 	@PostMapping("/createWorkoutPlan")
-	public void createWorkoutPlan(@PathVariable long clientId) {
+	public long createWorkoutPlan(@PathVariable long clientId) {
+		return clientId;
 	}
 }
