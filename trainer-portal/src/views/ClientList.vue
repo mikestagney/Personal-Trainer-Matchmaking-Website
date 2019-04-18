@@ -20,7 +20,7 @@
             </thead>
             <tbody>
                 <tr v-for="client in filteredClientList" :key="client.userID">
-                    <td><router-link v-bind:to="{ name: 'trainerProfile', params: { CliendID: client.userID }}" class="orangeText">{{client.firstName}} {{client.lastName}}</router-link></td>
+                    <td><router-link v-bind:to="{ name: 'client-profile', params: { ClientID: client.userID }}" class="orangeText">{{client.firstName}} {{client.lastName}}</router-link></td>
                     <td>{{client.city}}</td>
                     <td>{{client.state}}</td>
                 </tr>
