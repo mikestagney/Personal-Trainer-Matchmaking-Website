@@ -14,8 +14,8 @@
                 <router-link to="" exact>
                     <button class="text-light btn-lg exclusiveButton ml-2">Messages</button>
                 </router-link>
-                <router-link to="" exact>
-                    <button class="text-light btn-lg exclusiveButton ml-2">View Trainers</button>
+                <router-link to="/directory" exact>
+                    <button class="text-light btn-lg exclusiveButton ml-2">View Available Trainers</button>
                 </router-link>
             </div>
         </div>
