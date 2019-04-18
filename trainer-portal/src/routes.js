@@ -39,10 +39,6 @@ const routes = [
 
     /* client */
     { name: 'client-profile'  , path: '/client/profile/:ClientID'    , component: ClientProfile },
-<<<<<<< HEAD
-    { name: 'client-profile-user'  , path: '/client/profile'         , component: CurrentClientProfile },
-=======
->>>>>>> c65808e230e3d608a517612e176d5d94a910c45b
     { name: 'addTrainer' ,         path: '/addTrainer/:TrainerID'    , component: AddTrainer },
 
     { name: 'redirect'        , path: '/redirect'                    , component: Redirect  },
