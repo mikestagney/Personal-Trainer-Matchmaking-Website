@@ -82,7 +82,7 @@ export default {
             this.daysOfWeekArr.forEach(dayOfWeek => {
                 this.workoutPlan.daysOfWeek  += (dayOfWeek.bool ? 'T' : 'F');
                 this.daysOfWeekString += (dayOfWeek ? dayOfWeek.day : '');
-                lastTrueDay = (dayOfWeek ? dayOfWeek.day : '');
+                lastTrueDay = (dayOfWeek ? dayOfWeek.day : lastTrueDay);
             });
             if (this.daysOfWeekString.length > 11) {
                 this.daysOfWeekString = this.daysOfWeekString.substring(0, this.daysOfWeekString.length - lastTrueDay.length);

@@ -40,11 +40,20 @@ export default {
     data(){
         return{
             UserID: this.$route.params.UserID,
-            workoutPlans: []
+            workoutPlans: [],
+            daysOfWeekArr: {
+                sunday:    {bool: false, day: 'Sunday, '   },
+                monday:    {bool: false, day: 'Monday, '   },
+                tuesday:   {bool: false, day: 'Tuesday, '  },
+                wednesday: {bool: false, day: 'Wednesday, '},
+                thursday:  {bool: false, day: 'Thursday, ' },
+                friday:    {bool: false, day: 'Friday, '   },
+                saturday:  {bool: false, day: 'Saturday, ' },
+            },
+            daysOfWeekString: '',
         }
     },
     methods: {
-
     },
   created() {
       fetch(`${process.env.VUE_APP_REMOTE_API}/workoutPlans/${this.UserID}`, {
@@ -61,6 +70,23 @@ export default {
             this.workoutPlans = json;
         })
         .catch((err) => console.error(err));
+        this.daysOfWeekString       = '';
+        let lastTrueDay = '';
+        let counter = 0;
+        this.workoutPlans.forEach(workoutPlan => {
+            this.daysOfWeekArr.forEach(dayOfWeek => {
+                this.daysOfWeekString += (workoutPlan.dayOfWeek.indexOf(counter) == 'T' ? dayOfWeek.day : '');
+                lastTrueDay = (workoutPlan.dayOfWeek.indexOf(counter) == 'T' ? dayOfWeek.day : lastTrueDay);
+                counter++;
+            });
+            if (this.daysOfWeekString.length > 11) {
+                this.daysOfWeekString = this.daysOfWeekString.substring(0, this.daysOfWeekString.length - lastTrueDay.length);
+                this.daysOfWeekString += 'and ' + lastTrueDay.substring(0, lastTrueDay.length - 2);
+            }
+            else {
+                this.daysOfWeekString = this.daysOfWeekString.substring(0, this.daysOfWeekString.length - 2);
+            }
+        });
     }
  
 }

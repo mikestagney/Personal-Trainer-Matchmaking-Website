@@ -33,7 +33,17 @@ export default {
     data(){
         return{
             WorkoutPlanID: this.$route.params.WorkoutPlanID,
-            workoutPlan: ''
+            workoutPlan: '',
+            daysOfWeekArr: {
+                sunday:    {bool: false, day: 'Sunday, '   },
+                monday:    {bool: false, day: 'Monday, '   },
+                tuesday:   {bool: false, day: 'Tuesday, '  },
+                wednesday: {bool: false, day: 'Wednesday, '},
+                thursday:  {bool: false, day: 'Thursday, ' },
+                friday:    {bool: false, day: 'Friday, '   },
+                saturday:  {bool: false, day: 'Saturday, ' },
+            },
+            daysOfWeekString: '',
         }
     },
     methods: {
