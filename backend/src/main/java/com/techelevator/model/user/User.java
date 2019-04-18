@@ -56,14 +56,14 @@ public class User  {
 	@Size(min = 5, max = 16, message="Zip must be between 5 and 16 letters long")
 	private String zip;
 	
-	private Boolean hasTrainersOrClients;
+	private Boolean hasTrainer;
 
-	public Boolean getHasTrainersOrClients() {
-		return hasTrainersOrClients;
+	public Boolean getHasTrainer() {
+		return hasTrainer;
 	}
 
-	public void setHasTrainersOrClients(Boolean hasTrainersOrClients) {
-		this.hasTrainersOrClients = hasTrainersOrClients;
+	public void setHasTrainer(Boolean hasTrainer) {
+		this.hasTrainer = hasTrainer;
 	}
 
 	/**
