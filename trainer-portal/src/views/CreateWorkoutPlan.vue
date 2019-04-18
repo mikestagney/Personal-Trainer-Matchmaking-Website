@@ -10,7 +10,7 @@
             </div>
       <form method="POST" class="form-inline" v-on:submit.prevent="createWorkoutPlan">
             <div class="col">
-                <input name="title" type="text" placeholder="Title" v-model="this.workoutPlan.title" class="form-control">
+                <input name="title" type="text" placeholder="Title" v-model="workoutPlan.title" class="form-control">
             </div>
             <input type="checkbox" id="sunday" v-model="daysOfWeekArr.sunday.bool">
             <label for="checkbox">Sunday</label>
@@ -50,10 +50,9 @@ export default {
     },
     data(){
         return{
-            ClientID: ('${process.env.VUE_APP_REMOTE_API}/createWorkoutPlan/').params.ClientID,
             workoutPlan: {
-                TrainerID: auth.getUser().getID(),
-                ClientID: this.ClientID,
+                trainerId: auth.getUser().getID(),
+                clientId: ('${process.env.VUE_APP_REMOTE_API}/createWorkoutPlan/').params.clientId,
                 daysOfWeek: '',
                 title:      '',
                 message:    '',
