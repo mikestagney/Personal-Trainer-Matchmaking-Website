@@ -175,6 +175,9 @@ export default {
             .then((response) => {
             return response.json();
             })
+            .then((json) => {
+                this.trainer = json;
+            })
             .then(() => {
             this.$router.push('/trainer/profile/' + this.TrainerID);
             })
