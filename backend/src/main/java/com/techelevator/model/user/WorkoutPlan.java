@@ -8,15 +8,12 @@ public class WorkoutPlan {
 	
 	@MapToDB("workoutplan_id")
 	@Min(1)
-	@NotBlank(message="Work Out Id is required")
 	private Integer workoutId;
 	@MapToDB("trainer_id")
 	@Min(1)
-	@NotBlank(message="Trainer Id is required")
 	private Integer trainerId;
 	@MapToDB("client_id")
 	@Min(1)
-	@NotBlank(message="Client Id is required")
 	private Integer clientId;
 	@MapToDB("completed")
 	private Boolean completed;
