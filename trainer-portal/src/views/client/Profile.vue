@@ -12,13 +12,6 @@
             </div>
          </div>
          <client-tools v-if="jwt_token.getUser().rol === 'Client'" :ClientID = "ClientID"></client-tools>
-        <div class="row pb-3">
-            <div class="col" v-if="jwt_token.getUser().rol === 'Trainer'">
-            <router-link v-bind:to="{ name: 'create-workout-plan', params: { ClientID: ClientID }}" exact>
-                <button class="btn btn-lg btn-info pl-4 pr-4">Create Client Workout</button>
-            </router-link>
-            </div> 
-         </div>
     </div>
 </default-layout>
 </template>

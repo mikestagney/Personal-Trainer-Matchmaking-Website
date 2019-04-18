@@ -16,7 +16,7 @@
          </h3>
       </div>
    </div>
-   <trainer-tools v-if="jwt_token.getUser().rol === 'Trainer'" :TrainerID="TrainerID"></trainer-tools>
+   <trainer-tools v-if="jwt_token.getUser().jti === this.TrainerID" :TrainerID="TrainerID"></trainer-tools>
    <div class="row pb-3">
       <div class="col" v-if="jwt_token.getUser().rol === 'Client'">
          <router-link v-bind:to="{ name: 'addTrainer', params: { TrainerID: TrainerID }}" exact>

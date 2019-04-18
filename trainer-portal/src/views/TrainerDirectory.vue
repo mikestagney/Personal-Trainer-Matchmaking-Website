@@ -151,8 +151,8 @@ export default {
     methods: {
         filterTrainers() {
                 this.filteredTrainers = this.trainers.filter((trainer) => {
-                    return (trainer.firstName + ' ' + trainer.lastName).includes(this.name)
-                    && trainer.city.includes(this.city)
+                    return (trainer.firstName + ' ' + trainer.lastName).toLowerCase().includes(this.name.toLowerCase())
+                    && trainer.city.toLowerCase().includes(this.city.toLowerCase())
                     && trainer.state.includes(this.state)
                     && trainer.rating >= this.rating
                     && ((this.hourlyRate == 50 && trainer.hourlyRate >= this.hourlyRate)

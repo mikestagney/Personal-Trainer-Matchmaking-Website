@@ -11,25 +11,16 @@
         </div>
         <div class="row">
             <div class="col subheading p-2 shadow border border-info">
-                <h4 class="orangeText text-center">Login/Sign Up</h4>
+                <h4 class="orangeText text-center">Testimonial</h4>
                 <hr class="my-3">
                 <div class="hexa">
                     <div class="hex1">
                         <div class="hex2 shadow">
-                            <img src="/img/fitnessImage16.jpg" alt="" width="200" height="193" />
+                            <img src="/img/testimonial.png" alt="" width="200" height="193" />
                         </div>
                     </div>
                 </div>
-                <div class="text-center">
-                <router-link to="/login" exact>
-                    <button class="btn btn-lg btn-info mt-4 pl-4 pr-4">Login</button>
-                </router-link>
-                </div>
-                <div class="text-center">
-                <router-link to="/register" exact>
-                    <button class="btn btn-lg btn-info mt-4">Register</button>
-                </router-link>
-                </div>
+                <p class="mt-4">"Workout made it easy for me to set goals for myself and stick to them with the help of a personal trainer. The easy to access, online workout plans kept me on track at all times and if I did struggle, I was able to get in contact with my trainer right away. I'll be recommending Workout to all my friends!"</p>
             </div>
             <div class="col subheading p-2 ml-4 shadow border border-info">
                 <h4 class="orangeText text-center">Benefits</h4>
@@ -54,6 +45,11 @@
                     </div>
                 </div>
                 <p class="mt-4">Find a personal trainer and create a customized fitness plan that will "work out" for YOU!</p>
+                <div class="text-center">
+                <router-link to="/register" exact>
+                    <button class="btn btn-lg btn-info mt-4">Register Now</button>
+                </router-link>
+                </div>
             </div>
         </div>
     </default-layout>
