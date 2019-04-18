@@ -20,7 +20,7 @@
             <tbody>
                 <tr v-for="workout in workoutPlans" :key="workout.workoutId" v-bind:class="{'workout-completed': workout.completed}">
                     <input type="checkbox" v-on:click="changeStatus(workout.workoutId)"/>
-                    <td><router-link v-bind:to="{ name: 'workout-plan', params: { WorkoutPlanID: workout.workoutId }}" class="orangeText">{{workout.title}}</router-link></td>
+                    <td class="orangeText">{{workout.title}}</td>
                     <td>{{workout.message}}</td>
                     <td>{{weekFlagToText(workout.daysOfWeek)}}</td>
                 </tr>

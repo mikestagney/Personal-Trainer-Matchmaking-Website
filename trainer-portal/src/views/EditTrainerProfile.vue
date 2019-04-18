@@ -92,12 +92,12 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="certifications" class="col-sm-2 col-form-label">Certifications</label>
+            <label class="col-sm-2 col-form-label">Certifications</label>
             <div class="col-sm-10">
             <div v-for="certification in this.certificationsList" :key="certification">
                 <input class="form-control d-flex justify-content-center" v-bind:value="certification">
             </div>    
-                <button @click="addCertification" class="btn btn-dark mt-2 mb-2">
+                <button type="button" @click="addCertification" class="btn btn-dark mt-2 mb-2">
                 Add a new certification
                 </button>
         </div>
@@ -179,6 +179,7 @@ export default {
             .catch((err) => console.error(err));
         },
         addCertification() {
+
             try {
                 this.trainer.certifications.push(this.certification.value);
             }

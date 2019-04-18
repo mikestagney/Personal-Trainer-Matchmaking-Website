@@ -19,7 +19,6 @@ import Error          from './components/404.vue';
 import MessageDetail from '@/views/MessageDetail';
 import Messages      from '@/views/Messages';
 
-import WorkoutPlan         from '@/views/WorkoutPlan';
 import WorkoutPlans        from '@/views/WorkoutPlans';
 import CreateWorkoutPlan   from '@/views/CreateWorkoutPlan';
 
@@ -49,7 +48,6 @@ const routes = [
     {name: 'messages'         , path: '/inbox'                       , component: Messages },
 
     /* workout plan */
-    { name: 'workout-plan'   , path: '/workoutPlan/:WorkoutPlanID'         , component: WorkoutPlan },
     { name: 'workout-plans'   , path: '/workoutPlans/:UserID'              , component: WorkoutPlans },
     { name: 'create-workout-plan'   , path: '/createWorkoutPlan/:ClientID' , component: CreateWorkoutPlan },
 ];
