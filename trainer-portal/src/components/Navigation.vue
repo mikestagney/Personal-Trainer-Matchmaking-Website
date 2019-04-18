@@ -43,7 +43,7 @@ export default {
   data () {
     return {
       isTrainer: auth.getUser().rol == 'Trainer',
-      UserID: auth.getUser().id 
+      UserID: auth.getUser().jti
     };
   },
   methods: {
