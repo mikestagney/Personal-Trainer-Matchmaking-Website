@@ -20,9 +20,7 @@
                 <tr v-for="workout in workoutPlans" :key="workout.workoutId">
                     <td><router-link v-bind:to="{ name: 'workout-plan', params: { WorkoutPlanID: workout.workoutId }}" class="orangeText">{{workout.title}}</router-link></td>
                     <td>{{workout.message}}</td>
-                    <td v-for="(thisArr, index) in daysOfWeekStrings" :key="index">
-                        <span v-if="thisArr.id == workout.workoutId">{{ thisArr.str }}</span>
-                    </td>
+                    
                 </tr>
             </tbody>
         </table>
@@ -89,9 +87,7 @@ export default {
             else {
                 this.daysOfWeekString = this.daysOfWeekString.substring(0, this.daysOfWeekString.length - 2);
             }
-            let passInId = workoutPlan.workoutPlanId;
-            let passInStr = this.daysOfWeekString;
-            this.daysOfWeekStrings.push({id: passInId, str: passInStr});
+            this.daysOfWeekStrings.push(this.daysOfWeekString);
         });
     }
  
