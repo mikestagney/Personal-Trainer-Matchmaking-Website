@@ -22,7 +22,7 @@
                     <input type="checkbox" v-on:click="changeStatus(workout.workoutId)"/>
                     <td><router-link v-bind:to="{ name: 'workout-plan', params: { WorkoutPlanID: workout.workoutId }}" class="orangeText">{{workout.title}}</router-link></td>
                     <td>{{workout.message}}</td>
-                    
+                    <td>{{weekFlagToText(workout.daysOfWeek)}}</td>
                 </tr>
             </tbody>
         </table>
@@ -57,9 +57,20 @@ export default {
         }
     },
     methods: {
-         changeStatus(id) {
+        changeStatus(id) {
             const arrIndex = this.workoutPlans.findIndex((workout) => workout.workoutId == id);
             this.workoutPlans[arrIndex].completed = !this.workoutPlans[arrIndex].completed;
+        },
+        weekFlagToText(weekFlag) {
+            var days = [];
+            if( weekFlag.charAt(0) === 'T' ) days.push('Sun');
+            if( weekFlag.charAt(1) === 'T' ) days.push('Mon');
+            if( weekFlag.charAt(2) === 'T' ) days.push('Tue');
+            if( weekFlag.charAt(3) === 'T' ) days.push('Wed');
+            if( weekFlag.charAt(4) === 'T' ) days.push('Thu');
+            if( weekFlag.charAt(5) === 'T' ) days.push('Fri');
+            if( weekFlag.charAt(6) === 'T' ) days.push('Sat');
+            return days.join(', ');
         }
     },
 
@@ -78,26 +89,8 @@ export default {
             this.workoutPlans = json;
         })
         .catch((err) => console.error(err));
-        this.daysOfWeekString = '';
-        let lastTrueDay = '';
-        let counter = 0;
-        this.workoutPlans.forEach(workoutPlan => {
-            this.daysOfWeekArr.forEach(dayOfWeek => {
-                this.daysOfWeekString += (workoutPlan.dayOfWeek.indexOf(counter) == 'T' ? dayOfWeek : '');
-                lastTrueDay = (workoutPlan.dayOfWeek.indexOf(counter) == 'T' ? dayOfWeek : lastTrueDay);
-                counter++;
-            });
-            if (this.daysOfWeekString.length > 11) {
-                this.daysOfWeekString = this.daysOfWeekString.substring(0, this.daysOfWeekString.length - lastTrueDay.length);
-                this.daysOfWeekString += 'and ' + lastTrueDay.substring(0, lastTrueDay.length - 2);
-            }
-            else {
-                this.daysOfWeekString = this.daysOfWeekString.substring(0, this.daysOfWeekString.length - 2);
-            }
-            this.daysOfWeekStrings.push(this.daysOfWeekString);
-        });
     }
- 
+
 }
 </script>
 
