@@ -72,24 +72,26 @@ export default {
         }
     },
     methods: {
-        createWorkoutPlan() {
-            this.daysOfWeekString       = '';
+        setDaysOfWeek() {
             this.workoutPlan.daysOfWeek = '';
-            this.workoutPlan.trainerId = this.TrainerID;
-            this.workoutPlan.clientId = this.ClientID;
             this.daysOfWeekArr.forEach(dayOfWeek => {
                 this.workoutPlan.daysOfWeek  += (dayOfWeek ? 'T' : 'F');
             });
+        },
+        createWorkoutPlan() {
+            this.workoutPlan.trainerId = this.TrainerID;
+            this.workoutPlan.clientId = this.ClientID;
             fetch(`${process.env.VUE_APP_REMOTE_API}/createWorkoutPlan`, {
                 method: 'POST',
                     headers: new Headers ({
                     Authorization: 'Bearer ' + auth.getToken(),
+                    'Content-Type': 'application/json',
                     }),
                     credentials: 'same-origin',
                     body: JSON.stringify(this.workoutPlan),
                 }) 
-                    .then((response) => {
-                        return response.json();
+                    .then(() => {
+                        this.$router.push({name: 'workout-plans' , params: {UserID: this.ClientID}});
                     })
                     .catch((err) => console.error(err));
         },
