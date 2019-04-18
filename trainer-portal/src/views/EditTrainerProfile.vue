@@ -1,107 +1,129 @@
 <template>
 <default-layout>
-      <div class="container">
-         <h1>Edit Profile</h1>
-         <h2>   
+      <div class="container shadow bg-light border border-warning">
+         <h1 class="h3 mb-3 font-weight-normal text-center mt-3">Edit Profile</h1>
+<!--          <h2>   
             the trainer id is {{this.$route.params.TrainerID}}
             Trainer name: {{ trainer.firstName + ' ' + trainer.lastName }}
             Profile is {{ trainer.public ? 'Public':'Private' }}
-         </h2>
-              
-            <div class="form-input">
-               <span id="label">City: </span> <input type="text" v-model="trainer.city" 
-                  placeholder="trainer.city">
+         </h2> -->
+        <form>
+        <div class="form-group row">
+            <label for="city" class="col-sm-2 col-form-label">City</label>
+            <div class="col-sm-5">
+            <input type="text" class="form-control" placeholder="trainer.city" v-model="trainer.city">
             </div>
-            
-        <label for="state">State: </label>
-        <select name="state" v-model="trainer.state">
-            <option value="AK">Alaska</option>
-            <option value="AL">Alabama</option>
-            <option value="AR">Arkansas</option>
-            <option value="AZ">Arizona</option>
-            <option value="CA">California</option>
-            <option value="CO">Colorado</option>
-            <option value="CT">Connecticut</option>
-            <option value="DC">District of Columbia</option>
-            <option value="DE">Delaware</option>
-            <option value="FL">Florida</option>
-            <option value="GA">Georgia</option>
-            <option value="HI">Hawaii</option>
-            <option value="IA">Iowa</option>
-            <option value="ID">Idaho</option>
-            <option value="IL">Illinois</option>
-            <option value="IN">Indiana</option>
-            <option value="KS">Kansas</option>
-            <option value="KY">Kentucky</option>
-            <option value="LA">Louisiana</option>
-            <option value="MA">Massachusetts</option>
-            <option value="MD">Maryland</option>
-            <option value="ME">Maine</option>
-            <option value="MI">Michigan</option>
-            <option value="MN">Minnesota</option>
-            <option value="MO">Missouri</option>
-            <option value="MS">Mississippi</option>
-            <option value="MT">Montana</option>
-            <option value="NC">North Carolina</option>
-            <option value="ND">North Dakota</option>
-            <option value="NE">Nebraska</option>
-            <option value="NH">New Hampshire</option>
-            <option value="NJ">New Jersey</option>
-            <option value="NM">New Mexico</option>
-            <option value="NV">Nevada</option>
-            <option value="NY">New York</option>
-            <option value="OH">Ohio</option>
-            <option value="OK">Oklahoma</option>
-            <option value="OR">Oregon</option>
-            <option value="PA">Pennsylvania</option>
-            <option value="PR">Puerto Rico</option>
-            <option value="RI">Rhode Island</option>
-            <option value="SC">South Carolina</option>
-            <option value="SD">South Dakota</option>
-            <option value="TN">Tennessee</option>
-            <option value="TX">Texas</option>
-            <option value="UT">Utah</option>
-            <option value="VA">Virginia</option>
-            <option value="VT">Vermont</option>
-            <option value="WA">Washington</option>
-            <option value="WI">Wisconsin</option>
-            <option value="WV">West Virginia</option>
-            <option value="WY">Wyoming</option>
-        </select>   
-            <div class="form-input">
-               <span id="label">Philosphy (limit 50 characters)</span><br> <textarea rows="1" cols="70" v-model="trainer.philosophy"> 
-                  placeholder="trainer.philosophy"</textarea>
-            </div>  
-            <div class="form-input">
-               <span id="label">Hourly rate: </span> <input type="text" v-model="trainer.hourlyRate" 
-                  placeholder="trainer.hourlyRate">
-            </div>  
-            <div class="form-input">
-               <span id="label">Background information (limit 250 characters)</span> <textarea rows="4 " cols="100" v-model="trainer.biography"> 
-                  placeholder="trainer.biography"</textarea>
-            </div>  
-            <div class="form-input">
-
-               <span id="label">Certifications</span>
-                <div v-for="certification in this.certificationsList" :key="certification">
-                    <input v-bind:value="certification">
-                </div>
-                
-                <button @click="addCertification">
-                    Add a new certification
+        </div>
+        <div class="form-group row">
+            <label for="state" class="col-sm-2 col-form-label">State</label>
+            <div class="col-sm-5">
+            <select name="state" v-model="trainer.state" class="form-control" placeholder="trainer.state">
+                    <option value="AK">Alaska</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DC">District of Columbia</option>
+                    <option value="DE">Delaware</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="IA">Iowa</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MD">Maryland</option>
+                    <option value="ME">Maine</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MT">Montana</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NY">New York</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="PR">Puerto Rico</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VA">Virginia</option>
+                    <option value="VT">Vermont</option>
+                    <option value="WA">Washington</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WY">Wyoming</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="rate" class="col-sm-2 col-form-label">Hourly Rate</label>
+            <div class="col-sm-3">
+            <input type="text" class="form-control" placeholder="trainer.hourlyRate" v-model="trainer.hourlyRate">
+            </div>
+        </div>
+            <div class="form-group row">
+            <label for="philosophy" class="col-sm-2 col-form-label">Philosophy (limit 50 characters)</label>
+            <div class="col-sm-10">
+            <input type="text" class="form-control" v-model="trainer.philosophy" placeholder="trainer.philosophy">
+            </div>
+        </div>
+            <div class="form-group row">
+            <label for="biography" class="col-sm-2 col-form-label">Background information (limit 250 characters)</label>
+            <div class="col-sm-10">
+            <textarea type="text" class="form-control" v-model="trainer.biography" rows="4" placeholder="trainer.biography"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="certifications" class="col-sm-2 col-form-label">Certifications</label>
+            <div class="col-sm-10">
+            <div v-for="certification in this.certificationsList" :key="certification">
+                <input class="form-control d-flex justify-content-center" v-bind:value="certification">
+            </div>    
+                <button @click="addCertification" class="btn btn-dark mt-2 mb-2">
+                Add a new certification
                 </button>
-            </div>  
-            <div class="form-input">
-               <input id="true" type="radio" value="true" v-model="trainer.public"><label for="true">Profile is public</label>
-               <input id="false" type="radio" value="false" v-model="trainer.public"><label for="false">Profile is private</label>
-             </div>  
-            <div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">
-                Update profile
-            </button>        
-            </div> 
-         </div>
-   
+        </div>
+        </div>
+        <fieldset class="form-group">
+            <div class="row">
+            <legend class="col-form-label col-sm-2 pt-0">Profile Status</legend>
+            <div class="col-sm-2">
+                <div class="form-check">
+                <input id="true" class="form-check-input" type="radio" v-model="trainer.public" value="true">
+                <label class="form-check-label" for="true">Profile is public</label>
+                </div>
+                <div class="form-check">
+                <input id="false" class="form-check-input" type="radio" v-model="trainer.public" value="false">
+                <label class="form-check-label" for="false">Profile is private</label>
+                </div>
+            </div>
+            </div>
+        </fieldset>
+        <div class="form-group row">
+            <div class="col-sm-12">
+            <button type="submit" class="btn btn-info">Update Profile</button>
+            </div>
+        </div>
+        </form>
+        </div>
 </default-layout>
 </template>
 
