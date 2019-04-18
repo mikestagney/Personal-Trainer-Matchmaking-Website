@@ -19,7 +19,7 @@
    <trainer-tools v-if="jwt_token.getUser().rol === 'Trainer'" :TrainerID="TrainerID"></trainer-tools>
    <div class="row pb-3">
       <div class="col" v-if="jwt_token.getUser().rol === 'Client'">
-         <router-link to="" exact>
+         <router-link v-bind:to="{ name: 'addTrainer', params: { TrainerID: TrainerID }}" exact>
              <button class="btn btn-lg btn-info pl-4 pr-4">Book</button>
           </router-link>
           <router-link to="/trainer" exact>

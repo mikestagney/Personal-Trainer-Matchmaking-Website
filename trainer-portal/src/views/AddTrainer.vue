@@ -1,5 +1,20 @@
 <template>
   <default-layout>
+    <default-layout>
+     <div class="jumbotron addTrainerHeader shadow">
+            <div class="container">
+        <div class="site-heading text-dark text-center pinkTransparent p-2 shadow">
+            <h1 class="display-5 p-2 ">Confirmation</h1>
+            <h4>Look at you go! You have been booked with {{trainer.firstName}}!</h4>
+            <h4>Get chatting with your new trainer now to come up with a customized fitness plan that will meet and exceed all of your needs.</h4>
+            <router-link to="/messages" exact>
+                    <button class="text-light btn-lg btn-info mt-3">Message</button>
+            </router-link>
+    </div>
+    </div>
+    </div>
+    
+</default-layout>
  
   </default-layout>
 </template>
@@ -35,55 +50,13 @@ export default {
 </script>
 
 <style>
-html,
-body {
-  height: 100%;
-}
-#app {
-  height: 100%;
-}
-#login {
-  height: 100%;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-  align-items: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  font-family: 'Roboto Condensed', sans-serif;
-  border-radius: 10px;
-  
+
+.addTrainerHeader {
+    background-image: url('/img/fitnessImage9.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 4px;
+    height: 626px;
 }
 
-form {
-  text-align: center;
-}
-
-.form-signin {
-  width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: auto;
-}
-
-.form-signin .form-control {
-  position: relative;
-  box-sizing: border-box;
-  height: auto;
-  padding: 10px;
-  font-size: 16px;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
-.form-signin input[type='text'] {
-  margin-bottom: 10px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-signin input[type='password'] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
 </style>
