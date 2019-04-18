@@ -21,10 +21,10 @@
         </router-link>
 
         <router-link :to="{name: 'trainer-profile', params: { TrainerID: this.UserID } }" tag="li" v-if="this.isTrainer" class="nav-item" active-class="active" exact>
-          <a class="nav-link">My Profile</a>
+          <a class="nav-link" v-if="isLoggedIn()">My Profile</a>
         </router-link>
         <router-link :to="{name: 'client-profile', params: { ClientID: this.UserID } }" tag="li" v-else class="nav-item" active-class="active" exact>
-          <a class="nav-link">My Profile</a>
+          <a class="nav-link" v-if="isLoggedIn()">My Profile</a>
         </router-link>
         <router-link to="/" tag="li" class="nav-item" active-class="active" v-on:click.native="userLoginLogout()">
            <a class="nav-link">{{ isLoggedIn()? 'Logout': 'Login' }}</a>

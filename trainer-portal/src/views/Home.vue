@@ -20,7 +20,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="mt-4">"Workout made it easy for me to set goals for myself and stick to them with the help of a personal trainer. The easy to access, online workout plans kept me on track at all times and if I did struggle, I was able to get in contact with my trainer right away. I'll be recommending Workout to all my friends!"</p>
+                <p class="mt-4"><span class="font-italic"> "Workout made it easy for me to set goals for myself and stick to them with the help of a personal trainer. The easy to access, online workout plans kept me on track at all times and if I did struggle, I was able to get in contact with my trainer right away. I'll be recommending Workout to all my friends!"</span> - John, Cincinnati</p>
             </div>
             <div class="col subheading p-2 ml-4 shadow border border-info">
                 <h4 class="orangeText text-center">Benefits</h4>
