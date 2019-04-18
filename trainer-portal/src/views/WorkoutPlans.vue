@@ -55,7 +55,7 @@ export default {
                     'Content-Type': 'application/json',
                     }),
                     credentials: 'same-origin',
-                    body: JSON.stringify(this.workoutPlans[arrIndex].completed),
+                    body: JSON.stringify(this.workoutPlans[arrIndex].completed,this.workoutPlans[arrIndex].workoutId),
                 }) 
                     .catch((err) => console.error(err));
         },
