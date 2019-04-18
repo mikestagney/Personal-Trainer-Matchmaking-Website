@@ -1,9 +1,9 @@
 <template>
 <default-layout>
-    <div class="container">
-            <div class="row listHeader2 text-light mb-3 p-5 shadow">
+    <div class="crete-workout-plan container">
+            <div class="row listHeader text-dark mb-4 shadow">
                 <div class="col">
-                <h2 id="test">Workout Plan</h2>
+                <h2 id="test" class="p-4">Workout Plan</h2>
                 </div>
             </div>
       <form method="POST" class="form-inline" v-on:submit.prevent="createWorkoutPlan">
@@ -126,7 +126,7 @@ export default {
 <style>
 
 .listHeader {
-    
+    background-image:  url('/img/fitnessImage03.jpg');
     background-size: cover;
     background-position: bottom;
     border-radius: 4px;
