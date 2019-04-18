@@ -51,14 +51,6 @@ public class PersonalTrainerMatchController {
 		return userDao.getTrainerByID(trainerId);
 	}
     
-    @GetMapping("/trainer/profile")
-	public Trainer trainerProfilePage() throws UnauthorizedException {
-		if(!authProvider.userHasRole(new String[] {"Trainer"})) {
-            throw new UnauthorizedException();
-        }
-		return userDao.getTrainerByID(authProvider.getCurrentUser().getId());
-	}
-    
     @GetMapping("/trainer/profile/edit/{trainerId}")
 	public Trainer editTrainerProfilePage(@PathVariable long trainerId) throws UnauthorizedException {
     	if(!authProvider.userHasRole(new String[] {"Trainer"})) {
@@ -88,14 +80,6 @@ public class PersonalTrainerMatchController {
             throw new UnauthorizedException();
         }
 		return userDao.getClientById(clientId);
-	}
-    
-    @GetMapping("/client/profile")
-	public User clientProfilePage() throws UnauthorizedException {
-		if(!authProvider.userHasRole(new String[] {"Client"})) {
-            throw new UnauthorizedException();
-        }
-		return userDao.getClientById(authProvider.getCurrentUser().getId());
 	}
     
     @PutMapping("/client/updateProfile")
