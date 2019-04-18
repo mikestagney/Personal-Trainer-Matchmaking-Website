@@ -17,6 +17,7 @@ import Redirect       from './components/Redirect.vue';
 import Error          from './components/404.vue';
 
 import MessageDetail from '@/views/MessageDetail';
+import Messages      from '@/views/Messages';
 
 import WorkoutPlan         from '@/views/WorkoutPlan';
 import WorkoutPlans        from '@/views/WorkoutPlans';
@@ -32,19 +33,20 @@ const routes = [
     { name: 'dir-trainer'     , path: '/directory'                   , component: Directory  },
 
     /* trainer */
-    { name: 'trainer-profile' ,    path: '/trainer/profile/:TrainerID'      , component: TrainerProfile },
-    { name: 'client-list',         path: '/clientList'                      , component: ClientList },
+    { name: 'trainer-profile' ,    path: '/trainer/profile/:TrainerID'        , component: TrainerProfile },
+    { name: 'client-list',         path: '/clientList'                        , component: ClientList },
     { name: 'edit-trainer-profile' , path: '/trainer/profile/edit/:TrainerID' , component: EditTrainerProfile },
 
     /* client */
     { name: 'client-profile'  , path: '/client/profile/:ClientID'    , component: ClientProfile },
-    { name: 'addTrainer' ,         path: '/addTrainer/:TrainerID'           , component: AddTrainer },
+    { name: 'addTrainer' ,         path: '/addTrainer/:TrainerID'    , component: AddTrainer },
 
     { name: 'redirect'        , path: '/redirect'                    , component: Redirect  },
     { name: '404'             , path: '/404'                         , component: Error     },
 
     /* message */
-    {name: 'message-detail'   , path: '/message/:MessageID'         , component: MessageDetail },
+    {name: 'message-detail'   , path: '/message/:MessageID'          , component: MessageDetail },
+    {name: 'messages'         , path: '/inbox'                       , component: Messages },
 
     /* workout plan */
     { name: 'workout-plan'   , path: '/workoutPlan/:WorkoutPlanID'         , component: WorkoutPlan },
