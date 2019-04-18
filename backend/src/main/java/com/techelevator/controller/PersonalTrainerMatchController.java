@@ -195,7 +195,9 @@ public class PersonalTrainerMatchController {
 	}
 	
 	@PutMapping("/updateWorkoutPlan")
-	public void updateWorkoutPlan(@RequestBody boolean completed, @RequestBody long workoutId) {
-    		workoutDao.updateWorkoutPlan(completed,workoutId);
+	public void updateWorkoutPlan(@Valid @RequestBody WorkoutPlan workoutPlan, BindingResult result) throws UnauthorizedException {
+		if(!result.hasErrors()) {
+    		workoutDao.updateWorkoutPlan(workoutPlan);
+    	}	
 	}
 }
