@@ -171,12 +171,10 @@ export default {
             Authorization: 'Bearer ' + auth.getToken(),
             }),
             credentials: 'same-origin',
+            body: JSON.stringify(this.trainer),
             }) 
             .then((response) => {
             return response.json();
-            })
-            .then((json) => {
-                this.trainer = json;
             })
             .then(() => {
             this.$router.push('/trainer/profile/' + this.TrainerID);
@@ -205,7 +203,6 @@ export default {
     background-position: bottom;
     border-radius: 4px;
     height: 250px;
-
 }
 
 
