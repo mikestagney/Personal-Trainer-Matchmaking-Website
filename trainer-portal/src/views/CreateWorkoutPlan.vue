@@ -5,9 +5,11 @@
         <div class="site-heading text-light pinkTransparent p-2 shadow">
             <h1 class="display-5 p-2">Create a customized Workout Plan for your Client</h1>
       <form method="POST" class="form-inline" v-on:submit.prevent="createWorkoutPlan">
+            <h4>Workout Plan Name: </h4>
             <div class="col">
-                <input name="title" type="text" placeholder="Title" v-model="workoutPlan.title" class="form-control">
+                <input name="title" type="text" placeholder="ex: Cardio Day, Chest Day, Leges and more Legs, ..." v-model="workoutPlan.title" class="form-control">
             </div>
+            <h4>Days of Week to do Workout On: </h4>
             <input type="checkbox" id="sunday" v-model="daysOfWeekArr.sunday.bool">
             <label for="checkbox">Sunday</label>
             <input type="checkbox" id="monday" v-model="daysOfWeekArr.monday.bool">
@@ -21,9 +23,10 @@
             <input type="checkbox" id="friday" v-model="daysOfWeekArr.friday.bool">
             <label for="checkbox">Friday</label>
             <input type="checkbox" id="saturday" v-model="daysOfWeekArr.saturday.bool">
+            <h4>Description of workout...</h4>
             <label for="checkbox">Saturday</label>
             <div class="col">
-                <input name="message" type="text" placeholder="What is the workout?" v-model="workoutPlan.message" class="form-control">
+                <input name="message" type="text" placeholder="ex: Run 5 miles, Do 3 sets of bench, All Leg Workouts, ..." v-model="workoutPlan.message" class="form-control">
             </div>
                 <div class="col">
                 <input name="submit" value="Submit Workout Plan" type="submit" class="btn btn-info">
