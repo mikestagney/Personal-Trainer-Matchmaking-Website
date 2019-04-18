@@ -79,6 +79,7 @@ CREATE TABLE workout_plan
     days_of_week        varchar(7)   NOT NULL DEFAULT 'FFFFFFF',
     title               varchar(30),
     body                varchar(250),
+    completed boolean   NOT NULL DEFAULT false,   
 
     constraint pk_workout_plan primary key (workoutplan_id, trainer_id, client_id)
 );

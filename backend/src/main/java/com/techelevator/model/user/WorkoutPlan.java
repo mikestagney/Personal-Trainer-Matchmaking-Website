@@ -18,7 +18,17 @@ public class WorkoutPlan {
 	@Min(1)
 	@NotBlank(message="Client Id is required")
 	private Integer clientId;
+	@MapToDB("completed")
+	private Boolean completed;
 	
+	public Boolean getCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(Boolean completed) {
+		this.completed = completed;
+	}
+
 	public Integer getWorkoutId() {
 		return workoutId;
 	}
