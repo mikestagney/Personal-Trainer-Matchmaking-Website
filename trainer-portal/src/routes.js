@@ -17,7 +17,8 @@ import Redirect       from './components/Redirect.vue';
 import Error          from './components/404.vue';
 
 import MessageDetail from '@/views/MessageDetail';
-import Messages      from '@/views/Messages';
+import MessageList      from '@/views/MessageList';
+import WriteMessage  from '@/views/WriteMessage'
 
 import WorkoutPlans        from '@/views/WorkoutPlans';
 import CreateWorkoutPlan   from '@/views/CreateWorkoutPlan';
@@ -45,7 +46,8 @@ const routes = [
 
     /* message */
     {name: 'message-detail'   , path: '/message/:MessageID'          , component: MessageDetail },
-    {name: 'messages'         , path: '/inbox'                       , component: Messages },
+    {name: 'messages'         , path: '/inbox'                       , component: MessageList },
+    {name: 'writemessage'     , path: '/write'                        , component: WriteMessage},
 
     /* workout plan */
     { name: 'workout-plans'   , path: '/workoutPlans/:UserID'              , component: WorkoutPlans },

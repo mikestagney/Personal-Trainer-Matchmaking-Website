@@ -14,19 +14,21 @@
             <thead class="thead text-light orangeBackground">
             <tr>
             <th scope="col">Client Name</th>
-            <th scope="col">City</th>
-            <th scope="col">State</th>
+            <!-- <th scope="col">City</th>
+            <th scope="col">State</th> -->
             <th scope="col">New Workout Plan</th>
             <th scope="col">Client Progress</th>
+          <th scope="col">Contact</th>
             </tr>
             </thead>
             <tbody>
                 <tr v-for="client in filteredClientList" :key="client.userID">
                     <td class="orangeText">{{client.firstName}} {{client.lastName}}</td>
-                    <td>{{client.city}}</td>
-                    <td>{{client.state}}</td>
+                    <!-- <td>{{client.city}}</td>
+                    <td>{{client.state}}</td> -->
                     <td><router-link v-bind:to="{ name: 'create-workout-plan', params: { ClientID: client.userID }}" class="orangeText">Create Workout</router-link></td>
                     <td><router-link v-bind:to="{ name: 'workout-plans', params: { UserID: client.userID }}" class="orangeText">See Progress</router-link></td>
+                    <td><router-link v-bind:to="{ name: 'writemessage', params: { replyToID: client.userID, SenderName: client.firstName + ' ' + client.lastName}}" class="orangeText">Send Message</router-link></td>
                 </tr>
             </tbody>
         </table>

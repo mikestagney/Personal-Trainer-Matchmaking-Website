@@ -110,6 +110,7 @@
             <th scope="col">State</th>
             <th scope="col">Hourly Rate</th>
             <th scope="col">Rating</th>
+            <th scope="col">Contact</th>
             </tr>
             </thead>
             <tbody>
@@ -119,6 +120,7 @@
                     <td>{{trainer.state}}</td>
                     <td>{{trainer.hourlyRate}}</td>
                     <td>{{trainer.rating}}</td>
+                    <td><router-link v-bind:to="{ name: 'writemessage', params: { replyToID: trainer.trainerID, SenderName: trainer.firstName + ' ' + trainer.lastName}}"> Send Message </router-link></td>
                 </tr>
             </tbody>
         </table>

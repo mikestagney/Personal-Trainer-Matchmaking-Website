@@ -6,9 +6,9 @@
                <h1 id="test">
                   {{client.firstName}} {{client.lastName}}
                </h1>
-               <h3>
+               <!-- <h3>
                   {{client.city}}, {{client.state}}
-               </h3>
+               </h3> -->
             </div>
          </div>
          <client-tools v-if="jwt_token.getUser().rol === 'Client'" :ClientID = "ClientID" :ClientStatus = "client.hasTrainer"></client-tools>

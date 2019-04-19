@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -121,7 +122,7 @@ public class PersonalTrainerMatchController {
 	}
 	
 	@PostMapping("/send")
-	public void sendMessage(@Valid @RequestBody Message message, BindingResult result) {
+	public void sendMessage(@RequestBody Message message, BindingResult result) {
 		API_ErrorResult registrationResult = new API_ErrorResult();
 		if(result.hasErrors()) {
             for(ObjectError error : result.getAllErrors()) {
@@ -141,20 +142,16 @@ public class PersonalTrainerMatchController {
 	 * @param user_id this is the id of the user that the logged in User wants to see messages to and from
 	 * @return List<PrivateMessage> list of all Private Messages between user and User
 	 */
-	@GetMapping("/inbox/{userId}")
-	public List<Message> displayMessagesBetweenUsers(@PathVariable long userId) {
-		return privateMessageDao.getMessagesBetweenUsers(authProvider.getCurrentUser().getId(), userId);
-	}
-	
-    @GetMapping("/inbox/{messageId}")
+	@GetMapping("/inbox/message/{messageId}")
 	public Message displayMessage(@PathVariable long messageId) {
-		return privateMessageDao.getMessage(messageId);
+	return privateMessageDao.getMessage(messageId);
 	}
-    
-
-	@PutMapping("/inbox/{messageId}")
+	//public void deleteMessage(@PathVariable Message message) {
+	// @DeleteMapping("/inbox/message/{messageId}")
+	@DeleteMapping("/inbox/message/{messageId}")
 	public void deleteMessage(@PathVariable long messageId) {
-		privateMessageDao.deleteMessage(authProvider.getCurrentUser().getId(), messageId);
+	//long messageId = message.getMessageId();
+	privateMessageDao.deleteMessage(messageId); //authProvider.getCurrentUser().getId(), removed parameter
 	}
 	
 	@PostMapping("/addTrainer/{trainerId}")

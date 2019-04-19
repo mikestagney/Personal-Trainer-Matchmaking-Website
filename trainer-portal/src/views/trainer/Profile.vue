@@ -22,9 +22,9 @@
          <router-link v-bind:to="{ name: 'addTrainer', params: { TrainerID: TrainerID }}" exact>
              <button v-on:click="displayAlert" class="btn btn-lg btn-info pl-4 pr-4">Book</button>
           </router-link>
-          <router-link to="/trainer" exact>
+         <router-link v-bind:to="{ name: 'writemessage', params: { replyToID: TrainerID, SenderName: trainer.firstName + ' ' + trainer.lastName}}">
              <button class="btn btn-lg btn-info pl-4 pr-4 ml-2">Message</button>
-          </router-link>
+          </router-link> 
       </div>
    </div>
    <div class="row mb-3 subheading shadow border border-info">

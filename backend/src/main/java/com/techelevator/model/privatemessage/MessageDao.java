@@ -25,5 +25,5 @@ public interface MessageDao {
 	
 	public void sendMessage(Message message);
 	
-	public void deleteMessage(long user_id, long messageId);
+	public void deleteMessage(long messageId); // long user_id,  removed parameter
 }

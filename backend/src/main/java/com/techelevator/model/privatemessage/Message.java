@@ -1,11 +1,14 @@
 package com.techelevator.model.privatemessage;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * PrivateMessage Class is an object that holds a Trainer Id,
@@ -14,25 +17,25 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Message {
 
 	@Min(1)
-	@NotBlank(message="Message Id is required")
 	private long messageId;
 	@Min(1)
-	@NotBlank(message="Trainer Id is required")
 	private long senderId;
 	@Min(1)
-	@NotBlank(message="Client Id is required")
 	private long recipientId;
-	@NotBlank(message="Date Posted is required")
-	private LocalDate postDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private Date postDate;
 	@Size(min = 2, max = 20)
 	@NotBlank(message="Message subject line is required")
 	private String subject;
 	@Size(min = 2, max = 250)
 	@NotBlank(message="Message body text is required")
 	private String message;
-	private boolean unread;
+	private boolean unread;	
 	private boolean senderDelete;
 	private boolean recipientDelete;
+	
+	private String senderName;
+	private String recipientName;
 
 	public long getMessageId() {
 		return messageId;
@@ -73,14 +76,14 @@ public class Message {
 	/**
 	 * @return LocalDate the date associated when the Message was Sent
 	 */
-	public LocalDate getPostDate() {
+	public Date getPostDate() {
 		return postDate;
 	}
 
 	/**
 	 * @param LocalDate to set for this message's datePosted
 	 */
-	public void setPostDate(LocalDate postDate) {
+	public void setPostDate(Date postDate) {
 		this.postDate = postDate;
 	}
 	
@@ -140,5 +143,21 @@ public class Message {
 
 	public void setRecipientDelete(boolean recipientDelete) {
 		this.recipientDelete = recipientDelete;
+	}
+
+	public String getSenderName() {
+		return senderName;
+	}
+
+	public void setSenderName(String senderName) {
+		this.senderName = senderName;
+	}
+
+	public String getRecipientName() {
+		return recipientName;
+	}
+
+	public void setRecipientName(String recipientName) {
+		this.recipientName = recipientName;
 	}
 }
